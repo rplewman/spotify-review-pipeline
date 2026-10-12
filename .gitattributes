@@ -1,0 +1,2 @@
+* text=auto eol=lf
+pipeline/check_submission.py -text
