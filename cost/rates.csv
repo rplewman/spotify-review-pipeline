@@ -1,0 +1,14 @@
+provider,model,tier,item,usd_per_unit,unit,currency,source,checked
+celeris,celeris-1-decision,standard,input_tokens,0.04,1M tokens,USD,https://docs.celeris.ai/pricing,2026-10-12
+celeris,celeris-1-decision,standard,cached_input_tokens,0.04,1M tokens,USD,https://docs.celeris.ai/pricing,2026-10-12
+celeris,celeris-1-decision,standard,output_tokens,0.00,1M tokens,USD,https://docs.celeris.ai/pricing,2026-10-12
+celeris,celeris-1-magnus,standard,input_tokens,0.20,1M tokens,USD,https://docs.celeris.ai/pricing,2026-10-12
+celeris,celeris-1-magnus,standard,cached_input_tokens,0.02,1M tokens,USD,https://docs.celeris.ai/pricing,2026-10-12
+celeris,celeris-1-magnus,standard,output_tokens,0.70,1M tokens,USD,https://docs.celeris.ai/pricing,2026-10-12
+anthropic,claude-haiku-5-5,standard_le100k,input_tokens,0.10,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12
+anthropic,claude-haiku-5-5,standard_le100k,cache_write_5m_tokens,0.125,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12
+anthropic,claude-haiku-5-5,standard_le100k,cache_write_1h_tokens,0.20,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12
+anthropic,claude-haiku-5-5,standard_le100k,cache_read_tokens,0.01,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12
+anthropic,claude-haiku-5-5,standard_le100k,output_tokens,0.50,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12
+anthropic,claude-haiku-5-5,batch_le100k,input_tokens,0.05,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12
+anthropic,claude-haiku-5-5,batch_le100k,output_tokens,0.25,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12

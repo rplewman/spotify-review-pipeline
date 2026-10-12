@@ -1,0 +1,15 @@
+# secrets
+.env
+.env.*
+!.env.example
+# data and local state
+data/raw/
+state/
+*.zip
+.venv/
+__pycache__/
+.pytest_cache/
+# local checker reports (keep outside grading/)
+local-reference.json
+self-check.json
+*.local.json
