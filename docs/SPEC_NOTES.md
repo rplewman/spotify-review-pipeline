@@ -121,6 +121,12 @@ Keep the reports outside `grading/`. `review_required` flags evidence issues; it
   An optional `X-Client-Trace-Id` header is echoed back, so use it as our local request ID.
 - **Rate limits:** not published; per workspace and model, shared by all keys; bursts can be throttled below the sustained rate. Use one shared
   client-side limit per model; the Console doesn't show 429s.
+- **Measured response (M0 smoke test, 2026-10-12; saved in `evals/smoke/celeris_smoke_response.json`):** HTTP 200, body
+  `{"model", "answers": {<name>: ...}, "usage": {"input_tokens", "output_tokens"}}`, with **no `id` field in the body and no request-ID header**.
+  The only headers are `content-type`, `server-timing` (`processing;dur=34.860`, in ms) and the echoed `x-client-trace-id`, so **our
+  `X-Client-Trace-Id` is the `request_id`**. Answers: `choice` → `{"type","choice","probabilities":{opt:p},"confidence"}`;
+  `score` → `{"type","score" (float, probability-weighted),"probabilities":{"0":p,...},"confidence","legend":{"0":label,...}}`;
+  `noul` → `{"type","noul": P(true)}`. One review + 4 short questions (bare labels) = 306 input tokens, 0 output = $0.00001224.
 
 ### 9.10 Anthropic facts (platform.claude.com pricing + docs, checked 2026-10-12)
 - **Model:** `claude-haiku-5-5` (1M context, 128K max output). Prices per MTok for prompts ≤ 100K tokens: input $0.10, 5-min cache write $0.125,
