@@ -1,6 +1,36 @@
 # STATUS — handoff log
 
-## Last completed: M0 (Setup & spec intake) — ✅ gate passed 2026-10-12
+## Last completed: M1 (Ingest) — ✅ gate passed 2026-10-12 (no spend)
+
+### Done (M1)
+- `pipeline/db/schema.sql` (source_reviews, texts, work_items, results, records, calls, batch_jobs, ledger, runs, checkpoints;
+  analysis tables come in M4). `pipeline/agents/intake.py` = A1; `pipeline/cli.py ingest` runs it (~1.5 min, no API calls).
+- Command: `.venv/Scripts/python -m pipeline.cli ingest` → `state/pipeline.db`, `grading/ingestion.json` (via the checker's
+  `profile`, unchanged), `outputs/ingestion_report.json`, `outputs/data_manifest.json`, `evals/dev_100/dev_100_to_label.csv`.
+- 31/31 verification checks pass (all README/manifest numbers, dev-file checksums, golden = seed ranks 1–50,
+  analysis_10000 = 51–10,050, checkpoint/cost prefixes, checker profile = our counts). Malformed rows abort with the record number.
+- Tests: `tests/test_m1_ingest.py` (3 fast synthetic + 6 full-data tests marked `data`, ~3 min; skip with `-m "not data"`).
+  Re-run on the same DB is idempotent and outputs are byte-identical to the committed ones. Full suite: 12 passed.
+- Queue: 78,099 `work_items` (stage `enrich`) under the placeholder `label_config = provisional-v0`; M3a/M6 enqueue the real
+  config with `intake.enqueue(conn, stage, cfg)` (idempotent). The 13 empty texts are in `records` as `empty_review_text`.
+
+### Measured in M1
+- Scope (seed ranks 1–100,000): **78,099 distinct texts** (21,901 duplicate rows), 7.28M chars. Month shares match the full file
+  within 0.16 pp (max abs diff).
+- **Exact-text cache fill: +137,942 out-of-scope rows** completable at $0 (7,055 in-scope texts reused). Coverage point:
+  100k only 0.4908 → with fill **0.6161**.
+- Frequency add-on (remaining 406,090 distinct texts; 397,407 are singletons):
+  top 1k → +6,916 rows (12k chars, cov 0.6224); 5k → +17,894 (72k chars, 0.6324); 10k → +26,577 (256k chars, 0.6403);
+  25k → +41,577 (1.76M chars, 0.6539); all 406,090 → +422,667 rows (40.4M chars, cov 1.0).
+  So the full corpus is ≈ 5.6× the 100k's text volume (47.7M vs 7.3M chars) — input for the §1.2 gate in M6.
+- dev_100 = checkpoint_500 rows 101–200 (seed ranks 151–250), blank label columns, disjoint from cost_100.
+
+### Next step
+M2 (Labels, schema & golden set; 👤 Rory labels golden_50 + dev_100): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M2, then do M2."
+
+---
+
+## Previously completed: M0 (Setup & spec intake) — ✅ gate passed 2026-10-12
 
 ### Done (2026-10-12)
 - Dataset extracted to `data/raw/` (11 files). Full CSV SHA-256 verified: `1fc85de6…2fcef6` (matches manifest/§9.1).
@@ -36,5 +66,3 @@
 - Celeris Console: check whether a usage export exists (needed for the M5 reconciliation).
 - Make the GitHub repo public before submission.
 
-### Next step
-M1 (Ingest): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M1, then do M1."

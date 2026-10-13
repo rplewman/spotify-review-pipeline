@@ -1,0 +1,516 @@
+{
+  "agent": "A1 intake",
+  "cache_fill": {
+    "distinct_texts_reused": 7055,
+    "out_of_scope_rows_completed": 137942
+  },
+  "checks": [
+    {
+      "actual": 660622,
+      "check": "records",
+      "expected": 660622,
+      "ok": true
+    },
+    {
+      "actual": 97400616,
+      "check": "file_bytes",
+      "expected": 97400616,
+      "ok": true
+    },
+    {
+      "actual": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+      "check": "file_sha256",
+      "expected": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+      "ok": true
+    },
+    {
+      "actual": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+      "check": "file_sha256 = manifest",
+      "expected": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+      "ok": true
+    },
+    {
+      "actual": 13,
+      "check": "empty_review_text",
+      "expected": 13,
+      "ok": true
+    },
+    {
+      "actual": 159701,
+      "check": "missing_app_version",
+      "expected": 159701,
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "check": "duplicate_review_ids",
+      "expected": 0,
+      "ok": true
+    },
+    {
+      "actual": 484189,
+      "check": "distinct_nonempty_texts",
+      "expected": 484189,
+      "ok": true
+    },
+    {
+      "actual": "2022-05-17 00:01:07",
+      "check": "first_review",
+      "expected": "2022-05-17 00:01:07",
+      "ok": true
+    },
+    {
+      "actual": "2023-11-15 23:16:10",
+      "check": "last_review",
+      "expected": "2023-11-15 23:16:10",
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "check": "rows outside window",
+      "expected": 0,
+      "ok": true
+    },
+    {
+      "actual": 0,
+      "check": "ineligible nonempty rows",
+      "expected": 0,
+      "ok": true
+    },
+    {
+      "actual": {
+        "2022-05": 15461,
+        "2022-06": 30338,
+        "2022-07": 32784,
+        "2022-08": 30732,
+        "2022-09": 26933,
+        "2022-10": 27572,
+        "2022-11": 27349,
+        "2022-12": 31744,
+        "2023-01": 28609,
+        "2023-02": 20889,
+        "2023-03": 27238,
+        "2023-04": 25014,
+        "2023-05": 28062,
+        "2023-06": 27117,
+        "2023-07": 85079,
+        "2023-08": 30438,
+        "2023-09": 41634,
+        "2023-10": 89104,
+        "2023-11": 34525
+      },
+      "check": "reviews_by_month = manifest",
+      "expected": {
+        "2022-05": 15461,
+        "2022-06": 30338,
+        "2022-07": 32784,
+        "2022-08": 30732,
+        "2022-09": 26933,
+        "2022-10": 27572,
+        "2022-11": 27349,
+        "2022-12": 31744,
+        "2023-01": 28609,
+        "2023-02": 20889,
+        "2023-03": 27238,
+        "2023-04": 25014,
+        "2023-05": 28062,
+        "2023-06": 27117,
+        "2023-07": 85079,
+        "2023-08": 30438,
+        "2023-09": 41634,
+        "2023-10": 89104,
+        "2023-11": 34525
+      },
+      "ok": true
+    },
+    {
+      "actual": {
+        "duplicate_review_ids": 0,
+        "empty_review_text": 13,
+        "missing_app_version": 159701,
+        "records": 660622
+      },
+      "check": "checker profile counts",
+      "expected": {
+        "duplicate_review_ids": 0,
+        "empty_review_text": 13,
+        "missing_app_version": 159701,
+        "records": 660622
+      },
+      "ok": true
+    },
+    {
+      "actual": {
+        "2022-05": 15461,
+        "2022-06": 30338,
+        "2022-07": 32784,
+        "2022-08": 30732,
+        "2022-09": 26933,
+        "2022-10": 27572,
+        "2022-11": 27349,
+        "2022-12": 31744,
+        "2023-01": 28609,
+        "2023-02": 20889,
+        "2023-03": 27238,
+        "2023-04": 25014,
+        "2023-05": 28062,
+        "2023-06": 27117,
+        "2023-07": 85079,
+        "2023-08": 30438,
+        "2023-09": 41634,
+        "2023-10": 89104,
+        "2023-11": 34525
+      },
+      "check": "checker profile months",
+      "expected": {
+        "2022-05": 15461,
+        "2022-06": 30338,
+        "2022-07": 32784,
+        "2022-08": 30732,
+        "2022-09": 26933,
+        "2022-10": 27572,
+        "2022-11": 27349,
+        "2022-12": 31744,
+        "2023-01": 28609,
+        "2023-02": 20889,
+        "2023-03": 27238,
+        "2023-04": 25014,
+        "2023-05": 28062,
+        "2023-06": 27117,
+        "2023-07": 85079,
+        "2023-08": 30438,
+        "2023-09": 41634,
+        "2023-10": 89104,
+        "2023-11": 34525
+      },
+      "ok": true
+    },
+    {
+      "actual": 660609,
+      "check": "eligible rows ranked",
+      "expected": 660609,
+      "ok": true
+    },
+    {
+      "actual": 13,
+      "check": "quarantined empty records",
+      "expected": 13,
+      "ok": true
+    },
+    {
+      "actual": "1a125c3e509f58b0246ba16d0ea332675a53ffadb1928be4338a0bd7053a11c7",
+      "check": "golden_50_to_label.csv sha256",
+      "expected": "1a125c3e509f58b0246ba16d0ea332675a53ffadb1928be4338a0bd7053a11c7",
+      "ok": true
+    },
+    {
+      "actual": 7905,
+      "check": "golden_50_to_label.csv bytes",
+      "expected": 7905,
+      "ok": true
+    },
+    {
+      "actual": true,
+      "check": "golden_50_to_label.csv equals seed ranks 1-50",
+      "expected": true,
+      "ok": true
+    },
+    {
+      "actual": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+      "check": "cost_100.csv sha256",
+      "expected": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+      "ok": true
+    },
+    {
+      "actual": 15466,
+      "check": "cost_100.csv bytes",
+      "expected": 15466,
+      "ok": true
+    },
+    {
+      "actual": true,
+      "check": "cost_100.csv equals seed ranks 51-150",
+      "expected": true,
+      "ok": true
+    },
+    {
+      "actual": "a94e31663ee7b7eaa77e23b7a8425b530cc0c866ed5e714953172a0afef6a12f",
+      "check": "checkpoint_500.csv sha256",
+      "expected": "a94e31663ee7b7eaa77e23b7a8425b530cc0c866ed5e714953172a0afef6a12f",
+      "ok": true
+    },
+    {
+      "actual": 76170,
+      "check": "checkpoint_500.csv bytes",
+      "expected": 76170,
+      "ok": true
+    },
+    {
+      "actual": true,
+      "check": "checkpoint_500.csv equals seed ranks 51-550",
+      "expected": true,
+      "ok": true
+    },
+    {
+      "actual": "eaa62ca6d44d717302904a9c922e99b0b4584d174309cb45295ecbc2ba2a91b5",
+      "check": "analysis_10000.csv sha256",
+      "expected": "eaa62ca6d44d717302904a9c922e99b0b4584d174309cb45295ecbc2ba2a91b5",
+      "ok": true
+    },
+    {
+      "actual": 1477793,
+      "check": "analysis_10000.csv bytes",
+      "expected": 1477793,
+      "ok": true
+    },
+    {
+      "actual": true,
+      "check": "analysis_10000.csv equals seed ranks 51-10050",
+      "expected": true,
+      "ok": true
+    },
+    {
+      "actual": 100,
+      "check": "dev_100 rows",
+      "expected": 100,
+      "ok": true
+    },
+    {
+      "actual": 78099,
+      "check": "work_items = distinct in-scope texts",
+      "expected": 78099,
+      "ok": true
+    }
+  ],
+  "coverage_point_estimates": {
+    "full_corpus": 1.0,
+    "random_100k_only": 0.4908,
+    "random_100k_plus_cache_fill": 0.6161
+  },
+  "frequency_addon_curve": [
+    {
+      "coverage_point_with_100k_and_fill": 0.6224,
+      "rows_completed": 6916,
+      "rows_per_text": 6.916,
+      "top_distinct_texts": 1000,
+      "total_chars": 12454
+    },
+    {
+      "coverage_point_with_100k_and_fill": 0.6324,
+      "rows_completed": 17894,
+      "rows_per_text": 3.579,
+      "top_distinct_texts": 5000,
+      "total_chars": 72140
+    },
+    {
+      "coverage_point_with_100k_and_fill": 0.6403,
+      "rows_completed": 26577,
+      "rows_per_text": 2.658,
+      "top_distinct_texts": 10000,
+      "total_chars": 255527
+    },
+    {
+      "coverage_point_with_100k_and_fill": 0.6539,
+      "rows_completed": 41577,
+      "rows_per_text": 1.663,
+      "top_distinct_texts": 25000,
+      "total_chars": 1764067
+    },
+    {
+      "coverage_point_with_100k_and_fill": 1.0,
+      "label": "full_corpus",
+      "rows_completed": 422667,
+      "rows_per_text": 1.041,
+      "top_distinct_texts": 406090,
+      "total_chars": 40444080
+    }
+  ],
+  "max_abs_month_diff_pp": 0.162,
+  "month_distribution": {
+    "2022-05": {
+      "diff_pp": 0.039,
+      "full": 15461,
+      "full_share": 0.023404,
+      "scope": 2379,
+      "scope_share": 0.02379
+    },
+    "2022-06": {
+      "diff_pp": 0.013,
+      "full": 30338,
+      "full_share": 0.045923,
+      "scope": 4605,
+      "scope_share": 0.04605
+    },
+    "2022-07": {
+      "diff_pp": -0.049,
+      "full": 32784,
+      "full_share": 0.049626,
+      "scope": 4914,
+      "scope_share": 0.04914
+    },
+    "2022-08": {
+      "diff_pp": 0.063,
+      "full": 30732,
+      "full_share": 0.04652,
+      "scope": 4715,
+      "scope_share": 0.04715
+    },
+    "2022-09": {
+      "diff_pp": -0.014,
+      "full": 26933,
+      "full_share": 0.040769,
+      "scope": 4063,
+      "scope_share": 0.04063
+    },
+    "2022-10": {
+      "diff_pp": -0.057,
+      "full": 27572,
+      "full_share": 0.041736,
+      "scope": 4117,
+      "scope_share": 0.04117
+    },
+    "2022-11": {
+      "diff_pp": -0.069,
+      "full": 27349,
+      "full_share": 0.041399,
+      "scope": 4071,
+      "scope_share": 0.04071
+    },
+    "2022-12": {
+      "diff_pp": 0.006,
+      "full": 31744,
+      "full_share": 0.048052,
+      "scope": 4811,
+      "scope_share": 0.04811
+    },
+    "2023-01": {
+      "diff_pp": -0.011,
+      "full": 28609,
+      "full_share": 0.043306,
+      "scope": 4320,
+      "scope_share": 0.0432
+    },
+    "2023-02": {
+      "diff_pp": -0.032,
+      "full": 20889,
+      "full_share": 0.03162,
+      "scope": 3130,
+      "scope_share": 0.0313
+    },
+    "2023-03": {
+      "diff_pp": 0.02,
+      "full": 27238,
+      "full_share": 0.041231,
+      "scope": 4143,
+      "scope_share": 0.04143
+    },
+    "2023-04": {
+      "diff_pp": 0.047,
+      "full": 25014,
+      "full_share": 0.037864,
+      "scope": 3833,
+      "scope_share": 0.03833
+    },
+    "2023-05": {
+      "diff_pp": 0.011,
+      "full": 28062,
+      "full_share": 0.042478,
+      "scope": 4259,
+      "scope_share": 0.04259
+    },
+    "2023-06": {
+      "diff_pp": -0.038,
+      "full": 27117,
+      "full_share": 0.041048,
+      "scope": 4067,
+      "scope_share": 0.04067
+    },
+    "2023-07": {
+      "diff_pp": -0.03,
+      "full": 85079,
+      "full_share": 0.128786,
+      "scope": 12849,
+      "scope_share": 0.12849
+    },
+    "2023-08": {
+      "diff_pp": 0.162,
+      "full": 30438,
+      "full_share": 0.046075,
+      "scope": 4769,
+      "scope_share": 0.04769
+    },
+    "2023-09": {
+      "diff_pp": 0.078,
+      "full": 41634,
+      "full_share": 0.063022,
+      "scope": 6380,
+      "scope_share": 0.0638
+    },
+    "2023-10": {
+      "diff_pp": -0.092,
+      "full": 89104,
+      "full_share": 0.134879,
+      "scope": 13396,
+      "scope_share": 0.13396
+    },
+    "2023-11": {
+      "diff_pp": -0.047,
+      "full": 34525,
+      "full_share": 0.052261,
+      "scope": 5179,
+      "scope_share": 0.05179
+    }
+  },
+  "ok": true,
+  "profile": {
+    "distinct_nonempty_texts": 484189,
+    "duplicate_review_ids": 0,
+    "empty_review_text": 13,
+    "first_review": "2022-05-17 00:01:07",
+    "last_review": "2023-11-15 23:16:10",
+    "missing_app_version": 159701,
+    "records": 660622
+  },
+  "quarantined": {
+    "reason": "empty_review_text",
+    "review_ids": [
+      "5d085a1f-1737-45a6-a3fb-5211b327ec27",
+      "be032618-08ae-4dde-b0b2-d2ddcd8ea5a6",
+      "f7c94991-0fc2-49a5-b47e-510e97a1632c",
+      "f5b40f1f-6621-456f-b1f2-0b3a9361c793",
+      "7121867d-b162-4b15-a45f-6352dcff92c1",
+      "f0df3892-1cfd-44f6-b3bb-a2eef7e69f6e",
+      "a3b536ac-b508-4e02-8550-ff7ea0bf79c2",
+      "b9587209-7961-4fd2-903c-fcd0fa924721",
+      "1687e070-9c26-4657-9ecc-0141405bcd4b",
+      "34bf6347-1625-46cd-b6fa-82913e2f665d",
+      "e4a05a09-be34-40a3-9b4a-e3976dea1b82",
+      "1bbad718-5df1-4669-841d-d1d6a040945a",
+      "7c26b1a0-8e0b-426d-976c-15b526f94e30"
+    ]
+  },
+  "queue": {
+    "by_status": {
+      "pending": 78099
+    },
+    "label_config": "provisional-v0",
+    "stage": "enrich"
+  },
+  "random_100k": {
+    "distinct_text_chars": 7280687,
+    "distinct_texts": 78099,
+    "duplicate_rows": 21901,
+    "rank_range": [
+      1,
+      100000
+    ],
+    "rows": 100000
+  },
+  "remaining_distinct_texts": 406090,
+  "remaining_singleton_texts": 397407,
+  "scope_counts": {
+    "empty_text": 13,
+    "out_of_scope": 560609,
+    "random_100k": 100000
+  }
+}

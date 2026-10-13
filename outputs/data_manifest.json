@@ -1,0 +1,65 @@
+{
+  "dev_files": {
+    "analysis_10000.csv": {
+      "bytes": 1477793,
+      "sha256": "eaa62ca6d44d717302904a9c922e99b0b4584d174309cb45295ecbc2ba2a91b5"
+    },
+    "checkpoint_500.csv": {
+      "bytes": 76170,
+      "sha256": "a94e31663ee7b7eaa77e23b7a8425b530cc0c866ed5e714953172a0afef6a12f"
+    },
+    "cost_100.csv": {
+      "bytes": 15466,
+      "sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e"
+    },
+    "golden_50_to_label.csv": {
+      "bytes": 7905,
+      "sha256": "1a125c3e509f58b0246ba16d0ea332675a53ffadb1928be4338a0bd7053a11c7"
+    }
+  },
+  "input": {
+    "bytes": 97400616,
+    "file": "spotify_reviews_18months.csv",
+    "parsed_rows_sha256": "eb5ea1e15f020212004a5b1e2f873e45a9f105d1b4516ad077020492364f71ff",
+    "sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6"
+  },
+  "outputs": [
+    "grading/ingestion.json",
+    "outputs/ingestion_report.json",
+    "evals/dev_100/dev_100_to_label.csv"
+  ],
+  "parser": "csv.DictReader(strict=True), encoding utf-8-sig, newline=''; row hash = check_submission.row_sha",
+  "schema_sha256": "6e2928234cc75183e79ce50dbb99a315d3b674233b768362b43f9e182a273eb9",
+  "scope": {
+    "method": "First N by SHA-256(seed + ':' + review_id) among unique nonempty valid-rating rows (the official sampling order; ties by review_id)",
+    "seed": "berkeley-fall-2026-assignment-5-v1",
+    "size": 100000,
+    "subsets_rank_ranges": {
+      "analysis_10000": [
+        51,
+        10050
+      ],
+      "checkpoint_500": [
+        51,
+        550
+      ],
+      "cost_100": [
+        51,
+        150
+      ],
+      "dev_100": [
+        151,
+        250
+      ],
+      "golden_50": [
+        1,
+        50
+      ],
+      "random_100k": [
+        1,
+        100000
+      ]
+    }
+  },
+  "text_identity": "sha256 of the exact review_text (UTF-8), no normalization"
+}
