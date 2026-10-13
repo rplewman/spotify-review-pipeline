@@ -27,7 +27,9 @@
 2. Celeris Console: add card, set monthly spend limit **$8**, confirm $5 credit balance + expiry date, workspace active, whether usage export exists. Record the limit here.
 3. ~~Celeris smoke test~~ — done 2026-10-12 (approved by Rory): HTTP 200, 306 input tokens, **$0.00001224** list price.
    Response format recorded in PLAN §9.9 / SPEC_NOTES. No server request ID exists → our `X-Client-Trace-Id` is the `request_id`.
-4. Render: create a GitHub repo, push, then "New → Blueprint" from `render.yaml` and set `DATABASE_URL` in Render; confirm `/api/health` returns the hello row.
+4. ~~GitHub repo~~ — done: https://github.com/rplewman/spotify-review-pipeline (**private**; make public before submission).
+   Original brief is gitignored (stripped copy `docs/BRIEF_TEXT.md` is tracked).
+5. Render: "New → Blueprint" from `render.yaml` and set `DATABASE_URL` in Render; confirm `/api/health` returns the hello row.
 
 ### Next step
 Finish the four open items above, then M1 (Ingest).
