@@ -13,3 +13,6 @@ __pycache__/
 local-reference.json
 self-check.json
 *.local.json
+
+# original brief (stripped copy is docs/BRIEF_TEXT.md)
+Final Assignment - Multi Agent Large Data Processing Pipeline.md
