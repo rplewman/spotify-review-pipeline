@@ -16,16 +16,17 @@
 - PLAN.md: `[CONFIRM]` tags for Neon storage, Batch API discount/limits, and Haiku pricing resolved; §9.10 added.
 
 ### Facts confirmed in M0
+- Spend so far: Celeris $0.00001224 (smoke test). Anthropic $0.
 - Haiku 5.5 `claude-haiku-5-5`: $0.10 in / $0.50 out per MTok (≤ 100K prompt), cache read $0.01; batch 50% off ($0.05 / $0.25).
   Thinking adaptive by default; disable only at effort ≤ high; default effort `medium`.
 - Batch API: ≤ 100k requests / 256 MB per batch; usually < 1 h, max 24 h.
 - Celeris prices unchanged from §9.9; card top-ups $5–$1,000; credit expires 30 days after grant.
 
 ### Open (blocks M0 gate) — 👤 Rory
-1. Put `CELERIS_API_KEY` and `ANTHROPIC_API_KEY` (and OPENAI/TYPESAFE if used) into `.env` (Neon URLs are already there).
+1. ~~API keys~~ — done: `CELERIS_API_KEY` and `ANTHROPIC_API_KEY` are in `.env`.
 2. Celeris Console: add card, set monthly spend limit **$8**, confirm $5 credit balance + expiry date, workspace active, whether usage export exists. Record the limit here.
-3. Approve the Celeris smoke test (est. < $0.0001): `.venv/Scripts/python scripts/celeris_smoke.py --paid --max-spend 0.001`
-   → saves `evals/smoke/celeris_smoke_response.json`; then update §9.9 with the exact response JSON (resolves Q3 partly).
+3. ~~Celeris smoke test~~ — done 2026-10-12 (approved by Rory): HTTP 200, 306 input tokens, **$0.00001224** list price.
+   Response format recorded in PLAN §9.9 / SPEC_NOTES. No server request ID exists → our `X-Client-Trace-Id` is the `request_id`.
 4. Render: create a GitHub repo, push, then "New → Blueprint" from `render.yaml` and set `DATABASE_URL` in Render; confirm `/api/health` returns the hello row.
 
 ### Next step

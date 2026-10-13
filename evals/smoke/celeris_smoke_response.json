@@ -1,0 +1,114 @@
+{
+  "trace_id": "ef7eae61-8f79-46db-87d5-5506f5a637c6",
+  "status": 200,
+  "headers": {
+    "content-type": "application/json",
+    "server-timing": "processing;dur=34.860",
+    "x-client-trace-id": "ef7eae61-8f79-46db-87d5-5506f5a637c6"
+  },
+  "request": {
+    "model": "celeris-1-decision",
+    "state": "[R1] The app keeps logging me out every time I open it and I can't get back in. I pay for premium!",
+    "questions": {
+      "R1_topic": {
+        "type": "choice",
+        "instructions": "Topic of [R1]",
+        "criteria": {
+          "access": null,
+          "usability": null,
+          "playback": null,
+          "downloads": null,
+          "catalog": null,
+          "billing": null,
+          "support": null,
+          "other": null
+        }
+      },
+      "R1_intent": {
+        "type": "choice",
+        "instructions": "Intent of [R1]",
+        "criteria": {
+          "cancellation": null,
+          "complaint": null,
+          "request": null,
+          "praise": null,
+          "unclear": null
+        }
+      },
+      "R1_severity": {
+        "type": "score",
+        "instructions": "Severity of [R1]",
+        "criteria": [
+          "no problem",
+          "minor",
+          "degraded",
+          "blocked core task",
+          "serious harm"
+        ]
+      },
+      "R1_negative": {
+        "type": "noul",
+        "instructions": "[R1] is negative in tone."
+      }
+    }
+  },
+  "response": {
+    "model": "celeris-1-decision",
+    "answers": {
+      "R1_topic": {
+        "type": "choice",
+        "choice": "access",
+        "probabilities": {
+          "access": 0.88,
+          "usability": 0.06,
+          "playback": 0.01,
+          "downloads": 0.0,
+          "catalog": 0.01,
+          "billing": 0.01,
+          "support": 0.02,
+          "other": 0.01
+        },
+        "confidence": 0.86
+      },
+      "R1_intent": {
+        "type": "choice",
+        "choice": "complaint",
+        "probabilities": {
+          "cancellation": 0.02,
+          "complaint": 0.91,
+          "request": 0.05,
+          "praise": 0.01,
+          "unclear": 0.01
+        },
+        "confidence": 0.89
+      },
+      "R1_severity": {
+        "type": "score",
+        "score": 2.93,
+        "probabilities": {
+          "0": 0.01,
+          "1": 0.01,
+          "2": 0.05,
+          "3": 0.9,
+          "4": 0.03
+        },
+        "confidence": 0.88,
+        "legend": {
+          "0": "no problem",
+          "1": "minor",
+          "2": "degraded",
+          "3": "blocked core task",
+          "4": "serious harm"
+        }
+      },
+      "R1_negative": {
+        "type": "noul",
+        "noul": 0.99
+      }
+    },
+    "usage": {
+      "input_tokens": 306,
+      "output_tokens": 0
+    }
+  }
+}
