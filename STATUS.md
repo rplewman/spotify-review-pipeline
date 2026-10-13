@@ -1,6 +1,6 @@
 # STATUS — handoff log
 
-## Current: M0 (Setup & spec intake) — agent work done; 👤 steps open
+## Last completed: M0 (Setup & spec intake) — ✅ gate passed 2026-10-12
 
 ### Done (2026-10-12)
 - Dataset extracted to `data/raw/` (11 files). Full CSV SHA-256 verified: `1fc85de6…2fcef6` (matches manifest/§9.1).
@@ -22,7 +22,7 @@
 - Batch API: ≤ 100k requests / 256 MB per batch; usually < 1 h, max 24 h.
 - Celeris prices unchanged from §9.9; card top-ups $5–$1,000; credit expires 30 days after grant.
 
-### Open (blocks M0 gate) — 👤 Rory
+### M0 items (all done)
 1. ~~API keys~~ — done: `CELERIS_API_KEY` and `ANTHROPIC_API_KEY` are in `.env`.
 2. ~~Celeris Console~~ — done 2026-10-12: monthly spend limit **$10** (plan suggested $8), credit balance **$10**, Console shows **no expiry date** (docs say credit expires 30 days after grant; recheck in M5). Usage export: not yet checked (needed for the M5 reconciliation).
    Note: the $10 project budget covers Celeris + Anthropic together, so the pipeline's ledger cap (≤ $4.50 Celeris bucket, §4) is the binding limit, not the Console limit.
@@ -30,7 +30,11 @@
    Response format recorded in PLAN §9.9 / SPEC_NOTES. No server request ID exists → our `X-Client-Trace-Id` is the `request_id`.
 4. ~~GitHub repo~~ — done: https://github.com/rplewman/spotify-review-pipeline (**private**; make public before submission).
    Original brief is gitignored (stripped copy `docs/BRIEF_TEXT.md` is tracked).
-5. Render: "New → Blueprint" from `render.yaml` and set `DATABASE_URL` in Render; confirm `/api/health` returns the hello row.
+5. ~~Render~~ — done: Blueprint `spotify-review-pipeline` → https://spotify-review-pipeline.onrender.com ; `/api/health` returns `{"ok":true,"db":"hello from Neon"}`. `DATABASE_URL` set in Render (main branch). Health check reports redacted connection diagnostics on failure.
+
+### Still open (non-blocking)
+- Celeris Console: check whether a usage export exists (needed for the M5 reconciliation).
+- Make the GitHub repo public before submission.
 
 ### Next step
-Finish the four open items above, then M1 (Ingest).
+M1 (Ingest): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M1, then do M1."
