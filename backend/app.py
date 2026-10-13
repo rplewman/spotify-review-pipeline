@@ -11,6 +11,12 @@ app = FastAPI(title="Spotify Review Pipeline")
 
 @app.get("/api/health")
 def health():
-    with psycopg.connect(os.environ["DATABASE_URL"]) as conn:
-        row = conn.execute("select msg from hello where id = 1").fetchone()
+    url = os.environ.get("DATABASE_URL")
+    if not url:
+        return {"ok": False, "error": "DATABASE_URL is not set"}
+    try:
+        with psycopg.connect(url, connect_timeout=10) as conn:
+            row = conn.execute("select msg from hello where id = 1").fetchone()
+    except psycopg.Error as e:
+        return {"ok": False, "error": type(e).__name__}  # class name only; never echo the URL
     return {"ok": True, "db": row[0] if row else None}
