@@ -24,7 +24,8 @@
 
 ### Open (blocks M0 gate) — 👤 Rory
 1. ~~API keys~~ — done: `CELERIS_API_KEY` and `ANTHROPIC_API_KEY` are in `.env`.
-2. Celeris Console: add card, set monthly spend limit **$8**, confirm $5 credit balance + expiry date, workspace active, whether usage export exists. Record the limit here.
+2. ~~Celeris Console~~ — done 2026-10-12: monthly spend limit **$10** (plan suggested $8), credit balance **$10**, Console shows **no expiry date** (docs say credit expires 30 days after grant; recheck in M5). Usage export: not yet checked (needed for the M5 reconciliation).
+   Note: the $10 project budget covers Celeris + Anthropic together, so the pipeline's ledger cap (≤ $4.50 Celeris bucket, §4) is the binding limit, not the Console limit.
 3. ~~Celeris smoke test~~ — done 2026-10-12 (approved by Rory): HTTP 200, 306 input tokens, **$0.00001224** list price.
    Response format recorded in PLAN §9.9 / SPEC_NOTES. No server request ID exists → our `X-Client-Trace-Id` is the `request_id`.
 4. ~~GitHub repo~~ — done: https://github.com/rplewman/spotify-review-pipeline (**private**; make public before submission).
