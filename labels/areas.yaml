@@ -1,0 +1,9 @@
+# The 8 contract topics -> the brief's 4 effort areas (PLAN §1). Declared, additional aggregate; the
+# required baseline ranking stays per issue. catalog and other are reported as outside the four areas.
+version: areas-v1
+areas:
+  access: [access]
+  usability: [usability]
+  playback: [playback, downloads]
+  billing/support: [billing, support]
+outside: [catalog, other]

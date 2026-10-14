@@ -1,6 +1,29 @@
 # STATUS — handoff log
 
-## Last completed: M1 (Ingest) — ✅ gate passed 2026-10-12 (no spend)
+## Last completed: M2 (Labels, schema & golden set) — ✅ code gate passed 2026-10-13 (no spend); 👤 hand labels outstanding
+
+### Done (M2)
+- `labels/taxonomy.md` (contract tables verbatim + our conventions: sentiment scale, entities, evidence quote, needs_review,
+  accepted alternatives), `labels/examples.yaml` (18 worked examples from analysis_10000 minus dev_100, one per rule),
+  `labels/areas.yaml` (areas-v1), `labels/keywords.yaml` (keywords-v1: topic terms + entity terms).
+- `pipeline/schema.py` (schema-v1): `validate_record` / `validate_labels` mirror the checker's per-record rules.
+- Labeling tool: `.venv/Scripts/python scripts/label_tool.py golden|dev` → local page at 127.0.0.1:8765 (text only, metadata hidden);
+  validates and saves atomically on every label to `evals/golden/golden_50_labeled.csv` / `evals/dev_100/dev_100_labeled.csv`
+  (template's 13 columns + accepted_topics/intents/severities, notes, labeled_at). Resumable.
+- Tests `tests/test_m2_labels.py` (28): schema fixtures, label files, firewalls (only `scripts/label_tool.py` may reference the
+  labeled files — M6 adds its sweep/eval scripts to `LABEL_READERS`; no golden/dev_100 text ≥ 20 chars in `prompts/` or `labels/`),
+  tool round trip. Full suite fast: 32 passed (`-m "not data"`).
+
+### 👤 Rory (in parallel with M3a–M5)
+- Label `dev_100` first (M6 sweep needs it; finish before M5 ends), then the golden 50 (before M6's evaluation).
+- Progress: golden 0/50, dev_100 0/100.
+
+### Next step
+M3a (Queue, cache & control engine): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M3a, then do M3a."
+
+---
+
+## Previously completed: M1 (Ingest) — ✅ gate passed 2026-10-12 (no spend)
 
 ### Done (M1)
 - `pipeline/db/schema.sql` (source_reviews, texts, work_items, results, records, calls, batch_jobs, ledger, runs, checkpoints;
@@ -24,9 +47,6 @@
   25k → +41,577 (1.76M chars, 0.6539); all 406,090 → +422,667 rows (40.4M chars, cov 1.0).
   So the full corpus is ≈ 5.6× the 100k's text volume (47.7M vs 7.3M chars) — input for the §1.2 gate in M6.
 - dev_100 = checkpoint_500 rows 101–200 (seed ranks 151–250), blank label columns, disjoint from cost_100.
-
-### Next step
-M2 (Labels, schema & golden set; 👤 Rory labels golden_50 + dev_100): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M2, then do M2."
 
 ---
 

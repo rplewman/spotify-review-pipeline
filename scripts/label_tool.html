@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review Labeler</title>
+<style>
+  :root { --bg:#f7f7f5; --panel:#fff; --ink:#1d1d1b; --muted:#6b6b66; --line:#deded8; --accent:#1a7f4b; --warn:#b3261e; --pick:#e8f3ec; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161615; --panel:#202020; --ink:#ececea; --muted:#9a9a94; --line:#383836; --accent:#4cc38a; --warn:#ff8a80; --pick:#1f3a2c; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.45 system-ui, sans-serif; }
+  header { display:flex; gap:12px; align-items:center; padding:10px 16px; border-bottom:1px solid var(--line); background:var(--panel); position:sticky; top:0; z-index:1; }
+  header .grow { flex:1; }
+  main { display:grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap:16px; padding:16px; max-width:1400px; margin:auto; }
+  @media (max-width:900px) { main { grid-template-columns:1fr; } }
+  section { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px 16px; }
+  .review { font-size:18px; line-height:1.55; white-space:pre-wrap; word-break:break-word; padding:12px; border:1px dashed var(--line); border-radius:6px; }
+  .muted { color:var(--muted); font-size:13px; }
+  label.f { display:block; font-weight:600; margin:12px 0 4px; }
+  select, input[type=text], textarea { width:100%; font:inherit; padding:6px 8px; border:1px solid var(--line); border-radius:6px; background:var(--bg); color:var(--ink); }
+  textarea { min-height:52px; resize:vertical; }
+  .alts { display:flex; flex-wrap:wrap; gap:4px 12px; margin-top:4px; font-size:13px; color:var(--muted); }
+  .alts label { white-space:nowrap; }
+  .row { display:flex; gap:8px; align-items:center; }
+  button { font:inherit; padding:6px 12px; border-radius:6px; border:1px solid var(--line); background:var(--bg); color:var(--ink); cursor:pointer; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; }
+  .errors { color:var(--warn); font-size:14px; white-space:pre-wrap; }
+  .ok { color:var(--accent); font-size:14px; }
+  .grid { display:flex; flex-wrap:wrap; gap:4px; margin-top:10px; }
+  .grid button { width:34px; padding:4px 0; font-size:12px; }
+  .grid button.done { background:var(--pick); border-color:var(--accent); }
+  .grid button.cur { outline:2px solid var(--ink); }
+  table { border-collapse:collapse; width:100%; font-size:13px; margin-bottom:10px; }
+  td { border-top:1px solid var(--line); padding:3px 6px; vertical-align:top; }
+  td:first-child { font-family:ui-monospace, monospace; white-space:nowrap; }
+  details { margin-top:8px; font-size:13px; }
+  #sentVal { font-variant-numeric:tabular-nums; min-width:44px; text-align:right; }
+</style>
+</head>
+<body>
+<header>
+  <strong id="title">Labeler</strong><span class="muted" id="progress"></span><span class="grow"></span>
+  <button id="prev">← Prev</button><button id="next">Next →</button><button id="nextTodo">Next unlabeled</button>
+</header>
+<main>
+  <div>
+    <section>
+      <div class="muted" id="rid"></div>
+      <div class="review" id="text"></div>
+      <div class="row" style="margin-top:8px">
+        <button id="useSel">Use selection as quote</button><button id="useAll">Use whole text</button>
+        <span class="muted">Select text in the box above, then click.</span>
+      </div>
+    </section>
+    <section style="margin-top:16px">
+      <label class="f">Intent <span class="muted">(decide first, by precedence)</span></label>
+      <select id="intent"></select><div class="alts" id="altIntents"></div>
+      <label class="f">Topic <span class="muted">(highest-severity problem; tie → first mentioned)</span></label>
+      <select id="topic"></select><div class="alts" id="altTopics"></div>
+      <label class="f">Severity <span class="muted">(of that problem)</span></label>
+      <select id="severity"></select><div class="alts" id="altSeverities"></div>
+      <label class="f">Sentiment <span id="sentVal"></span></label>
+      <div class="row"><span class="muted">−1</span><input type="range" id="sentiment" min="-1" max="1" step="0.25" style="flex:1"><span class="muted">+1</span></div>
+      <label class="f">Evidence quote <span class="muted">(exact substring)</span></label>
+      <textarea id="quote"></textarea>
+      <label class="f">Entities <span class="muted">(comma-separated, only as written in the text; blank = none)</span></label>
+      <input type="text" id="entities" placeholder="e.g. shuffle, premium, lyrics">
+      <label class="f"><input type="checkbox" id="needsReview"> needs_review <span class="muted">(label is a guess: missing context, unreadable, unclear)</span></label>
+      <label class="f">Notes <span class="muted">(why ambiguous, what you weighed)</span></label>
+      <textarea id="notes"></textarea>
+      <div class="row" style="margin-top:12px"><button class="primary" id="save">Save &amp; next (Ctrl+Enter)</button><span id="msg"></span></div>
+    </section>
+  </div>
+  <div>
+    <section>
+      <strong>Reviews</strong> <span class="muted">(green = saved)</span>
+      <div class="grid" id="grid"></div>
+    </section>
+    <section style="margin-top:16px">
+      <strong>Intent precedence</strong>
+      <table>
+        <tr><td>cancellation</td><td>Explicitly leaving, uninstalling, cancelling, or threatening to</td></tr>
+        <tr><td>complaint</td><td>Negative experience, incl. mixed praise/criticism. General "bad app" = complaint, no inferred defect</td></tr>
+        <tr><td>request</td><td>Desired change without a reported failure</td></tr>
+        <tr><td>praise</td><td>Positive</td></tr>
+        <tr><td>unclear</td><td>Bare boycott slogans, unrelated or meaningless text</td></tr>
+      </table>
+      <strong>Topics</strong>
+      <table>
+        <tr><td>access</td><td>Login, signup, password or account access</td></tr>
+        <tr><td>usability</td><td>Navigation, controls, layout, queue/playlist management, ad interruptions</td></tr>
+        <tr><td>playback</td><td>Playback failure, crashes, lag, connection failures, audio quality, resource use</td></tr>
+        <tr><td>downloads</td><td>Downloading, saved music, offline listening, disappearing downloads</td></tr>
+        <tr><td>catalog</td><td>Missing songs/artists, search/discovery, recommendations, lyrics availability</td></tr>
+        <tr><td>billing</td><td>Price, charges, subscriptions, paywalls, premium entitlement; premium-only controls go here</td></tr>
+        <tr><td>support</td><td>Contacting support and the support response</td></tr>
+        <tr><td>other</td><td>General praise/criticism, unrelated content, or no supported specific topic</td></tr>
+      </table>
+      <strong>Severity</strong>
+      <table>
+        <tr><td>1</td><td>No reported problem: praise, neutral/unclear, pure feature request</td></tr>
+        <tr><td>2</td><td>Dislike, generic criticism, minor annoyance, cosmetic; no functional loss</td></tr>
+        <tr><td>3</td><td>Degraded or restricted function; some use or workaround remains</td></tr>
+        <tr><td>4</td><td>Clearly blocked core task (can't log in, can't play)</td></tr>
+        <tr><td>5</td><td>Explicit serious financial, privacy or data harm (price, crash or anger alone are not enough)</td></tr>
+      </table>
+      <details><summary>Our rules (labels/taxonomy.md §2)</summary>
+        <ul>
+          <li>Paid-plan mention alone ≠ billing; crashing for a paying user = playback; subscription not activating = billing.</li>
+          <li>Premium-only controls (skips, choosing songs, repeat, seeking) → billing, usually severity 3.</li>
+          <li>Ads → usability, usually 2. Connection errors / audio quality → playback.</li>
+          <li>Boycott slogan → unclear / other / 1. Explicit "I uninstalled" → cancellation, still severity of the actual problem.</li>
+          <li>Cancellation never raises severity. Mixed praise + criticism → complaint.</li>
+          <li>Positive review → first specific praised feature; general praise → other.</li>
+          <li>Sentiment: −1 hostile · −0.5 negative · 0 neutral/balanced · +0.5 positive · +1 enthusiastic.</li>
+          <li>Tick an alternative only if a second reading is genuinely defensible.</li>
+        </ul>
+      </details>
+    </section>
+  </div>
+</main>
+<script>
+let D, i = 0;
+const $ = id => document.getElementById(id);
+
+function opts(sel, vals) { sel.innerHTML = '<option value="">—</option>' + vals.map(v => `<option>${v}</option>`).join(''); }
+function alts(box, vals, name) { box.innerHTML = 'also accept: ' + vals.map(v => `<label><input type="checkbox" name="${name}" value="${v}"> ${v}</label>`).join(''); }
+function checked(name) { return [...document.querySelectorAll(`input[name=${name}]:checked`)].map(x => x.value); }
+function setChecked(name, vals) { document.querySelectorAll(`input[name=${name}]`).forEach(x => x.checked = vals.map(String).includes(x.value)); }
+function sent() { $('sentVal').textContent = (+$('sentiment').value).toFixed(2); }
+
+function render() {
+  const it = D.items[i], L = it.labels || {};
+  $('rid').textContent = `#${i + 1} · ${it.review_id}`;
+  $('text').textContent = it.review_text;
+  $('topic').value = L.topic || ''; $('intent').value = L.intent || ''; $('severity').value = L.severity || '';
+  $('sentiment').value = L.sentiment ?? 0; sent();
+  $('quote').value = L.evidence_quote || ''; $('entities').value = (L.entities || []).join(', ');
+  $('needsReview').checked = !!L.needs_review; $('notes').value = L.notes || '';
+  setChecked('at', L.accepted_topics || []); setChecked('ai', L.accepted_intents || []); setChecked('as', L.accepted_severities || []);
+  $('msg').textContent = ''; $('msg').className = '';
+  const done = D.items.filter(x => x.labels).length;
+  $('progress').textContent = `${done}/${D.items.length} labeled · saving to ${D.output}`;
+  $('grid').innerHTML = D.items.map((x, k) => `<button class="${x.labels ? 'done' : ''} ${k === i ? 'cur' : ''}" data-k="${k}">${k + 1}</button>`).join('');
+  window.scrollTo(0, 0);
+}
+
+function go(k) { i = Math.max(0, Math.min(D.items.length - 1, k)); render(); }
+
+async function save() {
+  const it = D.items[i];
+  const labels = {
+    topic: $('topic').value, intent: $('intent').value, severity: +$('severity').value || null,
+    sentiment: +$('sentiment').value, evidence_quote: $('quote').value,
+    entities: $('entities').value.split(',').map(s => s.trim()).filter(Boolean),
+    needs_review: $('needsReview').checked, notes: $('notes').value,
+    accepted_topics: checked('at'), accepted_intents: checked('ai'), accepted_severities: checked('as').map(Number),
+  };
+  const r = await fetch('/api/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ review_id: it.review_id, labels }) });
+  const j = await r.json();
+  if (!j.ok) { $('msg').className = 'errors'; $('msg').textContent = j.errors.join('\n'); return; }
+  it.labels = labels;
+  const nxt = D.items.findIndex((x, k) => k > i && !x.labels);
+  go(nxt >= 0 ? nxt : i + 1);
+  $('msg').className = 'ok'; $('msg').textContent = 'Saved.';
+}
+
+$('useSel').onclick = () => {
+  const s = window.getSelection().toString();
+  if (s && D.items[i].review_text.includes(s)) $('quote').value = s;
+  else { $('msg').className = 'errors'; $('msg').textContent = 'Select text inside the review box first.'; }
+};
+$('useAll').onclick = () => { $('quote').value = D.items[i].review_text; };
+$('sentiment').oninput = sent;
+$('prev').onclick = () => go(i - 1);
+$('next').onclick = () => go(i + 1);
+$('nextTodo').onclick = () => { const k = D.items.findIndex(x => !x.labels); if (k >= 0) go(k); };
+$('save').onclick = save;
+$('grid').onclick = e => { if (e.target.dataset.k) go(+e.target.dataset.k); };
+document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); save(); } });
+
+fetch('/api/items').then(r => r.json()).then(d => {
+  D = d;
+  $('title').textContent = d.set === 'golden' ? 'Golden 50' : 'dev_100';
+  opts($('topic'), d.topics); opts($('intent'), d.intents); opts($('severity'), d.severities);
+  alts($('altTopics'), d.topics, 'at'); alts($('altIntents'), d.intents, 'ai'); alts($('altSeverities'), d.severities, 'as');
+  const k = d.items.findIndex(x => !x.labels); go(k >= 0 ? k : 0);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# Code-side term lists (keywords-v1). Lowercase; matched case-insensitively on word boundaries.
+# topic_terms: used by the extractor to pick the evidence-quote sentence that supports the chosen topic.
+# entity_terms: explicit feature/surface/third-party terms copied into `entities` when written in the text.
+version: keywords-v1
+
+topic_terms:
+  access: [login, log in, logged out, log out, sign in, signin, sign up, signup, password, account, verification, email code, facebook login]
+  usability: [ads, ad, advert, commercials, interface, ui, layout, navigation, button, queue, playlist, shuffle, repeat, home screen,
+              library, widget, design, controls, swipe, dark mode, update changed]
+  playback: [crash, crashes, crashing, freeze, freezes, lag, laggy, stops, stopping, pause, pauses, skips by itself, buffering,
+             won't play, cant play, can't play, no internet, connection, offline error, bluetooth, audio, sound quality, volume,
+             battery, data usage, black screen, blank screen, glitch, bug]
+  downloads: [download, downloads, downloaded, offline, saved songs, storage, sd card]
+  catalog: [song missing, missing, not available, unavailable, artist, search, recommendation, recommendations, discover,
+            algorithm, lyrics, podcast, podcasts, audiobook, selection, library of songs]
+  billing: [premium, price, pay, paid, paying, charge, charged, money, refund, subscription, subscribe, unsubscribe, trial,
+            family plan, student, expensive, cost, free version, upgrade]
+  support: [support, customer service, customer care, help center, contact, response, reply, agent, chat support]
+
+entity_terms: [ads, premium, shuffle, smart shuffle, repeat, skip, skips, lyrics, playlist, playlists, queue, podcasts, podcast,
+               audiobooks, downloads, offline mode, discover weekly, daily mix, daily mixes, release radar, wrapped, dj,
+               car mode, widget, home screen, library, liked songs, search, radio, sleep timer, equalizer, crossfade,
+               spotify connect, bluetooth, android auto, apple carplay, chromecast, smart tv, wear os, sound quality,
+               family plan, student plan, free trial, customer support,
+               apple music, youtube music, amazon, amazon music, deezer, tidal, soundcloud, wynk, jiosaavn, gaana, pandora]

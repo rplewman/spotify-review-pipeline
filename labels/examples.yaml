@@ -1,0 +1,120 @@
+# Worked examples for labels/taxonomy.md (schema-v1).
+# Source: analysis_10000.csv minus dev_100 — development files only. Never golden_50 or dev_100 (enforced by tests/test_m2_labels.py).
+# `accepted` lists defensible alternatives in addition to the primary label.
+
+- review_id: d146397f-4a94-4980-be00-ae9212eca3a7
+  text: "This was fine till the last update, now you can't even pick a certain song without Spotify premium, and now you can only skip 6 songs, like please just let the songs fit my mood!"
+  rule: premium-only controls go to billing; restricted but usable = 3
+  label: {topic: billing, intent: complaint, severity: 3, sentiment: -0.5, entities: [premium], needs_review: false,
+          evidence_quote: "you can't even pick a certain song without Spotify premium"}
+
+- review_id: 7a5919ad-16d4-4f29-8e6e-1041415d7eee
+  text: "I need to pay to repeat the song I heard .I am uninstalling spotify"
+  rule: cancellation does not raise severity; the premium-only control stays at 3
+  label: {topic: billing, intent: cancellation, severity: 3, sentiment: -0.5, entities: [], needs_review: false,
+          evidence_quote: "I need to pay to repeat the song I heard .I am uninstalling spotify"}
+
+- review_id: b406cddb-f0fd-44f6-a26c-66c8e2dda360
+  text: "For a premium music app this one sucks. Constant crashes and stopping in the middle of songs, makes me think of switching back to Amazon. Fix the app!!"
+  rule: a paid-plan mention alone is not billing; crashes alone are not severity 5; "makes me think of switching" is a soft threat
+  label: {topic: playback, intent: complaint, severity: 3, sentiment: -0.75, entities: [Amazon], needs_review: false,
+          evidence_quote: "Constant crashes and stopping in the middle of songs"}
+  accepted: {intent: [cancellation]}
+
+- review_id: 392fe633-9df7-4f43-a807-f478c658695f
+  text: "I'm not sure what I'm doing wrong, but it plays tons and tons of ads. Like, four or five ads to every one or two songs."
+  rule: ads are usability (ad interruptions); volume alone is an annoyance
+  label: {topic: usability, intent: complaint, severity: 2, sentiment: -0.5, entities: [ads], needs_review: false,
+          evidence_quote: "four or five ads to every one or two songs"}
+  accepted: {severity: [3]}
+
+- review_id: 97982fee-a65f-4fed-9dd5-9ffb31efbee0
+  text: "I always get \"No internet available\" error even if the internet is working"
+  rule: connection failures are playback, not access
+  label: {topic: playback, intent: complaint, severity: 4, sentiment: -0.5, entities: [], needs_review: false,
+          evidence_quote: "I always get \"No internet available\" error even if the internet is working"}
+  accepted: {severity: [3]}
+
+- review_id: 71315e99-125e-491a-9fc9-87513df7c4ab
+  text: "Sound quality is very poor for non-subscribers."
+  rule: audio quality is playback; the plan mention alone does not make it billing
+  label: {topic: playback, intent: complaint, severity: 3, sentiment: -0.5, entities: [sound quality], needs_review: false,
+          evidence_quote: "Sound quality is very poor"}
+  accepted: {topic: [billing], severity: [2]}
+
+- review_id: 66c1f7bf-096a-4ecd-aeaf-6c534e326ad1
+  text: "Boycott swedin 😡"
+  rule: bare boycott slogan = unclear, other, severity 1
+  label: {topic: other, intent: unclear, severity: 1, sentiment: -0.5, entities: [], needs_review: false,
+          evidence_quote: "Boycott swedin"}
+
+- review_id: 7fd63051-28ec-4e51-a06e-97f7010eae40
+  text: "I uninstalled this app as a form of protest and boycott due to the fact that the Swedish Government allows the burning of the HOLY QUR'AN."
+  rule: an explicit personal departure is cancellation even for a boycott; no product problem, so topic other and severity 1
+  label: {topic: other, intent: cancellation, severity: 1, sentiment: -0.5, entities: [], needs_review: false,
+          evidence_quote: "I uninstalled this app as a form of protest and boycott"}
+  accepted: {severity: [2]}
+
+- review_id: 178c3b49-b689-4fe4-92a2-2257a58e6d95
+  text: "Worst app."
+  rule: general "bad app" is a complaint with no inferred defect
+  label: {topic: other, intent: complaint, severity: 2, sentiment: -0.75, entities: [], needs_review: false,
+          evidence_quote: "Worst app."}
+
+- review_id: f9d723b6-1e43-4205-ba0e-1b8d4a06fba2
+  text: "Too many ads and also you can not find all songs"
+  rule: tie at severity 2 -> the first specific problem mentioned (ads -> usability)
+  label: {topic: usability, intent: complaint, severity: 2, sentiment: -0.5, entities: [ads], needs_review: false,
+          evidence_quote: "Too many ads"}
+  accepted: {topic: [catalog]}
+
+- review_id: e5e95e2c-6057-4146-8367-eead940dea2a
+  text: "The last update is worse than before. Sudden blank screen often happens after I updated it, I couldn't do anything and had to forcely close the apps. Also the shuffle mode in daily mixes are so annoying."
+  rule: highest supported severity wins over order (blank-screen freeze beats the shuffle annoyance)
+  label: {topic: playback, intent: complaint, severity: 3, sentiment: -0.5, entities: [shuffle, daily mixes], needs_review: false,
+          evidence_quote: "Sudden blank screen often happens after I updated it, I couldn't do anything and had to forcely close the apps."}
+  accepted: {severity: [4]}
+
+- review_id: 41c0c736-6617-466a-8e4d-3a2b551185e5
+  text: "I had unsubscribed, and Spotify stole My money!!!"
+  rule: severity 5 = explicit financial harm (charged after unsubscribing)
+  label: {topic: billing, intent: complaint, severity: 5, sentiment: -1, entities: [], needs_review: false,
+          evidence_quote: "I had unsubscribed, and Spotify stole My money!!!"}
+
+- review_id: ad5a5352-e890-4ec8-b763-3cd8c790ab3a
+  text: "The price hike for a start too much"
+  rule: an expensive plan is billing severity 2, not 5
+  label: {topic: billing, intent: complaint, severity: 2, sentiment: -0.5, entities: [], needs_review: false,
+          evidence_quote: "The price hike for a start too much"}
+
+- review_id: 2784b978-ea2f-4a48-8afc-880fb791cb23
+  text: "i have strong internet connection still facing login errors and also i have updated Spotify why I'm facing this issue please solve this it's very irritating"
+  rule: unable to log in = blocked core task (4)
+  label: {topic: access, intent: complaint, severity: 4, sentiment: -0.5, entities: [], needs_review: false,
+          evidence_quote: "still facing login errors"}
+
+- review_id: 6194754b-94fe-4028-859c-40d465db79b4
+  text: "Great app but the playlist need to be fixed on mobile"
+  rule: mixed praise + criticism = complaint; what is wrong with playlists is unstated -> needs_review
+  label: {topic: usability, intent: complaint, severity: 2, sentiment: 0.25, entities: [playlist], needs_review: true,
+          evidence_quote: "the playlist need to be fixed on mobile"}
+  accepted: {severity: [3]}
+
+- review_id: d15761ac-03db-4020-bc46-384adf4a3fea
+  text: "Great selection of podcasts & I love i can search & play my music from here also!"
+  rule: positive review -> first specific praised feature (podcast selection -> catalog)
+  label: {topic: catalog, intent: praise, severity: 1, sentiment: 0.75, entities: [podcasts], needs_review: false,
+          evidence_quote: "Great selection of podcasts"}
+
+- review_id: 5bc203df-dac3-41ae-8b8d-ee0e8b9d9f50
+  text: "Awesome app and music"
+  rule: general praise -> other
+  label: {topic: other, intent: praise, severity: 1, sentiment: 0.75, entities: [], needs_review: false,
+          evidence_quote: "Awesome app and music"}
+
+- review_id: cbc5d976-0d07-4073-822c-6f0c33ca7005
+  text: "Please add feature where we can play the songs which are Saved in Playlist/Liked but where not played for long time."
+  rule: desired change with no reported failure = request, severity 1
+  label: {topic: usability, intent: request, severity: 1, sentiment: 0, entities: [playlist], needs_review: false,
+          evidence_quote: "Please add feature where we can play the songs which are Saved in Playlist/Liked but where not played for long time."}
+  accepted: {topic: [catalog]}
