@@ -16,7 +16,10 @@
 
 ### 👤 Rory (in parallel with M3a–M5)
 - Label `dev_100` first (M6 sweep needs it; finish before M5 ends), then the golden 50 (before M6's evaluation).
-- Progress: golden 0/50, dev_100 0/100.
+- Golden 50: ✅ labeled 2026-10-14 (`evals/golden/golden_50_labeled.csv`). Reviewed against the contract with Claude before any
+  model saw it (premium-only controls → billing, offline → downloads, lyrics → catalog, crashes → playback, translated 4 non-English
+  reviews, sentiment recalibrated); entities redone as explicit feature terms, earlier free-form tags kept in `notes`. Not tuning → no disclosure needed.
+- dev_100: 0/100.
 
 ### Next step
 M3a (Queue, cache & control engine): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M3a, then do M3a."
