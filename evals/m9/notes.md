@@ -48,7 +48,7 @@ The duplicated short texts mostly inflate `other-general` (outside the four area
   comparison). 1 call, accepted first time, $0.0029; 11 claims; rank check PASS. The "every measure" slip is gone, but two
   new mean_severity slips (not code-checkable): "Playback leads on mean_severity" (access leads; playback is 2nd) and
   "the mean_severity order differs from the main ranking" (it does not: access > playback > billing/support > usability
-  in both). 👤 Rory: accept with a README note, or hand-correct in M12 — no further regeneration without approval.
+  in both). **Decided (Rory): keep v3 as generated; disclose both slips in the README (M12).**
 
 ## Bug found and fixed: stale event loop
 `asyncio.run()` per call closes the loop while the async Anthropic client keeps pooled connections bound to it → the

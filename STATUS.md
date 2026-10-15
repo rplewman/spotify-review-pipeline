@@ -12,7 +12,7 @@
 - **A11 memo** (memo-prompt-v3: scope disclosure, wording rules, Robustness section, no "every measure" claims; v2 output
   had that slip and was regenerated once on Rory's yes): priority **usability**, 3 recs, 11 claims; code-generated number
   trace. 👤 **Open:** v3 has two mean_severity wording slips (says playback leads — access does; says the order differs in
-  the random 100k — it doesn't). Decide in M12: README note or hand correction (no more paid regenerations without a yes).
+  the random 100k — it doesn't). **Decided (Rory): keep v3 as generated; M12 README must disclose both slips.**
 - **Bug fixed:** stale asyncio loop with the async Anthropic client (`providers.base.run_sync`; batch_runner, oneshot);
   poll tolerates transient errors; FakeBatchProvider enforces one loop. Fast suite **138 passed**.
 
