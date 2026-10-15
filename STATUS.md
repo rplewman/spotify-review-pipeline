@@ -24,6 +24,13 @@
 - Self-grade follow-ups: hand-added **Reviewer note** at the end of `outputs/memo.md` (corrects the two mean_severity slips;
   generated text unchanged); README: "Grading in 5 minutes" block, coverage-point formula, explicit "no full-corpus run",
   claims check corrected to 11/11.
+- Deliverable audit vs the brief: added `outputs/run_summary.json` + `outputs/quarantine.jsonl.gz` (all 381,103 quarantined,
+  reason + attempts) via `scripts/run_summary.py` (read-only, zero calls); README "Artifacts named in the brief" table;
+  verifier severity corrected to **82.2%** (16,847/20,483; older notes say 82.3%). All README relative links/anchors resolve;
+  key numbers match the files; live dashboard + all API endpoints 200, 0 ✗ claims (favicon 404 only); recording, dataset and
+  Kaggle links open signed out. Mermaid diagram not render-tested (local server blocked) → check on GitHub once public.
+  ⚠ Recording file name says 10:42 local; the deliberate interrupt was 09:48 local (run IDs are local, UTC−7) → Rory to
+  confirm the video shows the interrupt.
 - Fast suite **136 passed** (with `.env`); clean clone 127 passed / 8 skipped (no Neon URL) after the firewall fix.
 
 ### 👤 Open for Rory (outward-facing, not done by Claude)

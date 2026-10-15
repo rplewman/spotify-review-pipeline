@@ -1,0 +1,682 @@
+{
+ "generated_by": "scripts/run_summary.py (read-only on state/pipeline.db, zero model calls)",
+ "manifest": {
+  "source": {
+   "file": "spotify_reviews_18months.csv",
+   "rows": 660622,
+   "sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6"
+  },
+  "code_version": "7941de1e6381f81467c75d7db2334ffeb248336f",
+  "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+  "verify_config": "claude-haiku-5-5+verifier-prompt-v1+effort-low",
+  "models": {
+   "A3": "celeris-1-decision",
+   "A5": "claude-haiku-5-5 (effort low)",
+   "A8": "claude-haiku-5-5 (Batch API, effort low)",
+   "A9": "claude-haiku-5-5",
+   "A11": "claude-haiku-5-5 (memo-prompt-v3)"
+  },
+  "prompts_sha256": {
+   "decision_state_v1.md": "9be519823b63971569f111edae5ea9cf422a53c5a2a8461c343526573f694625",
+   "escalation_system_v1.md": "e8fb1e561eaf1f5764c470dc0ab02193392a94f4d76059229f88c397459fd3ce",
+   "grouper_system_v1.md": "1a6692ee07f83c845c5dad8770880f0ffb1e5e6ff6f179ea4722cc471ca75ac1",
+   "memo_system_v1.md": "9a07ab49ae58dc3b6002637772525f416bcebe5f8384d4cc4872cbc123bcba43",
+   "memo_system_v2.md": "4bb7f0ab1fb550bff5f7df8c76061f435eecf3964e8ecd561003af62f2c29e7c",
+   "memo_system_v3.md": "795565e5d191ecbc2b9726597990920920ef8e882f71c843c0372bfa4679d8ba",
+   "verifier_system_v1.md": "9929453f5e059b01596d4ecd6b16d90c3ce4a9bb1a5b8e982f56ec40fb7cc4c2"
+  },
+  "labels_sha256": {
+   "areas.yaml": "48ff2969ad3dfa5707b84e7dd03c831a5a8d78baf701ba401d5ef6232e1cc782",
+   "examples.yaml": "0ce16cd211ebfb5559354ab5c4188d94bc86dd0e285c984c770b35e237004d7a",
+   "keywords.yaml": "18315f41c0ac1bc52608ab65e3f751bd1a8a8c2ce45ed9f6e311468134100aca",
+   "subtopics.yaml": "2b97376d6a88cb1814bb4c0e62f87a01106f0008e9349888ef3b7752fe588306",
+   "taxonomy.md": "26574e2afcb5a62f30a85ea71ff1c5f9eece1af2c9c70bb5a230b70d7b564db6"
+  },
+  "grading_sha256": {
+   "run.json": "1f649627b0e96c74b149982e5a1c7442daaa513cc6cd218c598b2fc411fef863",
+   "ingestion.json": "5512dd793b0bde3bd51f28b20b440108f3c9bab31233819bea5f32ce19482153",
+   "records.jsonl.gz": "86ef26e214f6d660f3bc20e9a9d496d10f37f9480e44f30b1f13909e9858a792",
+   "calls.jsonl.gz": "18ec27fdb9420bc95251a6549c46a9023b3fc0a4763284f972f07a2aeae4cc6e",
+   "membership.csv": "27d66b08abcb2d2c38a50c409429cbb363f49a5d721991ef7ff07b2ea5505b43",
+   "ranking.csv": "035385281d1ea60ca7ce8db10c8187508b277ee0bce09efb4c4c5a42ee168ad3",
+   "claims.csv": "6bb6ba0a8399572ff217013d8b5e36ee4ef29fcf3bd0c831da1836261e5c855b",
+   "checkpoint_before.json": "b9fe8e699b8b98786af13d4c946ef287f4423d30e89b6bfad959525135fcfcc7",
+   "checkpoint_after.json": "8ab7c040921ba3abcd739a32ed7ff47dcc0d5cb9517781685a68d6c2122948ca"
+  },
+  "outputs_sha256": {
+   "memo.md": "07bb868d846350dfa673a6c2acf2cb73e9f766cc297b553c04fb7b54a7812ebd",
+   "memo_input.json": "4431845dcbc0d6d6ace95dbc52986e086c4c093c7d656dbc7b00ed98cd020e79",
+   "claims.csv": "6bb6ba0a8399572ff217013d8b5e36ee4ef29fcf3bd0c831da1836261e5c855b",
+   "recommendations.json": "9109385578466bdae02a94d779907c28f52344387a7f7dbc6cd271d7ba521315",
+   "ranking.csv": "035385281d1ea60ca7ce8db10c8187508b277ee0bce09efb4c4c5a42ee168ad3",
+   "aggregates.csv": "d8f4eb2f4524fd3d8a3fb8ed7db26c38ab1a9715aa2ab29e5b65ce708f519347",
+   "area_aggregates.csv": "c1198ad364a33e506cafccca5ced16abf2e577a4904825929bd67ab0e242459d",
+   "issues.json": "adcd23aedb01b123599e6feae4505473c05adfa73024f99bca194c7a9c9b1ac0",
+   "membership.csv": "27d66b08abcb2d2c38a50c409429cbb363f49a5d721991ef7ff07b2ea5505b43",
+   "overall_metrics.json": "192a45d96c39d3dc4a25c2ceef60d687dd46ffe150335eeeee4fd4ed6fbaec36",
+   "quarantine.jsonl.gz": "f0d6c13ac00c79dd4edddda4430a65051cc1405fadf015e0b39683d664a73a57"
+  }
+ },
+ "final_run": {
+  "note": "Final classification run = random 100k (initial, interrupted on purpose \u2192 resume) + frequency add-on, then finalize (no calls), verify, group, memo. Not a full-corpus classification run.",
+  "run_ids": [
+   "run-20261015-094806-7e9c37",
+   "run-20261015-094822-868f46",
+   "run-20261015-102812-b0aa2c"
+  ]
+ },
+ "records": {
+  "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+  "cache_fill_rows_written": 0,
+  "quarantined_unreached": 0,
+  "quarantined_out_of_scope": 381090,
+  "unreached_before": {},
+  "reconcile": {
+   "ok": true,
+   "source_rows": 660622,
+   "records": 660622,
+   "missing_by_scope": {},
+   "orphan_records": 0,
+   "by_status": {
+    "completed": 279519,
+    "quarantined": 381103
+   },
+   "quarantined_by_reason": {
+    "empty_review_text": 13,
+    "out_of_scope_budget_100k": 381090
+   },
+   "by_scope_status": {
+    "empty_text:quarantined": 13,
+    "frequency_addon:completed": 41577,
+    "out_of_scope:completed": 137942,
+    "out_of_scope:quarantined": 381090,
+    "random_100k:completed": 100000
+   },
+   "completed_by_label_config": {
+    "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1": 279519
+   },
+   "completed_by_cache_reuse": 176420,
+   "ingestion_counts": {
+    "duplicate_review_ids": 0,
+    "empty_review_text": 13,
+    "missing_app_version": 159701,
+    "records": 660622
+   }
+  }
+ },
+ "quarantine": {
+  "file": "outputs/quarantine.jsonl.gz",
+  "by_reason": {
+   "out_of_scope_budget_100k": 381090,
+   "empty_review_text": 13
+  },
+  "runtime_validation_quarantines": 0,
+  "note": "outputs/quarantine.jsonl is the runtime log of reviews quarantined after failed model output; it is empty for this DB (none failed twice)."
+ },
+ "spending_limits": {
+  "project_cap_usd_list": 10.0,
+  "bucket_caps_usd_list": {
+   "pilots": 0.5,
+   "decisions": 2.0,
+   "escalation": 5.0,
+   "verification": 1.0,
+   "analysis": 0.25,
+   "reserve": 1.25
+  },
+  "per_run_max_spend": "settings.max_spend on each run",
+  "ledger_by_bucket": {
+   "analysis": {
+    "reserved_usd": 0.022903,
+    "settled_usd": 0.015659
+   },
+   "decisions": {
+    "reserved_usd": 1.659664,
+    "settled_usd": 1.231593
+   },
+   "escalation": {
+    "reserved_usd": 11.805231,
+    "settled_usd": 2.452635
+   },
+   "verification": {
+    "reserved_usd": 0.729173,
+    "settled_usd": 0.417327
+   }
+  }
+ },
+ "resume_evidence": {
+  "checkpoint_before_ids": 130221,
+  "checkpoint_after_ids": 130382,
+  "resume_check": {
+   "db": "state\\pipeline.db",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "initial_run": {
+    "run_id": "run-20261015-094806-7e9c37",
+    "phase": "initial",
+    "stop_reason": "interrupted",
+    "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+    "calls": {
+     "failed": 2,
+     "succeeded": 7
+    }
+   },
+   "resume_run": {
+    "run_id": "run-20261015-094822-868f46",
+    "phase": "resume",
+    "stop_reason": "drained",
+    "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+    "calls": {
+     "succeeded": 2779
+    },
+    "exit_code": 0
+   },
+   "check_at_after": {
+    "ok": true,
+    "flags": [],
+    "before": 130221,
+    "after": 130382,
+    "new_after_resume": 161,
+    "before_cached": 121579,
+    "before_unlogged_in_initial": 0,
+    "new_ids_in_resume_calls": 50,
+    "resume_calls_with_before_ids": []
+   },
+   "check_at_end": {
+    "ok": true,
+    "flags": [],
+    "before": 130221,
+    "after": 130382,
+    "new_after_resume": 161,
+    "before_cached": 121579,
+    "before_unlogged_in_initial": 0,
+    "new_ids_in_resume_calls": 50,
+    "resume_calls_with_before_ids": []
+   }
+  },
+  "details": "evals/recovery/README.md"
+ },
+ "runs": [
+  {
+   "run_id": "run-20261014-210446-507b1b",
+   "stage": "enrich",
+   "phase": "initial",
+   "started_at": "2026-10-15T04:04:46.480932Z",
+   "ended_at": "2026-10-15T04:07:50.972432Z",
+   "stop_reason": "drained",
+   "label_config": "celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1",
+   "final_config": false,
+   "settings": {
+    "workers": 1,
+    "batch_size": 50,
+    "max_spend": 0.1,
+    "bucket": "decisions",
+    "max_rank": 2050,
+    "max_attempts": 6,
+    "lease_seconds": 300.0,
+    "model": "celeris-1-decision"
+   },
+   "calls": {
+    "succeeded": 74
+   },
+   "calls_by_agent": {
+    "A3": 37,
+    "A5": 37
+   },
+   "calls_by_model": {
+    "celeris-1-decision": 37,
+    "claude-haiku-5-5": 37
+   },
+   "input_tokens": 597976,
+   "output_tokens": 24712,
+   "spend_usd_list_measured": 0.037915,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261014-210807-0e40de",
+   "stage": "enrich",
+   "phase": "initial",
+   "started_at": "2026-10-15T04:08:07.812381Z",
+   "ended_at": "2026-10-15T04:10:39.344109Z",
+   "stop_reason": "drained",
+   "label_config": "celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1",
+   "final_config": false,
+   "settings": {
+    "workers": 2,
+    "batch_size": 50,
+    "max_spend": 0.2,
+    "bucket": "decisions",
+    "max_rank": 6050,
+    "max_attempts": 6,
+    "lease_seconds": 300.0,
+    "model": "celeris-1-decision"
+   },
+   "calls": {
+    "succeeded": 136
+   },
+   "calls_by_agent": {
+    "A3": 68,
+    "A5": 68
+   },
+   "calls_by_model": {
+    "celeris-1-decision": 68,
+    "claude-haiku-5-5": 68
+   },
+   "input_tokens": 1119157,
+   "output_tokens": 47605,
+   "spend_usd_list_measured": 0.071875,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261014-211050-ebc60b",
+   "stage": "enrich",
+   "phase": "initial",
+   "started_at": "2026-10-15T04:10:50.564045Z",
+   "ended_at": "2026-10-15T04:12:05.162425Z",
+   "stop_reason": "drained",
+   "label_config": "celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1",
+   "final_config": false,
+   "settings": {
+    "workers": 4,
+    "batch_size": 50,
+    "max_spend": 0.2,
+    "bucket": "decisions",
+    "max_rank": 10050,
+    "max_attempts": 6,
+    "lease_seconds": 300.0,
+    "model": "celeris-1-decision"
+   },
+   "calls": {
+    "succeeded": 134
+   },
+   "calls_by_agent": {
+    "A3": 67,
+    "A5": 67
+   },
+   "calls_by_model": {
+    "celeris-1-decision": 67,
+    "claude-haiku-5-5": 67
+   },
+   "input_tokens": 1101578,
+   "output_tokens": 48858,
+   "spend_usd_list_measured": 0.071646,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261014-211208-3191ff",
+   "stage": "enrich",
+   "phase": "initial",
+   "started_at": "2026-10-15T04:12:08.259010Z",
+   "ended_at": "2026-10-15T04:12:08.442381Z",
+   "stop_reason": "drained",
+   "label_config": "celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1",
+   "final_config": false,
+   "settings": {
+    "workers": 4,
+    "batch_size": 50,
+    "max_spend": 0.01,
+    "bucket": "decisions",
+    "max_rank": 10050,
+    "max_attempts": 6,
+    "lease_seconds": 300.0,
+    "model": "celeris-1-decision"
+   },
+   "calls": {},
+   "calls_by_agent": {},
+   "calls_by_model": {},
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "spend_usd_list_measured": 0.0,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261014-222056-bfbe36",
+   "stage": "enrich",
+   "phase": "initial",
+   "started_at": "2026-10-15T05:20:56.805906Z",
+   "ended_at": "2026-10-15T05:25:51.083968Z",
+   "stop_reason": "drained",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "workers": 4,
+    "batch_size": 50,
+    "max_spend": 0.6,
+    "bucket": "decisions",
+    "max_rank": 10050,
+    "max_attempts": 6,
+    "lease_seconds": 300.0,
+    "model": "celeris-1-decision"
+   },
+   "calls": {
+    "succeeded": 340
+   },
+   "calls_by_agent": {
+    "A3": 170,
+    "A5": 170
+   },
+   "calls_by_model": {
+    "celeris-1-decision": 170,
+    "claude-haiku-5-5": 170
+   },
+   "input_tokens": 3112835,
+   "output_tokens": 280248,
+   "spend_usd_list_measured": 0.291157,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261015-094806-7e9c37",
+   "stage": "enrich",
+   "phase": "initial",
+   "started_at": "2026-10-15T16:48:06.809045Z",
+   "ended_at": "2026-10-15T16:48:15.409472Z",
+   "stop_reason": "interrupted",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "workers": 4,
+    "batch_size": 50,
+    "max_spend": 4.0,
+    "bucket": "decisions",
+    "max_rank": 100000,
+    "max_attempts": 6,
+    "lease_seconds": 300.0,
+    "model": "celeris-1-decision"
+   },
+   "calls": {
+    "succeeded": 7,
+    "failed": 2
+   },
+   "calls_by_agent": {
+    "A3": 5,
+    "A5": 4
+   },
+   "calls_by_model": {
+    "celeris-1-decision": 5,
+    "claude-haiku-5-5": 4
+   },
+   "input_tokens": 68147,
+   "output_tokens": 4080,
+   "spend_usd_list_measured": 0.005664,
+   "spend_usd_list_estimated": 0.006212
+  },
+  {
+   "run_id": "run-20261015-094822-868f46",
+   "stage": "enrich",
+   "phase": "resume",
+   "started_at": "2026-10-15T16:48:22.876064Z",
+   "ended_at": "2026-10-15T17:27:02.386164Z",
+   "stop_reason": "drained",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "workers": 4,
+    "batch_size": 50,
+    "max_spend": 4.0,
+    "bucket": "decisions",
+    "max_rank": 100000,
+    "max_attempts": 6,
+    "lease_seconds": 300.0,
+    "model": "celeris-1-decision"
+   },
+   "calls": {
+    "succeeded": 2779
+   },
+   "calls_by_agent": {
+    "A5": 1390,
+    "A3": 1389
+   },
+   "calls_by_model": {
+    "claude-haiku-5-5": 1390,
+    "celeris-1-decision": 1389
+   },
+   "input_tokens": 25682195,
+   "output_tokens": 2278602,
+   "spend_usd_list_measured": 2.386993,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261015-102812-b0aa2c",
+   "stage": "enrich",
+   "phase": "initial",
+   "started_at": "2026-10-15T17:28:12.366553Z",
+   "ended_at": "2026-10-15T17:41:26.941819Z",
+   "stop_reason": "drained",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "workers": 4,
+    "batch_size": 50,
+    "max_spend": 1.5,
+    "bucket": "decisions",
+    "max_rank": null,
+    "max_attempts": 6,
+    "lease_seconds": 300.0,
+    "model": "celeris-1-decision"
+   },
+   "calls": {
+    "succeeded": 1000
+   },
+   "calls_by_agent": {
+    "A3": 500,
+    "A5": 500
+   },
+   "calls_by_model": {
+    "celeris-1-decision": 500,
+    "claude-haiku-5-5": 500
+   },
+   "input_tokens": 8930373,
+   "output_tokens": 774575,
+   "spend_usd_list_measured": 0.812766,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261015-131520-9abb5b",
+   "stage": "verify",
+   "phase": "initial",
+   "started_at": "2026-10-15T20:15:20.507365Z",
+   "ended_at": "2026-10-15T20:15:28.597356Z",
+   "stop_reason": "interrupted",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1#claude-haiku-5-5+verifier-prompt-v1+effort-low",
+   "final_config": true,
+   "settings": {
+    "batch_size": 50,
+    "max_spend": 1.0,
+    "model": "claude-haiku-5-5",
+    "transport": "batch"
+   },
+   "calls": {
+    "succeeded": 409,
+    "failed": 5
+   },
+   "calls_by_agent": {
+    "A8": 414
+   },
+   "calls_by_model": {
+    "claude-haiku-5-5": 414
+   },
+   "input_tokens": 1271459,
+   "output_tokens": 1486185,
+   "spend_usd_list_measured": 0.410696,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261015-131525-6bed95",
+   "stage": "group",
+   "phase": "initial",
+   "started_at": "2026-10-15T20:15:26.795138Z",
+   "ended_at": "2026-10-15T20:16:22.652677Z",
+   "stop_reason": "done",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "max_spend": 0.05,
+    "model": "claude-haiku-5-5"
+   },
+   "calls": {
+    "succeeded": 1
+   },
+   "calls_by_agent": {
+    "A9": 1
+   },
+   "calls_by_model": {
+    "claude-haiku-5-5": 1
+   },
+   "input_tokens": 15706,
+   "output_tokens": 2168,
+   "spend_usd_list_measured": 0.002655,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261015-131752-7935db",
+   "stage": "verify",
+   "phase": "initial",
+   "started_at": "2026-10-15T20:17:52.308732Z",
+   "ended_at": "2026-10-15T20:30:42.321318Z",
+   "stop_reason": "drained",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1#claude-haiku-5-5+verifier-prompt-v1+effort-low",
+   "final_config": true,
+   "settings": {
+    "batch_size": 50,
+    "max_spend": 1.0,
+    "model": "claude-haiku-5-5",
+    "transport": "batch"
+   },
+   "calls": {
+    "failed": 4,
+    "succeeded": 1
+   },
+   "calls_by_agent": {
+    "A8": 5
+   },
+   "calls_by_model": {
+    "claude-haiku-5-5": 5
+   },
+   "input_tokens": 16659,
+   "output_tokens": 24376,
+   "spend_usd_list_measured": 0.006631,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261015-131819-333db6",
+   "stage": "memo",
+   "phase": "initial",
+   "started_at": "2026-10-15T20:18:19.481288Z",
+   "ended_at": "2026-10-15T20:18:59.942771Z",
+   "stop_reason": "done",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "max_spend": 0.05,
+    "model": "claude-haiku-5-5"
+   },
+   "calls": {
+    "failed": 2,
+    "succeeded": 1
+   },
+   "calls_by_agent": {
+    "A11": 3
+   },
+   "calls_by_model": {
+    "claude-haiku-5-5": 3
+   },
+   "input_tokens": 17207,
+   "output_tokens": 7552,
+   "spend_usd_list_measured": 0.005397,
+   "spend_usd_list_estimated": 0.004674
+  },
+  {
+   "run_id": "run-20261015-131949-842872",
+   "stage": "memo",
+   "phase": "initial",
+   "started_at": "2026-10-15T20:19:49.143924Z",
+   "ended_at": "2026-10-15T20:19:49.147936Z",
+   "stop_reason": "done",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "max_spend": 0.05,
+    "model": "claude-haiku-5-5"
+   },
+   "calls": {},
+   "calls_by_agent": {},
+   "calls_by_model": {},
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "spend_usd_list_measured": 0.0,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261015-132023-1f0a10",
+   "stage": "memo",
+   "phase": "initial",
+   "started_at": "2026-10-15T20:20:23.257152Z",
+   "ended_at": "2026-10-15T20:20:23.262815Z",
+   "stop_reason": "done",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "max_spend": 0.05,
+    "model": "claude-haiku-5-5"
+   },
+   "calls": {},
+   "calls_by_agent": {},
+   "calls_by_model": {},
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "spend_usd_list_measured": 0.0,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261015-132036-861d86",
+   "stage": "memo",
+   "phase": "initial",
+   "started_at": "2026-10-15T20:20:36.629330Z",
+   "ended_at": "2026-10-15T20:20:36.635822Z",
+   "stop_reason": "done",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "max_spend": 0.05,
+    "model": "claude-haiku-5-5"
+   },
+   "calls": {},
+   "calls_by_agent": {},
+   "calls_by_model": {},
+   "input_tokens": 0,
+   "output_tokens": 0,
+   "spend_usd_list_measured": 0.0,
+   "spend_usd_list_estimated": 0.0
+  },
+  {
+   "run_id": "run-20261015-133502-801305",
+   "stage": "memo",
+   "phase": "initial",
+   "started_at": "2026-10-15T20:35:02.761734Z",
+   "ended_at": "2026-10-15T20:35:19.717320Z",
+   "stop_reason": "done",
+   "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+   "final_config": true,
+   "settings": {
+    "max_spend": 0.02,
+    "model": "claude-haiku-5-5"
+   },
+   "calls": {
+    "succeeded": 1
+   },
+   "calls_by_agent": {
+    "A11": 1
+   },
+   "calls_by_model": {
+    "claude-haiku-5-5": 1
+   },
+   "input_tokens": 8673,
+   "output_tokens": 4051,
+   "spend_usd_list_measured": 0.002933,
+   "spend_usd_list_estimated": 0.0
+  }
+ ],
+ "notes": [
+  "Spend = list price from provider usage; calls without usage are settled at their ledger estimate (spend_usd_list_estimated), never 0.",
+  "Runs whose label_config is not final_config are the superseded M6 10k runs; their 344 calls are left out of grading/calls.jsonl.gz (evals/m10/export.json).",
+  "Pilot, M6/M6b side DBs and system-test DBs are separate (cost/, evals/); project spend roll-up in README \u00a7 Cost."
+ ]
+}
