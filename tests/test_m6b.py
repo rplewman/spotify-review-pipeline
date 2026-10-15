@@ -130,7 +130,7 @@ def test_build_addon_takes_the_most_frequent_out_of_scope_texts(tmp_path):
     conn.close()
 
 
-def test_addon_scope_enriches_and_is_left_out_of_the_ranking(tmp_path):
+def test_addon_scope_enriches_and_is_grouped_with_a_random_100k_comparison(tmp_path):
     db = build(tmp_path)
     base = ["--db", str(db), "--root", str(tmp_path), "--provider", "fake", "--label-config", "cfg-a",
             "--batch-size", "10"]
@@ -153,13 +153,15 @@ def test_addon_scope_enriches_and_is_left_out_of_the_ranking(tmp_path):
     down = ["--db", str(db), "--root", str(tmp_path), "--label-config", "cfg-a"]
     assert cli.main(["group", *down, "--provider", "fake"]) == 0
     members = {r["review_id"] for r in csv.DictReader((tmp_path / "outputs/membership.csv").open(encoding="utf-8"))}
-    excluded = set((tmp_path / "outputs/ranking_excluded.txt").read_text(encoding="utf-8").split())
-    assert members and not members & addon and excluded and excluded <= addon
-    assert json.loads((tmp_path / "outputs/issues.json").read_text(encoding="utf-8"))["excluded_from_ranking"]["records"] \
-        == len(excluded)
-    assert cli.main(["rank", "--root", str(tmp_path)]) == 0                       # validation accepts the exclusion
+    sample = set((tmp_path / "outputs/comparison_random_100k.txt").read_text(encoding="utf-8").split())
+    assert members & addon and sample < members and not sample & addon      # the add-on is grouped (contract)
+    assert not (tmp_path / "outputs/ranking_excluded.txt").exists()
+    assert json.loads((tmp_path / "outputs/issues.json").read_text(encoding="utf-8"))["comparison"]["members"]         == len(sample)
+    assert cli.main(["rank", "--root", str(tmp_path)]) == 0
     overall = json.loads((tmp_path / "outputs/overall_metrics.json").read_text(encoding="utf-8"))
-    assert overall["excluded_from_ranking"] == len(excluded) and overall["members"] == len(members)
+    assert overall["members"] == len(members) and overall["comparison_random_100k"]["members"] == len(sample)
+    comp = list(csv.DictReader((tmp_path / "outputs/comparison_random_100k_areas.csv").open(encoding="utf-8")))
+    assert sum(int(r["complaint_count"]) for r in comp) == len(sample)
 
 
 def test_m6b_defaults_send_severity_of_every_review_to_a5(tmp_path):

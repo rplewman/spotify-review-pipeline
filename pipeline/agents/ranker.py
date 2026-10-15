@@ -6,6 +6,8 @@ labels/areas.yaml. Outputs (byte-identical on every rerun of the same inputs):
 - outputs/aggregates.csv        the same per issue + name, topic, subtopic, area, cancellations, needs_review, share
 - outputs/area_aggregates.csv   the declared roll-up of the 8 topics into the brief's 4 effort areas (+ outside)
 - outputs/overall_metrics.json  record counts and label distributions for the dashboard
+- outputs/comparison_random_100k_{ranking,areas}.csv  the same computation on the members listed in
+  outputs/comparison_random_100k.txt (the unbiased random 100k; PLAN §1.1), for the memo's robustness check
 priority_score = severity_sum = complaint_count × mean_severity; sort by score desc, then issue_id asc; ranks from 1.
 mean_severity and shares: 6 decimals, half-up (the checker's `mean_string`). Membership is validated first.
 """
@@ -46,12 +48,12 @@ def load(root):
     with (out / "membership.csv").open(encoding="utf-8", newline="") as f:
         membership = [(row["issue_id"], row["review_id"]) for row in csv.DictReader(f)]
     issues = json.loads((out / "issues.json").read_text(encoding="utf-8"))
-    excl = out / "ranking_excluded.txt"  # frequency add-on records: completed, but not part of the ranking (grouper)
-    left_out = frozenset(excl.read_text(encoding="utf-8").split()) if excl.exists() else frozenset()
-    return records, membership, issues, left_out
+    comp = out / "comparison_random_100k.txt"
+    sample = frozenset(comp.read_text(encoding="utf-8").split()) if comp.exists() else None
+    return records, membership, issues, sample
 
 
-def validate(records, membership, issue_ids, left_out=frozenset()):
+def validate(records, membership, issue_ids):
     """The contract's membership rules (allow_multi_issue: false). Raises RankError listing the first problems."""
     errors, seen, per_review = [], set(), Counter()
     for iid, rid in membership:
@@ -66,16 +68,33 @@ def validate(records, membership, issue_ids, left_out=frozenset()):
         per_review[rid] += 1
     errors += [f"{rid} in {n} issues" for rid, n in per_review.items() if n > 1]
     ungrouped = [rid for rid, r in records.items() if r["status"] == "completed" and r["intent"] in MEMBER_INTENTS
-                 and rid not in per_review and rid not in left_out]
+                 and rid not in per_review]
     if ungrouped:
         errors.append(f"{len(ungrouped)} complaint/cancellation records not grouped (e.g. {ungrouped[0]})")
     if errors:
         raise RankError(f"{len(errors)} membership problem(s): " + "; ".join(errors[:5]))
 
 
-def compute(records, membership, issues_doc, left_out=frozenset()):
+def compute(records, membership, issues_doc):
     issues = {i["issue_id"]: i for i in issues_doc["issues"]}
-    validate(records, membership, set(issues), left_out)
+    validate(records, membership, set(issues))
+    rows, area_rows = roll_up(records, membership, issues)
+    completed = [r for r in records.values() if r["status"] == "completed"]
+    overall = {"label_config": issues_doc["label_config"], "records": len(records),
+               "completed": len(completed), "quarantined": len(records) - len(completed),
+               "cache_reused": sum(1 for r in completed if r.get("cache_source_id")),
+               "needs_review": sum(1 for r in completed if r["needs_review"] is True),
+               "members": len(membership), "issues": len(rows),
+               "by_intent": dict(sorted(Counter(r["intent"] for r in completed).items())),
+               "by_topic": dict(sorted(Counter(r["topic"] for r in completed).items())),
+               "by_severity": {str(k): v for k, v in sorted(Counter(r["severity"] for r in completed).items())},
+               "quarantine_reasons": dict(sorted(Counter(r["reason"] for r in records.values()
+                                                         if r["status"] == "quarantined").items()))}
+    return rows, area_rows, overall
+
+
+def roll_up(records, membership, issues):
+    """Issue rows (ranked) + area rows for a validated membership (or a subset of it). Code only."""
     sev, canc, nr = defaultdict(list), Counter(), Counter()
     for iid, rid in membership:
         r = records[rid]
@@ -102,18 +121,7 @@ def compute(records, membership, issues_doc, left_out=frozenset()):
                           "severity_sum": ssum, "mean_severity": mean_string(ssum, cnt) if cnt else "",
                           "share_of_members": share(cnt, total), "share_of_severity": share(ssum, total_sev),
                           "top_issue_id": mine[0]["issue_id"] if mine else ""})
-    completed = [r for r in records.values() if r["status"] == "completed"]
-    overall = {"label_config": issues_doc["label_config"], "records": len(records),
-               "completed": len(completed), "quarantined": len(records) - len(completed),
-               "cache_reused": sum(1 for r in completed if r.get("cache_source_id")),
-               "needs_review": sum(1 for r in completed if r["needs_review"] is True),
-               "members": total, "issues": len(rows), "excluded_from_ranking": len(left_out),
-               "by_intent": dict(sorted(Counter(r["intent"] for r in completed).items())),
-               "by_topic": dict(sorted(Counter(r["topic"] for r in completed).items())),
-               "by_severity": {str(k): v for k, v in sorted(Counter(r["severity"] for r in completed).items())},
-               "quarantine_reasons": dict(sorted(Counter(r["reason"] for r in records.values()
-                                                         if r["status"] == "quarantined").items()))}
-    return rows, area_rows, overall
+    return rows, area_rows
 
 
 def _write_csv(path, fields, rows):
@@ -125,12 +133,20 @@ def _write_csv(path, fields, rows):
 
 def rank(root, conn=None):
     """Recompute the ranking and aggregates from saved files; optionally refresh the DB tables. Zero model calls."""
-    records, membership, issues_doc, left_out = load(root)
-    rows, area_rows, overall = compute(records, membership, issues_doc, left_out)
+    records, membership, issues_doc, sample = load(root)
+    rows, area_rows, overall = compute(records, membership, issues_doc)
     out = Path(root) / "outputs"
     _write_csv(out / "ranking.csv", RANK_FIELDS, rows)
     _write_csv(out / "aggregates.csv", AGG_FIELDS, rows)
     _write_csv(out / "area_aggregates.csv", AREA_FIELDS, area_rows)
+    if sample is not None:
+        sub = [(iid, rid) for iid, rid in membership if rid in sample]
+        if len({rid for _, rid in sub}) != len(sample):
+            raise RankError("comparison_random_100k.txt lists review IDs that are not members")
+        c_rows, c_areas = roll_up(records, sub, {i["issue_id"]: i for i in issues_doc["issues"]})
+        _write_csv(out / "comparison_random_100k_ranking.csv", AGG_FIELDS, c_rows)
+        _write_csv(out / "comparison_random_100k_areas.csv", AREA_FIELDS, c_areas)
+        overall["comparison_random_100k"] = {"members": len(sub), "issues": len(c_rows)}
     (out / "overall_metrics.json").write_text(json.dumps(overall, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     if conn is not None:
         cfg = issues_doc["label_config"]
@@ -146,4 +162,5 @@ def rank(root, conn=None):
                              [(cfg, a["area"], json.dumps(a, sort_keys=True)) for a in area_rows])
     return {"issues": len(rows), "members": overall["members"], "top": rows[0]["issue_id"] if rows else None,
             "files": [f"outputs/{n}" for n in ("ranking.csv", "aggregates.csv", "area_aggregates.csv",
-                                               "overall_metrics.json")]}
+                                               "overall_metrics.json")]
+                     + ([f"outputs/comparison_random_100k_{n}.csv" for n in ("ranking", "areas")] if sample else [])}

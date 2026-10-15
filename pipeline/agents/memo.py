@@ -23,8 +23,8 @@ from pipeline.db.store import immediate, now_iso
 from pipeline.oneshot import call_validated
 
 ROOT = Path(__file__).resolve().parents[2]
-SYSTEM = (ROOT / "prompts" / "memo_system_v1.md").read_text(encoding="utf-8").strip()
-PROMPT_VERSION = "memo-prompt-v1"
+SYSTEM = (ROOT / "prompts" / "memo_system_v2.md").read_text(encoding="utf-8").strip()
+PROMPT_VERSION = "memo-prompt-v2"  # M9: scope disclosure, wording rules, random-100k comparison
 TOP_ISSUES = 10
 EVIDENCE_PER_ISSUE = 3
 METRICS = {"a": "complaint_count", "b": "severity_sum", "c": "mean_severity", "d": "priority_score"}
@@ -78,15 +78,25 @@ def build_pack(root):
                     "share_of_members": pct(row["share_of_members"]),
                     "claims": {m: f"C{r:02d}{k}" for k, m in METRICS.items()},
                     "evidence": issues[row["issue_id"]]["examples"][:EVIDENCE_PER_ISSUE]})
-    return {
+    pack = {
         "question": QUESTION, "label_config": overall["label_config"],
         "totals": {k: overall[k] for k in ("records", "completed", "quarantined", "needs_review", "members", "issues")},
-        "areas": [{**{k: a[k] for k in ("area", "topics", "top_issue_id")},
-                   **{k: int(a[k]) for k in ("issue_count", "complaint_count", "cancellation_count", "severity_sum")},
-                   "mean_severity": a["mean_severity"], "share_of_members": pct(a["share_of_members"]),
-                   "share_of_severity": pct(a["share_of_severity"])} for a in area_rows],
+        "quarantine_reasons": overall["quarantine_reasons"],
+        "areas": _areas(area_rows),
         "top_issues": top, "issues_not_shown": max(0, len(ranking) - TOP_ISSUES),
     }
+    comp = out / "comparison_random_100k_areas.csv"
+    if comp.exists():  # M9: the same roll-up on the unbiased random 100k alone (PLAN §1.1)
+        pack["comparison_random_100k"] = {"members": overall["comparison_random_100k"]["members"],
+                                          "areas": _areas(_read_csv(comp))}
+    return pack
+
+
+def _areas(area_rows):
+    return [{**{k: a[k] for k in ("area", "topics", "top_issue_id")},
+             **{k: int(a[k]) for k in ("issue_count", "complaint_count", "cancellation_count", "severity_sum")},
+             "mean_severity": a["mean_severity"], "share_of_members": pct(a["share_of_members"]),
+             "share_of_severity": pct(a["share_of_severity"])} for a in area_rows]
 
 
 def payload(pack, errors=None):

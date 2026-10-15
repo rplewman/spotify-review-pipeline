@@ -1,7 +1,10 @@
 """A9 Grouper (PLAN §3.3, brief step 4): code assigns issue membership; Haiku only names the issues.
 
 - Members: every completed record under the label_config whose intent is complaint or cancellation (originals, cache
-  reuses and out-of-scope fills alike: each review ID counts separately). Exactly one issue per review.
+  reuses, out-of-scope fills and the frequency add-on alike: each review ID counts separately). Exactly one issue per
+  review. The contract requires it (the checker flags `ungrouped_complaints` otherwise), so nothing is left out (M9).
+- Comparison (M9): the members in the unbiased random 100k scope are listed in outputs/comparison_random_100k.txt;
+  the ranker computes the same roll-up on them alone (PLAN §1.1: reported on both).
 - issue_id = "<topic>-<subtopic>" from labels/subtopics.yaml (first subtopic with a term in the review text, else
   "<topic>-general"). Deterministic: the same records always give the same membership.
 - Naming (one model call, role `group`): per issue its ID, topic, subtopic, size and ≤ 5 example quotes with review
@@ -77,15 +80,13 @@ def members(conn, label_config):
                                   s.text_sha256, s.review_text
                            FROM records r JOIN source_reviews s ON s.review_id = r.review_id
                            WHERE r.status='completed' AND r.label_config=? AND r.intent IN ('complaint','cancellation')
-                             AND s.scope IS NOT 'frequency_addon'
                            ORDER BY r.review_id""", (label_config,)).fetchall()
 
 
-def excluded(conn, label_config):
-    """Completed complaint/cancellation records left out of the business ranking: the frequency add-on (PLAN §1.1)
-    labels rows for coverage only, it is not a random sample."""
+def random_100k_members(conn, label_config):
+    """Members in the random 100k scope (the unbiased sample; add-on and cache-filled rows favour duplicated texts)."""
     return [r[0] for r in conn.execute("""SELECT r.review_id FROM records r JOIN source_reviews s ON s.review_id = r.review_id
-                                          WHERE r.status='completed' AND r.label_config=? AND s.scope='frequency_addon'
+                                          WHERE r.status='completed' AND r.label_config=? AND s.scope='random_100k'
                                             AND r.intent IN ('complaint','cancellation') ORDER BY r.review_id""",
                                        (label_config,))]
 
@@ -214,12 +215,13 @@ def group(conn, label_config, provider, root, run_id, max_spend=None):
         w = csv.writer(f, lineterminator="\n")
         w.writerow(["issue_id", "review_id"])
         w.writerows(membership)
-    left_out = excluded(conn, label_config)
-    (out / "ranking_excluded.txt").write_text("".join(rid + "\n" for rid in left_out), encoding="utf-8")
+    sample = random_100k_members(conn, label_config)
+    (out / "comparison_random_100k.txt").write_text("".join(rid + "\n" for rid in sample), encoding="utf-8")
+    (out / "ranking_excluded.txt").unlink(missing_ok=True)  # pre-M9 layout
     doc = {"label_config": label_config, "subtopics_version": subtopics()[0], "areas_version": areas()[0],
            "grouper_prompt": PROMPT_VERSION, "model": provider.model, "naming": prov,
-           "allow_multi_issue": False, "excluded_from_ranking": {"scope": "frequency_addon", "records": len(left_out),
-                                                                 "file": "ranking_excluded.txt"},
+           "allow_multi_issue": False, "comparison": {"scope": "random_100k", "members": len(sample),
+                                                      "file": "comparison_random_100k.txt"},
            "issues": list(issues.values())}
     (out / "issues.json").write_text(json.dumps(doc, ensure_ascii=False, indent=1, sort_keys=True) + "\n",
                                      encoding="utf-8")
