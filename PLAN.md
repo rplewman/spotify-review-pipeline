@@ -1,6 +1,6 @@
 # PLAN — Spotify Review Multi-Agent Pipeline (Final Assignment)
 
-> Status: **v4.1** · Updated 2026-10-14 · Owner: Rory · Deadline: **2026-10-20 midnight**
+> Status: **v4.2** · Updated 2026-10-15 · Owner: Rory · Deadline: **2026-10-20 midnight**
 > v4 changes: SQLite operational store + Neon serving DB; Celeris definitions shared once per request in `state`; cancellation Noul
 > dropped; A6 extraction is code-only; A12 merged into A11; Batch API limited to the verifier; 100 hand-labeled dev reviews for the
 > escalation-gate sweep; explicit `label_config` freeze; scripted interruption; early deployment skeleton; 8-topic → 4-area mapping;
@@ -12,6 +12,9 @@
 > `prepare_dataset.py`; and the Celeris docs (quickstart, decisions, pricing, rate limits, errors, models, known issues,
 > API reference), checked 2026-10-12. The rules they set are digested in §9. **Not yet read:** the CSV contents (M1)
 > Haiku pricing confirmed in M0 (see `cost/rates.csv`). Remaining unknowns are listed in STATUS.md.
+> v4.2 (2026-10-15, after M6): full corpus **NO-GO** (confirmed by Rory). The leftover budget goes to **label fidelity** instead:
+> new module **M6b** (sentiment fix, Haiku on severity for every review, a stronger-model topic test, 20% verification,
+> frequency add-on top 25,000), then a re-freeze and a 10k re-run. §4 buckets re-balanced; target ≤ $9.00 conservative.
 
 ---
 
@@ -30,7 +33,7 @@ and source review IDs. Deliver it as **one public GitHub repo** with a deployed 
 | Budget | **≤ $10 total at list price** for the project, pilots included (conservative reading; see Open Questions) |
 | Fixed-label decisions | **`celeris-1-decision`** via `POST /v1/systemone` (Jev/System One format; the TypeSafe SDK works by changing base URL/key/model) with `CELERIS_API_KEY`. $0.04 per million input tokens (cached input is the same price), output free. $5 of free credits, expiring 2026-11-12. **Rory adds a card and sets a Console spend limit** (M0), so the workspace activates normally; the limit is a provider-side backstop, and our ledger cap (§4) stays the primary control. A `402` still means a global stop. |
 | Language tasks + fallback | **Claude Haiku** (`claude-haiku-5-5`, `ANTHROPIC_API_KEY`). A console spend limit is set as a backstop. Candidate alternative to test in M5: **`celeris-1`** (Celeris's general chat model, $0.20 input / $0.02 cached / $0.70 output per million tokens, OpenAI-compatible), only if the credits cover it. |
-| Escalation | **Confidence gate:** if Celeris's top probability for topic, intent or severity is **< 0.60**, the review goes to a more capable reasoning model (§3.5). Capped by record fraction and $; the threshold is tuned on **100 dev reviews, human-adjudicated where Celeris and Haiku disagree** (§3.5, M6). Sonnet 5 is out unless M5 shows a clear gap. |
+| Escalation | **Confidence gate:** if Celeris's top probability for topic, intent or severity is **< 0.60**, the review goes to a more capable reasoning model (§3.5). Capped by record fraction and $; the threshold is tuned on **100 dev reviews, human-adjudicated where Celeris and Haiku disagree** (§3.5, M6). Sonnet 5 is out unless M5 shows a clear gap. **M6/M6b outcome:** Haiku answers severity for every review; topic and intent stay with Celeris unless the M6b stronger-model test wins on dev. |
 | Architecture | A **standalone chain of agents** (§3.3) coordinated by code, with a lease-based **work queue in SQLite** (one process, async workers), a pre-call result cache, batching (≤ 50 per request), and the **Anthropic Batch API for the verifier only**. It runs without Claude. |
 | One issue per complaint | `allow_multi_issue: false` (the contract default), so issue totals don't overlap |
 | Classification input | `review_text` only (`classification_input_fields: ["review_text"]`). Stars, likes, version and date are never sent to models. |
@@ -62,6 +65,8 @@ outside the scope (ranked by how many out-of-scope rows share the text). Short d
 completes many rows via `cache_source_id`. Rows completed this way are tagged `scope="frequency_addon"` and **excluded from the primary business
 ranking** (which stays on the unbiased random 100k); they count toward coverage only. M1 measures the gain curve (rows completed per distinct text
 added); M6 decides the size from leftover budget. The add-on is only the fallback path if the full-corpus gate (§1.2) says no.
+**Decided (M6, 2026-10-15): top 25,000 texts** (+41,577 rows, coverage point 0.6161 → 0.6539); built in M6b, run in M8 under
+the same frozen `label_config` (so add-on texts also get the M6b severity escalation).
 
 **Which 100k (decided):** continue the **official sampling order** from `prepare_dataset.py`, i.e. the lowest
 `SHA-256("berkeley-fall-2026-assignment-5-v1:" + review_id)` among unique nonempty valid-rating rows. The first 50 are the golden set and
@@ -315,12 +320,14 @@ CLAUDE.md STATUS.md  session bootstrap + handoff log (see §6)
 
 | Bucket | Agent(s) | Provider / tier | Cap | Notes |
 |---|---|---|---|---|
-| Pilots + comparisons (100 / 500 / 10k, A vs B, escalation candidates, `dev_100` escalations) | all | mixed | $1.00 | Under the frozen config the dev files are part of the 100k |
-| Decisions for the 100k (+ optional frequency add-on) | A3 | Celeris, real time | ≤ $4.50 | Credit first, then the card; the ledger stops at this cap; the add-on only uses what the 100k leaves. **Full-corpus GO (§1.2): this cap becomes the M6 projection + 20%, still within the $10 total** |
-| Escalation (below the gate) | A5 | Haiku 5.5 by default (cheaper than `celeris-1-magnus` per token), real time; Batch API if the full corpus is GO | $2.00 | Fraction cap set in M6 |
-| Verification sample | A8 | Haiku, Batch API | $0.50 | Declared in M4: **5% of distinct completed texts**, seed `verify-v1` (sha256(seed:text_sha256)/2^256 < 0.05) ≈ 3,900 texts at the 100k; ≤ 50 per request; upper-end ≈ $0.12 at batch rates |
+| Pilots + comparisons (100 / 500, A vs B, escalation candidates, `dev_100` escalations, M6b topic-model test) | all | mixed | $0.50 | ≈ $0.04 spent through M6; the M6/M6b 10k runs are under the frozen config and count in the buckets below |
+| Decisions for the 100k + frequency add-on (25k) | A3 | Celeris, real time | $2.00 | Credit first, then the card. Conservative: 100k $1.19 + add-on ≈ $0.38 + the M6 10k already spent $0.09 (full corpus NO-GO, M6) |
+| Escalation | A5 | Haiku 5.5, real time | $5.00 | **M6b: severity for every review** (100k ≈ $2.0 base / $3.4 conservative; add-on ≈ $0.6 / $1.1). A stronger topic model (M6b test) is added only if it fits here + reserve with ≥ $1.00 left |
+| Verification sample | A8 | Haiku, Batch API | $1.00 | **M6b: 20% of distinct completed texts** (was 5% in M4), seed `verify-v1` (sha256(seed:text_sha256)/2^256 < 0.20; a superset of the 5% sample) ≈ 15,600 texts at the 100k + ≈ 5,000 add-on texts; ≤ 50 per request; ≈ $0.55 base / $0.90 conservative |
 | Grouping names, memo + recommendations | A9, A11 | Haiku | $0.25 | Generated once and stored, never at page view |
-| Reserve (retries, reruns) | — | — | $1.75 | Includes the $0.75 freed by code-only extraction |
+| Reserve (retries, reruns) | — | — | $1.25 | Never planned into; the ledger's project cap ($10) is the hard stop |
+
+**v4.2 projection (conservative, list):** spent $0.23 + 100k A3 $1.19 + severity escalation $3.43 + add-on ≈ $1.48 + verification 20% ≈ $0.90 + analysis ≈ $0.05 + M6b test/re-run overhead ≈ $0.20 ≈ **$7.5** (base ≈ $4.8). Any stronger topic model must fit in the remaining ≈ $1.5 while keeping the $1.00 floor below $10.
 | **Total** | | | **≤ $10.00** | Cash spend ≈ everything except the Celeris bucket |
 
 **Reference point from the contract (illustration, not measured):** 660,609 reviews × (100 input + 150 output tokens) on
@@ -484,7 +491,31 @@ Needed before the pilot, because the 100-review pilot must include verification,
 - **Full-corpus decision point (§1.2):** compute the projection from the 10k measurements, check the four gate conditions, and record GO/NO-GO
   with the numbers in STATUS.md and `cost/report.md`. 👤 Rory confirms before M8.
 - If NO-GO: **decide the frequency add-on size** from the M1 gain curve and the measured cost per text (§1.1); 0 is an acceptable answer.
+  → **Decided: 25,000** (M6).
 - **Gate (go/no-go):** the projected 100k cost (conservative) plus the spend so far stays ≤ budget; quality is acceptable or its limitations are documented.
+- **Outcome (2026-10-15):** frozen shape A + Haiku severity escalation (gate 0.70, cap 0.40); 10k done ($0.18); golden topic/intent/
+  severity 90/90/90%, sentiment 52% within ±0.25; full corpus NO-GO; add-on 25k. Details: STATUS.md, `evals/m6_notes.md`.
+
+### M6b — Fidelity upgrade + re-freeze (💰 ≈ $0.5–0.7; decided by Rory 2026-10-15)
+Goal: spend the budget the full corpus no longer needs on **label quality** for the 100k, staying ≤ $9.00 conservative.
+1. **Sentiment = the most probable level** (−1, −0.5, 0, +0.5, +1; ties → nearer 0) instead of the probability-weighted value, which
+   pulls toward 0 (golden: MAE 0.31, 52% within ±0.25). Code only ($0); a new version tag in `label_config` (e.g. `sentiment-mode-v1`).
+   **Golden-driven, so disclosed** (README + `evals/m6_notes.md`) and checked on **fresh held-out cases**: 👤 Rory hand-labels 30 new
+   reviews (seed ranks just after analysis_10000, inside the 100k, never used by any tuning step; ≈ 20 min with `label_tool.py`);
+   old and new sentiment are both scored on them.
+2. **Haiku on severity for every review** (not only below 0.70): dev_100 severity 92% → 95%, adjudicated 65% → 78%. Topic and intent
+   keep Celeris's answer. Cap 1.00; escalation bucket $5.00 (§4).
+3. **Stronger-model topic test** (💰 cents; priced from the current rate card first): a stronger escalation model (e.g. Sonnet) answers
+   the topic question on all of `dev_100` with **every** topic option (not only Celeris's top-2). Adopt it for topic below a gate only
+   if it beats Celeris top-1 on the adjudicated rows by ≥ 2 reviews **and** the projected cost fits in escalation + reserve with
+   ≥ $1.00 left; the gate is then swept on dev. Otherwise topic stays with Celeris (recorded either way).
+4. **Verification at 20%** (declared rate, seed `verify-v1`; a superset of the 5% sample). Changes the evidence, not the labels.
+5. **Frequency add-on top 25,000** (§1.1): build the queue path (`enrich --scope addon`: frequency-ranked out-of-scope texts, tagged
+   `scope="frequency_addon"`, excluded from the business ranking). The run itself is in M8.
+6. **Re-freeze `label_config`**, set `pipeline/db/ledger.py` BUCKET_CAPS to §4, re-run seed ranks 1–10,050 under it (≈ $0.35–0.45),
+   re-run the golden eval (M6 and M6b numbers side by side), refresh the calculator and the projection.
+- **Gate:** projected conservative total (spend to date + 100k + add-on + verification + analysis) ≤ $9.00; the held-out sentiment
+  result and the topic-test result are recorded (adopted or not); offline tests pass before any paid step.
 
 ### M7 — System tests & recovery evidence (no spend / tiny)
 - Planted-error test: a deliberately wrong label in a **separate test copy**; the verifier/checks catch it.
@@ -506,6 +537,7 @@ Needed before the pilot, because the 100-review pilot must include verification,
 - Monitor via `status`. A credit-exhaustion or cap stop means save, report and decide; never auto-raise caps.
 - Then, per the M6 decision: **GO** → continue through every remaining distinct text in seed order (`enrich --scope full`, §1.2);
   **NO-GO** → the frequency add-on, if sized > 0 (§1.1). Same `label_config` and caps either way.
+  → **NO-GO confirmed (M6): the 100k, then the 25k add-on (`enrich --scope addon`), under the M6b frozen config.**
 - Apply the exact-text cache fill to out-of-scope rows (§1.1); quarantine the remaining out-of-scope rows with `out_of_scope_budget_100k`.
 - **Gate:** every one of the 660,622 IDs has one final record; the counts reconcile with `ingestion.json`.
 
@@ -546,14 +578,15 @@ Needed before the pilot, because the 100-review pilot must include verification,
 ### 5.1 Sequence and dependencies (no fixed dates; everything finishes before 2026-10-20 midnight)
 
 ```
-M0 ─▶ M1 ─▶ M2 ─▶ M3a ─▶ M3b ─▶ M4 ─▶ M5 ─▶ M6 ─▶ M7 ─▶ M8 ─▶ M9 ─▶ M10 ─▶ M11 ─▶ M12
+M0 ─▶ M1 ─▶ M2 ─▶ M3a ─▶ M3b ─▶ M4 ─▶ M5 ─▶ M6 ─▶ M6b ─▶ M7 ─▶ M8 ─▶ M9 ─▶ M10 ─▶ M11 ─▶ M12
             │                                 ▲
             └─ 👤 golden 50 (done) · dev_100 adjudication happens inside M6 ┘
 M0 hello-world deploy ─────────────────────────────────────────────▶ filled in by M11
 ```
 
 - **Critical path:** M5 (first real Celeris calls) → M6 (dev_100 model runs → Rory adjudicates ~20–30 disagreements, ≈ 30–60 min)
-  → `label_config` freeze → M8. The golden 50 are done.
+  → `label_config` freeze → M8. The golden 50 are done. **v4.2:** M6b (re-freeze + 10k re-run, 👤 30 held-out labels) sits
+  between M6 and M7; about one session.
 - **Wall-clock jobs:** M8 (≈ 2,000 decision calls, at rate limits measured in M6) and the A8 Batch API job (up to 24h turnaround) are the only
   long waits. Submit the verification batch as soon as M8 finishes, and work on M10–M11 while it runs.
 - **Rough effort:** ~13 build sessions + ~4–5 hours of labeling + run time. That fits 7 days at about two sessions a day, leaving roughly
@@ -590,8 +623,8 @@ M0 hello-world deploy ───────────────────�
 | Q7 | ~~Is 100k acceptable?~~ | **Resolved:** the instructor added the 100k allowance after the original brief, and it doesn't affect the grade. The README cites the brief's "or at least 100,000" and still states plainly that the out-of-scope rows were accounted for, not classified |
 | Q8 | Celeris request shape A (shared definitions, ≤ 50 reviews) vs B (1 per request)? | Default A; confirm with the M5 comparison |
 | Q9 | ~~Does Celeris work without a card?~~ | **Resolved:** Rory adds a card and a Console spend limit in M0 |
-| Q10 | Which escalation model (Haiku with low thinking or `celeris-1-magnus`)? | Measured in M5 by agreement gain per $ |
-| Q11 | ~~Is 60% the right gate, and on which signal?~~ | **Resolved (M6):** raw top probability, gate 0.70, **severity only** (Haiku hurt topic on dev_100), cap 0.40 |
+| Q10 | Which escalation model? | **M5:** Haiku over magnus. **M6b:** Haiku for severity (every review); a stronger model for topic only if the dev test says so |
+| Q11 | ~~Is 60% the right gate, and on which signal?~~ | **Resolved (M6):** raw top probability, severity only (Haiku hurt topic on dev_100). **M6b:** severity escalated for every review (no gate) |
 | Q12 | ~~When is Class 7?~~ | **Resolved:** already held; the only deadline is 2026-10-20 midnight |
 | Q13 | Is the topic → area mapping right (downloads → playback; catalog and other outside the four areas)? | As in §1; Rory confirms in M2 |
 | Q14 | Run the full corpus for extra credit? | **M6: NO-GO** ($16.86 conservative > $9.00); add-on top 25,000 recommended; Rory confirms before M8 |
