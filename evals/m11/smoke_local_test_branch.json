@@ -1,0 +1,44 @@
+{
+ "base_url": "http://localhost:8765",
+ "checked_at": "2026-10-15T21:04:37Z",
+ "published_at": "2026-10-15T21:04:17Z",
+ "ok": true,
+ "checks": {
+  "counts": {
+   "ok": true
+  },
+  "quarantine_reasons": {
+   "ok": true
+  },
+  "topic": {
+   "ok": true
+  },
+  "intent": {
+   "ok": true
+  },
+  "severity": {
+   "ok": true
+  },
+  "label_config": {
+   "ok": true
+  },
+  "ranking": {
+   "ok": true
+  },
+  "areas": {
+   "ok": true
+  },
+  "claims": {
+   "ok": true
+  },
+  "claims_recomputed_equal": {
+   "ok": true
+  },
+  "recommendations": {
+   "ok": true
+  },
+  "evidence_reviews_found": {
+   "ok": true
+  }
+ }
+}

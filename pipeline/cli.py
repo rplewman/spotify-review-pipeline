@@ -14,7 +14,8 @@
     python -m pipeline.cli analyze [--provider fake|anthropic]   group → rank → memo
     python -m pipeline.cli run --input <csv>              ingest → enrich → verify → group → rank → memo
     python -m pipeline.cli pilot [--provider fake|celeris] M5: cost_100 cold + warm, every stage, evidence in cost/
-    python -m pipeline.cli export | publish               arrive in M10 / M11
+    python -m pipeline.cli export                         M10: grading/ (records, calls, run.json, ranking files)
+    python -m pipeline.cli publish [--target main|test]   M11: serving tables + dashboard views into Neon (no API calls)
 
 Money rule: a paid provider runs only with --paid AND --max-spend. The fake provider is offline and free.
 """
@@ -461,6 +462,22 @@ def cmd_export(args):
     return 0
 
 
+def cmd_publish(args):
+    """M11: rebuild Neon's serving tables + dashboard views from the DB and saved files, in one transaction (no API calls)."""
+    import os
+    from pipeline.db import publish
+    load_dotenv(".env")
+    env = "DATABASE_URL" if args.target == "main" else "TEST_DATABASE_URL"
+    url = os.environ.get(env)
+    if not url:
+        print(f"{env} is not set (.env)", file=sys.stderr)
+        return 2
+    conn = connect(args.db)
+    r = publish.publish(conn, url, args.root, args.label_config, os.environ.get("DASHBOARD_RO_PASSWORD"))
+    print(json.dumps({"target": args.target, **r}, indent=1))
+    return 0
+
+
 def ctrl_break_as_ctrl_c():
     """Windows: a run started in its own process group (scripts/resume_demo.py) can only be sent Ctrl-Break. Treat it as
     Ctrl-C, so asyncio cancels the run and the orchestrator's cleanup (leases, attempts, checkpoint) runs as usual."""
@@ -523,7 +540,11 @@ def main(argv=None):
     p.add_argument("--root", type=Path, default=Path("."), help="where outputs/ and evals/recovery/ are read")
     p.add_argument("--out", type=Path, default=Path("grading"))
     p.add_argument("--report", type=Path, default=Path("evals/m10/export.json"))
-    commands.add_parser("publish", help="arrives in M11")
+    p = commands.add_parser("publish", help="M11: load the serving tables + dashboard views into Neon (no API calls)")
+    p.add_argument("--db", type=Path, default=Path("state/pipeline.db"))
+    p.add_argument("--label-config", default=None, help="default: grading/run.json's label_config")
+    p.add_argument("--root", type=Path, default=Path("."), help="where outputs/, evals/ and grading/ are read")
+    p.add_argument("--target", choices=("main", "test"), default="main", help="DATABASE_URL or TEST_DATABASE_URL")
     args = parser.parse_args(argv)
 
     if args.command == "ingest":
@@ -546,7 +567,8 @@ def main(argv=None):
         return cmd_pilot(args)
     if args.command == "export":
         return cmd_export(args)
-    print(f"`{args.command}` arrives in M11", file=sys.stderr)
+    if args.command == "publish":
+        return cmd_publish(args)
     return 2
 
 

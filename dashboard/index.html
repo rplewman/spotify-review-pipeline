@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spotify Review Insights</title>
+<style>
+:root {
+  color-scheme: light;
+  --surface-0: #f4f3f0; --surface-1: #fcfcfb; --border: rgba(11,11,11,0.10); --grid: #e1e0d9;
+  --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #6f6e69;
+  --series-1: #2a78d6; --series-1-soft: #2a78d61f; --good: #006300; --critical: #d03b3b;
+  --note-bg: #fff6e0; --note-border: #eda100;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --surface-0: #121211; --surface-1: #1a1a19; --border: rgba(255,255,255,0.10); --grid: #2c2c2a;
+    --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
+    --series-1: #3987e5; --series-1-soft: #3987e526; --good: #0ca30c; --critical: #e66767;
+    --note-bg: #2a2410; --note-border: #c98500;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-0: #121211; --surface-1: #1a1a19; --border: rgba(255,255,255,0.10); --grid: #2c2c2a;
+  --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #9a998f;
+  --series-1: #3987e5; --series-1-soft: #3987e526; --good: #0ca30c; --critical: #e66767;
+  --note-bg: #2a2410; --note-border: #c98500;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface-0); color: var(--text-primary);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+h2 { font-size: 18px; margin: 0 0 4px; }
+.sub { color: var(--text-secondary); margin: 0 0 16px; }
+.muted { color: var(--text-muted); font-size: 13px; }
+section { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 16px 0; }
+.note { background: var(--note-bg); border-left: 4px solid var(--note-border); border-radius: 6px; padding: 12px 14px; margin: 12px 0; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.tile .v { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.tile .k { color: var(--text-secondary); font-size: 13px; }
+.grid3 > div { min-width: 0; overflow-x: auto; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 24px; }
+.bars { display: grid; grid-template-columns: max-content 1fr max-content; gap: 6px 10px; align-items: center; margin-top: 10px; }
+.bars .lab { color: var(--text-secondary); font-size: 13px; }
+.bars .num { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--text-primary); text-align: right; }
+.track { height: 14px; position: relative; }
+.bar { height: 100%; background: var(--series-1); border-radius: 0 4px 4px 0; min-width: 2px; }
+.track:hover .bar, tr:hover .bar { filter: brightness(1.15); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { color: var(--text-secondary); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .03em; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.scroll { overflow-x: auto; }
+tr.outside td { color: var(--text-muted); }
+tr.pick td:first-child { box-shadow: inset 3px 0 0 var(--series-1); }
+tr.click { cursor: pointer; }
+tr.click:hover td { background: var(--series-1-soft); }
+.cellbar { display: flex; align-items: center; gap: 8px; }
+.cellbar span { min-width: 56px; text-align: right; font-variant-numeric: tabular-nums; }
+.cellbar .track { width: 120px; flex: none; height: 10px; }
+.rec { border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 12px 0; }
+.rec h3 { margin: 0 0 6px; font-size: 16px; }
+.pill { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--text-secondary); margin-right: 4px; }
+.ok { color: var(--good); font-weight: 600; } .bad { color: var(--critical); font-weight: 600; }
+blockquote { overflow-wrap: anywhere; margin: 8px 0; padding: 8px 12px; border-left: 3px solid var(--grid); color: var(--text-secondary); }
+a { color: var(--series-1); }
+button.link { background: none; border: 0; padding: 0; color: var(--series-1); cursor: pointer; font: inherit; text-decoration: underline; }
+.examples td { background: var(--surface-0); font-size: 13px; }
+#tip { position: fixed; pointer-events: none; background: var(--text-primary); color: var(--surface-1); font-size: 12px; padding: 6px 8px; border-radius: 6px; opacity: 0; transition: opacity .1s; z-index: 10; max-width: 280px; }
+dialog { max-width: 640px; width: calc(100% - 32px); border: 1px solid var(--border); border-radius: 10px; background: var(--surface-1); color: var(--text-primary); }
+dialog::backdrop { background: rgba(0,0,0,.4); }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; font-size: 14px; margin: 8px 0; }
+dt { color: var(--text-secondary); }
+code { font-size: 12px; overflow-wrap: anywhere; }
+td code { white-space: nowrap; }
+#footer code { white-space: normal; }
+#err { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Spotify Review Insights</h1>
+  <p class="sub" id="question">Loading…</p>
+  <div class="note" id="scope"><strong>Scope.</strong> Loading…</div>
+  <div class="note" id="err"></div>
+
+  <div class="tiles" id="tiles"></div>
+
+  <section>
+    <h2>Where should next quarter's effort go?</h2>
+    <p class="muted">Area roll-up of every grouped complaint/cancellation review. Severity sum = how many complaints × how bad they are; it is the ranking metric (priority score). "Outside" = topics that belong to none of the four areas (catalog, other).</p>
+    <div class="scroll"><table id="areas"></table></div>
+  </section>
+
+  <section>
+    <h2>AI recommendations</h2>
+    <p class="muted">Written once by the memo agent (A11) from the saved aggregates; the dashboard never calls a model. Every supporting number is re-checked here against the published aggregates (✓ = equal).</p>
+    <div id="recs">Loading…</div>
+  </section>
+
+  <section>
+    <h2>Issue ranking</h2>
+    <p class="muted">Priority score = severity sum over member reviews (complaints + cancellations). Click a row for its most severe reviews.</p>
+    <div class="scroll"><table id="ranking"></table></div>
+  </section>
+
+  <section>
+    <h2>Labels across completed reviews</h2>
+    <p class="muted" id="dist-note"></p>
+    <div class="grid3">
+      <div><h3 style="font-size:15px;margin:0">Topic</h3><div class="bars" id="topic"></div></div>
+      <div><h3 style="font-size:15px;margin:0">Intent</h3><div class="bars" id="intent"></div></div>
+      <div><h3 style="font-size:15px;margin:0">Severity (1 = minor, 5 = critical)</h3><div class="bars" id="severity"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Record status &amp; scope</h2>
+    <div class="grid3">
+      <div><h3 style="font-size:15px;margin:0 0 6px">Status and quarantine reason</h3><table id="status"></table></div>
+      <div><h3 style="font-size:15px;margin:0 0 6px">How each row was handled</h3><table id="scopeTable"></table></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Quality checks</h2>
+    <div class="grid3">
+      <div><h3 style="font-size:15px;margin:0 0 6px">Independent verifier (A8, random sample)</h3><table id="verify"></table></div>
+      <div><h3 style="font-size:15px;margin:0 0 6px">Golden set (50 human labels)</h3><table id="golden"></table></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Model calls &amp; cost (main run)</h2>
+    <p class="muted">Every model-call attempt in the main run's database, list price. Development pilots are reported in the repository's <code>cost/</code> folder.</p>
+    <div class="scroll"><table id="cost"></table></div>
+  </section>
+
+  <p class="muted" id="footer"></p>
+</main>
+<div id="tip" role="tooltip"></div>
+<dialog id="dlg"><div id="dlgBody"></div><form method="dialog"><button>Close</button></form></dialog>
+
+<script>
+const fmt = n => n == null ? "–" : Number(n).toLocaleString("en-US");
+const pct = (a, b) => (100 * a / b).toFixed(1) + "%";
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $ = id => document.getElementById(id);
+const get = url => fetch(url).then(r => { if (!r.ok) throw new Error(url + " → " + r.status); return r.json(); });
+const tip = $("tip");
+document.addEventListener("mousemove", e => {
+  const t = e.target.closest("[data-tip]");
+  if (!t) { tip.style.opacity = 0; return; }
+  tip.textContent = t.dataset.tip; tip.style.opacity = 1;
+  tip.style.left = Math.min(e.clientX + 12, innerWidth - tip.offsetWidth - 8) + "px"; tip.style.top = (e.clientY + 14) + "px";
+});
+
+function bars(el, rows, total, labelFn = r => r.label) {
+  const max = Math.max(...rows.map(r => r.n));
+  el.innerHTML = rows.map(r => `<span class="lab">${esc(labelFn(r))}</span>
+    <div class="track" data-tip="${esc(labelFn(r))}: ${fmt(r.n)} reviews (${pct(r.n, total)} of completed)"><div class="bar" style="width:${100 * r.n / max}%"></div></div>
+    <span class="num">${fmt(r.n)}</span>`).join("");
+}
+function cellbar(v, max, tipText) {
+  return `<div class="cellbar"><span>${fmt(v)}</span><div class="track" data-tip="${esc(tipText)}"><div class="bar" style="width:${100 * v / max}%"></div></div></div>`;
+}
+
+async function showReview(id) {
+  const d = $("dlgBody"); d.innerHTML = "Loading…"; $("dlg").showModal();
+  try {
+    const r = await get("/api/reviews/" + encodeURIComponent(id));
+    d.innerHTML = `<h3 style="margin-top:0">Review ${esc(r.review_id)}</h3><blockquote>${esc(r.review_text)}</blockquote>
+      <dl><dt>Issue</dt><dd>${esc(r.issue_id ?? "— (not a complaint)")}</dd><dt>Topic / intent</dt><dd>${esc(r.topic)} / ${esc(r.intent)}</dd>
+      <dt>Severity</dt><dd>${esc(r.severity)}</dd><dt>Sentiment</dt><dd>${esc(r.sentiment)}</dd><dt>Evidence quote</dt><dd>${esc(r.evidence_quote)}</dd>
+      <dt>Rating / version</dt><dd>${esc(r.review_rating)}★ / ${esc(r.app_version || "—")}</dd><dt>Posted</dt><dd>${esc(r.review_timestamp)}</dd>
+      <dt>Scope</dt><dd>${esc(r.scope)}${r.cache_source_id ? " (labels reused from " + esc(r.cache_source_id) + ")" : ""}</dd>
+      <dt>Needs review</dt><dd>${r.needs_review ? "yes" : "no"}</dd></dl>`;
+  } catch (e) { d.textContent = String(e); }
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-review]"); if (b) showReview(b.dataset.review); });
+
+async function main() {
+  const [ov, areas, recs, ranking, cost] = await Promise.all(
+    ["/api/overview", "/api/areas", "/api/recommendations", "/api/ranking", "/api/cost"].map(get));
+  const o = ov.overall, s = ov.summary;
+  $("question").textContent = s.question || "";
+  $("scope").innerHTML = `<strong>Scope.</strong> ${esc(s.scope_note)} <strong>${fmt(o.completed)}</strong> of ${fmt(o.records)} rows
+    (${pct(o.completed, o.records)}) carry labels; ${fmt(o.quarantined)} are quarantined with a reason. App-store reviews are self-selected, so counts describe
+    reviewers, not all users.`;
+  $("tiles").innerHTML = [
+    [fmt(o.records), "source rows (all accounted for)"], [fmt(o.completed), `completed · ${pct(o.completed, o.records)}`],
+    [fmt(o.quarantined), "quarantined, with reason"], [fmt(o.cache_reused), "completed by exact-text reuse"],
+    [fmt(o.needs_review), "completed, flagged needs_review"], [fmt(o.issues), `issues · ${fmt(o.members)} grouped reviews`],
+    [Number(o.coverage_point_candidate).toFixed(4), "coverage point (checker formula)"],
+  ].map(([v, k]) => `<div class="tile"><div class="v">${v}</div><div class="k">${k}</div></div>`).join("");
+
+  const names = Object.fromEntries(ranking.map(r => [r.issue_id, r.name]));
+  const maxSev = Math.max(...areas.map(a => a.severity_sum));
+  $("areas").innerHTML = `<tr><th>Area</th><th>Topics</th><th class="n">Issues</th><th class="n">Complaints</th><th class="n">Cancellations</th>
+    <th>Severity sum</th><th class="n">Mean severity</th><th class="n">Share of severity</th><th>Top issue</th></tr>` +
+    areas.map(a => `<tr class="${a.area === "outside" ? "outside" : ""} ${a.area === s.priority_area ? "pick" : ""}">
+      <td><strong>${esc(a.area)}</strong>${a.area === s.priority_area ? ' <span class="pill">memo pick</span>' : ""}</td><td>${esc(a.topics.replaceAll("|", ", "))}</td>
+      <td class="n">${a.issue_count}</td><td class="n">${fmt(a.complaint_count)}</td><td class="n">${fmt(a.cancellation_count)}</td>
+      <td>${cellbar(a.severity_sum, maxSev, `${a.area}: severity sum ${fmt(a.severity_sum)}`)}</td><td class="n">${Number(a.mean_severity).toFixed(2)}</td>
+      <td class="n">${(100 * a.share_of_severity).toFixed(1)}%</td><td>${esc(names[a.top_issue_id] || a.top_issue_id)}</td></tr>`).join("");
+
+  $("recs").innerHTML = recs.map(r => `<div class="rec"><h3>${r.position}. ${esc(r.title)}</h3>
+    <span class="pill">area: ${esc(r.area)}</span>${r.issue_ids.map(i => `<span class="pill">${esc(i)}</span>`).join("")}
+    <p>${esc(r.rationale)}</p>
+    <div class="scroll"><table><tr><th>Claim</th><th>Issue</th><th>Metric</th><th class="n">Memo value</th><th class="n">Recomputed</th><th>Check</th></tr>
+    ${r.claims.map(c => `<tr><td>${esc(c.claim_id)}</td><td><code>${esc(c.issue_id)}</code></td><td>${esc(c.metric)}</td>
+      <td class="n">${esc(c.value)}</td><td class="n">${esc(c.computed)}</td>
+      <td>${c.matches ? '<span class="ok">✓ matches</span>' : '<span class="bad">✗ differs</span>'}</td></tr>`).join("")}</table></div>
+    ${r.evidence.map(ev => `<blockquote>“${esc(ev.quote)}” — <button class="link" data-review="${esc(ev.review_id)}">review ${esc(ev.review_id.slice(0, 8))}</button>
+      ${ev.review ? `<span class="muted">(severity ${ev.review.severity}, ${esc(ev.review.review_rating)}★)</span>` : '<span class="bad">review not found</span>'}</blockquote>`).join("")}
+    </div>`).join("");
+
+  const maxP = Math.max(...ranking.map(r => r.priority_score));
+  $("ranking").innerHTML = `<tr><th class="n">#</th><th>Issue</th><th>Area</th><th class="n">Complaints</th><th class="n">Cancel.</th>
+    <th class="n">Mean sev.</th><th>Priority score</th></tr>` + ranking.map(r => `<tr class="click ${r.area === "outside" ? "outside" : ""}" data-issue="${esc(r.issue_id)}">
+      <td class="n">${r.rank}</td><td><strong>${esc(r.name)}</strong><br><code>${esc(r.issue_id)}</code></td><td>${esc(r.area)}</td>
+      <td class="n">${fmt(r.complaint_count)}</td><td class="n">${fmt(r.cancellation_count)}</td><td class="n">${Number(r.mean_severity).toFixed(2)}</td>
+      <td>${cellbar(r.priority_score, maxP, `#${r.rank} ${r.name}: priority ${fmt(r.priority_score)}`)}</td></tr>`).join("");
+  $("ranking").addEventListener("click", async e => {
+    const tr = e.target.closest("tr[data-issue]"); if (!tr) return;
+    const next = tr.nextElementSibling;
+    if (next && next.classList.contains("examples")) { next.remove(); return; }
+    const row = document.createElement("tr"); row.className = "examples";
+    row.innerHTML = `<td></td><td colspan="6">Loading…</td>`; tr.after(row);
+    const ex = await get(`/api/issues/${encodeURIComponent(tr.dataset.issue)}/reviews?limit=5`);
+    row.children[1].innerHTML = ex.map(x => `<div style="margin:4px 0">sev ${x.severity} · ${esc(x.evidence_quote || x.review_text)}
+      <button class="link" data-review="${esc(x.review_id)}">open</button></div>`).join("") || "No member reviews.";
+  });
+
+  $("dist-note").textContent = `${fmt(o.completed)} completed reviews (random 100k + add-on + exact-text reuse); quarantined rows have no labels.`;
+  bars($("topic"), ov.topic, o.completed); bars($("intent"), ov.intent, o.completed); bars($("severity"), ov.severity, o.completed);
+
+  $("status").innerHTML = `<tr><th>Status</th><th>Reason</th><th class="n">Rows</th></tr>` +
+    ov.status_reasons.map(r => `<tr><td>${esc(r.status)}</td><td>${esc(r.reason || "—")}</td><td class="n">${fmt(r.n)}</td></tr>`).join("");
+  $("scopeTable").innerHTML = `<tr><th>Scope</th><th>Status</th><th>Labels from</th><th class="n">Rows</th></tr>` +
+    ov.scope.map(r => `<tr><td>${esc(r.scope)}</td><td>${esc(r.status)}</td><td>${esc(r.completed_via === "call" ? "model call" : r.completed_via === "cache" ? "exact-text reuse" : "—")}</td>
+      <td class="n">${fmt(r.n)}</td></tr>`).join("");
+
+  const v = s.verification, g = s.golden;
+  $("verify").innerHTML = `<tr><th>Field</th><th class="n">Agreement</th></tr>` +
+    ["topic", "intent", "severity"].map(f => `<tr><td>${f}</td><td class="n">${(100 * v.agreement[f].rate).toFixed(1)}%</td></tr>`).join("") +
+    `<tr><td>all three fields</td><td class="n">${(100 * v.all_fields_agree.rate).toFixed(1)}%</td></tr>`;
+  $("golden").innerHTML = `<tr><th>Field</th><th class="n">Exact</th><th class="n">Accepted</th></tr>` +
+    ["topic", "intent", "severity"].map(f => `<tr><td>${f}</td><td class="n">${(100 * g[f].exact).toFixed(0)}%</td><td class="n">${(100 * g[f].accepted).toFixed(0)}%</td></tr>`).join("") +
+    `<tr><td>sentiment</td><td class="n" colspan="2">MAE ${g.sentiment.mae}</td></tr>`;
+
+  const total = cost.reduce((a, c) => a + Number(c.cost_usd), 0);
+  $("cost").innerHTML = `<tr><th>Phase</th><th>Agent</th><th>Model</th><th>Tier</th><th class="n">Calls</th><th class="n">Failed</th>
+    <th class="n">Input tok.</th><th class="n">Output tok.</th><th class="n">Cost (USD)</th></tr>` +
+    cost.map(c => `<tr><td>${esc(c.phase)}</td><td>${esc(c.agent)}</td><td>${esc(c.model)}</td><td>${esc(c.tier)}</td><td class="n">${fmt(c.calls)}</td>
+      <td class="n">${fmt(c.failed)}</td><td class="n">${fmt(c.input_tokens)}</td><td class="n">${fmt(c.output_tokens)}</td><td class="n">$${Number(c.cost_usd).toFixed(4)}</td></tr>`).join("") +
+    `<tr><td colspan="8"><strong>Total</strong></td><td class="n"><strong>$${total.toFixed(4)}</strong></td></tr>`;
+
+  $("footer").innerHTML = `label_config <code>${esc(s.label_config)}</code> · published ${esc(s.published_at)} ·
+    memo ${esc(s.memo?.model)} (${esc(s.memo?.memo_prompt)}) · read-only API: <a href="/api/docs">/api/docs</a>`;
+}
+main().catch(e => { $("err").style.display = "block"; $("err").textContent = "Could not load data: " + e.message + " (the free host may be waking up — reload in a minute)."; });
+</script>
+</body>
+</html>
