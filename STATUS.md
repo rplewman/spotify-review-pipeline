@@ -1,6 +1,48 @@
 # STATUS — handoff log
 
-## Last completed: M2 (Labels, schema & golden set) — ✅ code gate passed 2026-10-13 (no spend); 👤 hand labels outstanding
+## Last completed: M3a (Queue, cache & control engine) — ✅ gate passed 2026-10-14 (no spend)
+
+### Done (M3a)
+- `pipeline/db/store.py`: `connect` (WAL, busy_timeout, explicit transactions), `immediate()` = `BEGIN IMMEDIATE`, `migrate()`
+  (applies `schema.sql` + adds columns an older DB lacks; the real `state/pipeline.db` is migrated, nothing lost).
+  Schema additions: `work_items.available_at/invalid_attempts`, `calls.usage_available/est_usd/ended_at`, `ledger.run_id`,
+  `runs.stop_reason/heartbeat_at`, table `rate_limits`, index `ix_records_cfg`. (`outputs/data_manifest.json` re-generated: only `schema_sha256` changed.)
+- `pipeline/db/queue.py`: lease claim under `BEGIN IMMEDIATE` (pending in rank order + expired leases, two index walks: 100 calls / 5,000
+  items in 2.7 s on the real 78k queue), fenced `held()`, done / requeue with backoff+jitter / fail after `max_attempts` /
+  invalid → retry once → quarantined, `release_owner`.
+- `pipeline/agents/cache.py` (A2): `cached()` pre-call check, `write_result` (ON CONFLICT DO NOTHING), `fan_out` (records for every
+  source row with the text, in or out of scope; `cache_source_id` → direct original; replaced only under a different label_config),
+  `quarantine_texts`.
+- `pipeline/db/ledger.py`: reserve (checks project $10, bucket cap from PLAN §4, run `--max-spend`) → settle | release.
+  Unknown billing (timeouts, no usage, interrupted) settles at the estimate, never 0. `pipeline/db/limiter.py`: DB token buckets per
+  model (rpm/tpm, 10 s burst), 429 Retry-After blocks the model for every worker.
+- `pipeline/providers/base.py` (Request/Response/ProviderError, HTTP classification: 402 quota, 408/429/5xx transient with 429/502 not
+  charged, others fatal) + `fake.py` (valid, low_conf, malformed, timeout, 429, 402, fatal, injected, no_usage, hang).
+- `pipeline/stages.py`: Stage interface (payload / estimate / parse) + `PassthroughStage` (validates labels, ignores unknown IDs).
+  **M3b plugs A3–A7 in here**; the orchestrator does not change.
+- `pipeline/orchestrator.py` (A0): N async workers, each with its own connection; claim → pre-call check → reserve → limiter →
+  `calls` row `in_flight` → call → one transaction (call outcome + usage, ledger, fenced cache + fan-out, queue). Stops: drained, limit,
+  time, budget, quota_402, fatal_<status>, interrupted (Ctrl-C) → releases leases, closes attempts, checkpoint (count + sha256 of
+  completed IDs), `outputs/run_log.jsonl` + `outputs/quarantine.jsonl`. Heartbeat; `recover()` closes crashed runs (heartbeat older than the lease).
+- CLI: `enrich [--provider fake|celeris|anthropic] [--paid --max-spend] [--workers --batch-size --limit --max-minutes --lease-seconds --bucket]`,
+  `resume`, `status`, `run --input <csv>`; `export`/`publish` print "arrives in M10/M11". Paid providers are refused without `--paid`
+  and `--max-spend` (and do not exist yet); the fake provider is refused on `state/pipeline.db` (use `--db`).
+- Tests `tests/test_m3a_queue.py` (15, ~5 s): 4 threads + 4 async workers + **two processes** → no item twice, none lost;
+  **kill -9 mid-call → resume** (phase `resume`, crashed run closed, hung call failed "interrupted", 0 re-paid IDs, 0 open reservations);
+  Ctrl-C; expired lease reclaimed + old owner fenced; ledger stops before the cap; cache hit = no call; scripted 429/408/malformed/
+  no_usage/injected/402/max_attempts; limiter; calls rows fit §9.4; CLI money guards; migration. Full suite: 55 passed (incl. data tests).
+
+### Notes for M3b
+- Write `CelerisProvider` / `AnthropicProvider` against `providers/base.py` (send `request_id` as `X-Client-Trace-Id`; return usage or None).
+- Replace `PassthroughStage` with the A3→A7 chain; `estimate_tokens/usd` should use the real request size (state + questions).
+- The real DB still has only `provisional-v0` items (78,099 pending); fake runs never touch it.
+
+### Next step
+M3b (Enrichment agents A3–A7): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M3b, then do M3b."
+
+---
+
+## Previously completed: M2 (Labels, schema & golden set) — ✅ code gate passed 2026-10-13 (no spend); 👤 hand labels outstanding
 
 ### Done (M2)
 - `labels/taxonomy.md` (contract tables verbatim + our conventions: sentiment scale, entities, evidence quote, needs_review,
@@ -20,9 +62,6 @@
   reviews, sentiment recalibrated); entities redone as explicit feature terms, earlier free-form tags kept in `notes`. Not tuning → no disclosure needed.
 - dev_100: **not hand-labeled in full** (decided 2026-10-14, PLAN v4.1). In M6 Celeris + the Haiku escalation run on all 100;
   Rory adjudicates only their disagreements (~20–30). M6 adds a disagreements-only mode to `scripts/label_tool.py dev`.
-
-### Next step
-M3a (Queue, cache & control engine): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M3a, then do M3a."
 
 ---
 

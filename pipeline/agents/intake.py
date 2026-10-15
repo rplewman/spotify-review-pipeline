@@ -13,6 +13,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+from pipeline.db import store
 from pipeline.check_submission import FIELDS, read_json, row_sha, sha
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -96,7 +97,7 @@ def connect(db_path):
 
 
 def apply_schema(conn):
-    conn.executescript(SCHEMA.read_text(encoding="utf-8"))
+    store.migrate(conn)
 
 
 UPSERT_SOURCE = """

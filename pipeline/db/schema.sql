@@ -44,8 +44,10 @@ CREATE TABLE IF NOT EXISTS work_items (
                      CHECK (status IN ('pending', 'leased', 'done', 'failed', 'quarantined')),
     lease_owner      TEXT,
     lease_expires_at TEXT,
-    attempts         INTEGER NOT NULL DEFAULT 0,
+    attempts         INTEGER NOT NULL DEFAULT 0,  -- claims (incremented on every lease)
     last_error       TEXT,
+    available_at     TEXT,                        -- backoff: not claimable before this (ISO UTC)
+    invalid_attempts INTEGER NOT NULL DEFAULT 0,  -- invalid outputs; the 2nd quarantines the item
     UNIQUE (text_sha256, stage, label_config)
 );
 CREATE INDEX IF NOT EXISTS ix_work_claim ON work_items(stage, label_config, status, scope_rank);
@@ -83,6 +85,7 @@ CREATE TABLE IF NOT EXISTS records (
     label_config    TEXT,
     cache_source_id TEXT
 );
+CREATE INDEX IF NOT EXISTS ix_records_cfg ON records(label_config, status);
 
 -- Every model-call attempt.
 CREATE TABLE IF NOT EXISTS calls (
@@ -102,8 +105,12 @@ CREATE TABLE IF NOT EXISTS calls (
     latency_ms      INTEGER,
     error           TEXT,
     run_id          TEXT,
-    started_at      TEXT
+    started_at      TEXT,
+    usage_available INTEGER,                  -- 0 = provider gave no usage (tokens exported as 0 + flag)
+    est_usd         REAL,                     -- the ledger reservation for this attempt
+    ended_at        TEXT
 );
+CREATE INDEX IF NOT EXISTS ix_calls_run ON calls(run_id, outcome);
 
 CREATE TABLE IF NOT EXISTS batch_jobs (
     provider_job_id TEXT PRIMARY KEY,
@@ -120,15 +127,30 @@ CREATE TABLE IF NOT EXISTS ledger (
     bucket      TEXT NOT NULL,
     kind        TEXT NOT NULL CHECK (kind IN ('reserve', 'settle', 'release')),
     usd         REAL NOT NULL,
-    created_at  TEXT NOT NULL
+    created_at  TEXT NOT NULL,
+    run_id      TEXT
+);
+CREATE INDEX IF NOT EXISTS ix_ledger_req ON ledger(request_id, kind);
+
+-- Shared rate limiter (token buckets per model; every worker and process uses the same row). Times are epoch seconds.
+CREATE TABLE IF NOT EXISTS rate_limits (
+    model         TEXT PRIMARY KEY,
+    rpm           REAL NOT NULL,
+    tpm           REAL NOT NULL,
+    req_level     REAL NOT NULL,
+    tok_level     REAL NOT NULL,
+    updated_at    REAL NOT NULL,
+    blocked_until REAL NOT NULL DEFAULT 0     -- set from Retry-After on a 429
 );
 
 CREATE TABLE IF NOT EXISTS runs (
     run_id      TEXT PRIMARY KEY,
     config_json TEXT NOT NULL,
-    phase       TEXT,
+    phase       TEXT,                         -- initial | resume
     started_at  TEXT,
-    ended_at    TEXT
+    ended_at    TEXT,
+    stop_reason TEXT,
+    heartbeat_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS checkpoints (
