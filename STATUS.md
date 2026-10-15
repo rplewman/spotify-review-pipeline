@@ -1,6 +1,6 @@
 # STATUS — handoff log
 
-## In progress: M11 (Publish, backend, dashboard) — code done + verified on Neon `test`; live deploy waiting on Rory (no spend)
+## Last completed: M11 (Publish, backend, dashboard) — ✅ gate passed 2026-10-15 (no spend)
 
 ### Done (M11) — details `docs/DASHBOARD.md`
 - **Publish:** `pipeline/db/publish.py` + `pipeline.cli publish [--target main|test]`. One transaction: drop/recreate schemas
@@ -19,15 +19,25 @@
 - **Smoke:** `scripts/smoke_dashboard.py --base-url …` compares the API with `outputs/` → all 12 checks equal on the local
   backend over the full data on Neon `test` (`evals/m11/smoke_local_test_branch.json`).
 
-### Still to do (needs Rory)
-1. `python -m pipeline.cli publish --target main` (rebuilds the serving schemas on Neon main; was blocked pending approval).
-2. Render → service env: add `DASHBOARD_DATABASE_URL` (value from `.env`); then delete the owner `DATABASE_URL` there.
-3. `git push origin main` (24+ local commits; triggers the Render redeploy). Repo is still private.
-4. Live smoke: `python scripts/smoke_dashboard.py --base-url https://spotify-review-pipeline.onrender.com --out evals/m11/smoke_live.json`;
-   open the URL signed out. Then mark M11 complete.
+### Live (2026-10-15)
+- Published to Neon **main** (660,622 records; `dashboard_ro` granted) and pushed to GitHub (Render redeployed).
+  Rory set `DASHBOARD_DATABASE_URL` in Render. **https://spotify-review-pipeline.onrender.com** serves the dashboard signed out;
+  `/api/health` → `published_at 2026-10-15T21:08:18Z`.
+- **Live smoke: all 12 checks equal `outputs/`** (`evals/m11/smoke_live.json`). Access instructions: `docs/DASHBOARD.md`.
+- Not verified from outside: which role the live backend logs in as (the pooled connection doesn't show up in pg_stat_activity).
+  Rory: delete the owner `DATABASE_URL` from Render so the read-only URL is the only one there (the backend falls back to it).
+- Push warning: `grading/records.jsonl.gz` is 50.83 MB (> GitHub's 50 MB recommendation, < 100 MB limit). Accepted; mention in M12.
+
+### Notes for M12
+- README links `docs/DASHBOARD.md` + the live URL; DQ4/WR3 evidence = dashboard recommendations + `evals/m11/smoke_live.json`.
+- After any DB change: `pipeline.cli export` (M10) **and** `pipeline.cli publish --target main`, then re-run the live smoke.
 
 ### Spend
 - M11: **$0** (no API calls). Project total unchanged ≈ **$4.3298** list (Celeris ≈ $1.2492 credit, Anthropic ≈ $3.0807 cash).
+
+### Next step
+**M12 — README, evidence & publish.**
+"Read CLAUDE.md, STATUS.md and PLAN.md §5 M12, then do M12."
 
 ---
 
