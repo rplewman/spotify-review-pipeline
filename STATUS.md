@@ -15,11 +15,11 @@
   tool round trip. Full suite fast: 32 passed (`-m "not data"`).
 
 ### 👤 Rory (in parallel with M3a–M5)
-- Label `dev_100` first (M6 sweep needs it; finish before M5 ends), then the golden 50 (before M6's evaluation).
 - Golden 50: ✅ labeled 2026-10-14 (`evals/golden/golden_50_labeled.csv`). Reviewed against the contract with Claude before any
   model saw it (premium-only controls → billing, offline → downloads, lyrics → catalog, crashes → playback, translated 4 non-English
   reviews, sentiment recalibrated); entities redone as explicit feature terms, earlier free-form tags kept in `notes`. Not tuning → no disclosure needed.
-- dev_100: 0/100.
+- dev_100: **not hand-labeled in full** (decided 2026-10-14, PLAN v4.1). In M6 Celeris + the Haiku escalation run on all 100;
+  Rory adjudicates only their disagreements (~20–30). M6 adds a disagreements-only mode to `scripts/label_tool.py dev`.
 
 ### Next step
 M3a (Queue, cache & control engine): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M3a, then do M3a."

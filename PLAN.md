@@ -1,10 +1,11 @@
 # PLAN — Spotify Review Multi-Agent Pipeline (Final Assignment)
 
-> Status: **v4** · Updated 2026-10-12 · Owner: Rory · Deadline: **2026-10-20 midnight**
+> Status: **v4.1** · Updated 2026-10-14 · Owner: Rory · Deadline: **2026-10-20 midnight**
 > v4 changes: SQLite operational store + Neon serving DB; Celeris definitions shared once per request in `state`; cancellation Noul
 > dropped; A6 extraction is code-only; A12 merged into A11; Batch API limited to the verifier; 100 hand-labeled dev reviews for the
 > escalation-gate sweep; explicit `label_config` freeze; scripted interruption; early deployment skeleton; 8-topic → 4-area mapping;
 > optional high-frequency-text scope add-on; date calendar replaced by a dependency-ordered sequence (§5.1).
+> v4.1 (2026-10-14): `dev_100` reference labels = model labels + Rory adjudicates only Celeris/Haiku disagreements (§3.5), not 100 by hand.
 > v4.1: full-corpus decision point (§1.2) at the end of M6; Haiku 5.5 is the default escalation model; Celeris Console limit $8.
 > Sources read: the brief (`Final Assignment - Multi Agent Large Data Processing Pipeline.md`); from the dataset ZIP,
 > `README.md`, `GRADING_CONTRACT.md` (v1, "a5-audit-v1"), `COST_CALCULATOR.md`, `check_submission.py`, `manifest.json`,
@@ -29,13 +30,13 @@ and source review IDs. Deliver it as **one public GitHub repo** with a deployed 
 | Budget | **≤ $10 total at list price** for the project, pilots included (conservative reading; see Open Questions) |
 | Fixed-label decisions | **`celeris-1-decision`** via `POST /v1/systemone` (Jev/System One format; the TypeSafe SDK works by changing base URL/key/model) with `CELERIS_API_KEY`. $0.04 per million input tokens (cached input is the same price), output free. $5 of free credits, expiring 2026-11-12. **Rory adds a card and sets a Console spend limit** (M0), so the workspace activates normally; the limit is a provider-side backstop, and our ledger cap (§4) stays the primary control. A `402` still means a global stop. |
 | Language tasks + fallback | **Claude Haiku** (`claude-haiku-5-5`, `ANTHROPIC_API_KEY`). A console spend limit is set as a backstop. Candidate alternative to test in M5: **`celeris-1`** (Celeris's general chat model, $0.20 input / $0.02 cached / $0.70 output per million tokens, OpenAI-compatible), only if the credits cover it. |
-| Escalation | **Confidence gate:** if Celeris's top probability for topic, intent or severity is **< 0.60**, the review goes to a more capable reasoning model (§3.5). Capped by record fraction and $; the threshold is tuned on **100 hand-labeled dev reviews** (§3.5, M2/M6). Sonnet 5 is out unless M5 shows a clear gap. |
+| Escalation | **Confidence gate:** if Celeris's top probability for topic, intent or severity is **< 0.60**, the review goes to a more capable reasoning model (§3.5). Capped by record fraction and $; the threshold is tuned on **100 dev reviews, human-adjudicated where Celeris and Haiku disagree** (§3.5, M6). Sonnet 5 is out unless M5 shows a clear gap. |
 | Architecture | A **standalone chain of agents** (§3.3) coordinated by code, with a lease-based **work queue in SQLite** (one process, async workers), a pre-call result cache, batching (≤ 50 per request), and the **Anthropic Batch API for the verifier only**. It runs without Claude. |
 | One issue per complaint | `allow_multi_issue: false` (the contract default), so issue totals don't overlap |
 | Classification input | `review_text` only (`classification_input_fields: ["review_text"]`). Stars, likes, version and date are never sent to models. |
 | Database | **SQLite (`state/pipeline.db`, WAL mode) is the operational store** (queue, cache, results, calls, ledger, checkpoints): local, no network latency, no compute-hour limits, trivially testable. **Neon Postgres is the serving database**: a `publish` command loads processed records, aggregates, ranking, claims and recommendations into it, and the deployed backend reads only from Neon via `DATABASE_URL`. |
 | Product question mapping | The 8 contract topics roll up to the brief's 4 effort areas: **access** ← access · **usability** ← usability · **playback** ← playback, downloads · **billing/support** ← billing, support. `catalog` and `other` are reported as "outside the four areas". The required baseline ranking stays per issue; the area roll-up is an additional, declared aggregate used by the memo and dashboard (M4, M9). Mapping is versioned in `labels/areas.yaml`. |
-| Evaluation labels | **Golden 50** (evaluation only) **+ 100 hand-labeled dev reviews** (`dev_100`, for tuning the gate only). Both are labeled by Rory. |
+| Evaluation labels | **Golden 50** (evaluation only, hand-labeled by Rory — done 2026-10-14) **+ `dev_100`** (gate tuning only): reference = the label Celeris and the Haiku escalation agree on; Rory adjudicates every disagreement (§3.5). Not required by the brief; disclosed in the README. |
 | Workspace | This folder, which becomes the git repo |
 
 ### 1.1 How the 100k scope is exported (contract-driven)
@@ -237,9 +238,11 @@ arithmetic, ranking and claim checks. Models only read messy language.
 - **Gate:** `top_probability < 0.60` on **topic, intent or severity** → escalate (A5). The threshold is a declared, versioned part of
   `label_config` (e.g. `…+gate0.60+…`). Celeris's `confidence` field is a rescaled value (0 = even split), so we gate on the raw top probability
   and record both.
-- **Tune against human labels (`dev_100`):** Rory hand-labels 100 dev reviews (M2), drawn deterministically from `checkpoint_500` rows 101–500
-  (so the cost_100 pilot stays untouched). Every Celeris probability is saved, and every `dev_100` review below **0.70** is escalated once
-  (≈ cents). M6 then replays gates 0.50 / 0.60 / 0.70 **offline**: for each gate, accuracy vs the human labels (Celeris-only label above
+- **Tune against adjudicated labels (`dev_100`):** 100 dev reviews drawn deterministically from `checkpoint_500` rows 101–500
+  (so the cost_100 pilot stays untouched). Every Celeris probability is saved, and **every** `dev_100` review is also run once through the
+  A5 escalation (Haiku, < $0.01). Where Celeris and Haiku agree on topic, intent and severity, that label is the reference; Rory adjudicates
+  every disagreement in the label tool (expected 20–30 reviews). This is sufficient for the sweep: the gate only changes the outcome on
+  reviews where the two models disagree, and all of those carry a human label. Shared model errors are invisible to it (golden 50 covers that). M6 then replays gates 0.50 / 0.60 / 0.70 **offline**: for each gate, accuracy vs the human labels (Celeris-only label above
   the gate, escalated label below it) and the escalation rate measured on all 500 (probabilities only, no calls). Pick the gate with the
   best accuracy per escalated record, then **freeze `label_config`** (M6 gate).
 - **`dev_100` rules:** used for gate tuning only; never used as prompt examples (that would bias the sweep); never mixed with the golden 50.
@@ -396,8 +399,8 @@ git commit. 💰 = needs paid calls (approval required). 👤 = needs a human ac
 - `labels/areas.yaml` (8 topics → 4 effort areas, §1) and `labels/keywords.yaml` (topic terms for quote selection; feature-term list for entities).
 - A local labeling helper (simple local HTML or CSV) for `golden_50_to_label.csv` and `dev_100_to_label.csv`: shows one review, the definitions,
   dropdowns for topic/intent/severity, a sentiment slider, and an ambiguity note; saves accepted alternatives for ambiguous cases.
-- 👤 Rory hand-labels **the golden 50 and `dev_100`** (≈ 150 reviews, roughly 4–5 hours at ~2 min each). **Runs in parallel with M3–M5.**
-  `dev_100` is needed by M6's sweep; the golden 50 by M6's evaluation.
+- 👤 Rory hand-labels **the golden 50** (done 2026-10-14). `dev_100` is not hand-labeled in full: Rory adjudicates only the
+  Celeris/Haiku disagreements in M6 (v4.1, §3.5).
 - **Firewalls:** golden labels live only in `evals/golden/`, dev labels only in `evals/dev_100/`. A test fails if any pipeline module or prompt
   reads either, or if a golden or `dev_100` text appears in prompt examples. Only the M6 sweep script may read `dev_100`; only the evaluation
   script may read the golden labels.
@@ -471,8 +474,9 @@ Needed before the pilot, because the 100-review pilot must include verification,
 - 💰 Run `checkpoint_500` (the 100 are cached). Refresh the calculator. (Class 7 has already passed; this checkpoint is now only a development step.)
 - Golden evaluation (needs M2's labels): topic/intent agreement, severity exact + MAE, sentiment MAE (predeclared tolerance),
   quote membership + support, `needs_review` as a prediction, a confusion table, an ambiguous-case count, every disagreement saved.
-- 💰 (≈ cents) Escalate every `dev_100` review whose top probability is below 0.70 (needs M2's dev labels).
-- **Threshold sweep (offline):** for gates 0.50 / 0.60 / 0.70, accuracy vs the `dev_100` human labels per field and the escalation rate on all 500
+- 💰 (< $0.01) Run the A5 escalation on all of `dev_100`; list the Celeris/Haiku disagreements → 👤 Rory adjudicates them
+  (`scripts/label_tool.py dev`, disagreements only) → `evals/dev_100/dev_100_labeled.csv`.
+- **Threshold sweep (offline):** for gates 0.50 / 0.60 / 0.70, accuracy vs the `dev_100` reference labels per field and the escalation rate on all 500
   (`evals/threshold_sweep/`). Choose the gate and escalation cap.
 - Tune prompts/thresholds **on development records only**. If golden results drive a revision, disclose it and add fresh held-out cases.
 - **Freeze `label_config`** (§3.7) and record it in STATUS.md. Re-run the 100 and 500 under it (≈ $0.03) so the final export has one config.
@@ -544,12 +548,12 @@ Needed before the pilot, because the 100-review pilot must include verification,
 ```
 M0 ─▶ M1 ─▶ M2 ─▶ M3a ─▶ M3b ─▶ M4 ─▶ M5 ─▶ M6 ─▶ M7 ─▶ M8 ─▶ M9 ─▶ M10 ─▶ M11 ─▶ M12
             │                                 ▲
-            └─ 👤 hand-label dev_100 + golden 50 (in parallel with M3a–M5) ┘
+            └─ 👤 golden 50 (done) · dev_100 adjudication happens inside M6 ┘
 M0 hello-world deploy ─────────────────────────────────────────────▶ filled in by M11
 ```
 
-- **Critical path:** M5 (first real Celeris calls) → M6 needs the `dev_100` labels → `label_config` freeze → M8. Labeling is the one item only
-  Rory can do; finish `dev_100` before M5 ends and the golden 50 before M6's evaluation.
+- **Critical path:** M5 (first real Celeris calls) → M6 (dev_100 model runs → Rory adjudicates ~20–30 disagreements, ≈ 30–60 min)
+  → `label_config` freeze → M8. The golden 50 are done.
 - **Wall-clock jobs:** M8 (≈ 2,000 decision calls, at rate limits measured in M6) and the A8 Batch API job (up to 24h turnaround) are the only
   long waits. Submit the verification batch as soon as M8 finishes, and work on M10–M11 while it runs.
 - **Rough effort:** ~13 build sessions + ~4–5 hours of labeling + run time. That fits 7 days at about two sessions a day, leaving roughly
@@ -587,7 +591,7 @@ M0 hello-world deploy ───────────────────�
 | Q8 | Celeris request shape A (shared definitions, ≤ 50 reviews) vs B (1 per request)? | Default A; confirm with the M5 comparison |
 | Q9 | ~~Does Celeris work without a card?~~ | **Resolved:** Rory adds a card and a Console spend limit in M0 |
 | Q10 | Which escalation model (Haiku with low thinking or `celeris-1-magnus`)? | Measured in M5 by agreement gain per $ |
-| Q11 | Is 60% the right gate, and on which signal (raw top probability vs Celeris `confidence`)? | Raw top probability at 0.60; decided by the M6 sweep against `dev_100` |
+| Q11 | Is 60% the right gate, and on which signal (raw top probability vs Celeris `confidence`)? | Raw top probability at 0.60; decided by the M6 sweep against the adjudicated `dev_100` |
 | Q12 | ~~When is Class 7?~~ | **Resolved:** already held; the only deadline is 2026-10-20 midnight |
 | Q13 | Is the topic → area mapping right (downloads → playback; catalog and other outside the four areas)? | As in §1; Rory confirms in M2 |
 | Q14 | Run the full corpus for extra credit? | Decided at the M6 decision point (§1.2) from measured costs; Rory confirms GO before M8 |
@@ -613,7 +617,7 @@ M0 hello-world deploy ───────────────────�
 | Shape A answers bleed between reviews | M5 compares A vs B on the same 100; fall back to B if agreement drops materially |
 | Code-picked quotes don't support the label | Inspect quote support on the golden set (M6); the full text is always a valid fallback |
 | Deployment problems found late | Hello-world deployed in M0; M11 only fills it in |
-| `dev_100` labeling not done when M6 starts | Label `dev_100` before the golden 50; M6 blocks on it, everything before M6 does not |
+| `dev_100` adjudication delays M6 | Only disagreements need Rory (≈ 30–60 min); the tool shows them as a short queue |
 | A `label_config` change after dev runs invalidates earlier records | Explicit freeze in M6; cheap re-run of the 100 and 500 under the frozen config |
 | Context bloat across sessions | §6 protocol; STATUS.md handoffs |
 | A secret is committed | `.gitignore` in the first commit; pre-publish checks in M12 |
