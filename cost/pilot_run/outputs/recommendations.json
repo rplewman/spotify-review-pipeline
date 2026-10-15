@@ -1,0 +1,114 @@
+{
+ "cache": "hit",
+ "input_sha256": "e24b6b7a9423f8d521455f53a9347baaac1bd37bb85759c90db876c211a85946",
+ "label_config": "pilot-celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1",
+ "memo_prompt": "memo-prompt-v1",
+ "model": "claude-haiku-5-5",
+ "priority_area": "playback",
+ "question": "Where should Spotify put the next quarter of product effort: access, usability, playback, or billing/support?",
+ "recommendations": [
+  {
+   "area": "playback",
+   "claim_ids": [
+    "C03a",
+    "C03b"
+   ],
+   "evidence": [
+    {
+     "issue_id": "playback-general",
+     "quote": "App is stuck on loading/logo screen",
+     "review_id": "66a29b3c-c14d-440e-b722-b23e0c99ae82"
+    }
+   ],
+   "issue_ids": [
+    "playback-general"
+   ],
+   "position": 1,
+   "rationale": "Playback-general has the largest playback severity sum (19) across 5 complaints, and the top quote describes the app stuck on the loading screen.",
+   "supporting": [
+    {
+     "claim_id": "C03a",
+     "issue_id": "playback-general",
+     "metric": "complaint_count",
+     "value": "5"
+    },
+    {
+     "claim_id": "C03b",
+     "issue_id": "playback-general",
+     "metric": "severity_sum",
+     "value": "19"
+    }
+   ],
+   "title": "Triage playback freezes and loading-screen failures"
+  },
+  {
+   "area": "playback",
+   "claim_ids": [
+    "C06a",
+    "C06b"
+   ],
+   "evidence": [
+    {
+     "issue_id": "playback-stops_skips",
+     "quote": "Keep stopping halfway while playing music and it dun go back to where they stop and start playing a new song for you.",
+     "review_id": "6c257eba-3dca-49f6-b7f0-4c4484d81e26"
+    }
+   ],
+   "issue_ids": [
+    "playback-stops_skips"
+   ],
+   "position": 2,
+   "rationale": "Songs stopping mid-track and not resuming is a high-severity pattern (mean severity 4.0) and is distinct from the general freeze reports.",
+   "supporting": [
+    {
+     "claim_id": "C06a",
+     "issue_id": "playback-stops_skips",
+     "metric": "complaint_count",
+     "value": "2"
+    },
+    {
+     "claim_id": "C06b",
+     "issue_id": "playback-stops_skips",
+     "metric": "severity_sum",
+     "value": "8"
+    }
+   ],
+   "title": "Fix resume behaviour when songs stop partway through"
+  },
+  {
+   "area": "playback",
+   "claim_ids": [
+    "C10a",
+    "C10b"
+   ],
+   "evidence": [
+    {
+     "issue_id": "downloads-offline_mode",
+     "quote": "Offline not workjng",
+     "review_id": "dcff57c6-abd6-413b-b255-aec3dc34fcbd"
+    }
+   ],
+   "issue_ids": [
+    "downloads-offline_mode"
+   ],
+   "position": 3,
+   "rationale": "Offline mode failing is a severe single-complaint issue (severity 5) in the downloads topic that rolls up into playback.",
+   "supporting": [
+    {
+     "claim_id": "C10a",
+     "issue_id": "downloads-offline_mode",
+     "metric": "complaint_count",
+     "value": "1"
+    },
+    {
+     "claim_id": "C10b",
+     "issue_id": "downloads-offline_mode",
+     "metric": "severity_sum",
+     "value": "5"
+    }
+   ],
+   "title": "Restore offline mode reliability"
+  }
+ ],
+ "request_id": "6eda06b0d72a41e0842f26b3db96456c"
+}

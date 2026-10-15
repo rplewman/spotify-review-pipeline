@@ -1,0 +1,202 @@
+{
+ "generated_at": "2026-10-15T03:27:08.308034Z",
+ "input": {
+  "file": "cost_100.csv",
+  "sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+  "manifest_sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+  "match": true,
+  "rows": 100,
+  "ids_sha256": "02066ea0d4aedb7eec70b84bdcff12505bf60f7cf703f14c76e335177718572e"
+ },
+ "ingest": {
+  "rows": 100,
+  "distinct_texts": 100,
+  "empty_review_text": 0
+ },
+ "records": {
+  "completed": 100,
+  "quarantined": 0,
+  "rows": 100,
+  "completed_via_exact_text_reuse": 0
+ },
+ "unique_texts": 100,
+ "routes": {
+  "accept": 63,
+  "capped": 22,
+  "escalate": 15
+ },
+ "verification": {
+  "declared_sample_rate": 0.2,
+  "seed": "verify-v1",
+  "sampled_texts": 25,
+  "verified_texts": 25,
+  "tier": "standard (real time)"
+ },
+ "label_config": "pilot-celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1",
+ "stages": {
+  "enrich_decision": {
+   "agent": "A3",
+   "provider": "celeris",
+   "model": "celeris-1-decision",
+   "effort": "n/a (decision model)",
+   "prompt_version": "prompt-v1",
+   "schema_version": "schema-v1",
+   "shape": "A",
+   "batch_size": 50,
+   "workers": 1
+  },
+  "enrich_escalation": {
+   "agent": "A5",
+   "model": "claude-haiku-5-5",
+   "effort": "low",
+   "prompt_version": "escalation-prompt-v1",
+   "gate": 0.6,
+   "esc_fraction_cap": 0.15,
+   "batch_size": "≤ 50 (the batch's escalated texts)",
+   "workers": 1
+  },
+  "extract_validate": {
+   "agent": "A6+A7",
+   "model": "code",
+   "version": "extract-code-v1+schema-v1"
+  },
+  "verify": {
+   "agent": "A8",
+   "model": "claude-haiku-5-5",
+   "effort": "low",
+   "prompt_version": "verifier-prompt-v1",
+   "batch_size": 50,
+   "workers": 1,
+   "tier": "standard"
+  },
+  "group": {
+   "agent": "A9",
+   "model": "claude-haiku-5-5",
+   "effort": "low",
+   "prompt_version": "grouper-prompt-v1"
+  },
+  "rank": {
+   "agent": "A10",
+   "model": "code"
+  },
+  "memo": {
+   "agent": "A11",
+   "model": "claude-haiku-5-5",
+   "effort": "low",
+   "prompt_version": "memo-prompt-v1"
+  }
+ },
+ "phases": {
+  "cold": {
+   "stages": [
+    {
+     "stage": "ingest",
+     "seconds": 0.02,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": []
+    },
+    {
+     "stage": "enrich",
+     "seconds": 6.262,
+     "rc": 0,
+     "new_calls": 3,
+     "run_ids": [
+      "run-20261014-202626-4e6498"
+     ]
+    },
+    {
+     "stage": "verify",
+     "seconds": 10.111,
+     "rc": 0,
+     "new_calls": 1,
+     "run_ids": [
+      "run-20261014-202632-c7f99c"
+     ]
+    },
+    {
+     "stage": "group",
+     "seconds": 6.891,
+     "rc": 0,
+     "new_calls": 1,
+     "run_ids": [
+      "run-20261014-202642-752478"
+     ]
+    },
+    {
+     "stage": "rank",
+     "seconds": 0.067,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": []
+    },
+    {
+     "stage": "memo",
+     "seconds": 18.382,
+     "rc": 0,
+     "new_calls": 1,
+     "run_ids": [
+      "run-20261014-202649-494e5d"
+     ]
+    }
+   ],
+   "total_seconds": 42.006,
+   "new_calls": 6,
+   "new_enrich_calls": 3
+  },
+  "warm": {
+   "stages": [
+    {
+     "stage": "enrich",
+     "seconds": 0.069,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": [
+      "run-20261014-202707-28727a"
+     ]
+    },
+    {
+     "stage": "verify",
+     "seconds": 0.073,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": [
+      "run-20261014-202708-eb789a"
+     ]
+    },
+    {
+     "stage": "group",
+     "seconds": 0.029,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": [
+      "run-20261014-202708-1105dc"
+     ]
+    },
+    {
+     "stage": "rank",
+     "seconds": 0.038,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": []
+    },
+    {
+     "stage": "memo",
+     "seconds": 0.03,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": [
+      "run-20261014-202708-a5ca9c"
+     ]
+    }
+   ],
+   "total_seconds": 0.341,
+   "new_calls": 0,
+   "new_enrich_calls": 0
+  }
+ },
+ "local_compute": {
+  "usd": "unknown (local laptop CPU and SQLite; not billed, not metered)",
+  "note": "reported apart from API spend; times above include local work"
+ }
+}

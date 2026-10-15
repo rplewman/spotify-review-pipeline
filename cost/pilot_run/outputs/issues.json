@@ -1,0 +1,460 @@
+{
+ "allow_multi_issue": false,
+ "areas_version": "areas-v1",
+ "grouper_prompt": "grouper-prompt-v1",
+ "issues": [
+  {
+   "area": "access",
+   "description": "A user reports being unable to get into their account, alongside complaints about too many ads.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "It not letting me into my account and there are to many ads",
+     "review_id": "32fb340f-4f9f-4551-8dae-755221e58d6a",
+     "severity": 5
+    }
+   ],
+   "issue_id": "access-account",
+   "member_count": 1,
+   "name": "Cannot log into account",
+   "name_source": "model",
+   "subtopic": "account",
+   "topic": "access"
+  },
+  {
+   "area": "access",
+   "description": "A user says the app will not accept their password.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Will not except my password",
+     "review_id": "de0a9cdf-8974-48bc-802f-331228df4619",
+     "severity": 5
+    }
+   ],
+   "issue_id": "access-password",
+   "member_count": 1,
+   "name": "Password rejected at login",
+   "name_source": "model",
+   "subtopic": "password",
+   "topic": "access"
+  },
+  {
+   "area": "billing/support",
+   "description": "Users say core features such as skipping, going back, and choosing specific songs now require a Premium subscription or are limited for free users.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Jaruri h premium lena?",
+     "review_id": "89ea2c30-db8b-459d-8ab7-bbcb7f92c774",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Recent update really sucks. The ability to skip a song or go to previous song has been removed from non subscribed users.",
+     "review_id": "a3605554-5c3a-441d-836e-e9fdea83eb2e",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "This app is killing it self and forcing you to pay premium for basic things like just listening to music.",
+     "review_id": "a78d831a-69f4-428a-9235-cfdd9775c509",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "This was fine till the last update, now you can't even pick a certain song without Spotify premium, and now you can only skip 6 songs, like please just let the ",
+     "review_id": "d146397f-4a94-4980-be00-ae9212eca3a7",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "to restrict all the features jst so people would purchase premium ..",
+     "review_id": "88439ec2-7c49-4c57-bedb-c5e098692aff",
+     "severity": 3
+    }
+   ],
+   "issue_id": "billing-premium_limits",
+   "member_count": 5,
+   "name": "Basic features locked behind premium",
+   "name_source": "model",
+   "subtopic": "premium_limits",
+   "topic": "billing"
+  },
+  {
+   "area": "billing/support",
+   "description": "A user asks why a Premium subscription is needed just to play the next song or choose music.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Why it requires premium just to play next music / to choose music ??",
+     "review_id": "ad730d1a-829a-4dc4-9561-7e1cd07e2c30",
+     "severity": 4
+    }
+   ],
+   "issue_id": "billing-subscription",
+   "member_count": 1,
+   "name": "Premium required for basic playback",
+   "name_source": "model",
+   "subtopic": "subscription",
+   "topic": "billing"
+  },
+  {
+   "area": "outside",
+   "description": "Users say many songs are missing and that some genres, such as gospel music, are poorly covered.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Nice app! But many songs are not present here!",
+     "review_id": "0658feaa-5bec-416e-b6b0-3de2a4c14580",
+     "severity": 2
+    },
+    {
+     "intent": "complaint",
+     "quote": "It's nice but gospel music isn't much",
+     "review_id": "a1a28752-3256-4f81-b888-3e943343529f",
+     "severity": 1
+    }
+   ],
+   "issue_id": "catalog-general",
+   "member_count": 2,
+   "name": "Song and genre selection is limited",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "catalog"
+  },
+  {
+   "area": "outside",
+   "description": "Users report that lyrics appear for some songs but not others, or fail to show at times.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "It is good but there is a problem that in some songs there is no lyrics and in some songs there is lyrics it's so confusing.",
+     "review_id": "47becad0-8ae5-4a10-9731-fde8f2091862",
+     "severity": 2
+    },
+    {
+     "intent": "complaint",
+     "quote": "sometime the lyrics don't show",
+     "review_id": "e0127547-4edd-44a0-8d5e-e8398bc07086",
+     "severity": 2
+    }
+   ],
+   "issue_id": "catalog-lyrics",
+   "member_count": 2,
+   "name": "Lyrics missing or inconsistent",
+   "name_source": "model",
+   "subtopic": "lyrics",
+   "topic": "catalog"
+  },
+  {
+   "area": "playback",
+   "description": "A user reports that the offline feature does not work.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Offline not workjng",
+     "review_id": "dcff57c6-abd6-413b-b255-aec3dc34fcbd",
+     "severity": 5
+    }
+   ],
+   "issue_id": "downloads-offline_mode",
+   "member_count": 1,
+   "name": "Offline mode not working",
+   "name_source": "model",
+   "subtopic": "offline_mode",
+   "topic": "downloads"
+  },
+  {
+   "area": "outside",
+   "description": "Users leave short or general negative comments about the app, often citing premium changes or unrelated complaints, without specifying a clear problem.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Worst app",
+     "review_id": "06a45bd5-3ed9-43af-b7f2-8b9487e2ffff",
+     "severity": 2
+    },
+    {
+     "intent": "complaint",
+     "quote": "Worst app.",
+     "review_id": "178c3b49-b689-4fe4-92a2-2257a58e6d95",
+     "severity": 2
+    },
+    {
+     "intent": "complaint",
+     "quote": "This app the new update has made everthing premium and so usless i thought this app is good but no. Youtube music is better than this usless app. This has becom",
+     "review_id": "21915fcd-9a35-48ba-b277-6296c4154603",
+     "severity": 2
+    },
+    {
+     "intent": "complaint",
+     "quote": "Noob app",
+     "review_id": "2d5cdd20-3094-40a5-bc6e-653302b59b56",
+     "severity": 2
+    },
+    {
+     "intent": "complaint",
+     "quote": "RUDE APP , THIS APP SUPPORT GUYS 🤮🤮🤮🤮🤮🤮🤮🤮🤮🤮. تطبيق سيء ، بدعم المثليين 🤮🤮🤮",
+     "review_id": "33526c6f-7a49-4b3d-bd20-d1bc191c494c",
+     "severity": 2
+    }
+   ],
+   "issue_id": "other-general",
+   "member_count": 16,
+   "name": "Vague negative app reviews",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "other"
+  },
+  {
+   "area": "playback",
+   "description": "A premium user reports the app cannot connect over Wi-Fi but works on mobile data, and that some song quality is poor.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Iam a premium user. But this app if i using wifi not able to connect Internet. But if using mobile data it will work. Some songs quality also very poor comparin",
+     "review_id": "4ab2089a-ffa8-49e7-a8a3-aeb583a96796",
+     "severity": 3
+    }
+   ],
+   "issue_id": "playback-connection",
+   "member_count": 1,
+   "name": "Wi-Fi connection fails, mobile data works",
+   "name_source": "model",
+   "subtopic": "connection",
+   "topic": "playback"
+  },
+  {
+   "area": "playback",
+   "description": "A user says the app crashes after the latest update and will not open.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "The latest update has caused my app to crash I cant open the app please fix.",
+     "review_id": "55cc3abf-c295-4591-8c3a-78085cfdefaa",
+     "severity": 5
+    }
+   ],
+   "issue_id": "playback-crashes",
+   "member_count": 1,
+   "name": "App crashes after latest update",
+   "name_source": "model",
+   "subtopic": "crashes",
+   "topic": "playback"
+  },
+  {
+   "area": "playback",
+   "description": "Users report the app stuck on the loading screen, Google Assistant not playing songs, sound adjustment not working, and unclear bugs after updates.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "App is stuck on loading/logo screen",
+     "review_id": "66a29b3c-c14d-440e-b722-b23e0c99ae82",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I am unable to use my Google assistant on the app.it says playing your Spotify playlist but do not play the songs",
+     "review_id": "46ff0c74-5e86-4e5b-b4cd-36201aab0f9e",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Doesn't deserve even one star. Like what's the problem? We can't even go back few second to play music? WHAT IN THE WORLD IS THIS UPDATE? YOU PEOPLE NEED MORE M",
+     "review_id": "9e5f9745-f8be-48d3-b9de-4d118507d94a",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Idk if it's clever marketing to get the user to open the app, or if it's a bug...",
+     "review_id": "2ffdf599-a0d5-4c01-bf26-025215d44c06",
+     "severity": 3
+    },
+    {
+     "intent": "complaint",
+     "quote": "There is some bugs like music adjustment doesn't work Perporly plz do something about this bug",
+     "review_id": "9c9757da-6b99-4c95-a0e7-0661ee858027",
+     "severity": 3
+    }
+   ],
+   "issue_id": "playback-general",
+   "member_count": 5,
+   "name": "Playback freezes and bugs",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "playback"
+  },
+  {
+   "area": "playback",
+   "description": "Users report music stopping halfway and not resuming where it left off, or being unable to play songs smoothly.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Keep stopping halfway while playing music and it dun go back to where they stop and start playing a new song for you.",
+     "review_id": "6c257eba-3dca-49f6-b7f0-4c4484d81e26",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "i can't play song happly .",
+     "review_id": "e16a4550-43e7-4ae1-b538-a65cc652c31b",
+     "severity": 4
+    }
+   ],
+   "issue_id": "playback-stops_skips",
+   "member_count": 2,
+   "name": "Songs stop partway through",
+   "name_source": "model",
+   "subtopic": "stops_skips",
+   "topic": "playback"
+  },
+  {
+   "area": "usability",
+   "description": "Users say ads play too frequently, too soon between songs, and are too loud.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Decent,just let me have a solid 4-5 songs without an ad bro, it's always every 1 or 2 song then instant ads, that's all thanks",
+     "review_id": "3e8bdc92-4934-457e-85cc-8b9d14bf51c0",
+     "severity": 3
+    },
+    {
+     "intent": "complaint",
+     "quote": "Soo trash wayy to many ads I don't want premium but too much ads",
+     "review_id": "c2738a4f-e57c-46bc-a4ad-8ec5a4b5d5cd",
+     "severity": 3
+    },
+    {
+     "intent": "complaint",
+     "quote": "Too many ads....",
+     "review_id": "e5e6c55f-3069-4b7c-9807-f8b5d5bf2726",
+     "severity": 3
+    },
+    {
+     "intent": "complaint",
+     "quote": "The ads are so loud :'(",
+     "review_id": "ab67a772-c3b7-42ba-9b80-8d21d3857018",
+     "severity": 2
+    }
+   ],
+   "issue_id": "usability-ads",
+   "member_count": 4,
+   "name": "Too many ads during listening",
+   "name_source": "model",
+   "subtopic": "ads",
+   "topic": "usability"
+  },
+  {
+   "area": "usability",
+   "description": "Users say there are too many ads and restrictions, and some have uninstalled the app because of premium ads.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "DON'T DOWNLOAD THIS:Such a worst app ... that always plays adds instead of songs ...if want to enjoy music free without adds don't download this app ..",
+     "review_id": "cf6166ae-d71a-4839-9add-088645ad3b78",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "This app is nice but adds are too much",
+     "review_id": "85383985-844d-4f9b-bcd9-d6016ac35f6b",
+     "severity": 3
+    },
+    {
+     "intent": "complaint",
+     "quote": "Too much restrictions",
+     "review_id": "89a8e180-7846-4421-a2b6-fa7787e9d0d2",
+     "severity": 3
+    },
+    {
+     "intent": "cancellation",
+     "quote": "I m using this app from 5 to 6 year but now m uninstald this app cz his premium adds are everywhere now .",
+     "review_id": "035213ba-b1b9-411c-b028-70296e5f0e73",
+     "severity": 2
+    }
+   ],
+   "issue_id": "usability-general",
+   "member_count": 4,
+   "name": "Ads and restrictions frustrate users",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "usability"
+  },
+  {
+   "area": "usability",
+   "description": "A long-time user says a recent update removed basic music player features.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I am using Spotify from past two years From last update they removed basic features of music player",
+     "review_id": "7084ced1-0428-4093-9328-442f74719b4f",
+     "severity": 3
+    }
+   ],
+   "issue_id": "usability-interface",
+   "member_count": 1,
+   "name": "Basic music player features removed",
+   "name_source": "model",
+   "subtopic": "interface",
+   "topic": "usability"
+  },
+  {
+   "area": "usability",
+   "description": "Users dislike playlists playing songs randomly and having to scroll through one playlist, album, or artist at a time.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "If I wanted these songs I'd use a random playlist not not make my own!",
+     "review_id": "618d1dbb-0186-4537-923a-7b4dabf19afb",
+     "severity": 3
+    },
+    {
+     "intent": "complaint",
+     "quote": "Your new features are really bad thing that I found because it plays any song of the Playlist randomly it really really disappointing for and listeners who don'",
+     "review_id": "5c9c17d3-9d6a-4fa1-a2a4-ae98eefbbd25",
+     "severity": 2
+    },
+    {
+     "intent": "complaint",
+     "quote": "I don't want to scroll through 1 playlist or album or artist at a time.",
+     "review_id": "94c9f2f9-36fa-4c11-936e-660514fe7a35",
+     "severity": 2
+    }
+   ],
+   "issue_id": "usability-library_playlists",
+   "member_count": 3,
+   "name": "Playlist shuffle and browsing frustrate users",
+   "name_source": "model",
+   "subtopic": "library_playlists",
+   "topic": "usability"
+  },
+  {
+   "area": "usability",
+   "description": "A user says they can only skip six songs in a playlist, forcing them to sit through songs they do not want.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I just want to listen to one song but nooo I have to go through A HOLE PLAYLIST AND I CAN ONLY SKIP 6 OF THEM 6!!!",
+     "review_id": "ebc64fe2-9553-4528-87d5-cb4bb9783be6",
+     "severity": 4
+    }
+   ],
+   "issue_id": "usability-playback_controls",
+   "member_count": 1,
+   "name": "Skip limit blocks playlist listening",
+   "name_source": "model",
+   "subtopic": "playback_controls",
+   "topic": "usability"
+  }
+ ],
+ "label_config": "pilot-celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1",
+ "model": "claude-haiku-5-5",
+ "naming": {
+  "cache": "hit",
+  "input_sha256": "af05d0ac78605018e071f428c1f0350e13bcadfc083f7f6ba4b117114c5e8983",
+  "notes": [],
+  "request_id": "62cb892df2dc4ccc8adbb43c22514530"
+ },
+ "subtopics_version": "subtopics-v1"
+}

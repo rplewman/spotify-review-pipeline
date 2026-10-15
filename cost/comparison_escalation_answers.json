@@ -1,0 +1,1135 @@
+{
+ "entries": [
+  {
+   "text_sha256": "8b7bebe3bd4246f804349b877578b66937fe5e3882499365249ba15204e1ca0c",
+   "questions": [
+    [
+     "intent",
+     [
+      [
+       "praise",
+       0.5
+      ],
+      [
+       "complaint",
+       0.48
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "1cfcdd1d7ff0955c6526f43a85df245ca6d6a881951035f84c2e06d0bbb2a1c7",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "billing",
+       0.49
+      ],
+      [
+       "playback",
+       0.29
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "4cc722395b0457c4c3acc10afc5c8db69018812c909a85223620eead6f10aee8",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "catalog",
+       0.54
+      ],
+      [
+       "other",
+       0.38
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "3a60dc1a633d353069ef9a704a63cfa0c542036c7d386a11382c504ea1a5b24b",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "usability",
+       0.38
+      ],
+      [
+       "billing",
+       0.33
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "6cfee996d3a924c84323e5eedcf0ac8077787aad7b8a23bd386ecfdbd543e2f1",
+   "questions": [
+    [
+     "intent",
+     [
+      [
+       "cancellation",
+       0.58
+      ],
+      [
+       "request",
+       0.26
+      ]
+     ]
+    ],
+    [
+     "severity",
+     [
+      [
+       "2",
+       0.51
+      ],
+      [
+       "1",
+       0.16
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "d38add5aac5cb1a5ac485a73a9249365b6301f05108263f033f8e6242375e6b4",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "other",
+       0.39
+      ],
+      [
+       "playback",
+       0.28
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "8ac3c17a0de1b7bbc0e04652cb4648de099e105cbe6070eebc2f87fb1428a786",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "usability",
+       0.5
+      ],
+      [
+       "billing",
+       0.32
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "f7ac099f9b4eb5f98f6fddfb370ba4f5d741a0496fa3d4d342fe3aa3ad9dda05",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "catalog",
+       0.53
+      ],
+      [
+       "other",
+       0.29
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "8447ca5d739e671b6d2f0ac30f2216c8ebe6b2d5f11f459feb0b1cfaff520426",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "playback",
+       0.52
+      ],
+      [
+       "usability",
+       0.44
+      ]
+     ]
+    ],
+    [
+     "severity",
+     [
+      [
+       "3",
+       0.45
+      ],
+      [
+       "4",
+       0.42
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "ce24667b27b04feff74fc2ec57e9362b606817ea54041a9c617c97cb568baee8",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "playback",
+       0.42
+      ],
+      [
+       "usability",
+       0.36
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "1a43a5ed1232732a9ae89d1f4fdbe82f65776b45c24111b83deb778186c6f945",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "usability",
+       0.52
+      ],
+      [
+       "billing",
+       0.34
+      ]
+     ]
+    ],
+    [
+     "severity",
+     [
+      [
+       "3",
+       0.42
+      ],
+      [
+       "4",
+       0.39
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "858d4554d4c09bfcd078fef5f6941598482e9b6e83c392a4a75ed0f5633f9b66",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "2",
+       0.54
+      ],
+      [
+       "4",
+       0.21
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "242ab8d4974273fd98e28a39093802991622a0ffcd4cb58639af869f17e7188d",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "playback",
+       0.54
+      ],
+      [
+       "usability",
+       0.43
+      ]
+     ]
+    ],
+    [
+     "severity",
+     [
+      [
+       "3",
+       0.45
+      ],
+      [
+       "4",
+       0.36
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "fd01d45c8a95114613d713f56d372f6b973f449386b8faf8c06e6d694e04698a",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "playback",
+       0.45
+      ],
+      [
+       "usability",
+       0.38
+      ]
+     ]
+    ],
+    [
+     "severity",
+     [
+      [
+       "3",
+       0.52
+      ],
+      [
+       "4",
+       0.39
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "1feb3562d216b2e627a20c18f5b8621dea1d18f4b4a72fc0875b648185a1cbed",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "usability",
+       0.54
+      ],
+      [
+       "playback",
+       0.4
+      ]
+     ]
+    ],
+    [
+     "severity",
+     [
+      [
+       "2",
+       0.49
+      ],
+      [
+       "3",
+       0.34
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "216173a029152c6d5d6fafaa4d4e642458bdb8ec3b1ffa8bcfca039f990b3586",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "usability",
+       0.48
+      ],
+      [
+       "billing",
+       0.32
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "6f803cb9f2e51b70959e2006a35bd213a07bcb5d74b979f7dd35df0642f6a405",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "2",
+       0.52
+      ],
+      [
+       "1",
+       0.41
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "1299d62c82d2d28723f286ebff205e003ec153fc9f24c0467591210618eb64d7",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "2",
+       0.36
+      ],
+      [
+       "5",
+       0.29
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "6f3f3f5349ce62d03639479ce11bf8aeae50f89300d9cc70eb78dbba70d57da8",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "5",
+       0.51
+      ],
+      [
+       "4",
+       0.46
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "22e9c6f1282c4cbb57c2109db374e18c59bef354b1cf74f2082890a0e839d668",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "4",
+       0.47
+      ],
+      [
+       "3",
+       0.36
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "16148abbf0b9daa27befdb60eb1761d22e392b49f2832cde9e7b74f7c12a5e7f",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "4",
+       0.51
+      ],
+      [
+       "3",
+       0.44
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "f4bc67348cb81366e95effc5ff139472f3d6fa3ff66cc34bac9e7945ed6eee39",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "other",
+       0.53
+      ],
+      [
+       "catalog",
+       0.42
+      ]
+     ]
+    ],
+    [
+     "severity",
+     [
+      [
+       "1",
+       0.49
+      ],
+      [
+       "2",
+       0.46
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "6d785acc7d4ce49fe4e4bbf276dc73f1cf7c20094d3e96fe84ef79fbebcaf88a",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "usability",
+       0.35
+      ],
+      [
+       "other",
+       0.3
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "dc5a3162adb39537389300bbd6b57f065c2623e6ae7778f09d0e5f34d506fc88",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "other",
+       0.49
+      ],
+      [
+       "usability",
+       0.21
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "de31646e292fe3e4f53eedf4be8ed407c405f0f8cd775117051f2fdd87b16374",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "catalog",
+       0.51
+      ],
+      [
+       "other",
+       0.44
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "76e488b5b3a0153d264179bcca9e8ae61e782bbb74cf19659db307a73d612cf9",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "4",
+       0.41
+      ],
+      [
+       "3",
+       0.23
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "fa932abc4e03717a970a150fd8d30eb101097bdd4107b2e8ebaf03818efd1376",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "4",
+       0.51
+      ],
+      [
+       "3",
+       0.4
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "e542e53a790077065ff174b161d09cc762a9a5bf35031362b2e0ee9ea58c7b6b",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "other",
+       0.58
+      ],
+      [
+       "usability",
+       0.17
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "ec51d9f8452c8c8c1778e693cd761a89a4d4b28b43922c79fea90c0661e286c6",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "other",
+       0.56
+      ],
+      [
+       "catalog",
+       0.21
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "a98b9d3205c9346d4a4e18e6ccb70dd38a1ab6da19874f19503b9787229d75d3",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "4",
+       0.53
+      ],
+      [
+       "3",
+       0.39
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "33f84bb1ec199c4c1af1ea1fc6e760065fbd0971b04fffe65e1bc4e6924f2a76",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "other",
+       0.58
+      ],
+      [
+       "usability",
+       0.18
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "56c982a21f901bf691c074e251c077011148ae3d859b3ede42f2c922d212a0bf",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "other",
+       0.34
+      ],
+      [
+       "playback",
+       0.27
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "d2fae5ba8635d8df733e06eef35cd09daffea9798c23bdcd7a3304a122f9a3cf",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "2",
+       0.51
+      ],
+      [
+       "1",
+       0.44
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "8f538bd4c6172ea310f44eee7c062ded7d8b4aa32a6d86b34a855259e91dc965",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "1",
+       0.52
+      ],
+      [
+       "2",
+       0.45
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "fc56ed51d355b1e93139a168c119a67a908a009c76e67be1a4192a952d5d7efb",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "other",
+       0.34
+      ],
+      [
+       "playback",
+       0.17
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "756d8531cb9378cdf1181c7ce5eac77e5baf58c00f4e2914946f67b31242f804",
+   "questions": [
+    [
+     "topic",
+     [
+      [
+       "other",
+       0.41
+      ],
+      [
+       "playback",
+       0.27
+      ]
+     ]
+    ]
+   ]
+  },
+  {
+   "text_sha256": "a9d22310e0430007568b74a603550ace29c0246614f3016c28355392aa667c02",
+   "questions": [
+    [
+     "severity",
+     [
+      [
+       "3",
+       0.48
+      ],
+      [
+       "2",
+       0.42
+      ]
+     ]
+    ]
+   ]
+  }
+ ],
+ "variants": {
+  "haiku-low": {
+   "model": "claude-haiku-5-5",
+   "run_id": "run-20261014-202726-c9a4c6",
+   "answers": {
+    "8b7bebe3bd4246f804349b877578b66937fe5e3882499365249ba15204e1ca0c": {
+     "intent": "complaint"
+    },
+    "1cfcdd1d7ff0955c6526f43a85df245ca6d6a881951035f84c2e06d0bbb2a1c7": {
+     "topic": "billing"
+    },
+    "4cc722395b0457c4c3acc10afc5c8db69018812c909a85223620eead6f10aee8": {
+     "topic": "other"
+    },
+    "3a60dc1a633d353069ef9a704a63cfa0c542036c7d386a11382c504ea1a5b24b": {
+     "topic": "usability"
+    },
+    "6cfee996d3a924c84323e5eedcf0ac8077787aad7b8a23bd386ecfdbd543e2f1": {
+     "intent": "cancellation",
+     "severity": "2"
+    },
+    "d38add5aac5cb1a5ac485a73a9249365b6301f05108263f033f8e6242375e6b4": {
+     "topic": "other"
+    },
+    "8ac3c17a0de1b7bbc0e04652cb4648de099e105cbe6070eebc2f87fb1428a786": {
+     "topic": "billing"
+    },
+    "f7ac099f9b4eb5f98f6fddfb370ba4f5d741a0496fa3d4d342fe3aa3ad9dda05": {
+     "topic": "other"
+    },
+    "8447ca5d739e671b6d2f0ac30f2216c8ebe6b2d5f11f459feb0b1cfaff520426": {
+     "topic": "playback",
+     "severity": "4"
+    },
+    "ce24667b27b04feff74fc2ec57e9362b606817ea54041a9c617c97cb568baee8": {
+     "topic": "playback"
+    },
+    "1a43a5ed1232732a9ae89d1f4fdbe82f65776b45c24111b83deb778186c6f945": {
+     "topic": "billing",
+     "severity": "3"
+    },
+    "858d4554d4c09bfcd078fef5f6941598482e9b6e83c392a4a75ed0f5633f9b66": {
+     "severity": "2"
+    },
+    "242ab8d4974273fd98e28a39093802991622a0ffcd4cb58639af869f17e7188d": {
+     "topic": "usability",
+     "severity": "3"
+    },
+    "fd01d45c8a95114613d713f56d372f6b973f449386b8faf8c06e6d694e04698a": {
+     "topic": "playback",
+     "severity": "3"
+    },
+    "1feb3562d216b2e627a20c18f5b8621dea1d18f4b4a72fc0875b648185a1cbed": {
+     "topic": "usability",
+     "severity": "2"
+    },
+    "216173a029152c6d5d6fafaa4d4e642458bdb8ec3b1ffa8bcfca039f990b3586": {
+     "topic": "usability"
+    },
+    "6f803cb9f2e51b70959e2006a35bd213a07bcb5d74b979f7dd35df0642f6a405": {
+     "severity": "1"
+    },
+    "1299d62c82d2d28723f286ebff205e003ec153fc9f24c0467591210618eb64d7": {
+     "severity": "2"
+    },
+    "6f3f3f5349ce62d03639479ce11bf8aeae50f89300d9cc70eb78dbba70d57da8": {
+     "severity": "4"
+    },
+    "22e9c6f1282c4cbb57c2109db374e18c59bef354b1cf74f2082890a0e839d668": {
+     "severity": "4"
+    },
+    "16148abbf0b9daa27befdb60eb1761d22e392b49f2832cde9e7b74f7c12a5e7f": {
+     "severity": "3"
+    },
+    "f4bc67348cb81366e95effc5ff139472f3d6fa3ff66cc34bac9e7945ed6eee39": {
+     "topic": "other",
+     "severity": "1"
+    },
+    "6d785acc7d4ce49fe4e4bbf276dc73f1cf7c20094d3e96fe84ef79fbebcaf88a": {
+     "topic": "other"
+    },
+    "dc5a3162adb39537389300bbd6b57f065c2623e6ae7778f09d0e5f34d506fc88": {
+     "topic": "other"
+    },
+    "de31646e292fe3e4f53eedf4be8ed407c405f0f8cd775117051f2fdd87b16374": {
+     "topic": "other"
+    },
+    "76e488b5b3a0153d264179bcca9e8ae61e782bbb74cf19659db307a73d612cf9": {
+     "severity": "3"
+    },
+    "fa932abc4e03717a970a150fd8d30eb101097bdd4107b2e8ebaf03818efd1376": {
+     "severity": "3"
+    },
+    "e542e53a790077065ff174b161d09cc762a9a5bf35031362b2e0ee9ea58c7b6b": {
+     "topic": "other"
+    },
+    "ec51d9f8452c8c8c1778e693cd761a89a4d4b28b43922c79fea90c0661e286c6": {
+     "topic": "other"
+    },
+    "a98b9d3205c9346d4a4e18e6ccb70dd38a1ab6da19874f19503b9787229d75d3": {
+     "severity": "3"
+    },
+    "33f84bb1ec199c4c1af1ea1fc6e760065fbd0971b04fffe65e1bc4e6924f2a76": {
+     "topic": "other"
+    },
+    "56c982a21f901bf691c074e251c077011148ae3d859b3ede42f2c922d212a0bf": {
+     "topic": "other"
+    },
+    "d2fae5ba8635d8df733e06eef35cd09daffea9798c23bdcd7a3304a122f9a3cf": {
+     "severity": "2"
+    },
+    "8f538bd4c6172ea310f44eee7c062ded7d8b4aa32a6d86b34a855259e91dc965": {
+     "severity": "1"
+    },
+    "fc56ed51d355b1e93139a168c119a67a908a009c76e67be1a4192a952d5d7efb": {
+     "topic": "other"
+    },
+    "756d8531cb9378cdf1181c7ce5eac77e5baf58c00f4e2914946f67b31242f804": {
+     "topic": "other"
+    },
+    "a9d22310e0430007568b74a603550ace29c0246614f3016c28355392aa667c02": {
+     "severity": "2"
+    }
+   }
+  },
+  "haiku-off": {
+   "model": "claude-haiku-5-5",
+   "run_id": "run-20261014-202731-fb5bec",
+   "answers": {
+    "8b7bebe3bd4246f804349b877578b66937fe5e3882499365249ba15204e1ca0c": {
+     "intent": "praise"
+    },
+    "1cfcdd1d7ff0955c6526f43a85df245ca6d6a881951035f84c2e06d0bbb2a1c7": {
+     "topic": "billing"
+    },
+    "4cc722395b0457c4c3acc10afc5c8db69018812c909a85223620eead6f10aee8": {
+     "topic": "other"
+    },
+    "3a60dc1a633d353069ef9a704a63cfa0c542036c7d386a11382c504ea1a5b24b": {
+     "topic": "usability"
+    },
+    "6cfee996d3a924c84323e5eedcf0ac8077787aad7b8a23bd386ecfdbd543e2f1": {
+     "intent": "cancellation",
+     "severity": "2"
+    },
+    "d38add5aac5cb1a5ac485a73a9249365b6301f05108263f033f8e6242375e6b4": {
+     "topic": "other"
+    },
+    "8ac3c17a0de1b7bbc0e04652cb4648de099e105cbe6070eebc2f87fb1428a786": {
+     "topic": "billing"
+    },
+    "f7ac099f9b4eb5f98f6fddfb370ba4f5d741a0496fa3d4d342fe3aa3ad9dda05": {
+     "topic": "other"
+    },
+    "8447ca5d739e671b6d2f0ac30f2216c8ebe6b2d5f11f459feb0b1cfaff520426": {
+     "topic": "playback",
+     "severity": "3"
+    },
+    "ce24667b27b04feff74fc2ec57e9362b606817ea54041a9c617c97cb568baee8": {
+     "topic": "playback"
+    },
+    "1a43a5ed1232732a9ae89d1f4fdbe82f65776b45c24111b83deb778186c6f945": {
+     "topic": "billing",
+     "severity": "3"
+    },
+    "858d4554d4c09bfcd078fef5f6941598482e9b6e83c392a4a75ed0f5633f9b66": {
+     "severity": "2"
+    },
+    "242ab8d4974273fd98e28a39093802991622a0ffcd4cb58639af869f17e7188d": {
+     "topic": "usability",
+     "severity": "3"
+    },
+    "fd01d45c8a95114613d713f56d372f6b973f449386b8faf8c06e6d694e04698a": {
+     "topic": "playback",
+     "severity": "3"
+    },
+    "1feb3562d216b2e627a20c18f5b8621dea1d18f4b4a72fc0875b648185a1cbed": {
+     "topic": "usability",
+     "severity": "2"
+    },
+    "216173a029152c6d5d6fafaa4d4e642458bdb8ec3b1ffa8bcfca039f990b3586": {
+     "topic": "usability"
+    },
+    "6f803cb9f2e51b70959e2006a35bd213a07bcb5d74b979f7dd35df0642f6a405": {
+     "severity": "1"
+    },
+    "1299d62c82d2d28723f286ebff205e003ec153fc9f24c0467591210618eb64d7": {
+     "severity": "2"
+    },
+    "6f3f3f5349ce62d03639479ce11bf8aeae50f89300d9cc70eb78dbba70d57da8": {
+     "severity": "4"
+    },
+    "22e9c6f1282c4cbb57c2109db374e18c59bef354b1cf74f2082890a0e839d668": {
+     "severity": "4"
+    },
+    "16148abbf0b9daa27befdb60eb1761d22e392b49f2832cde9e7b74f7c12a5e7f": {
+     "severity": "3"
+    },
+    "f4bc67348cb81366e95effc5ff139472f3d6fa3ff66cc34bac9e7945ed6eee39": {
+     "topic": "other",
+     "severity": "1"
+    },
+    "6d785acc7d4ce49fe4e4bbf276dc73f1cf7c20094d3e96fe84ef79fbebcaf88a": {
+     "topic": "other"
+    },
+    "dc5a3162adb39537389300bbd6b57f065c2623e6ae7778f09d0e5f34d506fc88": {
+     "topic": "other"
+    },
+    "de31646e292fe3e4f53eedf4be8ed407c405f0f8cd775117051f2fdd87b16374": {
+     "topic": "other"
+    },
+    "76e488b5b3a0153d264179bcca9e8ae61e782bbb74cf19659db307a73d612cf9": {
+     "severity": "3"
+    },
+    "fa932abc4e03717a970a150fd8d30eb101097bdd4107b2e8ebaf03818efd1376": {
+     "severity": "3"
+    },
+    "e542e53a790077065ff174b161d09cc762a9a5bf35031362b2e0ee9ea58c7b6b": {
+     "topic": "other"
+    },
+    "ec51d9f8452c8c8c1778e693cd761a89a4d4b28b43922c79fea90c0661e286c6": {
+     "topic": "other"
+    },
+    "a98b9d3205c9346d4a4e18e6ccb70dd38a1ab6da19874f19503b9787229d75d3": {
+     "severity": "3"
+    },
+    "33f84bb1ec199c4c1af1ea1fc6e760065fbd0971b04fffe65e1bc4e6924f2a76": {
+     "topic": "other"
+    },
+    "56c982a21f901bf691c074e251c077011148ae3d859b3ede42f2c922d212a0bf": {
+     "topic": "other"
+    },
+    "d2fae5ba8635d8df733e06eef35cd09daffea9798c23bdcd7a3304a122f9a3cf": {
+     "severity": "2"
+    },
+    "8f538bd4c6172ea310f44eee7c062ded7d8b4aa32a6d86b34a855259e91dc965": {
+     "severity": "1"
+    },
+    "fc56ed51d355b1e93139a168c119a67a908a009c76e67be1a4192a952d5d7efb": {
+     "topic": "other"
+    },
+    "756d8531cb9378cdf1181c7ce5eac77e5baf58c00f4e2914946f67b31242f804": {
+     "topic": "other"
+    },
+    "a9d22310e0430007568b74a603550ace29c0246614f3016c28355392aa667c02": {
+     "severity": "2"
+    }
+   }
+  },
+  "magnus-low": {
+   "model": "celeris-1-magnus",
+   "run_id": "run-20261014-202736-d83665",
+   "answers": {
+    "8b7bebe3bd4246f804349b877578b66937fe5e3882499365249ba15204e1ca0c": {
+     "intent": "complaint"
+    },
+    "1cfcdd1d7ff0955c6526f43a85df245ca6d6a881951035f84c2e06d0bbb2a1c7": {
+     "topic": "billing"
+    },
+    "4cc722395b0457c4c3acc10afc5c8db69018812c909a85223620eead6f10aee8": {
+     "topic": "other"
+    },
+    "3a60dc1a633d353069ef9a704a63cfa0c542036c7d386a11382c504ea1a5b24b": {
+     "topic": "usability"
+    },
+    "6cfee996d3a924c84323e5eedcf0ac8077787aad7b8a23bd386ecfdbd543e2f1": {
+     "intent": "cancellation",
+     "severity": "2"
+    },
+    "d38add5aac5cb1a5ac485a73a9249365b6301f05108263f033f8e6242375e6b4": {
+     "topic": "other"
+    },
+    "8ac3c17a0de1b7bbc0e04652cb4648de099e105cbe6070eebc2f87fb1428a786": {
+     "topic": "billing"
+    },
+    "f7ac099f9b4eb5f98f6fddfb370ba4f5d741a0496fa3d4d342fe3aa3ad9dda05": {
+     "topic": "other"
+    },
+    "8447ca5d739e671b6d2f0ac30f2216c8ebe6b2d5f11f459feb0b1cfaff520426": {
+     "topic": "playback",
+     "severity": "3"
+    },
+    "ce24667b27b04feff74fc2ec57e9362b606817ea54041a9c617c97cb568baee8": {
+     "topic": "playback"
+    },
+    "1a43a5ed1232732a9ae89d1f4fdbe82f65776b45c24111b83deb778186c6f945": {
+     "topic": "billing",
+     "severity": "3"
+    },
+    "858d4554d4c09bfcd078fef5f6941598482e9b6e83c392a4a75ed0f5633f9b66": {
+     "severity": "2"
+    },
+    "242ab8d4974273fd98e28a39093802991622a0ffcd4cb58639af869f17e7188d": {
+     "topic": "usability",
+     "severity": "3"
+    },
+    "fd01d45c8a95114613d713f56d372f6b973f449386b8faf8c06e6d694e04698a": {
+     "topic": "downloads",
+     "severity": "3"
+    },
+    "1feb3562d216b2e627a20c18f5b8621dea1d18f4b4a72fc0875b648185a1cbed": {
+     "topic": "usability",
+     "severity": "3"
+    },
+    "216173a029152c6d5d6fafaa4d4e642458bdb8ec3b1ffa8bcfca039f990b3586": {
+     "topic": "usability"
+    },
+    "6f803cb9f2e51b70959e2006a35bd213a07bcb5d74b979f7dd35df0642f6a405": {
+     "severity": "1"
+    },
+    "1299d62c82d2d28723f286ebff205e003ec153fc9f24c0467591210618eb64d7": {
+     "severity": "1"
+    },
+    "6f3f3f5349ce62d03639479ce11bf8aeae50f89300d9cc70eb78dbba70d57da8": {
+     "severity": "4"
+    },
+    "22e9c6f1282c4cbb57c2109db374e18c59bef354b1cf74f2082890a0e839d668": {
+     "severity": "3"
+    },
+    "16148abbf0b9daa27befdb60eb1761d22e392b49f2832cde9e7b74f7c12a5e7f": {
+     "severity": "3"
+    },
+    "f4bc67348cb81366e95effc5ff139472f3d6fa3ff66cc34bac9e7945ed6eee39": {
+     "topic": "catalog",
+     "severity": "1"
+    },
+    "6d785acc7d4ce49fe4e4bbf276dc73f1cf7c20094d3e96fe84ef79fbebcaf88a": {
+     "topic": "other"
+    },
+    "dc5a3162adb39537389300bbd6b57f065c2623e6ae7778f09d0e5f34d506fc88": {
+     "topic": "other"
+    },
+    "de31646e292fe3e4f53eedf4be8ed407c405f0f8cd775117051f2fdd87b16374": {
+     "topic": "catalog"
+    },
+    "76e488b5b3a0153d264179bcca9e8ae61e782bbb74cf19659db307a73d612cf9": {
+     "severity": "3"
+    },
+    "fa932abc4e03717a970a150fd8d30eb101097bdd4107b2e8ebaf03818efd1376": {
+     "severity": "4"
+    },
+    "e542e53a790077065ff174b161d09cc762a9a5bf35031362b2e0ee9ea58c7b6b": {
+     "topic": "other"
+    },
+    "ec51d9f8452c8c8c1778e693cd761a89a4d4b28b43922c79fea90c0661e286c6": {
+     "topic": "other"
+    },
+    "a98b9d3205c9346d4a4e18e6ccb70dd38a1ab6da19874f19503b9787229d75d3": {
+     "severity": "3"
+    },
+    "33f84bb1ec199c4c1af1ea1fc6e760065fbd0971b04fffe65e1bc4e6924f2a76": {
+     "topic": "other"
+    },
+    "56c982a21f901bf691c074e251c077011148ae3d859b3ede42f2c922d212a0bf": {
+     "topic": "other"
+    },
+    "d2fae5ba8635d8df733e06eef35cd09daffea9798c23bdcd7a3304a122f9a3cf": {
+     "severity": "2"
+    },
+    "8f538bd4c6172ea310f44eee7c062ded7d8b4aa32a6d86b34a855259e91dc965": {
+     "severity": "2"
+    },
+    "fc56ed51d355b1e93139a168c119a67a908a009c76e67be1a4192a952d5d7efb": {
+     "topic": "other"
+    },
+    "756d8531cb9378cdf1181c7ce5eac77e5baf58c00f4e2914946f67b31242f804": {
+     "topic": "other"
+    },
+    "a9d22310e0430007568b74a603550ace29c0246614f3016c28355392aa667c02": {
+     "severity": "2"
+    }
+   }
+  }
+ }
+}

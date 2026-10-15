@@ -1,0 +1,53 @@
+{
+ "agreement": {
+  "intent": {
+   "agree": 20,
+   "rate": 0.8
+  },
+  "severity": {
+   "agree": 19,
+   "rate": 0.76
+  },
+  "topic": {
+   "agree": 21,
+   "rate": 0.84
+  }
+ },
+ "all_fields_agree": {
+  "agree": 13,
+  "rate": 0.52
+ },
+ "by_decision_source": {
+  "decision": {
+   "all_fields_agree": 11,
+   "verified": 19
+  },
+  "escalation": {
+   "all_fields_agree": 2,
+   "verified": 6
+  }
+ },
+ "disagreeing_reviews": 12,
+ "disagreements": 15,
+ "files": [
+  "evals/verify/verifier_predictions.jsonl",
+  "evals/verify/disagreements.csv"
+ ],
+ "label_config": "pilot-celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1",
+ "sample": {
+  "method": "sha256(seed:text_sha256)/2^256 < rate over distinct texts with a result",
+  "queue": {
+   "done": 25
+  },
+  "rate": 0.2,
+  "seed": "verify-v1",
+  "size": 25
+ },
+ "severity_within_1": {
+  "agree": 25,
+  "rate": 1.0
+ },
+ "unverified": 0,
+ "verified": 25,
+ "verify_config": "claude-haiku-5-5+verifier-prompt-v1+effort-low"
+}

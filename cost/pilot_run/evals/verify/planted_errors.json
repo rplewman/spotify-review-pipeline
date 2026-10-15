@@ -1,0 +1,28 @@
+{
+ "detected": 3,
+ "label_config": "pilot-celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1",
+ "missed": 0,
+ "note": "test copy only; excluded from business aggregates",
+ "planted": [
+  {
+   "field": "topic",
+   "planted": "support",
+   "review_id": "ad730d1a-829a-4dc4-9561-7e1cd07e2c30",
+   "true_first_label": "billing"
+  },
+  {
+   "field": "topic",
+   "planted": "access",
+   "review_id": "0f2b7fd2-71a6-4657-998e-da44f5893956",
+   "true_first_label": "other"
+  },
+  {
+   "field": "topic",
+   "planted": "access",
+   "review_id": "1d9f396e-7a8a-414b-a622-3ad6f9570abe",
+   "true_first_label": "other"
+  }
+ ],
+ "synthetic": true,
+ "verify_config": "claude-haiku-5-5+verifier-prompt-v1+effort-low"
+}

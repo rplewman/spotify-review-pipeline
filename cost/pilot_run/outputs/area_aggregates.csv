@@ -1,0 +1,6 @@
+area,topics,issue_count,complaint_count,cancellation_count,severity_sum,mean_severity,share_of_members,share_of_severity,top_issue_id
+access,access,2,2,0,10,5.000000,0.039216,0.067568,access-account
+usability,usability,5,13,1,37,2.846154,0.254902,0.250000,usability-general
+playback,playback|downloads,5,10,0,40,4.000000,0.196078,0.270270,playback-general
+billing/support,billing|support,2,6,0,23,3.833333,0.117647,0.155405,billing-premium_limits
+outside,catalog|other,3,20,2,38,1.900000,0.392157,0.256757,other-general

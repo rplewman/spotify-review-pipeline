@@ -1,0 +1,79 @@
+{
+ "shape_A_vs_B": {
+  "reviews_compared": 100,
+  "label_config_A": "pilot-celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1",
+  "label_config_B": "pilot-shapeB",
+  "agreement": {
+   "topic": 0.82,
+   "intent": 0.85,
+   "severity": 0.73
+  },
+  "sentiment_mean_abs_diff": 0.3353,
+  "A": {
+   "requests": 2,
+   "input_tokens": 27509,
+   "input_tokens_per_review": 275.09,
+   "usd": 0.0011003599999999999,
+   "latency_ms_per_review": 23.26
+  },
+  "B": {
+   "requests": 100,
+   "input_tokens": 55487,
+   "input_tokens_per_review": 554.87,
+   "usd": 0.0022194800000000002,
+   "latency_ms_per_review": 118.05
+  }
+ },
+ "escalation_candidates": {
+  "reviews": 37,
+  "questions": 44,
+  "variants": {
+   "haiku-low": {
+    "model": "claude-haiku-5-5",
+    "answered": 44,
+    "agrees_with_a3_top1": 0.6363636363636364,
+    "attempts": 1,
+    "succeeded": 1,
+    "input_tokens": 4179,
+    "output_tokens": 1213,
+    "usd": 0.0009047,
+    "usd_per_review": 2.4451351351351354e-05,
+    "latency_ms": 4933
+   },
+   "haiku-off": {
+    "model": "claude-haiku-5-5",
+    "answered": 44,
+    "agrees_with_a3_top1": 0.6818181818181818,
+    "attempts": 1,
+    "succeeded": 1,
+    "input_tokens": 4178,
+    "output_tokens": 1211,
+    "usd": 0.001056525,
+    "usd_per_review": 2.855472972972973e-05,
+    "latency_ms": 4965
+   },
+   "magnus-low": {
+    "model": "celeris-1-magnus",
+    "answered": 44,
+    "agrees_with_a3_top1": 0.5681818181818182,
+    "attempts": 1,
+    "succeeded": 1,
+    "input_tokens": 2792,
+    "output_tokens": 6702,
+    "usd": 0.005249799999999999,
+    "usd_per_review": 0.00014188648648648646,
+    "latency_ms": 23412
+   }
+  },
+  "pairwise_agreement": {
+   "haiku-low vs haiku-off": 0.9545454545454546,
+   "haiku-low vs magnus-low": 0.7954545454545454,
+   "haiku-off vs magnus-low": 0.7954545454545454
+  }
+ },
+ "not_run": {
+  "sonnet_escalation": "not run; modeled only (higher per-token price than Haiku, PLAN \u00a74)",
+  "haiku_only_enrichment": "not run; modeled: every review through Haiku \u2248 the contract's GPT-6 Luna illustration order of magnitude (PLAN \u00a74 reference point)",
+  "batch_vs_standard_other_stages": "not run; Batch API = 50% of standard token prices (rates.csv), only A8 uses it"
+ }
+}

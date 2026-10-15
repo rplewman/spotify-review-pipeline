@@ -1,0 +1,754 @@
+{
+ "controls": {
+  "budget_usd": 10.0,
+  "output_token_cap": 4000,
+  "max_concurrency": 4,
+  "max_fallback_fraction": 0.15,
+  "verify_rate": 0.05,
+  "verify_tier": "batch"
+ },
+ "volumes": {
+  "full_with_reuse": {
+   "rows": 660622,
+   "outputs": 660609,
+   "quarantined": 13,
+   "distinct": 484189
+  },
+  "full_no_reuse": {
+   "rows": 660622,
+   "outputs": 660609,
+   "quarantined": 13,
+   "distinct": 660609
+  },
+  "scope_100k": {
+   "rows": 100000,
+   "outputs": 100000,
+   "quarantined": 0,
+   "distinct": 78099
+  }
+ },
+ "measured": {
+  "input": {
+   "file": "cost_100.csv",
+   "sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+   "manifest_sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+   "match": true,
+   "rows": 100,
+   "ids_sha256": "02066ea0d4aedb7eec70b84bdcff12505bf60f7cf703f14c76e335177718572e"
+  },
+  "records": {
+   "completed": 100,
+   "quarantined": 0,
+   "rows": 100,
+   "completed_via_exact_text_reuse": 0
+  },
+  "unique_texts": 100,
+  "routes": {
+   "accept": 63,
+   "capped": 22,
+   "escalate": 15
+  },
+  "verification": {
+   "declared_sample_rate": 0.2,
+   "seed": "verify-v1",
+   "sampled_texts": 25,
+   "verified_texts": 25,
+   "tier": "standard (real time)"
+  },
+  "label_config": "pilot-celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1",
+  "stage_config": {
+   "enrich_decision": {
+    "agent": "A3",
+    "provider": "celeris",
+    "model": "celeris-1-decision",
+    "effort": "n/a (decision model)",
+    "prompt_version": "prompt-v1",
+    "schema_version": "schema-v1",
+    "shape": "A",
+    "batch_size": 50,
+    "workers": 1
+   },
+   "enrich_escalation": {
+    "agent": "A5",
+    "model": "claude-haiku-5-5",
+    "effort": "low",
+    "prompt_version": "escalation-prompt-v1",
+    "gate": 0.6,
+    "esc_fraction_cap": 0.15,
+    "batch_size": "\u2264 50 (the batch's escalated texts)",
+    "workers": 1
+   },
+   "extract_validate": {
+    "agent": "A6+A7",
+    "model": "code",
+    "version": "extract-code-v1+schema-v1"
+   },
+   "verify": {
+    "agent": "A8",
+    "model": "claude-haiku-5-5",
+    "effort": "low",
+    "prompt_version": "verifier-prompt-v1",
+    "batch_size": 50,
+    "workers": 1,
+    "tier": "standard"
+   },
+   "group": {
+    "agent": "A9",
+    "model": "claude-haiku-5-5",
+    "effort": "low",
+    "prompt_version": "grouper-prompt-v1"
+   },
+   "rank": {
+    "agent": "A10",
+    "model": "code"
+   },
+   "memo": {
+    "agent": "A11",
+    "model": "claude-haiku-5-5",
+    "effort": "low",
+    "prompt_version": "memo-prompt-v1"
+   }
+  },
+  "stages": {
+   "A3": {
+    "unit": "distinct text decided",
+    "units": 100,
+    "attempts": 2,
+    "succeeded": 2,
+    "failed": 0,
+    "items": {
+     "celeris/celeris-1-decision/standard/input_tokens": 27509.0
+    },
+    "cost": 0.00110036,
+    "cold_cost": 0.00110036,
+    "warm_cost": 0.0
+   },
+   "A5": {
+    "unit": "escalated text",
+    "units": 15,
+    "attempts": 1,
+    "succeeded": 1,
+    "failed": 0,
+    "items": {
+     "anthropic/claude-haiku-5-5/standard_le100k/input_tokens": 1430.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/cache_write_5m_tokens": 1330.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/output_tokens": 590.0
+    },
+    "cost": 0.00060425,
+    "cold_cost": 0.00060425,
+    "warm_cost": 0.0
+   },
+   "A8": {
+    "unit": "verified text",
+    "units": 25,
+    "attempts": 1,
+    "succeeded": 1,
+    "failed": 0,
+    "items": {
+     "anthropic/claude-haiku-5-5/standard_le100k/input_tokens": 1082.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/cache_write_5m_tokens": 1315.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/output_tokens": 2262.0
+    },
+    "cost": 0.0014035749999999998,
+    "cold_cost": 0.0014035749999999998,
+    "warm_cost": 0.0
+   },
+   "A9": {
+    "unit": "run",
+    "units": 1,
+    "attempts": 1,
+    "succeeded": 1,
+    "failed": 0,
+    "items": {
+     "anthropic/claude-haiku-5-5/standard_le100k/input_tokens": 4621.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/output_tokens": 1062.0
+    },
+    "cost": 0.0009931,
+    "cold_cost": 0.0009931,
+    "warm_cost": 0.0
+   },
+   "A11": {
+    "unit": "run",
+    "units": 1,
+    "attempts": 1,
+    "succeeded": 1,
+    "failed": 0,
+    "items": {
+     "anthropic/claude-haiku-5-5/standard_le100k/input_tokens": 5263.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/cache_write_5m_tokens": 1157.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/output_tokens": 3159.0
+    },
+    "cost": 0.002250425,
+    "cold_cost": 0.002250425,
+    "warm_cost": 0.0
+   }
+  },
+  "api_subtotal_usd": 0.00635171,
+  "api_by_provider_usd": {
+   "celeris": 0.00110036,
+   "anthropic": 0.00525135
+  },
+  "unknown_billing_usd": 0,
+  "unknown_billing_attempts": 0,
+  "cold": {
+   "seconds": 42.006,
+   "calls": 6,
+   "stages": [
+    {
+     "stage": "ingest",
+     "seconds": 0.02,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": []
+    },
+    {
+     "stage": "enrich",
+     "seconds": 6.262,
+     "rc": 0,
+     "new_calls": 3,
+     "run_ids": [
+      "run-20261014-202626-4e6498"
+     ]
+    },
+    {
+     "stage": "verify",
+     "seconds": 10.111,
+     "rc": 0,
+     "new_calls": 1,
+     "run_ids": [
+      "run-20261014-202632-c7f99c"
+     ]
+    },
+    {
+     "stage": "group",
+     "seconds": 6.891,
+     "rc": 0,
+     "new_calls": 1,
+     "run_ids": [
+      "run-20261014-202642-752478"
+     ]
+    },
+    {
+     "stage": "rank",
+     "seconds": 0.067,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": []
+    },
+    {
+     "stage": "memo",
+     "seconds": 18.382,
+     "rc": 0,
+     "new_calls": 1,
+     "run_ids": [
+      "run-20261014-202649-494e5d"
+     ]
+    }
+   ],
+   "api_usd": 0.00635171
+  },
+  "warm": {
+   "seconds": 0.341,
+   "calls": 0,
+   "enrich_calls": 0,
+   "stages": [
+    {
+     "stage": "enrich",
+     "seconds": 0.069,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": [
+      "run-20261014-202707-28727a"
+     ]
+    },
+    {
+     "stage": "verify",
+     "seconds": 0.073,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": [
+      "run-20261014-202708-eb789a"
+     ]
+    },
+    {
+     "stage": "group",
+     "seconds": 0.029,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": [
+      "run-20261014-202708-1105dc"
+     ]
+    },
+    {
+     "stage": "rank",
+     "seconds": 0.038,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": []
+    },
+    {
+     "stage": "memo",
+     "seconds": 0.03,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": [
+      "run-20261014-202708-a5ca9c"
+     ]
+    }
+   ],
+   "incremental_api_usd": 0.0
+  },
+  "throughput_rows_per_s": 2.3806122934818834,
+  "cost_per_1000_rows_usd": 0.0635171,
+  "cost_per_completed_record_usd": 6.35171e-05,
+  "rates_used": [
+   {
+    "key": "anthropic/claude-haiku-5-5/standard_le100k/cache_write_5m_tokens",
+    "usd_per_million": 0.125,
+    "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "checked": "2026-10-12",
+    "currency": "USD"
+   },
+   {
+    "key": "anthropic/claude-haiku-5-5/standard_le100k/input_tokens",
+    "usd_per_million": 0.1,
+    "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "checked": "2026-10-12",
+    "currency": "USD"
+   },
+   {
+    "key": "anthropic/claude-haiku-5-5/standard_le100k/output_tokens",
+    "usd_per_million": 0.5,
+    "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "checked": "2026-10-12",
+    "currency": "USD"
+   },
+   {
+    "key": "celeris/celeris-1-decision/standard/input_tokens",
+    "usd_per_million": 0.04,
+    "source": "https://docs.celeris.ai/pricing",
+    "checked": "2026-10-12",
+    "currency": "USD"
+   }
+  ],
+  "local_compute": {
+   "usd": "unknown (local laptop CPU and SQLite; not billed, not metered)",
+   "note": "reported apart from API spend; times above include local work"
+  }
+ },
+ "projections": {
+  "full_with_reuse": {
+   "base": {
+    "stages": {
+     "A3": {
+      "units": 484189,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 133195552.00999999
+      },
+      "usd": 5.3278220804
+     },
+     "A5": {
+      "units": 72628.34999999999,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 6923902.699999999,
+       "cache_write_5m_tokens": 6439713.699999999,
+       "output_tokens": 2856715.0999999996
+      },
+      "usd": 2.9257120324999994
+     },
+     "A8": {
+      "units": 24209.45,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 1047784.996,
+       "cache_write_5m_tokens": 1273417.07,
+       "output_tokens": 2190471.0360000003
+      },
+      "usd": 0.6636778623000001
+     },
+     "A9": {
+      "units": 1,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 4621.0,
+       "output_tokens": 1062.0
+      },
+      "usd": 0.0009931
+     },
+     "A11": {
+      "units": 1,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 5263.0,
+       "cache_write_5m_tokens": 1157.0,
+       "output_tokens": 3159.0
+      },
+      "usd": 0.002250425
+     }
+    },
+    "fallback_fraction": 0.15,
+    "api_usd": 8.9204555002,
+    "time": {
+     "stages_s": {
+      "ingest": 132.1244,
+      "enrich": 7579.978794999999,
+      "verify": 3600.0,
+      "group": 6.891,
+      "rank": 0.067,
+      "memo": 18.382
+     },
+     "total_s": 11337.443195,
+     "throughput_rows_per_s": 58.26904608363068
+    },
+    "cost_per_1000_rows_usd": 0.013503116003100106,
+    "cost_per_output_usd": 1.3503381728374876e-05
+   },
+   "conservative": {
+    "stages": {
+     "A3": {
+      "units": 484189,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 183143884.01375
+      },
+      "usd": 7.32575536055
+     },
+     "A5": {
+      "units": 72628.34999999999,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 9520366.212499999,
+       "cache_write_5m_tokens": 8854606.3375,
+       "output_tokens": 4713579.915
+      },
+      "usd": 4.415652370937499
+     },
+     "A8": {
+      "units": 24209.45,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 1440704.3695000003,
+       "cache_write_5m_tokens": 1750948.4712500004,
+       "output_tokens": 3614277.2094000005
+      },
+      "usd": 1.0631519443875002
+     },
+     "A9": {
+      "units": 1,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 10166.2,
+       "output_tokens": 2336.4
+      },
+      "usd": 0.0021848200000000005
+     },
+     "A11": {
+      "units": 1,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 11578.6,
+       "cache_write_5m_tokens": 2545.4,
+       "output_tokens": 6949.8
+      },
+      "usd": 0.004950935
+     }
+    },
+    "fallback_fraction": 0.15,
+    "api_usd": 12.811695430874998,
+    "time": {
+     "stages_s": {
+      "ingest": 132.1244,
+      "enrich": 15159.957589999998,
+      "verify": 86400.0,
+      "group": 13.782,
+      "rank": 0.134,
+      "memo": 36.764
+     },
+     "total_s": 101742.76199,
+     "throughput_rows_per_s": 6.493061394037353
+    },
+    "cost_per_1000_rows_usd": 0.019393382949515755,
+    "cost_per_output_usd": 1.9393764588243574e-05
+   }
+  },
+  "full_no_reuse": {
+   "base": {
+    "stages": {
+     "A3": {
+      "units": 660609,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 181726929.80999997
+      },
+      "usd": 7.269077192399999
+     },
+     "A5": {
+      "units": 99091.34999999999,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 9446708.7,
+       "cache_write_5m_tokens": 8786099.7,
+       "output_tokens": 3897593.1
+      },
+      "usd": 3.9917298825
+     },
+     "A8": {
+      "units": 33030.450000000004,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 1429557.8760000002,
+       "cache_write_5m_tokens": 1737401.6700000004,
+       "output_tokens": 2988595.1160000004
+      },
+      "usd": 0.9054967563000001
+     },
+     "A9": {
+      "units": 1,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 4621.0,
+       "output_tokens": 1062.0
+      },
+      "usd": 0.0009931
+     },
+     "A11": {
+      "units": 1,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 5263.0,
+       "cache_write_5m_tokens": 1157.0,
+       "output_tokens": 3159.0
+      },
+      "usd": 0.002250425
+     }
+    },
+    "fallback_fraction": 0.15,
+    "api_usd": 12.169547356199999,
+    "time": {
+     "stages_s": {
+      "ingest": 132.1244,
+      "enrich": 10341.833895,
+      "verify": 3600.0,
+      "group": 6.891,
+      "rank": 0.067,
+      "memo": 18.382
+     },
+     "total_s": 14099.298295,
+     "throughput_rows_per_s": 46.85495591183249
+    },
+    "cost_per_1000_rows_usd": 0.01842134739109506,
+    "cost_per_output_usd": 1.8421709901318328e-05
+   },
+   "conservative": {
+    "stages": {
+     "A3": {
+      "units": 660609,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 249874528.48874998
+      },
+      "usd": 9.99498113955
+     },
+     "A5": {
+      "units": 99091.34999999999,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 12989224.462499999,
+       "cache_write_5m_tokens": 12080887.0875,
+       "output_tokens": 6431028.615
+      },
+      "usd": 6.0245476396874995
+     },
+     "A8": {
+      "units": 33030.450000000004,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 1965642.0795000005,
+       "cache_write_5m_tokens": 2388927.2962500006,
+       "output_tokens": 4931181.941400001
+      },
+      "usd": 1.4505239541375001
+     },
+     "A9": {
+      "units": 1,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 10166.2,
+       "output_tokens": 2336.4
+      },
+      "usd": 0.0021848200000000005
+     },
+     "A11": {
+      "units": 1,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 11578.6,
+       "cache_write_5m_tokens": 2545.4,
+       "output_tokens": 6949.8
+      },
+      "usd": 0.004950935
+     }
+    },
+    "fallback_fraction": 0.15,
+    "api_usd": 17.477188488375,
+    "time": {
+     "stages_s": {
+      "ingest": 132.1244,
+      "enrich": 20683.66779,
+      "verify": 86400.0,
+      "group": 13.782,
+      "rank": 0.134,
+      "memo": 36.764
+     },
+     "total_s": 107266.47219,
+     "throughput_rows_per_s": 6.158699792325108
+    },
+    "cost_per_1000_rows_usd": 0.026455656167028947,
+    "cost_per_output_usd": 2.6456176782900322e-05
+   }
+  },
+  "scope_100k": {
+   "base": {
+    "stages": {
+     "A3": {
+      "units": 78099,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 21484253.909999996
+      },
+      "usd": 0.8593701563999999
+     },
+     "A5": {
+      "units": 11714.85,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 1116815.7,
+       "cache_write_5m_tokens": 1038716.7000000001,
+       "output_tokens": 460784.10000000003
+      },
+      "usd": 0.4719132075
+     },
+     "A8": {
+      "units": 3904.9500000000003,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 169006.236,
+       "cache_write_5m_tokens": 205400.37000000002,
+       "output_tokens": 353319.87600000005
+      },
+      "usd": 0.10705029930000001
+     },
+     "A9": {
+      "units": 1,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 4621.0,
+       "output_tokens": 1062.0
+      },
+      "usd": 0.0009931
+     },
+     "A11": {
+      "units": 1,
+      "retry_overhead": 0.0,
+      "tokens": {
+       "input_tokens": 5263.0,
+       "cache_write_5m_tokens": 1157.0,
+       "output_tokens": 3159.0
+      },
+      "usd": 0.002250425
+     }
+    },
+    "fallback_fraction": 0.15,
+    "api_usd": 1.4415771882,
+    "time": {
+     "stages_s": {
+      "ingest": 20.0,
+      "enrich": 1222.639845,
+      "verify": 3600.0,
+      "group": 6.891,
+      "rank": 0.067,
+      "memo": 18.382
+     },
+     "total_s": 4867.979845,
+     "throughput_rows_per_s": 20.542402225167802
+    },
+    "cost_per_1000_rows_usd": 0.014415771882,
+    "cost_per_output_usd": 1.4415771882e-05
+   },
+   "conservative": {
+    "stages": {
+     "A3": {
+      "units": 78099,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 29540849.12625
+      },
+      "usd": 1.18163396505
+     },
+     "A5": {
+      "units": 11714.85,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 1535621.5875000001,
+       "cache_write_5m_tokens": 1428235.4625000004,
+       "output_tokens": 760293.7650000001
+      },
+      "usd": 0.7122384740625001
+     },
+     "A8": {
+      "units": 3904.9500000000003,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 232383.57450000005,
+       "cache_write_5m_tokens": 282425.50875000004,
+       "output_tokens": 582977.7954000001
+      },
+      "usd": 0.17148490301250002
+     },
+     "A9": {
+      "units": 1,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 10166.2,
+       "output_tokens": 2336.4
+      },
+      "usd": 0.0021848200000000005
+     },
+     "A11": {
+      "units": 1,
+      "retry_overhead": 0.1,
+      "tokens": {
+       "input_tokens": 11578.6,
+       "cache_write_5m_tokens": 2545.4,
+       "output_tokens": 6949.8
+      },
+      "usd": 0.004950935
+     }
+    },
+    "fallback_fraction": 0.15,
+    "api_usd": 2.072493097125,
+    "time": {
+     "stages_s": {
+      "ingest": 20.0,
+      "enrich": 2445.27969,
+      "verify": 86400.0,
+      "group": 13.782,
+      "rank": 0.134,
+      "memo": 36.764
+     },
+     "total_s": 88915.95969,
+     "throughput_rows_per_s": 1.1246574894838206
+    },
+    "cost_per_1000_rows_usd": 0.02072493097125,
+    "cost_per_output_usd": 2.072493097125e-05
+   }
+  }
+ },
+ "warnings": [
+  "OVER BUDGET: full_with_reuse (conservative) $12.81 > budget $10.00",
+  "OVER BUDGET: full_no_reuse (base) $12.17 > budget $10.00",
+  "OVER BUDGET: full_no_reuse (conservative) $17.48 > budget $10.00"
+ ]
+}

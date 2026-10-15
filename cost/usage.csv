@@ -1,0 +1,14 @@
+request_id,run_id,pilot_phase,stage,agent,provider,model,tier,item,units,unit,usage_available,outcome
+55d32c447a104e0da89a354d188caade,run-20261014-202626-4e6498,cold,enrich,A3,celeris,celeris-1-decision,standard,input_tokens,13738,tokens,1,succeeded
+4e29882653ee4fc19bbe4fb9ff40488d,run-20261014-202626-4e6498,cold,enrich,A5,anthropic,claude-haiku-5-5,standard_le100k,input_tokens,1430,tokens,1,succeeded
+4e29882653ee4fc19bbe4fb9ff40488d,run-20261014-202626-4e6498,cold,enrich,A5,anthropic,claude-haiku-5-5,standard_le100k,cache_write_5m_tokens,1330,tokens,1,succeeded
+4e29882653ee4fc19bbe4fb9ff40488d,run-20261014-202626-4e6498,cold,enrich,A5,anthropic,claude-haiku-5-5,standard_le100k,output_tokens,590,tokens,1,succeeded
+9f3715d8250c4e739f57954559757da1,run-20261014-202626-4e6498,cold,enrich,A3,celeris,celeris-1-decision,standard,input_tokens,13771,tokens,1,succeeded
+d8fc1db841c44af6832b00e91c6f78a1,run-20261014-202632-c7f99c,cold,verify,A8,anthropic,claude-haiku-5-5,standard_le100k,input_tokens,1082,tokens,1,succeeded
+d8fc1db841c44af6832b00e91c6f78a1,run-20261014-202632-c7f99c,cold,verify,A8,anthropic,claude-haiku-5-5,standard_le100k,cache_write_5m_tokens,1315,tokens,1,succeeded
+d8fc1db841c44af6832b00e91c6f78a1,run-20261014-202632-c7f99c,cold,verify,A8,anthropic,claude-haiku-5-5,standard_le100k,output_tokens,2262,tokens,1,succeeded
+62cb892df2dc4ccc8adbb43c22514530,run-20261014-202642-752478,cold,group,A9,anthropic,claude-haiku-5-5,standard_le100k,input_tokens,4621,tokens,1,succeeded
+62cb892df2dc4ccc8adbb43c22514530,run-20261014-202642-752478,cold,group,A9,anthropic,claude-haiku-5-5,standard_le100k,output_tokens,1062,tokens,1,succeeded
+6eda06b0d72a41e0842f26b3db96456c,run-20261014-202649-494e5d,cold,memo,A11,anthropic,claude-haiku-5-5,standard_le100k,input_tokens,5263,tokens,1,succeeded
+6eda06b0d72a41e0842f26b3db96456c,run-20261014-202649-494e5d,cold,memo,A11,anthropic,claude-haiku-5-5,standard_le100k,cache_write_5m_tokens,1157,tokens,1,succeeded
+6eda06b0d72a41e0842f26b3db96456c,run-20261014-202649-494e5d,cold,memo,A11,anthropic,claude-haiku-5-5,standard_le100k,output_tokens,3159,tokens,1,succeeded

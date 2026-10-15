@@ -1,0 +1,18 @@
+rank,issue_id,name,topic,subtopic,area,complaint_count,cancellation_count,severity_sum,mean_severity,priority_score,needs_review_count,share_of_members
+1,other-general,Vague negative app reviews,other,general,outside,16,2,31,1.937500,31,3,0.313725
+2,billing-premium_limits,Basic features locked behind premium,billing,premium_limits,billing/support,5,0,19,3.800000,19,0,0.098039
+3,playback-general,Playback freezes and bugs,playback,general,playback,5,0,19,3.800000,19,2,0.098039
+4,usability-general,Ads and restrictions frustrate users,usability,general,usability,4,1,12,3.000000,12,1,0.078431
+5,usability-ads,Too many ads during listening,usability,ads,usability,4,0,11,2.750000,11,1,0.078431
+6,playback-stops_skips,Songs stop partway through,playback,stops_skips,playback,2,0,8,4.000000,8,2,0.039216
+7,usability-library_playlists,Playlist shuffle and browsing frustrate users,usability,library_playlists,usability,3,0,7,2.333333,7,0,0.058824
+8,access-account,Cannot log into account,access,account,access,1,0,5,5.000000,5,0,0.019608
+9,access-password,Password rejected at login,access,password,access,1,0,5,5.000000,5,0,0.019608
+10,downloads-offline_mode,Offline mode not working,downloads,offline_mode,playback,1,0,5,5.000000,5,1,0.019608
+11,playback-crashes,App crashes after latest update,playback,crashes,playback,1,0,5,5.000000,5,0,0.019608
+12,billing-subscription,Premium required for basic playback,billing,subscription,billing/support,1,0,4,4.000000,4,0,0.019608
+13,catalog-lyrics,Lyrics missing or inconsistent,catalog,lyrics,outside,2,0,4,2.000000,4,1,0.039216
+14,usability-playback_controls,Skip limit blocks playlist listening,usability,playback_controls,usability,1,0,4,4.000000,4,0,0.019608
+15,catalog-general,Song and genre selection is limited,catalog,general,outside,2,0,3,1.500000,3,1,0.039216
+16,playback-connection,"Wi-Fi connection fails, mobile data works",playback,connection,playback,1,0,3,3.000000,3,0,0.019608
+17,usability-interface,Basic music player features removed,usability,interface,usability,1,0,3,3.000000,3,0,0.019608

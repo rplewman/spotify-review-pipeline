@@ -1,6 +1,56 @@
 # STATUS — handoff log
 
-## Last completed: M4 (Downstream stages, thin versions) — ✅ gate passed 2026-10-14 (no spend)
+## Last completed: M5 (Cost calculator + 100-review pilot) — ✅ gate passed 2026-10-14 (💰 $0.0169 list, approved by Rory)
+
+### Done (M5)
+- **`pilot` command** (`pipeline/pilot.py`, `cli pilot`): verifies `cost_100.csv` against the manifest checksum, refuses an existing
+  DB (cold = empty cache), 1 worker, every stage through the normal CLI (ingest → enrich A3–A7 → verify A8 **standard tier, declared
+  pilot rate 0.2** → group → rank → memo), then a warm rerun. Exports `cost/{pilot_records.jsonl, pilot_calls.jsonl, usage.csv,
+  pilot_measured.json}` + stage outputs in `cost/pilot_run/`. `calls.cache_write_tokens` added (Anthropic cache writes priced apart).
+- **Calculator** (`cost/calculator.py`, stdlib only, offline): usage.csv × rates.csv → `cost/report.{md,html,json}`; measured table
+  (§9.6), projections full-with-reuse / full-no-reuse / 100k scope × base + conservative, controls (budget, output-token cap,
+  concurrency, fallback fraction, verify rate/tier, volumes), budget + PLAN §4 bucket warnings. `cost/README.md` = replay vs pilot commands.
+- **Comparisons** (`scripts/pilot_compare.py` → `cost/comparisons.{md,json}`); `MagnusProvider` (chat completions at
+  `…/celeris-1-magnus/v1`, JSON mode — endpoint confirmed by a live 200).
+- Claude client sends `anthropic-workspace-id` from `ANTHROPIC_WORKSPACE_ID` (Rory's key is not workspace-scoped; now in `.env`).
+- Tests `tests/test_m5_cost.py` (10): the gate (2× rates → 2× API subtotal, measured and projected; times/counts/local unchanged;
+  volume change → measured identical), pilot evidence + 100 IDs = cost_100 order, refusals, billing items mutually exclusive,
+  comparisons offline, magnus on a mocked transport. Fast suite: **104 passed**.
+
+### Measured (pilot, `state/pilot.db`)
+- 100/100 completed, 0 quarantined, 100 distinct texts (no duplicates in cost_100). Cold **42 s, 6 calls, $0.006352**
+  (Celeris $0.0011 = 275 input tokens/review; Haiku A5 $0.0006, A8 $0.0014, A9 $0.0010, A11 $0.0023). **Warm 0.3 s, 0 calls.**
+- A4 at gate 0.60: accept 63, **escalate 15 (the 0.15 cap), capped 22** → 37% of reviews are below the gate. A8 agreement on
+  25 texts: topic 84%, intent 80%, severity 76%. Memo passed validation first try (priority: playback, pilot data only).
+- Haiku: structured output + effort low works; cache writes ~1.1–1.3k tokens/call, 0 reads in the pilot (one call per stage).
+- **Shape A vs B**: B = 555 tokens/review vs A 275 (2×), 5× slower; top-label agreement topic 82%, intent 85%, severity 73%.
+  A stays the default; whether A or B is *right* where they differ is for the M6 golden eval (B on golden 50 ≈ $0.001).
+- **Escalation candidates** (37 low-conf reviews, 44 questions): Haiku-low $0.0009, Haiku-thinking-off $0.0011 (cache write),
+  identical output tokens (~1.2k) and 95% agreement → effort low barely thinks; **magnus $0.0053 (6×), 23 s, 80% agreement** →
+  Haiku stays. Not run (modeled only): Sonnet, Haiku-only enrichment, Batch vs standard for other stages.
+
+### Projections (cost/report.md, defaults: concurrency 4, fallback cap 0.15, verify 5% batch)
+- **100k scope: base $1.44, conservative $2.07** (A3 $0.86 / A5 $0.47 / A8 $0.11) → fits every PLAN §4 bucket.
+- Full corpus with reuse: base $8.92, conservative $12.81 (over $10); no reuse: $12.17 / $17.48. Input to the §1.2 decision in M6:
+  at the current A5 fraction the full corpus does not fit with margin; it only fits if escalation share/cost drops.
+
+### Spend to date (list price; see `cost/report_reconciliation.md`)
+- M5: **$0.016881** = Celeris $0.009669 (prepaid credit) + Anthropic $0.007212 (cash). Includes 2 failed pilot attempts
+  ($0.00055 each, Celeris only; Haiku 400 workspace error not billed) kept in `state/pilot_attempt{1,2}.db`.
+- Project total ≈ $0.0169. **The ledger cap is per DB: `state/pipeline.db` does not see this spend** — M8 must leave room for it.
+- Provider dashboards not yet reconciled (Rory: compare Celeris + Anthropic Console usage for 2026-10-14 with the note).
+
+### Notes for M6
+- Gate sweep: 37% below 0.60 vs a 0.15 cap → 22% of pilot reviews ended needs_review (capped). `results.probs_json` has a3/a4/a5.
+- Consider Haiku `thinking: disabled` for A5 (same answers in the pilot, no thinking tokens risk) — decide on golden accuracy.
+- Comparisons need `state/pilot.db`, `state/pilot_shapeB.db`, `state/pilot_compare.db` (gitignored; `cost/` holds the evidence).
+
+### Next step
+M6 (Scale checkpoints 500 → 10,000 + golden evaluation): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M6, then do M6."
+
+---
+
+## Previously completed: M4 (Downstream stages, thin versions) — ✅ gate passed 2026-10-14 (no spend)
 
 ### Done (M4)
 - **A8 Verifier** (`agents/verifier.py`, `prompts/verifier_system_v1.md`): declared seeded sample = distinct texts with a

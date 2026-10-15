@@ -1,0 +1,11 @@
+claim_id,issue_id,metric,value
+C02a,billing-premium_limits,complaint_count,5
+C02b,billing-premium_limits,severity_sum,19
+C03a,playback-general,complaint_count,5
+C03b,playback-general,severity_sum,19
+C03c,playback-general,mean_severity,3.800000
+C04a,usability-general,complaint_count,4
+C06a,playback-stops_skips,complaint_count,2
+C06b,playback-stops_skips,severity_sum,8
+C10a,downloads-offline_mode,complaint_count,1
+C10b,downloads-offline_mode,severity_sum,5
