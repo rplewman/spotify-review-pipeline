@@ -1,0 +1,539 @@
+{
+ "input_sha256": "62ba8adbd945f70ace5c0afbb571d398044ad6583aee83fa19047fa653993e86",
+ "pack": {
+  "areas": [
+   {
+    "area": "access",
+    "cancellation_count": 334,
+    "complaint_count": 2339,
+    "issue_count": 4,
+    "mean_severity": "3.637452",
+    "severity_sum": 8508,
+    "share_of_members": "2.3%",
+    "share_of_severity": "3.7%",
+    "top_issue_id": "access-login",
+    "topics": "access"
+   },
+   {
+    "area": "usability",
+    "cancellation_count": 423,
+    "complaint_count": 20720,
+    "issue_count": 5,
+    "mean_severity": "2.469498",
+    "severity_sum": 51168,
+    "share_of_members": "20.4%",
+    "share_of_severity": "22.2%",
+    "top_issue_id": "usability-ads",
+    "topics": "usability"
+   },
+   {
+    "area": "playback",
+    "cancellation_count": 186,
+    "complaint_count": 9055,
+    "issue_count": 10,
+    "mean_severity": "3.335726",
+    "severity_sum": 30205,
+    "share_of_members": "8.9%",
+    "share_of_severity": "13.1%",
+    "top_issue_id": "playback-general",
+    "topics": "playback|downloads"
+   },
+   {
+    "area": "billing/support",
+    "cancellation_count": 350,
+    "complaint_count": 8176,
+    "issue_count": 7,
+    "mean_severity": "2.679428",
+    "severity_sum": 21907,
+    "share_of_members": "8.0%",
+    "share_of_severity": "9.5%",
+    "top_issue_id": "billing-subscription",
+    "topics": "billing|support"
+   },
+   {
+    "area": "outside",
+    "cancellation_count": 2515,
+    "complaint_count": 61359,
+    "issue_count": 7,
+    "mean_severity": "1.940074",
+    "severity_sum": 119041,
+    "share_of_members": "60.4%",
+    "share_of_severity": "51.6%",
+    "top_issue_id": "other-general",
+    "topics": "catalog|other"
+   }
+  ],
+  "comparison_random_100k": {
+   "areas": [
+    {
+     "area": "access",
+     "cancellation_count": 80,
+     "complaint_count": 1493,
+     "issue_count": 4,
+     "mean_severity": "3.959812",
+     "severity_sum": 5912,
+     "share_of_members": "3.1%",
+     "share_of_severity": "4.9%",
+     "top_issue_id": "access-login",
+     "topics": "access"
+    },
+    {
+     "area": "usability",
+     "cancellation_count": 343,
+     "complaint_count": 13525,
+     "issue_count": 5,
+     "mean_severity": "2.583068",
+     "severity_sum": 34936,
+     "share_of_members": "28.2%",
+     "share_of_severity": "29.1%",
+     "top_issue_id": "usability-ads",
+     "topics": "usability"
+    },
+    {
+     "area": "playback",
+     "cancellation_count": 132,
+     "complaint_count": 6976,
+     "issue_count": 10,
+     "mean_severity": "3.347190",
+     "severity_sum": 23350,
+     "share_of_members": "14.6%",
+     "share_of_severity": "19.4%",
+     "top_issue_id": "playback-general",
+     "topics": "playback|downloads"
+    },
+    {
+     "area": "billing/support",
+     "cancellation_count": 279,
+     "complaint_count": 6311,
+     "issue_count": 7,
+     "mean_severity": "2.714308",
+     "severity_sum": 17130,
+     "share_of_members": "13.2%",
+     "share_of_severity": "14.2%",
+     "top_issue_id": "billing-subscription",
+     "topics": "billing|support"
+    },
+    {
+     "area": "outside",
+     "cancellation_count": 875,
+     "complaint_count": 19615,
+     "issue_count": 7,
+     "mean_severity": "1.982768",
+     "severity_sum": 38892,
+     "share_of_members": "40.9%",
+     "share_of_severity": "32.4%",
+     "top_issue_id": "other-general",
+     "topics": "catalog|other"
+    }
+   ],
+   "members": 47920
+  },
+  "issues_not_shown": 23,
+  "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+  "quarantine_reasons": {
+   "empty_review_text": 13,
+   "out_of_scope_budget_100k": 381090
+  },
+  "question": "Where should Spotify put the next quarter of product effort: access, usability, playback, or billing/support?",
+  "top_issues": [
+   {
+    "area": "outside",
+    "cancellation_count": "2455",
+    "claims": {
+     "complaint_count": "C01a",
+     "mean_severity": "C01c",
+     "priority_score": "C01d",
+     "severity_sum": "C01b"
+    },
+    "complaint_count": "57823",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "This app not install my my phone",
+      "review_id": "0b511def-25c5-4bc9-a413-ce51374652e9",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "Don't install this aap. This app owner is hacker😯 You All data is lose. ❌❌❌Not Install ❌❌❌ I LOVE ISLAM I LOVE QURAN",
+      "review_id": "12d1cda3-fbf8-4288-8899-dede3ef4d1b3",
+      "severity": 5
+     },
+     {
+      "intent": "cancellation",
+      "quote": "When I did a search of MUSIC VIDEOES I found disturbing results of child pornography, fetishes, explicit content, etc. What is SPOTIFY doing to protect innocent",
+      "review_id": "15ff4f9c-ab57-4731-a82a-814f1e02f547",
+      "severity": 5
+     }
+    ],
+    "issue_id": "other-general",
+    "mean_severity": "1.919115",
+    "name": "Miscellaneous complaints about the app",
+    "priority_score": "110969",
+    "rank": 1,
+    "severity_sum": "110969",
+    "share_of_members": "56.9%",
+    "topic": "other"
+   },
+   {
+    "area": "usability",
+    "cancellation_count": "103",
+    "claims": {
+     "complaint_count": "C02a",
+     "mean_severity": "C02c",
+     "priority_score": "C02d",
+     "severity_sum": "C02b"
+    },
+    "complaint_count": "8131",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "I have the free version so I can listen to all the ads, though!",
+      "review_id": "056c340f-c7ad-42d8-a275-37e46f1f4f24",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "The app is good , not alot of ads and a nice range of music.",
+      "review_id": "79a00b5c-92c5-45d4-bd96-998a456d7c2b",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "But even though the ad was over, the timer was still counting up.",
+      "review_id": "8c256cff-407f-4f2c-ad6e-dabdeef1bf0d",
+      "severity": 5
+     }
+    ],
+    "issue_id": "usability-ads",
+    "mean_severity": "2.276227",
+    "name": "Too many ads and repeated songs",
+    "priority_score": "18508",
+    "rank": 2,
+    "severity_sum": "18508",
+    "share_of_members": "8.0%",
+    "topic": "usability"
+   },
+   {
+    "area": "usability",
+    "cancellation_count": "108",
+    "claims": {
+     "complaint_count": "C03a",
+     "mean_severity": "C03c",
+     "priority_score": "C03d",
+     "severity_sum": "C03b"
+    },
+    "complaint_count": "6087",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "Logged out of my account and the app is completely frozen on the loading screen. Uninstalled and re-installed as well as updated the app and nothing is working.",
+      "review_id": "2bfdb397-8572-4648-b75b-7be421da488a",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "ما يفتح الاغاني و بس اسوي بلاي لست ما اقدر افتحها",
+      "review_id": "364f1e60-d6c5-4f12-9905-4feb3eae1b90",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "Would have been 5 stars if there was a way to turn off all the 3rd party tracking and privacy invasion on the Android version of this app. I'm a paying Spotify ",
+      "review_id": "37fcb540-9ed1-4382-8c7a-8c0609f7a063",
+      "severity": 5
+     }
+    ],
+    "issue_id": "usability-general",
+    "mean_severity": "2.394940",
+    "name": "App frozen or will not open",
+    "priority_score": "14578",
+    "rank": 3,
+    "severity_sum": "14578",
+    "share_of_members": "6.0%",
+    "topic": "usability"
+   },
+   {
+    "area": "playback",
+    "cancellation_count": "88",
+    "claims": {
+     "complaint_count": "C04a",
+     "mean_severity": "C04c",
+     "priority_score": "C04d",
+     "severity_sum": "C04b"
+    },
+    "complaint_count": "4288",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "Unable to play music after last update.",
+      "review_id": "0051687b-07e5-4d70-bdfb-0dad47e14476",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "My enhanced playlists don't play at all anymore, even the songs I downloaded. I tried all the recommended steps online and it's still broke. Please fix.",
+      "review_id": "012fb178-99c4-4963-9a51-9a5ccf3d87ca",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "I have been using this app for years but after the latest update, I couldn't even play any music anymore.. I already uninstall and re-install it many times but ",
+      "review_id": "062b8882-2cc3-48c3-874d-71e481f22f5f",
+      "severity": 5
+     }
+    ],
+    "issue_id": "playback-general",
+    "mean_severity": "3.280550",
+    "name": "Music will not play after update",
+    "priority_score": "14067",
+    "rank": 4,
+    "severity_sum": "14067",
+    "share_of_members": "4.2%",
+    "topic": "playback"
+   },
+   {
+    "area": "billing/support",
+    "cancellation_count": "186",
+    "claims": {
+     "complaint_count": "C05a",
+     "mean_severity": "C05c",
+     "priority_score": "C05d",
+     "severity_sum": "C05b"
+    },
+    "complaint_count": "3636",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "BROOO PLS FIX IT I ALREADY BUY A PREMIUM THAT IS FOR 2 MONTH WITH GOPAY.",
+      "review_id": "15b26959-751f-46d5-a0aa-f983d7d7c707",
+      "severity": 5
+     },
+     {
+      "intent": "cancellation",
+      "quote": "This app used to be \"the best\" apparently and gave the best experience but now it has become \"the worst\" and almost everything requires premium,I generally lits",
+      "review_id": "1654f767-39df-44fb-8406-23a9df67dc0e",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "I'm paying every month for premium, why have you logged me out of premium",
+      "review_id": "25766091-58d1-47ad-83d6-ca36d97fccfd",
+      "severity": 5
+     }
+    ],
+    "issue_id": "billing-subscription",
+    "mean_severity": "2.710946",
+    "name": "Premium status lost or not recognized",
+    "priority_score": "9857",
+    "rank": 5,
+    "severity_sum": "9857",
+    "share_of_members": "3.6%",
+    "topic": "billing"
+   },
+   {
+    "area": "usability",
+    "cancellation_count": "91",
+    "claims": {
+     "complaint_count": "C06a",
+     "mean_severity": "C06c",
+     "priority_score": "C06d",
+     "severity_sum": "C06b"
+    },
+    "complaint_count": "2377",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "App is awful and broken. Podcasts randomly stop, also can no longer use skip/play/stop because the neccessary buttons no longer show up. Have to force close the",
+      "review_id": "41082441-be8d-4508-9630-4ff7b05cb5c2",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "Since last update, podcasts stop literally every 10 minutes and the display screen is gone so you can't skip forward or back, view queue, add to queue.",
+      "review_id": "4dd98e33-718c-417e-964d-bfa1419e09ca",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "The update has made the shuffle button broken and when I open the app it freezes.",
+      "review_id": "7f8f84a9-5067-4fac-9942-3112612b7efc",
+      "severity": 5
+     }
+    ],
+    "issue_id": "usability-playback_controls",
+    "mean_severity": "3.043332",
+    "name": "Playback controls missing or broken",
+    "priority_score": "7234",
+    "rank": 6,
+    "severity_sum": "7234",
+    "share_of_members": "2.3%",
+    "topic": "usability"
+   },
+   {
+    "area": "usability",
+    "cancellation_count": "97",
+    "claims": {
+     "complaint_count": "C07a",
+     "mean_severity": "C07c",
+     "priority_score": "C07d",
+     "severity_sum": "C07b"
+    },
+    "complaint_count": "2678",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "I've tried restarting my phone & clearing cache but everytime I open the app it loads in for like 15 seconds, let's me use the interface for a few seconds then ",
+      "review_id": "225fe8f2-cadb-4d9e-8401-a71d50a0a08f",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "Whatever update you guys just did ruined the app I paid for the premium version and I can't listen to any freaking song now I don't know what's going on but it ",
+      "review_id": "7004fca0-8462-4481-8fa0-6a6bf5ae3cc1",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "Spotify Is Suck They Removed The Shuttle Button from music I Can't Play What Music I Want Spotify Sucks Dont Download This Piece of s##t App👎",
+      "review_id": "71f50cd4-5f25-4a61-8ca2-0125494ea9bd",
+      "severity": 5
+     }
+    ],
+    "issue_id": "usability-interface",
+    "mean_severity": "2.486931",
+    "name": "Interface broken after recent update",
+    "priority_score": "6660",
+    "rank": 7,
+    "severity_sum": "6660",
+    "share_of_members": "2.6%",
+    "topic": "usability"
+   },
+   {
+    "area": "access",
+    "cancellation_count": "8",
+    "claims": {
+     "complaint_count": "C08a",
+     "mean_severity": "C08c",
+     "priority_score": "C08d",
+     "severity_sum": "C08b"
+    },
+    "complaint_count": "1283",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "I'm using this app for a long time but when I changed my phone, I'm not able to login to the app.",
+      "review_id": "0279213f-793b-4c95-b0f5-4e53a2f10e34",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "Worst login",
+      "review_id": "02caf933-31b9-4814-8f4a-eb0984c8d012",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "Can't log in with Facebook or google won't send an email link so I can't even use the app!",
+      "review_id": "034bdddd-1d60-45c3-a6fb-fc573697c745",
+      "severity": 5
+     }
+    ],
+    "issue_id": "access-login",
+    "mean_severity": "4.246298",
+    "name": "Login attempts fail repeatedly",
+    "priority_score": "5448",
+    "rank": 8,
+    "severity_sum": "5448",
+    "share_of_members": "1.3%",
+    "topic": "access"
+   },
+   {
+    "area": "playback",
+    "cancellation_count": "27",
+    "claims": {
+     "complaint_count": "C09a",
+     "mean_severity": "C09c",
+     "priority_score": "C09d",
+     "severity_sum": "C09b"
+    },
+    "complaint_count": "1466",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "Recently Spotify stopped working and will not load any random song or my playlists on homepage. I have tried to go to my library but it tells me it is empty and",
+      "review_id": "10f1e64a-79bf-4efb-9255-765a976f5b8a",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "No matter what i can't play the song i want.",
+      "review_id": "12addf94-b729-472e-a84f-2432bf59b494",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "I can find a song but can't play",
+      "review_id": "12b556eb-c4d2-4e75-9131-0648f254c172",
+      "severity": 5
+     }
+    ],
+    "issue_id": "playback-stops_skips",
+    "mean_severity": "3.466576",
+    "name": "Selected songs will not play",
+    "priority_score": "5082",
+    "rank": 9,
+    "severity_sum": "5082",
+    "share_of_members": "1.4%",
+    "topic": "playback"
+   },
+   {
+    "area": "billing/support",
+    "cancellation_count": "65",
+    "claims": {
+     "complaint_count": "C10a",
+     "mean_severity": "C10c",
+     "priority_score": "C10d",
+     "severity_sum": "C10b"
+    },
+    "complaint_count": "1747",
+    "evidence": [
+     {
+      "intent": "complaint",
+      "quote": "Scammer i pay twice for premium and still showing up free account",
+      "review_id": "0712a3e7-2fcc-45d7-bf6e-1192f667ce41",
+      "severity": 5
+     },
+     {
+      "intent": "complaint",
+      "quote": "I am premium, but it still doesn't allow certain features to work (example, won't let me shuffle because it's \"a premium feature\" despite paying for premium.",
+      "review_id": "01386da0-3f89-461e-b9fc-43cad9994217",
+      "severity": 4
+     },
+     {
+      "intent": "complaint",
+      "quote": "All cuz I don't have premium.",
+      "review_id": "0212430e-4c4a-4e22-9c0a-6a2b7ff367c3",
+      "severity": 4
+     }
+    ],
+    "issue_id": "billing-premium_limits",
+    "mean_severity": "2.866629",
+    "name": "Paid premium features still locked",
+    "priority_score": "5008",
+    "rank": 10,
+    "severity_sum": "5008",
+    "share_of_members": "1.7%",
+    "topic": "billing"
+   }
+  ],
+  "totals": {
+   "completed": 279519,
+   "issues": 33,
+   "members": 101649,
+   "needs_review": 17708,
+   "quarantined": 381103,
+   "records": 660622
+  }
+ }
+}

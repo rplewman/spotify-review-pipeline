@@ -1,0 +1,103 @@
+verify sample: 20683 texts at rate 0.2 (seed 'verify-v1'); 20683 newly enqueued
+Traceback (most recent call last):
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\anthropic\_base_client.py", line 2048, in _attempt_request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpx2\_client.py", line 1818, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpx2\_client.py", line 1846, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpx2\_client.py", line 1881, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpx2\_client.py", line 1915, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpx2\_transports\default.py", line 388, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpcore2\_async\connection_pool.py", line 242, in handle_async_request
+    raise exc from None
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpcore2\_async\connection_pool.py", line 224, in handle_async_request
+    response = await connection.handle_async_request(pool_request.request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpcore2\_async\connection.py", line 96, in handle_async_request
+    return await self._connection.handle_async_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpcore2\_async\http11.py", line 124, in handle_async_request
+    await self._response_closed()
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpcore2\_async\http11.py", line 228, in _response_closed
+    await self.aclose()
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpcore2\_async\http11.py", line 236, in aclose
+    await self._network_stream.aclose()
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\httpcore2\_backends\anyio.py", line 55, in aclose
+    await self._stream.aclose()
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\anyio\streams\tls.py", line 248, in aclose
+    await self.transport_stream.aclose()
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 1467, in aclose
+    self._transport.close()
+  File "C:\Users\thoma\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 109, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+  File "C:\Users\thoma\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 799, in call_soon
+    self._check_closed()
+  File "C:\Users\thoma\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 545, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\thoma\Spotify Review FInal\pipeline\providers\claude.py", line 101, in _guard
+    return await coro
+           ^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\anthropic\resources\messages\batches.py", line 542, in retrieve
+    return await self._get(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\anthropic\_base_client.py", line 2213, in get
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\anthropic\_base_client.py", line 1887, in request
+    response, prepared = await self._attempt_request(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\.venv\Lib\site-packages\anthropic\_base_client.py", line 2062, in _attempt_request
+    raise APIConnectionError(request=request) from err
+anthropic.APIConnectionError: Connection error.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\thoma\Spotify Review FInal\pipeline\cli.py", line 529, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\pipeline\cli.py", line 517, in main
+    return simple[args.command](args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\pipeline\cli.py", line 296, in cmd_verify
+    summary = run_verify_batch(conn, stage, BatchConfig(batch_size=args.batch_size, max_spend=args.max_spend,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\pipeline\batch_runner.py", line 215, in run_verify_batch
+    if not poll(conn, stage.provider, job_id, cfg):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\pipeline\batch_runner.py", line 111, in poll
+    status, counts = asyncio.run(provider.status(job_id))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\pipeline\providers\claude.py", line 114, in status
+    job = await self._guard(self.client.messages.batches.retrieve(job_id))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\thoma\Spotify Review FInal\pipeline\providers\claude.py", line 103, in _guard
+    raise ProviderError("transient", None, f"connection error: {e}", billed=False)
+pipeline.providers.base.ProviderError: None transient: connection error: Connection error.
+exit 1

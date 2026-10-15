@@ -1,0 +1,52 @@
+verify sample: 20683 texts at rate 0.2 (seed 'verify-v1'); 0 newly enqueued
+{
+ "run": {
+  "run_id": "run-20261015-131752-7935db",
+  "jobs": [
+   {
+    "job_id": "msgbatch_01KBzEx9evSNE9nUkNj4b4G3",
+    "resumed": true,
+    "tally": {
+     "succeeded": 409,
+     "invalid": 250,
+     "requeued": 0,
+     "failed": 0
+    }
+   },
+   {
+    "job_id": "msgbatch_01FSTTmboXgqgy3aYHDb1wgD",
+    "resumed": false,
+    "tally": {
+     "succeeded": 1,
+     "invalid": 200,
+     "requeued": 0,
+     "failed": 0
+    }
+   }
+  ],
+  "stop_reason": "drained",
+  "spend_usd_list": {
+   "spent": 0.006631075,
+   "reserved": 0
+  }
+ },
+ "verified": 20483,
+ "unverified": 200,
+ "agreement": {
+  "topic": {
+   "agree": 16330,
+   "rate": 0.7972
+  },
+  "intent": {
+   "agree": 17327,
+   "rate": 0.8459
+  },
+  "severity": {
+   "agree": 16847,
+   "rate": 0.8225
+  }
+ },
+ "disagreements": 10945,
+ "planted_detected": "3/3"
+}
+exit 0

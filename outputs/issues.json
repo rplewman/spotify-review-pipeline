@@ -1,0 +1,1407 @@
+{
+ "allow_multi_issue": false,
+ "areas_version": "areas-v1",
+ "comparison": {
+  "file": "comparison_random_100k.txt",
+  "members": 47920,
+  "scope": "random_100k"
+ },
+ "grouper_prompt": "grouper-prompt-v1",
+ "issues": [
+  {
+   "area": "access",
+   "description": "Users find they are logged out or see account errors such as being told they are offline or that something is wrong when trying to sign back in.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I can't even log into my account anymore, it's telling me I'm offline while I have a good network with data.",
+     "review_id": "143d6fed-4a92-4f25-911e-914e61fe4644",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "After paying also it shows that I don't have premium account neither its getting logged in .",
+     "review_id": "177ff048-c49c-48be-a856-b02d47633eab",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Great app I love it The music's okay but for some reason it keeps logging me out of my account and not letting me go back in and glitching out and when it's sti",
+     "review_id": "1c43df05-c02a-429d-a85e-8ecd9cce1255",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Been signed out of my account and can't sign back in telling me something is wrong been like this for over a week now!",
+     "review_id": "36753c7c-0696-4318-b2d4-be68587ccd0e",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "It won't even let me create an account whenever I try it's says I'm offline even though I'm connected to the wifi I've also I had this trouble with other music ",
+     "review_id": "3d8de030-e8e7-4240-919b-ae6c8acb2364",
+     "severity": 5
+    }
+   ],
+   "issue_id": "access-account",
+   "member_count": 191,
+   "name": "Cannot sign in to account",
+   "name_source": "model",
+   "subtopic": "account",
+   "topic": "access"
+  },
+  {
+   "area": "access",
+   "description": "Users cannot get logged into the app at all, with logins that never succeed or phone number checks that keep failing.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Paying for premium as of the past few months I've had constant bugs where I'm unable to play my own playlists. Uninstalled app and reinstalled it to fix and now",
+     "review_id": "013cd8a7-8cb4-4661-b574-21c1da3ac841",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "So great it works but then it logs you out and can never log you back in because try again seems to be the only thing this app can do",
+     "review_id": "0b3894d5-776e-4101-8335-26b777847414",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Even after putting correct phone number it is showing check your phone number",
+     "review_id": "0c29b27a-c016-406c-b22e-7621c43543af",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Your app never logs in",
+     "review_id": "0d730aeb-b0ec-48db-b0d4-6d9992fc8358",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Not logged in by mobile no.",
+     "review_id": "10e89240-f8c3-4ff8-9fb2-2dea1b3f6141",
+     "severity": 5
+    }
+   ],
+   "issue_id": "access-general",
+   "member_count": 691,
+   "name": "General sign-in failures",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "access"
+  },
+  {
+   "area": "access",
+   "description": "Users are unable to log in through their phone number, Facebook, Google, or after switching phones, leaving them unable to use the app.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I'm using this app for a long time but when I changed my phone, I'm not able to login to the app.",
+     "review_id": "0279213f-793b-4c95-b0f5-4e53a2f10e34",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Worst login",
+     "review_id": "02caf933-31b9-4814-8f4a-eb0984c8d012",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Can't log in with Facebook or google won't send an email link so I can't even use the app!",
+     "review_id": "034bdddd-1d60-45c3-a6fb-fc573697c745",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Hi Spotify, I am unable to login through my contact number.",
+     "review_id": "045c4d57-f375-454f-8b8d-253368a88397",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Terrible, unable to log in, unable to link to Alexa, unable to connect to internet.",
+     "review_id": "05541060-2e43-4a76-89db-eb01e54d9d13",
+     "severity": 5
+    }
+   ],
+   "issue_id": "access-login",
+   "member_count": 1283,
+   "name": "Login attempts fail repeatedly",
+   "name_source": "model",
+   "subtopic": "login",
+   "topic": "access"
+  },
+  {
+   "area": "access",
+   "description": "Users cannot recover a lost username or password or change an old password, which locks them out of their accounts.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Cannot get my account open and I cannot see lost username or password or both.",
+     "review_id": "0e936504-de6a-4f2f-b515-e7b3a4b7572d",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I can't remember the old password and it's just not letting me change to a new one.",
+     "review_id": "0f1ba210-88cf-4b9c-86c7-6996aaee198a",
+     "severity": 5
+    },
+    {
+     "intent": "cancellation",
+     "quote": "this app is the worst they been charging me for over 4 yrs for a service that im not using every time I want to cancel they wont let me in my account or my pass",
+     "review_id": "14ff8b9a-059f-4481-a943-7c1e658fb827",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I had a nice portfolio, got a massage to change password, lost everthing.",
+     "review_id": "1f42b7ef-0116-41df-9096-72fe215ffe2c",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "After the last update, my account has flown off, I can't log in to it.",
+     "review_id": "29526b76-2088-4b6c-afa6-b7369b613c85",
+     "severity": 5
+    }
+   ],
+   "issue_id": "access-password",
+   "member_count": 174,
+   "name": "Password reset and recovery problems",
+   "name_source": "model",
+   "subtopic": "password",
+   "topic": "access"
+  },
+  {
+   "area": "billing/support",
+   "description": "Users paid for premium but it did not show up on their account, and they did not receive a refund or help from support.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I bought a premium package on the spotify application for a period of 1 month but not until 1 week did my package disappear..",
+     "review_id": "04935650-74c9-441b-ae5a-065500ce9007",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Have been a premium individual user for more then a year..",
+     "review_id": "049e3115-09d2-42db-a440-40fcd909d52c",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I will never get premium again",
+     "review_id": "04af8ea4-e452-444e-9612-30c5ce8081dc",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I Payed For Premium but it did not reflect, i contacted spotify but I didn't get any help and my money wasn't refunded but the transaction was successfull",
+     "review_id": "07ea7568-4015-47d2-8b44-87ea58e42fd8",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I did not give a sortie to take money out of my Google Play for this app I want it back on my account immediately",
+     "review_id": "170e1a08-2253-4d95-bdd9-4bb7cef95217",
+     "severity": 5
+    }
+   ],
+   "issue_id": "billing-charges_refunds",
+   "member_count": 1084,
+   "name": "Premium payment not applied or refunded",
+   "name_source": "model",
+   "subtopic": "charges_refunds",
+   "topic": "billing"
+  },
+  {
+   "area": "billing/support",
+   "description": "Users report being charged more than expected, including double charges, or being billed without permission.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "It charges you without asking permission",
+     "review_id": "0e1137f4-7232-4203-af78-a89bc7e39916",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Cuando mi suscripción termino. Tenia el modo offline anoche. Hoy la app no me permite hacer nada. Por que estoy en modo offline yya no tengo suscripción y el mo",
+     "review_id": "12b92262-e76b-49dd-b663-0bbf5328dd37",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Double taxes each month. Not pleased at all. I had to uninstall app.",
+     "review_id": "4cd966b3-2f68-4ac6-ae5c-8d56ca64a333",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "9.99 wasn't a bad deal.... Until they started charging my card twice a month.",
+     "review_id": "521e0ee0-c1ef-4065-9112-3635855531b6",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "ME ENCANTA SPOTIFY, EL ÚNICO PROBLEMA ES QUE NUEVAMENTE LE COBRARON A JAIME ROSALES, QUE ES GRATIS SUPUESTAMENTE Y ÉL NO LO USA. SOY YO LA QUE LO QUIERO.",
+     "review_id": "6985febf-75fa-47e9-9a86-c62f47a18554",
+     "severity": 5
+    }
+   ],
+   "issue_id": "billing-general",
+   "member_count": 1084,
+   "name": "Unexpected or repeated charges",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "billing"
+  },
+  {
+   "area": "billing/support",
+   "description": "Users who pay for premium still find the app showing free-account limits or blocking features such as shuffle and playback choices.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Scammer i pay twice for premium and still showing up free account",
+     "review_id": "0712a3e7-2fcc-45d7-bf6e-1192f667ce41",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I am premium, but it still doesn't allow certain features to work (example, won't let me shuffle because it's \"a premium feature\" despite paying for premium.",
+     "review_id": "01386da0-3f89-461e-b9fc-43cad9994217",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "All cuz I don't have premium.",
+     "review_id": "0212430e-4c4a-4e22-9c0a-6a2b7ff367c3",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "It says u have to buy subscription",
+     "review_id": "02d55207-85b4-4740-9f0c-5ba9707fa96f",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Also we should pay to listen to songs without being shuffled",
+     "review_id": "03985873-3771-421a-9321-bfb9ae04f7a3",
+     "severity": 4
+    }
+   ],
+   "issue_id": "billing-premium_limits",
+   "member_count": 1747,
+   "name": "Paid premium features still locked",
+   "name_source": "model",
+   "subtopic": "premium_limits",
+   "topic": "billing"
+  },
+  {
+   "area": "billing/support",
+   "description": "Users feel premium is unaffordable or that features once free have moved behind the paywall.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I no longer get to choose what I listen to because I stopped paying?",
+     "review_id": "32476875-9541-433b-8072-d89618f60361",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "BASIC features are being made premium!",
+     "review_id": "27943888-814c-4b22-8e69-bdc813e5d55c",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "After I sent the student papers, I waited for weeks and no reply came so i had to pay full price.",
+     "review_id": "3662e17b-6265-4a64-b75d-e6476c067c37",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Not everyone can afford premium.",
+     "review_id": "3eabbf01-73aa-4671-bfe3-e18d7818ffd3",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "now it is only for them who afford premium.",
+     "review_id": "3f37f2b1-9434-42de-b21a-344a044d511e",
+     "severity": 4
+    }
+   ],
+   "issue_id": "billing-price",
+   "member_count": 452,
+   "name": "Premium cost seen as too high",
+   "name_source": "model",
+   "subtopic": "price",
+   "topic": "billing"
+  },
+  {
+   "area": "billing/support",
+   "description": "Users with an active premium subscription are logged out of premium or find the app stops working properly after it lapses or fails to load their content.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "BROOO PLS FIX IT I ALREADY BUY A PREMIUM THAT IS FOR 2 MONTH WITH GOPAY.",
+     "review_id": "15b26959-751f-46d5-a0aa-f983d7d7c707",
+     "severity": 5
+    },
+    {
+     "intent": "cancellation",
+     "quote": "This app used to be \"the best\" apparently and gave the best experience but now it has become \"the worst\" and almost everything requires premium,I generally lits",
+     "review_id": "1654f767-39df-44fb-8406-23a9df67dc0e",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I'm paying every month for premium, why have you logged me out of premium",
+     "review_id": "25766091-58d1-47ad-83d6-ca36d97fccfd",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "After I bought premium account it fails to load my playlists, my like songs or anything.",
+     "review_id": "3970d33f-ceb2-419b-93e9-2883ed15dd5a",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "App stopped working properly after my premium stopped, now all I get is \"something went wrong\"",
+     "review_id": "5edf13ac-6ccb-45b9-803a-e552016a8c21",
+     "severity": 5
+    }
+   ],
+   "issue_id": "billing-subscription",
+   "member_count": 3636,
+   "name": "Premium status lost or not recognized",
+   "name_source": "model",
+   "subtopic": "subscription",
+   "topic": "billing"
+  },
+  {
+   "area": "outside",
+   "description": "Users find their playlists, liked songs, albums, or whole music library missing or empty after an update or reinstall.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I've had premium for a week or two, I'm literally PAYING for this, and today i get on the app and every album to ever exist is gone. i only have my playlists. t",
+     "review_id": "5442ffc8-66df-423d-8fc5-eef0d99b0f7d",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "What have you done to the app??? Its gone awful and I mean absolute rubbish, songs not loading, artists not being recognised, my playlists are empty. Sort it ou",
+     "review_id": "575dfcef-feeb-4f94-9a66-4fd5a9744b26",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Edit: For the 2nd time Spotify has deleted everything on my account. This includes my Playlists I spent forever making, along with my username! How does this ev",
+     "review_id": "95237f59-b7ab-4ea1-ae8d-3aa9b69d0ae1",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "All my playlists are gone. All other playlists or albums i open have 0 songs and says i should return home. I've reinstalled the app multuple times as well as s",
+     "review_id": "982b2743-9b23-491c-a946-56304fc6e45a",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Music library is completely disappeared even liked songs. Disappointing wasting my time and money.",
+     "review_id": "bfd833b8-1c47-4a66-b230-09a010618f32",
+     "severity": 5
+    }
+   ],
+   "issue_id": "catalog-general",
+   "member_count": 1883,
+   "name": "Library and playlists disappeared",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "catalog"
+  },
+  {
+   "area": "outside",
+   "description": "Users can no longer see song lyrics, which they say were available before, and some report that lyrics now require premium.",
+   "examples": [
+    {
+     "intent": "cancellation",
+     "quote": "Really spotify gone bad after this recent update i really hate this, I'm uninstalling, because there are no lyrics at all, the biggest reason why I'm using this",
+     "review_id": "0335ab02-832f-45ce-b827-092ef2aa6c50",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "I used to be able to see all the lyrics, after the new update, only premium users can view lyrics, they limited the listening period and I can't add songs to th",
+     "review_id": "0c25b52a-cb7a-4d5f-abbb-b40ca937509f",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "The new update does not allow u to see lyrics without premium and so many glitch I guess am gonna switch to other music app atp",
+     "review_id": "280d0e22-55e0-4c53-bbd1-0a8545ac3427",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Is this a joke first lyrics and then music shuffle.",
+     "review_id": "75137e2d-67c6-4520-a230-62af5d5e4d94",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Doesn't show lyrics and im even a premium.",
+     "review_id": "804ca517-0a3c-4d34-b5f0-b9d10726bdd2",
+     "severity": 4
+    }
+   ],
+   "issue_id": "catalog-lyrics",
+   "member_count": 770,
+   "name": "Lyrics missing or restricted to premium",
+   "name_source": "model",
+   "subtopic": "lyrics",
+   "topic": "catalog"
+  },
+  {
+   "area": "outside",
+   "description": "Users find that songs they chose are not available or are automatically removed from their playlists.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "You people remove all the songs. The song we chose is not there. If we add it to the playlist, it automatically gets removed. Why are you doing this? The songs ",
+     "review_id": "ab68de0e-48b0-4548-8af8-4c889ee34b82",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Very poor app, my favourite songs are not available in this app and I'm not able to buy premium subscription because of loading problem 👎🏻👎🏻👎🏻👎🏻👎🏻",
+     "review_id": "e5867a52-b4c3-4dee-983f-56fc6e0620bd",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "The first page is there with recent plays and podcasts, etc.",
+     "review_id": "fc5781a3-3107-45f4-8144-b6c7a3e58cdb",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I thought the some songs just got deleted from my playlist, turns out this idiot app removed a lot of good songs 🤬🤬🤬😡😡😡",
+     "review_id": "12856471-acdc-44c5-8f4f-612e4ac878da",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "We are paying, we pay to listen songs, literally most of the songs are unavailable",
+     "review_id": "1b346ad5-36d0-4501-9087-fda70d6faaee",
+     "severity": 4
+    }
+   ],
+   "issue_id": "catalog-missing_content",
+   "member_count": 359,
+   "name": "Songs unavailable or removed from playlists",
+   "name_source": "model",
+   "subtopic": "missing_content",
+   "topic": "catalog"
+  },
+  {
+   "area": "outside",
+   "description": "Users cannot open their podcasts, and some report that liked songs and podcasts have disappeared.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "All my liked songs and podcast have disappeared.",
+     "review_id": "179d6dca-2b13-426a-ab32-0191ce0ec53b",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Cannot access podcasts.",
+     "review_id": "96911b5f-ce86-4b83-af1e-72613a51f0f5",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Can no longer acces my podcasts.",
+     "review_id": "06c3e9d2-f617-4dc5-84b6-ab7319c37f84",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "How can I unfollow this podcast??!!",
+     "review_id": "0c678778-5f40-4af0-bf50-2fced3774166",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Won't allow me access to some things like podcasts or allow me to edit my profile.",
+     "review_id": "33ecb4f1-68c1-4762-b53a-b6e1c70deefa",
+     "severity": 4
+    }
+   ],
+   "issue_id": "catalog-podcasts_audiobooks",
+   "member_count": 68,
+   "name": "Podcasts cannot be accessed",
+   "name_source": "model",
+   "subtopic": "podcasts_audiobooks",
+   "topic": "catalog"
+  },
+  {
+   "area": "outside",
+   "description": "Users are frustrated that suggested songs and daily playlists do not match their taste or replace the music they searched for.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "It won't let me play my music only there stupid suggested songs that I don't ever like FIX THIS",
+     "review_id": "194f3c24-f09d-4b58-8b05-8109e61d624b",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "When I used the search bar to find the song I wanted it started a random playlist instead of what I wanted to listen to.",
+     "review_id": "42bc5935-31a4-419f-869e-9dc530761a97",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Top algorithm, but again hacked ,can't even recover the playlists set by me last week ,cost over three hundred dollars,per week for nothing ,",
+     "review_id": "d87536c5-6fe0-4b38-b0b1-c47936e4a0d8",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "I listened to my favorite songs all the time and I loved making playlists and getting recommendations that I really enjoy!",
+     "review_id": "e7778e79-94f7-467d-9a52-84239dc7f9bc",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "I don't like how my daily suggestions often has downvoted songs, and usually there is aleast 1 daily playlist of music I don't listen to. Its also frustating wh",
+     "review_id": "01586c44-300e-4ea2-988a-154d0b4e420e",
+     "severity": 3
+    }
+   ],
+   "issue_id": "catalog-recommendations",
+   "member_count": 180,
+   "name": "Unwanted recommendations and playlists",
+   "name_source": "model",
+   "subtopic": "recommendations",
+   "topic": "catalog"
+  },
+  {
+   "area": "outside",
+   "description": "Users find that search returns nothing, crashes, or plays a different song than the one they selected.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I counted search any song the page is not working..",
+     "review_id": "1181e6d3-9c8e-434b-ab73-d5c5e92a29f7",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I can't even find the music I'm looking for. When I type it up it shows on the screen and when I press play something else plays. I hate it.",
+     "review_id": "69f3dc6e-c205-4b73-9030-4a3f01dd46c3",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I search for artists and there's nothing there.",
+     "review_id": "a7353811-9bcc-4c49-ab4d-f2b924368f5e",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Since the update, the search is not working.",
+     "review_id": "d2c7d085-df82-4c90-b51e-f9c38da2590a",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I can't even search for an artist/song before it crashes!",
+     "review_id": "e2147615-08b1-4951-821e-f8216990c11a",
+     "severity": 5
+    }
+   ],
+   "issue_id": "catalog-search",
+   "member_count": 276,
+   "name": "Search not returning or playing correct results",
+   "name_source": "model",
+   "subtopic": "search",
+   "topic": "catalog"
+  },
+  {
+   "area": "playback",
+   "description": "Users cannot download music to their device, with downloads either never starting or never completing.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "We can't download songs😒",
+     "review_id": "1c804b4c-64d9-4cd6-bb82-d86905d69147",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Why my app can't download any music,my plan premium to",
+     "review_id": "2f821bc7-4df2-4e65-b31e-755a742d2568",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Music won't download",
+     "review_id": "4ae8c696-10f8-4c71-9345-09704f043835",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I listen to Spotify mostly when on the tube and unfortunately there's no signal underground, the app used to play my downloaded songs without any issues but now",
+     "review_id": "52c687f0-da39-4a08-ade3-13f31d32292a",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Very bad app and frod app. Song are not downloading 😡😡😡😡😡🤔🤔😠😠",
+     "review_id": "53cb8992-15ad-43b7-9cf6-03c0d2221cc4",
+     "severity": 5
+    }
+   ],
+   "issue_id": "downloads-download_fails",
+   "member_count": 664,
+   "name": "Songs fail to download",
+   "name_source": "model",
+   "subtopic": "download_fails",
+   "topic": "downloads"
+  },
+  {
+   "area": "playback",
+   "description": "Users find their downloaded music and playlists are missing or will not play, even after reinstalling the app.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Tamilan",
+     "review_id": "12ea40c1-a7b5-424a-a2f0-2d2fa8f2060e",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "STOP DELETING MY SONGS!! I pay for Premium I expect my moneys worth. Not songs dissapearing from my liked songs?!?!?",
+     "review_id": "1a264dda-5e52-4b13-9f61-a4ed10742cb1",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Todo iba relativamente bien. Hasta que noté que toda mi biblioteca se había borrado. Ni una sola playlist tenía. Tampoco puedo reproducir canciones. Probé desin",
+     "review_id": "404805c2-7767-46ca-93b4-6f71f0946fc1",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "None of my spotify playlist have music in them I have Uninstalled twice and still no joy pretty upset as I've been premium payer for quite a long time",
+     "review_id": "f8885ac6-1fc0-4c37-b389-78d4ff84cbec",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "No me deja escuchar mi musica descargada, como si no hubiera descargado nada",
+     "review_id": "047291f4-afd9-4ceb-8705-897139d0c0ea",
+     "severity": 4
+    }
+   ],
+   "issue_id": "downloads-general",
+   "member_count": 125,
+   "name": "Downloaded music not playing or missing",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "downloads"
+  },
+  {
+   "area": "playback",
+   "description": "Users find previously downloaded offline music deleted or unavailable after an update, and cannot re-download it.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I spend ages downloading my favourite content, then every couple of months, usually when I'm out of data range, i go to listen to downloaded content and it's AL",
+     "review_id": "5be3399d-dcd2-405b-a931-29b02ffc966e",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "New update deleted all my downloaded music (over 12GB), and now it's not allowing me to re-download any of it.",
+     "review_id": "64a7805e-65fa-4fd4-ae5b-81fd71546268",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Also, download for offline no longer works.",
+     "review_id": "6e55f75b-88ba-494a-92cb-a4e73bc66863",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Untested updates mess up years of offline songs.",
+     "review_id": "d395b180-ca78-4ef9-a290-b814ec3fb73d",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I paid for offline listening due to lack of cell service in my area, but it never had my downloaded music available despite constantly downloading when I have c",
+     "review_id": "db11c37e-0f76-4191-8a54-a7bbcd3e51a3",
+     "severity": 5
+    }
+   ],
+   "issue_id": "downloads-lost_downloads",
+   "member_count": 136,
+   "name": "Downloaded songs disappear after updates",
+   "name_source": "model",
+   "subtopic": "lost_downloads",
+   "topic": "downloads"
+  },
+  {
+   "area": "playback",
+   "description": "Users with premium can no longer play downloaded songs when offline.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "A year ago I stopped being able to play songs offline even tho im still on premium.",
+     "review_id": "2931c6e4-f9b7-4442-a658-e972198c635f",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "And i am not able to play downloaded songs offline..",
+     "review_id": "29ba480d-a6c3-4446-aae3-8a716bca5618",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Can't play music offline.",
+     "review_id": "329f0141-3b9c-46b7-87bd-7659099a4261",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Cant listen to offline songs even if I have a premium acct.",
+     "review_id": "36ce41ba-61af-4603-b34c-2ebcf991e76a",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "suddenly I can no longer play my offline music.",
+     "review_id": "682d56ef-c8d1-4bf6-b426-d9790a583096",
+     "severity": 5
+    }
+   ],
+   "issue_id": "downloads-offline_mode",
+   "member_count": 243,
+   "name": "Offline listening stopped working",
+   "name_source": "model",
+   "subtopic": "offline_mode",
+   "topic": "downloads"
+  },
+  {
+   "area": "outside",
+   "description": "Users leave varied complaints that do not fit a specific category, including installation problems, security concerns, and content worries.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "This app not install my my phone",
+     "review_id": "0b511def-25c5-4bc9-a413-ce51374652e9",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Don't install this aap. This app owner is hacker😯 You All data is lose. ❌❌❌Not Install ❌❌❌ I LOVE ISLAM I LOVE QURAN",
+     "review_id": "12d1cda3-fbf8-4288-8899-dede3ef4d1b3",
+     "severity": 5
+    },
+    {
+     "intent": "cancellation",
+     "quote": "When I did a search of MUSIC VIDEOES I found disturbing results of child pornography, fetishes, explicit content, etc. What is SPOTIFY doing to protect innocent",
+     "review_id": "15ff4f9c-ab57-4731-a82a-814f1e02f547",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Its so bad app in the world . This app install and than your pH is start virus and your ph is completely hang not download pls all Guys 😠🙏🙏🙏🙏🙏🙏",
+     "review_id": "1d375e57-bff8-4579-ae42-d73d66e87a29",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "steals data",
+     "review_id": "219c4e30-737d-4f1f-a53c-8d9e2c179e09",
+     "severity": 5
+    }
+   ],
+   "issue_id": "other-general",
+   "member_count": 57823,
+   "name": "Miscellaneous complaints about the app",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "other"
+  },
+  {
+   "area": "playback",
+   "description": "Users hear no sound after updates or report poor audio quality, including short 30-second snippets instead of full songs.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Very poor quality regularly shuts down, buffers, audio quality is much lower than Apple Music and now the app just said it's unable to find my music so I guess ",
+     "review_id": "17cd553e-b106-4abf-a2ff-f6ffcfc1fdc4",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Stopped working after latest update. There is no sound. App says something went wrong",
+     "review_id": "3ad43bb0-180f-4860-b7a5-0f9779698a0f",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "No sound at all since last update",
+     "review_id": "6a982805-82c7-4f84-a6ff-da3dc4ec3728",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "The bug needs fixed, I am paying for a subscription and don't want to stop and go somewhere else.",
+     "review_id": "182b6b09-3b01-4924-a860-baf2daf60702",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Horrible on mobile, I try to play a liked song, and it only plays a 30second audio snippet, I try to look up a song and it plays some random song from a playlis",
+     "review_id": "1e034b01-0bd0-45c7-b63c-e1c1007999ca",
+     "severity": 4
+    }
+   ],
+   "issue_id": "playback-audio_quality",
+   "member_count": 317,
+   "name": "No sound or poor audio quality",
+   "name_source": "model",
+   "subtopic": "audio_quality",
+   "topic": "playback"
+  },
+  {
+   "area": "playback",
+   "description": "Users see messages saying there is no internet connection even when their wifi or cellular data is working.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Until a few days ago the app was great but now it's not even playing songs. It just keeps loading even when there's active internet and all other apps are able ",
+     "review_id": "004d1c8a-a8c8-4746-b975-cd2f31c2a730",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "The problem is it shows me no internet connection whereas the is enough cellular data",
+     "review_id": "03e89b4f-239b-4d3a-832d-0d11935e8e60",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "The app says i can't connect to the Internet despite having an actual Internet connection",
+     "review_id": "07277e63-3bda-4358-92ae-dcf4a5c46342",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Lol the app is not working not even playing song or only say no internet go offline try again I have high speed 4g internet fix the bug plz",
+     "review_id": "07cfab6c-718a-4cf5-bd8f-7e8fcf9587ba",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Tried resetting my phone and internet connection, but continues to tell me I have no internet connection.",
+     "review_id": "16c22dc9-4a4f-41af-8bbb-cc4d02cab4b4",
+     "severity": 5
+    }
+   ],
+   "issue_id": "playback-connection",
+   "member_count": 817,
+   "name": "App reports false no-internet error",
+   "name_source": "model",
+   "subtopic": "connection",
+   "topic": "playback"
+  },
+  {
+   "area": "playback",
+   "description": "Users report the app crashing, freezing on the splash screen, or showing a black screen when opened.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I am using android phone Iqoo z5, the app is always crashing and not playing music.",
+     "review_id": "03bc3bce-b20b-4077-8852-2976c8e166e1",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "App has been stuck on the splashcreen for the past week. Randomly crashed and can no longer access. Tried all the options, nothing works.",
+     "review_id": "05656774-f13e-438d-b32e-5b33bb4000b5",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "It crashes when I open the app :(",
+     "review_id": "0fe0fab5-cdec-4497-b2bd-a1a614babcae",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Black screen is all I get.",
+     "review_id": "1249b5c2-e9bd-447f-8a67-f72a80407fd9",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Constant crashing",
+     "review_id": "194a6f50-3282-4be8-9522-82ce0449bd67",
+     "severity": 5
+    }
+   ],
+   "issue_id": "playback-crashes",
+   "member_count": 833,
+   "name": "App crashes or freezes on launch",
+   "name_source": "model",
+   "subtopic": "crashes",
+   "topic": "playback"
+  },
+  {
+   "area": "playback",
+   "description": "Users are unable to play any music after a recent update, even after reinstalling or following online fixes.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Unable to play music after last update.",
+     "review_id": "0051687b-07e5-4d70-bdfb-0dad47e14476",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "My enhanced playlists don't play at all anymore, even the songs I downloaded. I tried all the recommended steps online and it's still broke. Please fix.",
+     "review_id": "012fb178-99c4-4963-9a51-9a5ccf3d87ca",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I have been using this app for years but after the latest update, I couldn't even play any music anymore.. I already uninstall and re-install it many times but ",
+     "review_id": "062b8882-2cc3-48c3-874d-71e481f22f5f",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Been using for years now, but recently Spotify has decided to stop working and not allowing me to listen to any music end off, even after following info online,",
+     "review_id": "0751d68b-0e11-4f63-bb7f-46a5f8ba400c",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Stopped playing on my Samsung A50 phone after Android 11 update. Erased all my music from SD card. Nothing works, will not play anything, what am I paying for? ",
+     "review_id": "07f59bbd-a997-47f6-b91e-4a9a5c645c32",
+     "severity": 5
+    }
+   ],
+   "issue_id": "playback-general",
+   "member_count": 4288,
+   "name": "Music will not play after update",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "playback"
+  },
+  {
+   "area": "playback",
+   "description": "Users find the app extremely slow, with screens and songs taking too long to load or respond.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Forever Loading, too slow and couldn't play any song. I regret going premium...waste of money",
+     "review_id": "1f54262a-de4f-421e-aaee-95a0cce750c9",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I don't know what happened since the last update but the app is INSANELY \nslow and I can't even load the screen to play anything. Was way better \nbefore",
+     "review_id": "61ce97dc-8878-4e82-9643-0d1d78fa443a",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Very slow respond, I can't even play songs",
+     "review_id": "ac314f29-6cbc-476b-904b-adfbd7d5d505",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I'm hoping with each update, this bug / glitch will be fixed.",
+     "review_id": "214b4bfc-a54b-498b-8794-4c24d2bf04ae",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "Cleared my storage and it wouldn't let me listen to any music at all",
+     "review_id": "332c1cd5-69a9-473f-b5d5-cf254ca53919",
+     "severity": 4
+    }
+   ],
+   "issue_id": "playback-performance",
+   "member_count": 166,
+   "name": "App very slow to load and play",
+   "name_source": "model",
+   "subtopic": "performance",
+   "topic": "playback"
+  },
+  {
+   "area": "playback",
+   "description": "Users can find a song or playlist but cannot start playback, and some report the library appears empty.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Recently Spotify stopped working and will not load any random song or my playlists on homepage. I have tried to go to my library but it tells me it is empty and",
+     "review_id": "10f1e64a-79bf-4efb-9255-765a976f5b8a",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "No matter what i can't play the song i want.",
+     "review_id": "12addf94-b729-472e-a84f-2432bf59b494",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I can find a song but can't play",
+     "review_id": "12b556eb-c4d2-4e75-9131-0648f254c172",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I can't play the music",
+     "review_id": "19e33b3d-fd6f-4f89-be79-93b6380e16b5",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "This music app was my favourite but now whenever I want to play any song I can't play anything I also did the instructions what Spotify told me to do to fix the",
+     "review_id": "19eab351-dd56-4dd4-a0a0-68500bc6cbdb",
+     "severity": 5
+    }
+   ],
+   "issue_id": "playback-stops_skips",
+   "member_count": 1466,
+   "name": "Selected songs will not play",
+   "name_source": "model",
+   "subtopic": "stops_skips",
+   "topic": "playback"
+  },
+  {
+   "area": "billing/support",
+   "description": "Users with billing or account problems cannot reach a person to resolve issues and feel the support process is inadequate.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Everything is good except for not being able to get ahold of a human to fix my account being overcharged",
+     "review_id": "58ac4f3d-d562-47a8-a7c8-d21cb3e85d1d",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Would give 5 but been trying to connect wife to duo account keeps glitching on address verification and there is no way to call a human to fix it.",
+     "review_id": "16b2357f-8ed2-441e-9892-15911afa520f",
+     "severity": 3
+    },
+    {
+     "intent": "complaint",
+     "quote": "I've had 7 Agents, 4½ hrs speaking with them through their messaging service!!!! To find they can't fix the issue with their App!!! If you are an Android user a",
+     "review_id": "1f2de3d8-bf5f-4712-84ac-31239b168017",
+     "severity": 3
+    },
+    {
+     "intent": "complaint",
+     "quote": "Im only keeping Spotify because it works well. But they ripped me off in money and wouldn't pay it back.so it's more about their customers service. Spotify I lo",
+     "review_id": "390d6460-4f50-4d07-9b72-ab116359a40e",
+     "severity": 3
+    },
+    {
+     "intent": "complaint",
+     "quote": "My spotify is set offline i am facing this issue past one week can i talk to your team",
+     "review_id": "3f13c651-0af1-401a-b0c0-7143e22fe61d",
+     "severity": 3
+    }
+   ],
+   "issue_id": "support-general",
+   "member_count": 57,
+   "name": "Cannot reach a human for account help",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "support"
+  },
+  {
+   "area": "billing/support",
+   "description": "Users report bad customer service, no phone support, and unhelpful support routes when trying to resolve problems.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Terrible customer service, music is alright, but SoundCloud + Opera Beta for youtube is better.",
+     "review_id": "1416283d-6651-4e1b-aabe-c6457be15e7f",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Tried to contact support to resolve.",
+     "review_id": "1761af09-42f3-4d48-8715-de9f9d9d2130",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "My account was compromised, I think you guys had been hacked, there is a security breaches, my email was changed without my consent, and all the linke the suppo",
+     "review_id": "3b6bd644-ec8e-405a-b4fc-b4a13b45528a",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "No telephone support and other routes have been useless",
+     "review_id": "45d07c5b-1110-422a-8c4d-7f128042697c",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Bad customer service support.",
+     "review_id": "5ef248bc-abbf-4d46-8278-c85461747fe7",
+     "severity": 5
+    }
+   ],
+   "issue_id": "support-support",
+   "member_count": 116,
+   "name": "Poor customer support experience",
+   "name_source": "model",
+   "subtopic": "support",
+   "topic": "support"
+  },
+  {
+   "area": "usability",
+   "description": "Users find the app has many ads, including ad timers that behave incorrectly, and listening sessions that repeat the same songs.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I have the free version so I can listen to all the ads, though!",
+     "review_id": "056c340f-c7ad-42d8-a275-37e46f1f4f24",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "The app is good , not alot of ads and a nice range of music.",
+     "review_id": "79a00b5c-92c5-45d4-bd96-998a456d7c2b",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "But even though the ad was over, the timer was still counting up.",
+     "review_id": "8c256cff-407f-4f2c-ad6e-dabdeef1bf0d",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Make an awesome playlist, hear 8 songs over and over.",
+     "review_id": "0101a3b2-043d-4b9c-b2ad-43d0095877fb",
+     "severity": 4
+    },
+    {
+     "intent": "complaint",
+     "quote": "and many more annoying ads...",
+     "review_id": "0224b0d6-3bd4-43fe-9f00-c0066cbaf72e",
+     "severity": 4
+    }
+   ],
+   "issue_id": "usability-ads",
+   "member_count": 8131,
+   "name": "Too many ads and repeated songs",
+   "name_source": "model",
+   "subtopic": "ads",
+   "topic": "usability"
+  },
+  {
+   "area": "usability",
+   "description": "Users report the app staying on a loading screen, failing to open, or crashing when they select a song, even after reinstalling.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "Logged out of my account and the app is completely frozen on the loading screen. Uninstalled and re-installed as well as updated the app and nothing is working.",
+     "review_id": "2bfdb397-8572-4648-b75b-7be421da488a",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "ما يفتح الاغاني و بس اسوي بلاي لست ما اقدر افتحها",
+     "review_id": "364f1e60-d6c5-4f12-9905-4feb3eae1b90",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Would have been 5 stars if there was a way to turn off all the 3rd party tracking and privacy invasion on the Android version of this app. I'm a paying Spotify ",
+     "review_id": "37fcb540-9ed1-4382-8c7a-8c0609f7a063",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Terrible. The app would not open.",
+     "review_id": "3e8e46eb-7327-4fa7-80e9-ebe312b6117c",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I am currently having issues with Spotify. Whenever I select a new song, it crashes. I have deleted and reinstalled it. I have updated. Nothing is working. It's",
+     "review_id": "4c6e1a5b-acf2-4f8c-81ce-dcc055a01962",
+     "severity": 5
+    }
+   ],
+   "issue_id": "usability-general",
+   "member_count": 6087,
+   "name": "App frozen or will not open",
+   "name_source": "model",
+   "subtopic": "general",
+   "topic": "usability"
+  },
+  {
+   "area": "usability",
+   "description": "Users say the app stopped working properly after an update, with screens loading and then failing or buttons missing.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "I've tried restarting my phone & clearing cache but everytime I open the app it loads in for like 15 seconds, let's me use the interface for a few seconds then ",
+     "review_id": "225fe8f2-cadb-4d9e-8401-a71d50a0a08f",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Whatever update you guys just did ruined the app I paid for the premium version and I can't listen to any freaking song now I don't know what's going on but it ",
+     "review_id": "7004fca0-8462-4481-8fa0-6a6bf5ae3cc1",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Spotify Is Suck They Removed The Shuttle Button from music I Can't Play What Music I Want Spotify Sucks Dont Download This Piece of s##t App👎",
+     "review_id": "71f50cd4-5f25-4a61-8ca2-0125494ea9bd",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Latest Update The app doesnt even work. It was working perfectly untill I updated the app now it wont even load anything. Please fix this.",
+     "review_id": "7602d301-ebb8-4700-a0ec-62b3830a3fa0",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Recent update made it unable to use",
+     "review_id": "7856e308-7bc5-42ef-ab76-c11edbb7b12a",
+     "severity": 5
+    }
+   ],
+   "issue_id": "usability-interface",
+   "member_count": 2678,
+   "name": "Interface broken after recent update",
+   "name_source": "model",
+   "subtopic": "interface",
+   "topic": "usability"
+  },
+  {
+   "area": "usability",
+   "description": "Users cannot open liked songs, albums, playlists, or podcasts, and songs they add to playlists do not appear.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "It's horrible I can't listen to music nothing will add on my playlist fix it 😡😡",
+     "review_id": "1fb0951f-dca5-479d-8d06-ee1a57092c7d",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Could only access media by going to library to load playlists from there.",
+     "review_id": "3e57c316-822c-43c2-a202-709d91893b77",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Liked songs, albums, Playlists are not opening at all. Fix this goddamned bug!",
+     "review_id": "4560e76f-6e48-47e0-b9ff-4947b037c31b",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "I have been using the app for 3 years but just a few days ago the app closed my account and my 3 years of playlists got ruined.",
+     "review_id": "82f09eb7-c923-46a7-af55-d405fb204a97",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "everytime i open a podcast or playlist an error occurs ..",
+     "review_id": "840d9467-6d5f-4620-8e08-613f9b99e97b",
+     "severity": 5
+    }
+   ],
+   "issue_id": "usability-library_playlists",
+   "member_count": 1447,
+   "name": "Playlists fail to open or update",
+   "name_source": "model",
+   "subtopic": "library_playlists",
+   "topic": "usability"
+  },
+  {
+   "area": "usability",
+   "description": "Users find skip, play, stop, shuffle, and queue controls missing or broken, and podcasts stopping unexpectedly.",
+   "examples": [
+    {
+     "intent": "complaint",
+     "quote": "App is awful and broken. Podcasts randomly stop, also can no longer use skip/play/stop because the neccessary buttons no longer show up. Have to force close the",
+     "review_id": "41082441-be8d-4508-9630-4ff7b05cb5c2",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "Since last update, podcasts stop literally every 10 minutes and the display screen is gone so you can't skip forward or back, view queue, add to queue.",
+     "review_id": "4dd98e33-718c-417e-964d-bfa1419e09ca",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "The update has made the shuffle button broken and when I open the app it freezes.",
+     "review_id": "7f8f84a9-5067-4fac-9942-3112612b7efc",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "After the new update everything is messed up i highly don't recommend this app we can't skip the song or even scroll through song or play song we like ,we need ",
+     "review_id": "9079c130-1fff-44ee-b4e1-b907f546ae3c",
+     "severity": 5
+    },
+    {
+     "intent": "complaint",
+     "quote": "If u do install this in ur phone ur can only listen to shuffle play or previews.",
+     "review_id": "a5c06033-dad6-4e2a-bffe-f339b081b92e",
+     "severity": 5
+    }
+   ],
+   "issue_id": "usability-playback_controls",
+   "member_count": 2377,
+   "name": "Playback controls missing or broken",
+   "name_source": "model",
+   "subtopic": "playback_controls",
+   "topic": "usability"
+  }
+ ],
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "model": "claude-haiku-5-5",
+ "naming": {
+  "cache": "miss",
+  "input_sha256": "6234f836b13fd069b0f99cad9eb22a42a44fc8ece9f325c21d9c018cd86e0d5a",
+  "notes": [],
+  "request_id": "d508123351154b88ad6ab02138614d15"
+ },
+ "subtopics_version": "subtopics-v1"
+}

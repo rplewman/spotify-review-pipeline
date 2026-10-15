@@ -174,6 +174,50 @@ def check(body, pack, known_issues):
     return errors
 
 
+def _sources(pack):
+    """{number: [paths in memo_input.json]}; list items are labelled by their area / issue ID."""
+    found = {}
+
+    def walk(node, path):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                walk(v, f"{path}.{k}" if path else k)
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                label = (v.get("issue_id") or v.get("area") or v.get("review_id")) if isinstance(v, dict) else None
+                walk(v, f"{path}[{label or i}]")
+        elif isinstance(node, (int, float, str)) and not isinstance(node, bool):
+            for tok in NUMBER.findall(CLAIM_TAG.sub(" ", UUID.sub(" ", str(node)))):
+                n = _num(tok)
+                if n is not None:
+                    found.setdefault(n, []).append(path)
+    walk(pack, "")
+    return found
+
+
+def trace_numbers(body, pack):
+    """M9 gate: every number in the memo maps to a claim ID or to a field of memo_input.json (code, no model)."""
+    claims = {cid: t[m] for t in pack["top_issues"] for m, cid in t["claims"].items()}
+    sources = _sources(pack)
+    texts = [body["memo_markdown"]] + [f"{r['title']} {r['rationale']}" for r in body["recommendations"]]
+    rows, seen = [], set()
+    for text in texts:
+        cited = {_num(str(claims[c])): c for c in CLAIM_TAG.findall(text) if c in claims}
+        for tok in NUMBER.findall(CLAIM_TAG.sub(" ", UUID.sub(" ", ISSUE_REF.sub(" ", text)))):
+            tok = tok.rstrip(",")
+            n = _num(tok)
+            if n is None or n in seen:
+                continue
+            seen.add(n)
+            if n in cited:
+                rows.append((tok, f"claim {cited[n]}"))
+            elif n in sources:
+                rows.append((tok, "; ".join(sources[n][:3]) + (" …" if len(sources[n]) > 3 else "")))
+            else:
+                rows.append((tok, "small count/ordinal (1–10, allowed by the check)"))
+    return rows
+
+
 def write_outputs(conn, root, pack, body, prov, label_config, ranking):
     out = Path(root) / "outputs"
     claims = {cid: (t["issue_id"], m) for t in pack["top_issues"] for m, cid in t["claims"].items()}
@@ -210,7 +254,11 @@ def write_outputs(conn, root, pack, body, prov, label_config, ranking):
             f"(sha256 `{prov['input_sha256'][:16]}…`); label_config `{label_config}`. Every number below was checked by "
             f"code against the saved aggregates; claim IDs resolve in `outputs/claims.csv`.\n\n"
             f"{body['memo_markdown'].strip()}\n\n## Recommendations\n\n{rec_md}\n\n"
-            f"## Claims cited\n\n| claim_id | issue_id | metric | value |\n|---|---|---|---|\n{table}\n")
+            f"## Claims cited\n\n| claim_id | issue_id | metric | value |\n|---|---|---|---|\n{table}\n\n"
+            f"## Number trace\n\nEvery number in the memo and recommendations, mapped by code to a claim ID or to its "
+            f"field in `outputs/memo_input.json` (area-level numbers and totals have no contract claim metric).\n\n"
+            f"| number | source |\n|---|---|\n" + "\n".join(f"| {n} | {src} |" for n, src in trace_numbers(body, pack))
+            + "\n")
     (out / "memo.md").write_text(memo, encoding="utf-8", newline="\n")
     with immediate(conn):
         conn.execute("DELETE FROM claims WHERE label_config=?", (label_config,))

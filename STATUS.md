@@ -1,6 +1,37 @@
 # STATUS — handoff log
 
-## Last completed: M8 (Main 100k run + 25k add-on) — ✅ gate passed 2026-10-15 (💰 $3.2117 list, approved by Rory)
+## Last completed: M9 (Analysis: verify, group, rank, memo) — ✅ gate passed 2026-10-15 (💰 $0.4301 list, approved by Rory)
+
+### Done (M9) — details `evals/m9/notes.md`
+- **Scope change (Rory OK):** the contract ranking groups all **101,649** completed complaint/cancellation records (checker
+  `ungrouped_complaints`); random-100k comparison (47,920) in `outputs/comparison_random_100k_*.csv`; same area order.
+- **A8 verify** (Batch, 20%, seed verify-v1): 20,683 sampled → 20,483 verified, **200 unverified** (4 requests truncated at
+  max_tokens 5,000 twice; rerun would need batch ≤ 25). Agreement topic 79.7% / intent 84.6% / severity 82.3% (±1 99.4%);
+  planted 3/3. Investigation: usability stays #1 under verifier labels; playback ↔ billing/support swap 2nd/3rd.
+- **A9/A10:** 33 issues (model-named); `rank` byte-identical, zero calls; `scripts/m9_rank_check.py` (checker algorithm) PASS.
+- **A11 memo** (memo-prompt-v2: scope disclosure, wording rules, Robustness section): priority **usability**, 3 recs,
+  10 claims; code-generated number trace (36/36 numbers mapped). 👤 **Rory to review the argument**: one wording slip
+  ("largest on every measure" is false for mean severity) — accept with a note or regenerate (≈ $0.005).
+- **Bug fixed:** stale asyncio loop with the async Anthropic client (`providers.base.run_sync`; batch_runner, oneshot);
+  poll tolerates transient errors; FakeBatchProvider enforces one loop. Fast suite **138 passed**.
+
+### Spend (list price)
+- M9: **$0.4301** = verify $0.4173 + group $0.0027 + memo $0.0101 (Anthropic Haiku, cash). Estimate $0.57.
+- **Project total ≈ $4.3269** (Celeris ≈ $1.2492 credit, Anthropic ≈ $3.0778 cash). pipeline.db ledger total ≈ $4.1143.
+
+### Notes for M10
+- Export membership/ranking/claims from `outputs/` as-is (they pass the checker's ranking/claim logic); run.json
+  `allow_multi_issue: false`. Calls: include the 9 failed verify calls and the 2 failed memo calls (real outcomes).
+- `outputs/enriched.jsonl.gz` is gitignored (53 MB); rebuild with `pipeline.cli group` (cache hit, zero calls) if missing.
+- Earlier M8 notes below still apply (export only final-label_config enrich calls; checkpoints into grading/).
+
+### Next step
+**M10 — Grading export + checker.**
+"Read CLAUDE.md, STATUS.md and PLAN.md §5 M10, then do M10."
+
+---
+
+## Previously completed: M8 (Main 100k run + 25k add-on) — ✅ gate passed 2026-10-15 (💰 $3.2117 list, approved by Rory)
 
 ### Done (M8)
 - **Resume demo, screen-recorded by Rory** (`evals/recovery/`): initial run interrupted after 4 A3 batches (exit 130,
@@ -29,9 +60,6 @@
   interrupted calls of run-20261015-094806-7e9c37 are real failed outcomes and stay in `calls.jsonl`.
 - `outputs/run_log.jsonl` was appended by the runs (tracked file, committed).
 
-### Next step
-**M9 — Analysis: verify, group, rank, memo.**
-"Read CLAUDE.md, STATUS.md and PLAN.md §5 M9, then do M9."
 
 ---
 

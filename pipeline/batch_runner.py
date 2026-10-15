@@ -25,8 +25,11 @@ from dataclasses import dataclass
 from pipeline.db import ledger, queue
 from pipeline.db.store import immediate, now_iso
 from pipeline.oneshot import end_run, start_run
+from pipeline.providers.base import ProviderError, run_sync as _run
 
 LEASE = 26 * 3600  # a batch can take up to 24 h
+POLL_TRANSIENT_LIMIT = 10  # consecutive connection errors while polling before giving up (rerun resumes by job ID)
+
 
 
 @dataclass
@@ -97,7 +100,7 @@ def build_and_submit(conn, stage, cfg, run_id):
         conn.execute("""INSERT INTO batch_jobs (provider_job_id, item_ids_json, status, job_key, role, label_config,
                                                 run_id) VALUES (?,?, 'building', ?, 'verify', ?, ?)""",
                      (pending_id, json.dumps(item_map), job_key, key, run_id))
-    job_id = asyncio.run(provider.submit([(rid, params) for rid, params, _ in requests]))
+    job_id = _run(provider, provider.submit([(rid, params) for rid, params, _ in requests]))
     with immediate(conn):
         conn.execute("UPDATE batch_jobs SET provider_job_id=?, status='submitted', submitted_at=? WHERE provider_job_id=?",
                      (job_id, now_iso(), pending_id))
@@ -107,8 +110,17 @@ def build_and_submit(conn, stage, cfg, run_id):
 def poll(conn, provider, job_id, cfg):
     """Wait for the job to end. Returns True when ended, False when max_wait passed (the job stays open)."""
     deadline = time.monotonic() + cfg.max_wait_seconds
+    transient = 0
     while True:
-        status, counts = asyncio.run(provider.status(job_id))
+        try:
+            status, counts = _run(provider, provider.status(job_id))
+            transient = 0
+        except ProviderError as e:  # the job lives on the provider's side: a failed poll changes nothing
+            transient += 1
+            if e.kind != "transient" or transient >= POLL_TRANSIENT_LIMIT:
+                raise
+            time.sleep(cfg.poll_seconds)
+            continue
         with immediate(conn):
             conn.execute("UPDATE batch_jobs SET request_counts_json=? WHERE provider_job_id=?",
                          (json.dumps(counts, sort_keys=True), job_id))
@@ -128,7 +140,7 @@ def commit(conn, stage, job_id, cfg):
     item_map, owner = conn.execute("SELECT item_ids_json, job_key FROM batch_jobs WHERE provider_job_id=?",
                                    (job_id,)).fetchone()
     item_map = json.loads(item_map)
-    results = {cid: (kind, resp, err) for cid, kind, resp, err in asyncio.run(provider.results(job_id))}
+    results = {cid: (kind, resp, err) for cid, kind, resp, err in _run(provider, provider.results(job_id))}
     tally = {"succeeded": 0, "invalid": 0, "requeued": 0, "failed": 0}
     for rid, ids in item_map.items():
         if conn.execute("SELECT outcome FROM calls WHERE request_id=?", (rid,)).fetchone()[0] != "in_flight":

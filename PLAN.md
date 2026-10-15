@@ -67,6 +67,9 @@ ranking** (which stays on the unbiased random 100k); they count toward coverage 
 added); M6 decides the size from leftover budget. The add-on is only the fallback path if the full-corpus gate (§1.2) says no.
 **Decided (M6, 2026-10-15): top 25,000 texts** (+41,577 rows, coverage point 0.6161 → 0.6539); built in M6b, run in M8 under
 the same frozen `label_config` (so add-on texts also get the M6b severity escalation).
+**Changed in M9 (Rory, 2026-10-15):** the checker flags `ungrouped_complaints`, so the contract ranking groups **every**
+completed complaint/cancellation record (add-on included); the random-100k view is a code-only comparison
+(`outputs/comparison_random_100k_*.csv`) that the memo reports under "Robustness".
 
 **Which 100k (decided):** continue the **official sampling order** from `prepare_dataset.py`, i.e. the lowest
 `SHA-256("berkeley-fall-2026-assignment-5-v1:" + review_id)` among unique nonempty valid-rating rows. The first 50 are the golden set and

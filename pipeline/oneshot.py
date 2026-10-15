@@ -13,7 +13,7 @@ from datetime import datetime
 
 from pipeline.db import ledger, queue
 from pipeline.db.store import immediate, now_iso
-from pipeline.providers.base import ProviderError, Request
+from pipeline.providers.base import ProviderError, Request, run_sync
 
 
 class CallRejected(Exception):
@@ -61,7 +61,7 @@ def call_validated(conn, provider, *, role, agent, label_config, payload, valida
         req = Request(request_id, provider.model, list(review_ids), [], current, timeout, dict(meta or {}))
         t0 = time.perf_counter()
         try:
-            resp = asyncio.run(asyncio.wait_for(provider.call(req), timeout))
+            resp = run_sync(provider, asyncio.wait_for(provider.call(req), timeout))
         except (ProviderError, asyncio.TimeoutError) as e:
             if isinstance(e, asyncio.TimeoutError):
                 e = ProviderError("transient", None, "client timeout", billed=None)

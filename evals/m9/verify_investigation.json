@@ -1,0 +1,189 @@
+{
+ "verified_texts": 20483,
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "top_topic_confusions": [
+  [
+   "catalog -> other",
+   715
+  ],
+  [
+   "usability -> other",
+   480
+  ],
+  [
+   "usability -> billing",
+   412
+  ],
+  [
+   "playback -> other",
+   401
+  ],
+  [
+   "playback -> usability",
+   293
+  ],
+  [
+   "usability -> playback",
+   269
+  ],
+  [
+   "catalog -> usability",
+   200
+  ],
+  [
+   "usability -> catalog",
+   140
+  ],
+  [
+   "other -> catalog",
+   133
+  ],
+  [
+   "billing -> other",
+   132
+  ]
+ ],
+ "top_intent_confusions": [
+  [
+   "complaint -> unclear",
+   791
+  ],
+  [
+   "complaint -> cancellation",
+   614
+  ],
+  [
+   "praise -> unclear",
+   592
+  ],
+  [
+   "praise -> complaint",
+   398
+  ],
+  [
+   "request -> complaint",
+   251
+  ],
+  [
+   "complaint -> request",
+   137
+  ],
+  [
+   "complaint -> praise",
+   98
+  ],
+  [
+   "praise -> request",
+   62
+  ],
+  [
+   "cancellation -> unclear",
+   60
+  ],
+  [
+   "cancellation -> complaint",
+   31
+  ]
+ ],
+ "severity_verifier_minus_first": {
+  "-3": 4,
+  "-2": 69,
+  "-1": 2743,
+  "0": 16847,
+  "1": 767,
+  "2": 46,
+  "3": 7
+ },
+ "all_fields_agree_by": {
+  "scope": {
+   "frequency_addon": {
+    "n": 4975,
+    "agree": 3186,
+    "rate": 0.6404
+   },
+   "random_100k": {
+    "n": 15508,
+    "agree": 8733,
+    "rate": 0.5631
+   }
+  },
+  "length": {
+   "150+": {
+    "n": 3800,
+    "agree": 1529,
+    "rate": 0.4024
+   },
+   "40-149": {
+    "n": 7112,
+    "agree": 3849,
+    "rate": 0.5412
+   },
+   "<40": {
+    "n": 9571,
+    "agree": 6541,
+    "rate": 0.6834
+   }
+  }
+ },
+ "area_rollup_on_sample (distinct texts; complaint+cancellation)": {
+  "first": {
+   "access": {
+    "complaints": 375,
+    "severity_sum": 1527
+   },
+   "usability": {
+    "complaints": 3224,
+    "severity_sum": 8379
+   },
+   "playback": {
+    "complaints": 1708,
+    "severity_sum": 5754
+   },
+   "billing/support": {
+    "complaints": 1548,
+    "severity_sum": 4215
+   },
+   "outside": {
+    "complaints": 3952,
+    "severity_sum": 7919
+   }
+  },
+  "verifier": {
+   "access": {
+    "complaints": 406,
+    "severity_sum": 1561
+   },
+   "usability": {
+    "complaints": 2854,
+    "severity_sum": 6767
+   },
+   "playback": {
+    "complaints": 1652,
+    "severity_sum": 5144
+   },
+   "billing/support": {
+    "complaints": 2044,
+    "severity_sum": 5609
+   },
+   "outside": {
+    "complaints": 3453,
+    "severity_sum": 7149
+   }
+  }
+ },
+ "area_order_by_severity_sum": {
+  "first": [
+   "usability",
+   "playback",
+   "billing/support",
+   "access"
+  ],
+  "verifier": [
+   "usability",
+   "billing/support",
+   "playback",
+   "access"
+  ]
+ },
+ "area_order_agrees": false
+}

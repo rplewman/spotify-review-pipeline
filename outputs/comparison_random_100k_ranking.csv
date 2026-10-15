@@ -1,0 +1,34 @@
+rank,issue_id,name,topic,subtopic,area,complaint_count,cancellation_count,severity_sum,mean_severity,priority_score,needs_review_count,share_of_members
+1,other-general,Miscellaneous complaints about the app,other,general,outside,17183,843,32920,1.915847,32920,2748,0.358577
+2,playback-general,Music will not play after update,playback,general,playback,3355,73,11028,3.287034,11028,153,0.070013
+3,usability-ads,Too many ads and repeated songs,usability,ads,usability,4579,88,11007,2.403800,11007,31,0.095555
+4,usability-general,App frozen or will not open,usability,general,usability,3985,85,9886,2.480803,9886,155,0.083159
+5,billing-subscription,Premium status lost or not recognized,billing,subscription,billing/support,2880,145,7830,2.718750,7830,79,0.060100
+6,usability-playback_controls,Playback controls missing or broken,usability,playback_controls,usability,1921,70,5825,3.032275,5825,9,0.040088
+7,usability-interface,Interface broken after recent update,usability,interface,usability,1844,81,4750,2.575922,4750,31,0.038481
+8,playback-stops_skips,Selected songs will not play,playback,stops_skips,playback,1169,17,4047,3.461933,4047,4,0.024395
+9,billing-premium_limits,Paid premium features still locked,billing,premium_limits,billing/support,1389,49,4004,2.882649,4004,12,0.028986
+10,access-login,Login attempts fail repeatedly,access,login,access,875,6,3699,4.227429,3699,12,0.018260
+11,usability-library_playlists,Playlists fail to open or update,usability,library_playlists,usability,1196,19,3468,2.899666,3468,6,0.024958
+12,catalog-general,Library and playlists disappeared,catalog,general,outside,1161,17,2658,2.289406,2658,82,0.024228
+13,billing-charges_refunds,Premium payment not applied or refunded,billing,charges_refunds,billing/support,851,37,2426,2.850764,2426,21,0.017759
+14,playback-connection,App reports false no-internet error,playback,connection,playback,653,12,2321,3.554364,2321,17,0.013627
+15,playback-crashes,App crashes or freezes on launch,playback,crashes,playback,596,5,2268,3.805369,2268,6,0.012437
+16,billing-general,Unexpected or repeated charges,billing,general,billing/support,762,35,1835,2.408136,1835,62,0.015902
+17,catalog-lyrics,Lyrics missing or restricted to premium,catalog,lyrics,outside,566,4,1441,2.545936,1441,5,0.011811
+18,downloads-download_fails,Songs fail to download,downloads,download_fails,playback,457,7,1435,3.140044,1435,21,0.009537
+19,access-general,General sign-in failures,access,general,access,319,68,1035,3.244514,1035,63,0.006657
+20,billing-price,Premium cost seen as too high,billing,price,billing/support,305,12,703,2.304918,703,1,0.006365
+21,catalog-missing_content,Songs unavailable or removed from playlists,catalog,missing_content,outside,264,5,692,2.621212,692,2,0.005509
+22,catalog-search,Search not returning or playing correct results,catalog,search,outside,234,4,677,2.893162,677,5,0.004883
+23,downloads-offline_mode,Offline listening stopped working,downloads,offline_mode,playback,196,3,660,3.367347,660,2,0.004090
+24,playback-audio_quality,No sound or poor audio quality,playback,audio_quality,playback,227,1,601,2.647577,601,2,0.004737
+25,access-password,Password reset and recovery problems,access,password,access,146,1,597,4.089041,597,1,0.003047
+26,access-account,Cannot sign in to account,access,account,access,153,5,581,3.797386,581,4,0.003193
+27,downloads-lost_downloads,Downloaded songs disappear after updates,downloads,lost_downloads,playback,108,8,369,3.416667,369,3,0.002254
+28,catalog-recommendations,Unwanted recommendations and playlists,catalog,recommendations,outside,150,1,354,2.360000,354,0,0.003130
+29,downloads-general,Downloaded music not playing or missing,downloads,general,playback,106,6,313,2.952830,313,7,0.002212
+30,playback-performance,App very slow to load and play,playback,performance,playback,109,0,308,2.825688,308,4,0.002275
+31,support-support,Poor customer support experience,support,support,billing/support,94,1,271,2.882979,271,4,0.001962
+32,catalog-podcasts_audiobooks,Podcasts cannot be accessed,catalog,podcasts_audiobooks,outside,57,1,150,2.631579,150,1,0.001189
+33,support-general,Cannot reach a human for account help,support,general,billing/support,30,0,61,2.033333,61,9,0.000626

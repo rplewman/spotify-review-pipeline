@@ -1,0 +1,50 @@
+{
+ "agreement": {
+  "intent": {
+   "agree": 17327,
+   "rate": 0.8459
+  },
+  "severity": {
+   "agree": 16847,
+   "rate": 0.8225
+  },
+  "topic": {
+   "agree": 16330,
+   "rate": 0.7972
+  }
+ },
+ "all_fields_agree": {
+  "agree": 11919,
+  "rate": 0.5819
+ },
+ "by_decision_source": {
+  "escalation": {
+   "all_fields_agree": 11919,
+   "verified": 20483
+  }
+ },
+ "disagreeing_reviews": 8564,
+ "disagreements": 10945,
+ "files": [
+  "evals/verify/verifier_predictions.jsonl",
+  "evals/verify/disagreements.csv"
+ ],
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "sample": {
+  "method": "sha256(seed:text_sha256)/2^256 < rate over distinct texts with a result",
+  "queue": {
+   "done": 20483,
+   "quarantined": 200
+  },
+  "rate": 0.2,
+  "seed": "verify-v1",
+  "size": 20683
+ },
+ "severity_within_1": {
+  "agree": 20357,
+  "rate": 0.9938
+ },
+ "unverified": 200,
+ "verified": 20483,
+ "verify_config": "claude-haiku-5-5+verifier-prompt-v1+effort-low"
+}

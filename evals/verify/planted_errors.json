@@ -1,0 +1,28 @@
+{
+ "detected": 3,
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "missed": 0,
+ "note": "test copy only; excluded from business aggregates",
+ "planted": [
+  {
+   "field": "topic",
+   "planted": "access",
+   "review_id": "70af9d02-e727-4dba-affe-36e18637ed57",
+   "true_first_label": "other"
+  },
+  {
+   "field": "topic",
+   "planted": "access",
+   "review_id": "e901ed1b-b3d7-41f5-a257-6765374656fa",
+   "true_first_label": "other"
+  },
+  {
+   "field": "topic",
+   "planted": "billing",
+   "review_id": "e299f9b9-06e9-4066-8a2b-0f799753a442",
+   "true_first_label": "catalog"
+  }
+ ],
+ "synthetic": true,
+ "verify_config": "claude-haiku-5-5+verifier-prompt-v1+effort-low"
+}

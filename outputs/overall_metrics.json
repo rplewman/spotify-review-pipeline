@@ -1,0 +1,42 @@
+{
+ "by_intent": {
+  "cancellation": 3808,
+  "complaint": 97841,
+  "praise": 168205,
+  "request": 4382,
+  "unclear": 5283
+ },
+ "by_severity": {
+  "1": 179685,
+  "2": 74046,
+  "3": 17359,
+  "4": 7199,
+  "5": 1230
+ },
+ "by_topic": {
+  "access": 2528,
+  "billing": 9846,
+  "catalog": 19560,
+  "downloads": 1934,
+  "other": 203697,
+  "playback": 13334,
+  "support": 635,
+  "usability": 27985
+ },
+ "cache_reused": 176420,
+ "comparison_random_100k": {
+  "issues": 33,
+  "members": 47920
+ },
+ "completed": 279519,
+ "issues": 33,
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "members": 101649,
+ "needs_review": 17708,
+ "quarantine_reasons": {
+  "empty_review_text": 13,
+  "out_of_scope_budget_100k": 381090
+ },
+ "quarantined": 381103,
+ "records": 660622
+}

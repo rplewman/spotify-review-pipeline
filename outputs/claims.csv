@@ -1,0 +1,11 @@
+claim_id,issue_id,metric,value
+C02a,usability-ads,complaint_count,8131
+C02b,usability-ads,severity_sum,18508
+C03a,usability-general,complaint_count,6087
+C03b,usability-general,severity_sum,14578
+C04a,playback-general,complaint_count,4288
+C05a,billing-subscription,complaint_count,3636
+C06a,usability-playback_controls,complaint_count,2377
+C07a,usability-interface,complaint_count,2678
+C08a,access-login,complaint_count,1283
+C08c,access-login,mean_severity,4.246298

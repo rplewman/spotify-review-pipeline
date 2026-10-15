@@ -76,3 +76,14 @@ class Provider:
         return ((usage.get("input_tokens", 0) - cached) * self.rates["input_tokens"]
                 + cached * self.rates.get("cached_tokens", self.rates["input_tokens"])
                 + usage.get("output_tokens", 0) * self.rates["output_tokens"]) / 1e6
+
+
+def run_sync(provider, coro):
+    """Run a provider coroutine from sync code on ONE event loop per provider. The async Anthropic client keeps its
+    connection pool across calls; after asyncio.run() closes a loop, a pooled connection bound to it fails the next
+    call with "Event loop is closed" → APIConnectionError (M9: a verify poll crashed, a memo attempt was lost)."""
+    import asyncio
+    loop = getattr(provider, "_sync_loop", None)
+    if loop is None or loop.is_closed():
+        loop = provider._sync_loop = asyncio.new_event_loop()
+    return loop.run_until_complete(coro)

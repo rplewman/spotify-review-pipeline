@@ -187,8 +187,17 @@ class FakeBatchProvider(FakeProvider):
         super().__init__(model=model, **kw)
         self.outcomes, self.polls_to_end = list(outcomes), polls_to_end
         self.jobs, self.submits, self.polls = {}, 0, {}
+        self._loop_seen = None
+
+    def _same_loop(self):
+        """Like the real async client: its connection pool is bound to the first event loop it ran on (M9 bug)."""
+        loop = asyncio.get_running_loop()
+        if self._loop_seen not in (None, loop):
+            raise RuntimeError("Event loop is closed")
+        self._loop_seen = loop
 
     async def submit(self, requests):
+        self._same_loop()
         self.submits += 1
         job_id = f"msgbatch_fake_{uuid.uuid4().hex[:10]}"
         self.jobs[job_id] = [(cid, params, self.outcomes.pop(0) if self.outcomes else "succeeded")
@@ -197,11 +206,13 @@ class FakeBatchProvider(FakeProvider):
         return job_id
 
     async def status(self, job_id):
+        self._same_loop()
         self.polls[job_id] += 1
         ended = self.polls[job_id] > self.polls_to_end
         return ("ended" if ended else "in_progress"), {"processing": 0 if ended else len(self.jobs[job_id])}
 
     async def results(self, job_id):
+        self._same_loop()
         out = []
         for cid, params, kind in self.jobs[job_id]:
             if kind == "missing":

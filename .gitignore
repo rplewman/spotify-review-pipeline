@@ -16,3 +16,6 @@ self-check.json
 
 # original brief (stripped copy is docs/BRIEF_TEXT.md)
 Final Assignment - Multi Agent Large Data Processing Pipeline.md
+
+# M9: record snapshot for `rank` (53 MB; rebuilt by `pipeline.cli group` from state/pipeline.db)
+outputs/enriched.jsonl.gz
