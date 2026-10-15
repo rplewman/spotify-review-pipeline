@@ -591,10 +591,10 @@ M0 hello-world deploy ───────────────────�
 | Q8 | Celeris request shape A (shared definitions, ≤ 50 reviews) vs B (1 per request)? | Default A; confirm with the M5 comparison |
 | Q9 | ~~Does Celeris work without a card?~~ | **Resolved:** Rory adds a card and a Console spend limit in M0 |
 | Q10 | Which escalation model (Haiku with low thinking or `celeris-1-magnus`)? | Measured in M5 by agreement gain per $ |
-| Q11 | Is 60% the right gate, and on which signal (raw top probability vs Celeris `confidence`)? | Raw top probability at 0.60; decided by the M6 sweep against the adjudicated `dev_100` |
+| Q11 | ~~Is 60% the right gate, and on which signal?~~ | **Resolved (M6):** raw top probability, gate 0.70, **severity only** (Haiku hurt topic on dev_100), cap 0.40 |
 | Q12 | ~~When is Class 7?~~ | **Resolved:** already held; the only deadline is 2026-10-20 midnight |
 | Q13 | Is the topic → area mapping right (downloads → playback; catalog and other outside the four areas)? | As in §1; Rory confirms in M2 |
-| Q14 | Run the full corpus for extra credit? | Decided at the M6 decision point (§1.2) from measured costs; Rory confirms GO before M8 |
+| Q14 | Run the full corpus for extra credit? | **M6: NO-GO** ($16.86 conservative > $9.00); add-on top 25,000 recommended; Rory confirms before M8 |
 
 ## 8. Risks
 

@@ -1,0 +1,90 @@
+{
+ "decision": "NO-GO",
+ "conditions": {
+  "1_shape_A": {
+   "ok": true,
+   "value": "celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1"
+  },
+  "2_projection_le_9": {
+   "ok": false,
+   "value": 16.8625,
+   "parts": {
+    "spend_to_date": 0.225926,
+    "remaining_texts": 475697,
+    "usd_per_text_A3_A5_conservative": 3.272309602465322e-05,
+    "downstream_A8_A9_A11_conservative": 1.0703
+   }
+  },
+  "3_escalation_rate": {
+   "ok": false,
+   "value": 0.3684644371172869,
+   "cap": 0.4,
+   "note": "measured share below the gate; the conservative projection prices the cap"
+  },
+  "4_time": {
+   "ok": true,
+   "enrich_hours_conservative": 6.71,
+   "lead_hours_before_start": 24.0,
+   "projected_finish": "2026-10-16T11:04+00:00",
+   "latest_finish": "2026-10-18T00:00+00:00"
+  }
+ },
+ "spend_to_date_by_provider": {
+  "celeris": 0.11083820000000003,
+  "anthropic": 0.11508782499999991
+ },
+ "scope_100k_projected_total_conservative": 2.6823,
+ "headroom_under_9": 6.3177,
+ "frequency_addon": {
+  "steps": [
+   {
+    "top": 1000,
+    "rows": 6916,
+    "coverage": 0.6224,
+    "usd_upper": 0.0327
+   },
+   {
+    "top": 5000,
+    "rows": 17894,
+    "coverage": 0.6324,
+    "usd_upper": 0.1636
+   },
+   {
+    "top": 10000,
+    "rows": 26577,
+    "coverage": 0.6403,
+    "usd_upper": 0.3272
+   },
+   {
+    "top": 25000,
+    "rows": 41577,
+    "coverage": 0.6539,
+    "usd_upper": 0.8181
+   },
+   {
+    "top": 406090,
+    "rows": 422667,
+    "coverage": 1.0,
+    "usd_upper": 13.2885
+   }
+  ],
+  "recommended_top": 25000,
+  "rule": "largest step whose upper-end cost (per-text cost, no length discount) ≤ half the headroom under $9.00"
+ },
+ "inputs": {
+  "report": "C:\\Users\\thoma\\Spotify Review FInal\\cost\\report.json",
+  "measured": "C:\\Users\\thoma\\Spotify Review FInal\\cost\\m6\\measured.json",
+  "dbs": [
+   "state/pipeline.db",
+   "state/pilot.db",
+   "state/pilot_attempt1.db",
+   "state/pilot_attempt2.db",
+   "state/pilot_shapeB.db",
+   "state/pilot_compare.db",
+   "state/m6_dev.db",
+   "state/m6_golden_B.db",
+   "state/m6_dev_B.db"
+  ]
+ },
+ "confirm": "Rory confirms before M8"
+}

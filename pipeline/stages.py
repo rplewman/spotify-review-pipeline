@@ -147,9 +147,12 @@ class PassthroughStage(Stage):
         return ok, bad, notes
 
 
-def make_label_config(decision_model, shape, gate, esc_model, esc_fraction):
-    """PLAN §3.7: every setting that changes a label is in the string; any change → new work, no cache reuse."""
-    return (f"{decision_model}+shape{shape}+gate{gate:.2f}+esc-{esc_model or 'none'}-{esc_fraction:.2f}"
+def make_label_config(decision_model, shape, gate, esc_model, esc_fraction, esc_fields=None):
+    """PLAN §3.7: every setting that changes a label is in the string; any change → new work, no cache reuse.
+    `esc_fields` (the gated fields) is written only when it is not all three, so earlier strings are unchanged."""
+    fields = tuple(esc_fields or router.GATED)
+    gated = "" if set(fields) == set(router.GATED) else "+escfields-" + "-".join(f for f in router.GATED if f in fields)
+    return (f"{decision_model}+shape{shape}+gate{gate:.2f}+esc-{esc_model or 'none'}-{esc_fraction:.2f}{gated}"
             f"+{extractor.EXTRACT_VERSION}+{decision.PROMPT_VERSION}+{SCHEMA_VERSION}")
 
 
@@ -165,16 +168,19 @@ class EnrichStage(Stage):
     """
 
     def __init__(self, provider, label_config, escalation_provider=None, shape="A", gate=0.60, esc_fraction=0.15,
-                 esc_bucket="escalation", esc_bucket_cap=None):
+                 esc_bucket="escalation", esc_bucket_cap=None, esc_fields=router.GATED):
         super().__init__(provider, label_config)
+        self.esc_fields = tuple(esc_fields)
         self.escalation_provider, self.shape, self.gate = escalation_provider, shape, gate
         self.esc_fraction = esc_fraction if escalation_provider is not None else 0.0
         self.esc_bucket, self.esc_bucket_cap = esc_bucket, esc_bucket_cap
         self._allowance = None
+        self.max_rank = None  # set by the CLI from RunConfig.max_rank (cap counted over the prefix)
 
     def describe(self):
         return {"stage": "EnrichStage", "shape": self.shape, "gate": self.gate, "esc_fraction": self.esc_fraction,
-                "escalation_model": getattr(self.escalation_provider, "model", None), "esc_bucket": self.esc_bucket}
+                "escalation_model": getattr(self.escalation_provider, "model", None), "esc_bucket": self.esc_bucket,
+                "esc_fields": list(self.esc_fields)}
 
     # ----- saved intermediate outputs -----
     def _load(self, conn, agent, shas):
@@ -213,8 +219,10 @@ class EnrichStage(Stage):
                     if i["text_sha256"] in ctx["a3"] and i["text_sha256"] not in ctx["a4"]}
         if unrouted:
             if self._allowance is None:
-                self._allowance = router.escalation_allowance(conn, self.stage, self.label_config, self.esc_fraction)
-            ctx["a4"].update(router.route(conn, self.label_config, unrouted, self.gate, self._allowance))
+                self._allowance = router.escalation_allowance(conn, self.stage, self.label_config, self.esc_fraction,
+                                                               self.max_rank)
+            ctx["a4"].update(router.route(conn, self.label_config, unrouted, self.gate, self._allowance,
+                                                  self.esc_fields))
         if not ctx["a5_sent"]:
             ctx["a5_sent"] = True
             todo = [i for i in live if ctx["a4"].get(i["text_sha256"], {}).get("route") == "escalate"

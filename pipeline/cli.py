@@ -39,7 +39,9 @@ from pipeline.providers.fake import FakeBatchProvider, FakeProvider, parse_scrip
 from pipeline.stages import EnrichStage, PassthroughStage, make_label_config
 
 PAID_PROVIDERS = ("celeris", "anthropic")
-STAGE_DEFAULTS = {"stage": "chain", "shape": "A", "gate": 0.60, "esc_fraction": 0.15, "esc_max_spend": None}
+# Frozen in M6 (2026-10-15, dev_100 sweep, option B): escalate severity only, gate 0.70, cap 0.40.
+STAGE_DEFAULTS = {"stage": "chain", "shape": "A", "gate": 0.70, "esc_fraction": 0.40, "esc_max_spend": None,
+                  "esc_fields": "severity"}
 
 
 def add_enrich_flags(p, resume=False):
@@ -56,10 +58,12 @@ def add_enrich_flags(p, resume=False):
     p.add_argument("--gate", type=float, default=None, help="A4 escalation gate on the top probability (default 0.60)")
     p.add_argument("--esc-fraction", type=float, default=None, help="A4 cap: max escalated share of the queue (default 0.15)")
     p.add_argument("--esc-max-spend", type=float, default=None, help="A5 $ sub-cap (default: PLAN §4 escalation bucket)")
+    p.add_argument("--esc-fields", default=None, help="gated fields, comma-separated (default severity; M6 freeze)")
     p.add_argument("--label-config", default=d)
     p.add_argument("--workers", type=int, default=d)
     p.add_argument("--batch-size", type=int, default=d)
     p.add_argument("--limit", type=int, default=d, help="max items to claim in this run")
+    p.add_argument("--max-rank", type=int, default=d, help="only texts with scope_rank ≤ N (seed-order prefix)")
     p.add_argument("--max-minutes", type=float, default=d)
     p.add_argument("--lease-seconds", type=float, default=d)
     p.add_argument("--bucket", default=d, help=f"ledger bucket ({', '.join(ledger.BUCKET_CAPS)})")
@@ -93,7 +97,11 @@ def default_label_config(args):
     if args.provider == "fake":
         return "fake-v0"
     esc = None if args.escalation == "none" else "claude-haiku-5-5"
-    return make_label_config("celeris-1-decision", args.shape, args.gate, esc, args.esc_fraction)
+    return make_label_config("celeris-1-decision", args.shape, args.gate, esc, args.esc_fraction, esc_fields(args))
+
+
+def esc_fields(args):
+    return tuple(f.strip() for f in args.esc_fields.split(",") if f.strip())
 
 
 def make_stage(args, label_config):
@@ -113,13 +121,14 @@ def make_stage(args, label_config):
     esc = {"fake": lambda: FakeProvider(latency=args.fake_latency, model="fake-escalation"),
            "anthropic": lambda: ClaudeProvider(), "none": lambda: None}[args.escalation]()
     return EnrichStage(provider, label_config, esc, shape=args.shape, gate=args.gate, esc_fraction=args.esc_fraction,
+                       esc_fields=esc_fields(args),
                        esc_bucket_cap=args.esc_max_spend), spec
 
 
 def run_enrich(args, base=None, phase="initial"):
     base = dict(base or {})
     overrides = {"label_config": "label_config", "workers": "workers", "batch_size": "batch_size", "limit": "limit",
-                 "lease_seconds": "lease_seconds", "bucket": "bucket"}
+                 "max_rank": "max_rank", "lease_seconds": "lease_seconds", "bucket": "bucket"}
     for arg, key in overrides.items():
         if getattr(args, arg, None) is not None:
             base[key] = getattr(args, arg)
@@ -135,6 +144,7 @@ def run_enrich(args, base=None, phase="initial"):
     fields = RunConfig.__dataclass_fields__
     cfg = RunConfig(**{k: v for k, v in base.items() if k in fields})
     stage, spec = make_stage(args, cfg.label_config)
+    stage.max_rank = cfg.max_rank
     if args.provider == "fake" and Path(args.db).resolve() == Path("state/pipeline.db").resolve():
         raise SystemExit("refused: fake runs must use their own --db, not the operational state/pipeline.db")
     conn = connect(args.db)
@@ -356,7 +366,7 @@ def cmd_pilot(args):
         raise SystemExit(f"refused: {', '.join(sorted(set(paid)))} is paid; pass --paid and --max-spend (PLAN §4)")
     args.decision_model = "celeris-1-decision" if args.provider == "celeris" else "fake"
     if args.label_config is None:
-        args.shape, args.gate, args.esc_fraction = "A", 0.60, 0.15
+        args.shape, args.gate, args.esc_fraction, args.esc_fields = "A", 0.60, 0.15, "topic,intent,severity"
         args.label_config = "pilot-" + default_label_config(args)
     if Path(args.db).resolve() == Path("state/pipeline.db").resolve():
         raise SystemExit("refused: the pilot needs its own --db, not the operational state/pipeline.db")
@@ -443,7 +453,7 @@ def main(argv=None):
         return cmd_ingest(args)
     if args.command == "enrich":
         return run_enrich(args, {k: getattr(args, k) for k in ("label_config", "workers", "batch_size", "limit",
-                                                                "lease_seconds", "bucket") if hasattr(args, k)})
+                                                                "max_rank", "lease_seconds", "bucket") if hasattr(args, k)})
     if args.command == "resume":
         return cmd_resume(args)
     if args.command == "status":

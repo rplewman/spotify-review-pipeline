@@ -1,0 +1,50 @@
+{
+ "A top-1 / adjudicated": {
+  "n": 23,
+  "topic": 19,
+  "intent": 20,
+  "severity": 13
+ },
+ "A top-1 / all": {
+  "n": 100,
+  "topic": 96,
+  "intent": 97,
+  "severity": 90
+ },
+ "frozen (A + Haiku severity < 0.70) / adjudicated": {
+  "n": 23,
+  "topic": 19,
+  "intent": 20,
+  "severity": 15
+ },
+ "frozen (A + Haiku severity < 0.70) / all": {
+  "n": 100,
+  "topic": 96,
+  "intent": 97,
+  "severity": 92
+ },
+ "B top-1 / adjudicated": {
+  "n": 23,
+  "topic": 20,
+  "intent": 16,
+  "severity": 11
+ },
+ "B top-1 / all": {
+  "n": 100,
+  "topic": 88,
+  "intent": 88,
+  "severity": 71
+ },
+ "B + Haiku severity (A-gated, approx.) / adjudicated": {
+  "n": 23,
+  "topic": 20,
+  "intent": 16,
+  "severity": 15
+ },
+ "B + Haiku severity (A-gated, approx.) / all": {
+  "n": 100,
+  "topic": 88,
+  "intent": 88,
+  "severity": 92
+ }
+}

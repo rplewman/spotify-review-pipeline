@@ -131,6 +131,7 @@ def measured_section(rates, sources, usage, calls, m):
     completed = m["records"]["completed"]
     used = sorted({(p["provider"], p["model"], p["tier"], p["item"]) for p in priced})
     return {
+        "label": m.get("label", "100-review pilot"),
         "input": m["input"],
         "records": m["records"], "unique_texts": m["unique_texts"], "routes": m["routes"],
         "verification": m["verification"], "label_config": m["label_config"], "stage_config": m["stages"],
@@ -281,13 +282,13 @@ def hms(s):
 def report_md(r, credit_providers=("celeris",)):
     me, c = r["measured"], r["controls"]
     credits = sum(v for k, v in me["api_by_provider_usd"].items() if k in credit_providers)
-    L = ["# Cost report — 100-review pilot + projections", "",
+    L = [f"# Cost report — {me['label']} + projections", "",
          "Offline replay: `python cost/calculator.py` (usage.csv × rates.csv; no API calls). List prices; credits and "
          "cash are shown apart; local compute is not metered (unknown, not 0).", ""]
     if r["warnings"]:
         L += ["## Warnings", ""] + [f"- **{w}**" for w in r["warnings"]] + [""]
     i = me["input"]
-    L += ["## Measured (pilot)", "",
+    L += [f"## Measured ({'pilot' if me['label'] == '100-review pilot' else me['label']})", "",
           "| Item | Value |", "|---|---|",
           f"| Input | `{i['file']}` sha256 `{i['sha256'][:16]}…` (manifest match: {i['match']}) |",
           f"| Review IDs | {i['rows']} (ids sha256 `{i['ids_sha256'][:16]}…`) |",

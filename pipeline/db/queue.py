@@ -14,30 +14,35 @@ import random
 
 from pipeline.db.store import immediate, now_iso
 
+MAX_RANK = 2 ** 62  # no rank limit
+
 CLAIM = """
 UPDATE work_items SET status = 'leased', lease_owner = :owner, lease_expires_at = :expires, attempts = attempts + 1
 WHERE id IN (
     SELECT id FROM (
         SELECT * FROM (SELECT id, scope_rank FROM work_items       -- pending, in rank order (index walk, stops at :n)
-                       WHERE stage = :stage AND label_config = :cfg AND status = 'pending'
+                       WHERE stage = :stage AND label_config = :cfg AND status = 'pending' AND scope_rank <= :max_rank
                          AND (available_at IS NULL OR available_at <= :now)
                        ORDER BY scope_rank LIMIT :n)
         UNION ALL
         SELECT * FROM (SELECT id, scope_rank FROM work_items       -- expired leases (crashed workers)
                        WHERE stage = :stage AND label_config = :cfg AND status = 'leased' AND lease_expires_at < :now
+                         AND scope_rank <= :max_rank
                        ORDER BY scope_rank LIMIT :n))
     ORDER BY scope_rank LIMIT :n)
 RETURNING id
 """
 
 
-def claim(conn, owner, stage, label_config, n, lease_seconds=300, run_id=None):
-    """Atomically lease up to `n` items (lowest scope_rank first). Returns dicts with the text and its original ID."""
+def claim(conn, owner, stage, label_config, n, lease_seconds=300, run_id=None, max_rank=None):
+    """Atomically lease up to `n` items (lowest scope_rank first; only scope_rank ≤ `max_rank` when given, e.g. the
+    analysis_10000 prefix). Returns dicts with the text and its original ID."""
     if n <= 0:
         return []
     with immediate(conn):
         ids = [r[0] for r in conn.execute(CLAIM, {"owner": owner, "expires": now_iso(lease_seconds), "stage": stage,
-                                                   "cfg": label_config, "now": now_iso(), "n": n})]
+                                                   "cfg": label_config, "now": now_iso(), "n": n,
+                                                   "max_rank": MAX_RANK if max_rank is None else max_rank})]
         if run_id:
             conn.execute("UPDATE runs SET heartbeat_at = ? WHERE run_id = ?", (now_iso(), run_id))
     if not ids:
@@ -126,7 +131,8 @@ def counts(conn, stage, label_config):
     return {s: n for s, n in rows}
 
 
-def has_open_work(conn, stage, label_config):
+def has_open_work(conn, stage, label_config, max_rank=None):
     """True while anything is pending (maybe delayed) or leased: a worker should wait rather than exit."""
     return conn.execute("SELECT 1 FROM work_items WHERE stage=? AND label_config=? AND status IN ('pending','leased') "
-                        "LIMIT 1", (stage, label_config)).fetchone() is not None
+                        "AND scope_rank <= ? LIMIT 1",
+                        (stage, label_config, MAX_RANK if max_rank is None else max_rank)).fetchone() is not None

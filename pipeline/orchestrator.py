@@ -38,6 +38,7 @@ class RunConfig:
     bucket_cap: float | None = None   # override PLAN §4's cap for the bucket
     max_seconds: float | None = None
     limit: int | None = None          # max items to claim this run (pilots)
+    max_rank: int | None = None       # only texts with scope_rank ≤ this (a seed-order prefix, e.g. 10,050)
     lease_seconds: float = 300.0
     max_attempts: int = 6             # transient failures before an item is marked failed
     rpm: float = 600.0
@@ -139,9 +140,9 @@ class Orchestrator:
                         self.stop("limit")
                         break
                 items = queue.claim(conn, owner, self.cfg.stage, self.cfg.label_config, want,
-                                    self.cfg.lease_seconds, self.run_id)
+                                    self.cfg.lease_seconds, self.run_id, self.cfg.max_rank)
                 if not items:
-                    if queue.has_open_work(conn, self.cfg.stage, self.cfg.label_config):
+                    if queue.has_open_work(conn, self.cfg.stage, self.cfg.label_config, self.cfg.max_rank):
                         await asyncio.sleep(self.cfg.idle_poll)  # others hold leases, or retries are backing off
                         continue
                     self.stop("drained")

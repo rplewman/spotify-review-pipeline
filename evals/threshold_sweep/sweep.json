@@ -1,0 +1,430 @@
+{
+ "reference": {
+  "reviews": 100,
+  "adjudicated": 23,
+  "note": "model-agreement rows are not hand-checked; on them every gate scores the same"
+ },
+ "a5_usd_per_escalated_review": 4.0283333333333334e-05,
+ "gates": {
+  "0.00": {
+   "fields": {
+    "topic": {
+     "n": 100,
+     "primary": 95,
+     "accepted": 96,
+     "escalated": 0,
+     "acc_primary": 0.95,
+     "acc_accepted": 0.96,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.8260869565217391
+    },
+    "intent": {
+     "n": 100,
+     "primary": 97,
+     "accepted": 97,
+     "escalated": 0,
+     "acc_primary": 0.97,
+     "acc_accepted": 0.97,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.8695652173913043
+    },
+    "severity": {
+     "n": 100,
+     "primary": 90,
+     "accepted": 90,
+     "escalated": 0,
+     "acc_primary": 0.9,
+     "acc_accepted": 0.9,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.5652173913043478
+    }
+   },
+   "escalation_500": {
+    "texts": 479,
+    "review_rate": 0.0,
+    "field_rates": {
+     "topic": 0.0,
+     "intent": 0.0,
+     "severity": 0.0
+    },
+    "questions_per_escalated": 0.0
+   },
+   "a5_usd_100k": 0.0,
+   "main": false
+  },
+  "0.40": {
+   "fields": {
+    "topic": {
+     "n": 100,
+     "primary": 94,
+     "accepted": 95,
+     "escalated": 1,
+     "acc_primary": 0.94,
+     "acc_accepted": 0.95,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.782608695652174
+    },
+    "intent": {
+     "n": 100,
+     "primary": 97,
+     "accepted": 97,
+     "escalated": 0,
+     "acc_primary": 0.97,
+     "acc_accepted": 0.97,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.8695652173913043
+    },
+    "severity": {
+     "n": 100,
+     "primary": 90,
+     "accepted": 90,
+     "escalated": 1,
+     "acc_primary": 0.9,
+     "acc_accepted": 0.9,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.5652173913043478
+    }
+   },
+   "escalation_500": {
+    "texts": 479,
+    "review_rate": 0.033402922755741124,
+    "field_rates": {
+     "topic": 0.020876826722338204,
+     "intent": 0.0041753653444676405,
+     "severity": 0.008350730688935281
+    },
+    "questions_per_escalated": 1.0
+   },
+   "a5_usd_100k": 0.10508853611691023,
+   "main": false
+  },
+  "0.50": {
+   "fields": {
+    "topic": {
+     "n": 100,
+     "primary": 92,
+     "accepted": 93,
+     "escalated": 4,
+     "acc_primary": 0.92,
+     "acc_accepted": 0.93,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.6956521739130435
+    },
+    "intent": {
+     "n": 100,
+     "primary": 97,
+     "accepted": 97,
+     "escalated": 1,
+     "acc_primary": 0.97,
+     "acc_accepted": 0.97,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.8695652173913043
+    },
+    "severity": {
+     "n": 100,
+     "primary": 90,
+     "accepted": 90,
+     "escalated": 8,
+     "acc_primary": 0.9,
+     "acc_accepted": 0.9,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.5652173913043478
+    }
+   },
+   "escalation_500": {
+    "texts": 479,
+    "review_rate": 0.16910229645093947,
+    "field_rates": {
+     "topic": 0.0709812108559499,
+     "intent": 0.016701461377870562,
+     "severity": 0.0918580375782881
+    },
+    "questions_per_escalated": 1.0617283950617284
+   },
+   "a5_usd_100k": 0.5320107140918581,
+   "main": true
+  },
+  "0.60": {
+   "fields": {
+    "topic": {
+     "n": 100,
+     "primary": 93,
+     "accepted": 94,
+     "escalated": 12,
+     "acc_primary": 0.93,
+     "acc_accepted": 0.94,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.7391304347826086
+    },
+    "intent": {
+     "n": 100,
+     "primary": 97,
+     "accepted": 97,
+     "escalated": 2,
+     "acc_primary": 0.97,
+     "acc_accepted": 0.97,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.8695652173913043
+    },
+    "severity": {
+     "n": 100,
+     "primary": 91,
+     "accepted": 91,
+     "escalated": 24,
+     "acc_primary": 0.91,
+     "acc_accepted": 0.91,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.6086956521739131
+    }
+   },
+   "escalation_500": {
+    "texts": 479,
+    "review_rate": 0.35490605427974947,
+    "field_rates": {
+     "topic": 0.1524008350730689,
+     "intent": 0.037578288100208766,
+     "severity": 0.23173277661795408
+    },
+    "questions_per_escalated": 1.188235294117647
+   },
+   "a5_usd_100k": 1.1165656962421713,
+   "main": true
+  },
+  "0.70": {
+   "fields": {
+    "topic": {
+     "n": 100,
+     "primary": 93,
+     "accepted": 94,
+     "escalated": 24,
+     "acc_primary": 0.93,
+     "acc_accepted": 0.94,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.7391304347826086
+    },
+    "intent": {
+     "n": 100,
+     "primary": 97,
+     "accepted": 97,
+     "escalated": 6,
+     "acc_primary": 0.97,
+     "acc_accepted": 0.97,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.8695652173913043
+    },
+    "severity": {
+     "n": 100,
+     "primary": 92,
+     "accepted": 92,
+     "escalated": 37,
+     "acc_primary": 0.92,
+     "acc_accepted": 0.92,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.6521739130434783
+    }
+   },
+   "escalation_500": {
+    "texts": 479,
+    "review_rate": 0.5365344467640919,
+    "field_rates": {
+     "topic": 0.24843423799582465,
+     "intent": 0.06471816283924843,
+     "severity": 0.3695198329853862
+    },
+    "questions_per_escalated": 1.272373540856031
+   },
+   "a5_usd_100k": 1.6879846113778707,
+   "main": true
+  },
+  "0.80": {
+   "fields": {
+    "topic": {
+     "n": 100,
+     "primary": 93,
+     "accepted": 94,
+     "escalated": 39,
+     "acc_primary": 0.93,
+     "acc_accepted": 0.94,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.7391304347826086
+    },
+    "intent": {
+     "n": 100,
+     "primary": 97,
+     "accepted": 97,
+     "escalated": 13,
+     "acc_primary": 0.97,
+     "acc_accepted": 0.97,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.8695652173913043
+    },
+    "severity": {
+     "n": 100,
+     "primary": 95,
+     "accepted": 95,
+     "escalated": 49,
+     "acc_primary": 0.95,
+     "acc_accepted": 0.95,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.782608695652174
+    }
+   },
+   "escalation_500": {
+    "texts": 479,
+    "review_rate": 0.7014613778705637,
+    "field_rates": {
+     "topic": 0.38413361169102295,
+     "intent": 0.10438413361169102,
+     "severity": 0.5010438413361169
+    },
+    "questions_per_escalated": 1.4107142857142858
+   },
+   "a5_usd_100k": 2.206859258455115,
+   "main": false
+  },
+  "1.01": {
+   "fields": {
+    "topic": {
+     "n": 100,
+     "primary": 95,
+     "accepted": 95,
+     "escalated": 100,
+     "acc_primary": 0.95,
+     "acc_accepted": 0.95,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.782608695652174
+    },
+    "intent": {
+     "n": 100,
+     "primary": 98,
+     "accepted": 98,
+     "escalated": 100,
+     "acc_primary": 0.98,
+     "acc_accepted": 0.98,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.9130434782608695
+    },
+    "severity": {
+     "n": 100,
+     "primary": 95,
+     "accepted": 95,
+     "escalated": 100,
+     "acc_primary": 0.95,
+     "acc_accepted": 0.95,
+     "adjudicated_n": 23,
+     "adjudicated_acc": 0.782608695652174
+    }
+   },
+   "escalation_500": {
+    "texts": 479,
+    "review_rate": 1.0,
+    "field_rates": {
+     "topic": 1.0,
+     "intent": 1.0,
+     "severity": 1.0
+    },
+    "questions_per_escalated": 3.0
+   },
+   "a5_usd_100k": 3.14608805,
+   "main": false
+  }
+ },
+ "confidence_signal": {
+  "0.50": {
+   "topic": {
+    "n": 100,
+    "primary": 93,
+    "accepted": 94,
+    "escalated": 9,
+    "acc_primary": 0.93,
+    "acc_accepted": 0.94,
+    "adjudicated_n": 23,
+    "adjudicated_acc": 0.7391304347826086
+   },
+   "intent": {
+    "n": 100,
+    "primary": 97,
+    "accepted": 97,
+    "escalated": 2,
+    "acc_primary": 0.97,
+    "acc_accepted": 0.97,
+    "adjudicated_n": 23,
+    "adjudicated_acc": 0.8695652173913043
+   },
+   "severity": {
+    "n": 100,
+    "primary": 91,
+    "accepted": 91,
+    "escalated": 24,
+    "acc_primary": 0.91,
+    "acc_accepted": 0.91,
+    "adjudicated_n": 23,
+    "adjudicated_acc": 0.6086956521739131
+   }
+  },
+  "0.60": {
+   "topic": {
+    "n": 100,
+    "primary": 93,
+    "accepted": 94,
+    "escalated": 17,
+    "acc_primary": 0.93,
+    "acc_accepted": 0.94,
+    "adjudicated_n": 23,
+    "adjudicated_acc": 0.7391304347826086
+   },
+   "intent": {
+    "n": 100,
+    "primary": 97,
+    "accepted": 97,
+    "escalated": 5,
+    "acc_primary": 0.97,
+    "acc_accepted": 0.97,
+    "adjudicated_n": 23,
+    "adjudicated_acc": 0.8695652173913043
+   },
+   "severity": {
+    "n": 100,
+    "primary": 91,
+    "accepted": 91,
+    "escalated": 35,
+    "acc_primary": 0.91,
+    "acc_accepted": 0.91,
+    "adjudicated_n": 23,
+    "adjudicated_acc": 0.6086956521739131
+   }
+  },
+  "0.70": {
+   "topic": {
+    "n": 100,
+    "primary": 93,
+    "accepted": 94,
+    "escalated": 29,
+    "acc_primary": 0.93,
+    "acc_accepted": 0.94,
+    "adjudicated_n": 23,
+    "adjudicated_acc": 0.7391304347826086
+   },
+   "intent": {
+    "n": 100,
+    "primary": 97,
+    "accepted": 97,
+    "escalated": 10,
+    "acc_primary": 0.97,
+    "acc_accepted": 0.97,
+    "adjudicated_n": 23,
+    "adjudicated_acc": 0.8695652173913043
+   },
+   "severity": {
+    "n": 100,
+    "primary": 95,
+    "accepted": 95,
+    "escalated": 45,
+    "acc_primary": 0.95,
+    "acc_accepted": 0.95,
+    "adjudicated_n": 23,
+    "adjudicated_acc": 0.782608695652174
+   }
+  }
+ }
+}

@@ -1,6 +1,66 @@
 # STATUS — handoff log
 
-## Last completed: M5 (Cost calculator + 100-review pilot) — ✅ gate passed 2026-10-14 (💰 $0.0169 list, approved by Rory)
+## Last completed: M6 (Scale checkpoints + golden evaluation) — ✅ gate passed 2026-10-15 (💰 $0.2090 list, approved by Rory)
+
+### Frozen label_config (CLI default from now on; `pipeline/cli.py` STAGE_DEFAULTS)
+`celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1`
+= shape A, **escalate severity only**, gate 0.70 on the raw top probability, cap 0.40. Chosen on dev_100 (option B, Rory
+2026-10-15). Rationale + caveats: `evals/m6_notes.md`. M8 runs plain `enrich --provider celeris --escalation anthropic
+--bucket decisions --workers 4 --paid --max-spend …` (defaults = the frozen config).
+
+### Done (M6)
+- **Code:** `enrich --max-rank N` (claims only scope_rank ≤ N; the A4 cap counts only the prefix, so a 10k step gets 40% of
+  10k, not 40% of 78k up front; saved in the run config → resume inherits it). `--esc-fields` (gated fields; in label_config
+  as `+escfields-…` only when not all three, so older strings are unchanged). Pilot / dev-enrich pin the M5 settings.
+  `scripts/m6.py` (dev-db, dev-enrich, dev-escalate, dev-prepare, sweep, golden, measure, decide, compare-b);
+  `scripts/label_tool.py dev --disagreements` (only model disagreements, agreed fields pre-filled, both answers shown).
+  Calculator title follows the measured file's `label`. Tests `tests/test_m6_eval.py` (7). Fast suite: **111 passed**.
+- **checkpoint_500** (`state/m6_dev.db` = pilot.db copy + 500 rows): 479 texts, the pilot's 100 reused (cache), 379 new;
+  pilot config: 309 accept / 71 escalate / 99 capped.
+- **dev_100:** Haiku on every field of all 100 (`evals/dev_100/model_answers.json`); 23 disagreements (severity 15,
+  topic 10, intent 2) adjudicated by Rory; 77 model-agreement references (marked `[model-agreement]` in notes, not
+  hand-checked) → `evals/dev_100/dev_100_labeled.csv` complete.
+- **Sweep** (`evals/threshold_sweep/sweep.md`): on the 23 adjudicated, A3-only topic 83% vs 74% with Haiku at 0.60; severity
+  57% → 65% (0.70) → 78% (0.80). Escalation on 500 (any field): 0.50 17%, 0.60 36%, 0.70 54%; severity only at 0.70: 37%.
+  Q11: Celeris `confidence` as the signal is no better than the raw top probability.
+- **10k under the frozen config** (`state/pipeline.db`, seed ranks 1–10,050 = golden + analysis_10000, 8,492 texts,
+  10,050 records, 1,558 by exact-text reuse, 0 quarantined): A4 accept 5,363 / escalate 3,129 (36.8%), 0 capped;
+  0 failed calls, 0 429s. Warm rerun: 0 calls, 0.03 s. `cost/m6/scale_runs.md`:
+  1 worker 9.8 texts/s (24 req/min), 2 workers 22.2 (54), 4 workers 44.4 (108) → **use 4 workers in M8** (8 untested).
+  M8 continues the same queue: these 8,492 are done (69,607 pending).
+- **Calculator refreshed** from the 10k (`cost/report.{md,html,json}`; pilot version kept as `cost/report_pilot.*`;
+  inputs `cost/m6/{usage.csv,calls.jsonl,measured.json}` = 10k enrich + the pilot's A8/A9/A11):
+  **100k base $1.78, conservative $2.73** (A3 $0.86/$1.19, A5 $0.81/$1.37, A8 $0.11/$0.17) — inside every PLAN §4 bucket.
+- **Golden 50** (`evals/golden/golden_eval.md`, every disagreement in `golden_disagreements.csv`): topic 90%, intent 90%,
+  severity 90% / MAE 0.18 (accepted alternatives counted; exact 78/86/82%); sentiment MAE 0.31, 52% within ±0.25
+  (**known limitation: pulled toward 0**); quotes 100% substrings / 98% overlap gold; needs_review precision 100%,
+  recall 15%; 22 ambiguous cases. Shape B observation (golden 96/96/82) **not confirmed on dev** (adjudicated 20/16/11 vs
+  19/20/13) → shape A kept; disclosed in `evals/m6_notes.md`.
+- **Full-corpus decision (§1.2): NO-GO** (`cost/full_corpus_decision.md`, also appended to `cost/report.md`): conservative
+  projection $16.86 > $9.00 (conditions 2 and 3 fail; time would fit). **Frequency add-on recommendation: top 25,000
+  distinct texts** (≤ $0.82 upper end, +41,577 rows, coverage point 0.6161 → 0.6539). 👤 Rory confirms both before M8.
+
+### Spend (list price)
+- M6: **$0.2090** = Celeris $0.1012 (prepaid credit) + Anthropic $0.1079 (cash). Includes one Haiku attempt with a client
+  connection error after 4 ms, settled at its estimate **$0.0132** (billing unknown, likely $0) — check the Console.
+  Breakdown: dev-enrich $0.0059, dev-escalate $0.0052 (+$0.0132 unknown), golden shape B $0.0011, 10k $0.1814,
+  dev shape B $0.0022.
+- **Project total $0.2259** (Celeris $0.1108, Anthropic $0.1151). `state/pipeline.db`'s own ledger holds $0.1814; the rest is
+  in the pilot/M6 DBs (`scripts/m6.py decide` sums them, de-duplicated by request_id). M8's caps must leave room for it.
+
+### Notes for M7/M8
+- M8 add-on: needs an `enrich --scope addon`-style path (frequency-ranked texts beyond rank 100k) — not built yet.
+- Escalation cap 0.40 is counted over the prefix in reach; at the 100k it allows 31,239 escalations (~28.7k expected).
+- `state/m6_dev.db`, `m6_dev_B.db`, `m6_golden_B.db` are gitignored; `evals/` and `cost/m6/` hold the evidence.
+- Old `label_tool.py dev` process (PID 31656, port 8765) was still running on 2026-10-15 with a pre-M6 copy of the dev
+  CSV — don't save from it.
+
+### Next step
+M7 (System tests & recovery evidence): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M7, then do M7."
+
+---
+
+## Previously completed: M5 (Cost calculator + 100-review pilot) — ✅ gate passed 2026-10-14 (💰 $0.0169 list, approved by Rory)
 
 ### Done (M5)
 - **`pilot` command** (`pipeline/pilot.py`, `cli pilot`): verifies `cost_100.csv` against the manifest checksum, refuses an existing
@@ -45,8 +105,8 @@
 - Consider Haiku `thinking: disabled` for A5 (same answers in the pilot, no thinking tokens risk) — decide on golden accuracy.
 - Comparisons need `state/pilot.db`, `state/pilot_shapeB.db`, `state/pilot_compare.db` (gitignored; `cost/` holds the evidence).
 
-### Next step
-M6 (Scale checkpoints 500 → 10,000 + golden evaluation): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M6, then do M6."
+### Next step (then)
+M6 — done 2026-10-15 (see above).
 
 ---
 

@@ -1,8 +1,8 @@
 """A4 Router (PLAN §3.3, §3.5), code only: accept A3's labels or send the uncertain fields to A5.
 
-- Gate: a field among topic / intent / severity whose top probability is < `gate` (default 0.60, part of label_config)
-  is uncertain. Sentiment is not gated (it is a probability-weighted value, not a choice).
-- Caps: escalations under one label_config are limited to floor(esc_fraction × the stage's work items). The count and
+- Gate: a gated field (topic / intent / severity by default; the frozen M6 config gates severity only, because the
+  dev_100 sweep showed Haiku hurts topic) whose top probability is < `gate` (part of label_config) is uncertain. Sentiment is not gated (it is a probability-weighted value, not a choice).
+- Caps: escalations under one label_config are limited to floor(esc_fraction × the stage's work items in reach). The count and
   the new routes are written in one write transaction, so concurrent workers can never overshoot it. Over the cap →
   `capped`: A3's labels with needs_review=true. The $ sub-cap is the ledger's `escalation` bucket: when it refuses
   the A5 reservation, the stage re-routes those reviews to `capped_budget` (same outcome).
@@ -20,8 +20,9 @@ def top_prob(decision, field):
     return max(decision["probs"][field].values())
 
 
-def uncertain_fields(decision, gate):
-    return [f for f in GATED if top_prob(decision, f) < gate]
+def uncertain_fields(decision, gate, fields=GATED):
+    """The gated fields (all three by default; M6 froze severity only) whose top probability is below the gate."""
+    return [f for f in fields if top_prob(decision, f) < gate]
 
 
 def top2(decision, field):
@@ -29,27 +30,29 @@ def top2(decision, field):
     return sorted(decision["probs"][field].items(), key=lambda kv: (-kv[1], kv[0]))[:2]
 
 
-def escalation_allowance(conn, stage, label_config, esc_fraction):
-    total = conn.execute("SELECT COUNT(*) FROM work_items WHERE stage=? AND label_config=?",
-                         (stage, label_config)).fetchone()[0]
+def escalation_allowance(conn, stage, label_config, esc_fraction, max_rank=None):
+    """floor(esc_fraction × the work items in reach). With a rank limit only the prefix counts, so a 10k step of the
+    100k queue gets 15% of 10k, not 15% of 78k spent up front (the cap scales with how far the run has reached)."""
+    total = conn.execute("SELECT COUNT(*) FROM work_items WHERE stage=? AND label_config=? AND scope_rank <= ?",
+                         (stage, label_config, 2 ** 62 if max_rank is None else max_rank)).fetchone()[0]
     return math.floor(esc_fraction * total + 1e-9)
 
 
-def route(conn, label_config, decisions, gate, allowance):
+def route(conn, label_config, decisions, gate, allowance, fields=GATED):
     """decisions = {text_sha: decision} for texts without a saved route. Returns {text_sha: route dict} (saved)."""
     out = {}
     with immediate(conn):
         used = conn.execute("SELECT COUNT(*) FROM agent_outputs WHERE label_config=? AND agent='A4' "
                             "AND json_extract(output_json, '$.route')='escalate'", (label_config,)).fetchone()[0]
         for sha, d in decisions.items():
-            fields = uncertain_fields(d, gate)
-            if not fields:
+            low = uncertain_fields(d, gate, fields)
+            if not low:
                 r = {"route": "accept", "fields": []}
             elif used < allowance:
-                r = {"route": "escalate", "fields": fields}
+                r = {"route": "escalate", "fields": low}
                 used += 1
             else:
-                r = {"route": "capped", "fields": fields}
+                r = {"route": "capped", "fields": low}
             r["gate"] = gate
             conn.execute("INSERT INTO agent_outputs (text_sha256, label_config, agent, request_id, output_json, created_at) "
                          "VALUES (?,?,'A4',NULL,?,?) ON CONFLICT DO NOTHING", (sha, label_config, json.dumps(r), now_iso()))

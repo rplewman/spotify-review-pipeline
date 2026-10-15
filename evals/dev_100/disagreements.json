@@ -1,0 +1,536 @@
+{
+ "source": "model_answers.json",
+ "reviews": [
+  {
+   "review_id": "e85a31f6-786e-4673-94b8-010fea8ce464",
+   "fields": [
+    "topic"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "catalog",
+     "p": 0.37,
+     "haiku": "other"
+    }
+   },
+   "prefill": {
+    "intent": "praise",
+    "severity": 1,
+    "sentiment": 0.75,
+    "entities": [],
+    "evidence_quote": "I love the mixes",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "a7b7539a-c8d3-4f4e-9edd-d46cd1b1fd12",
+   "fields": [
+    "topic",
+    "severity"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "playback",
+     "p": 0.94,
+     "haiku": "billing"
+    },
+    "severity": {
+     "celeris": "5",
+     "p": 0.66,
+     "haiku": "4"
+    }
+   },
+   "prefill": {
+    "intent": "cancellation",
+    "sentiment": -0.75,
+    "entities": [
+     "premium"
+    ],
+    "evidence_quote": "The very second I signed up for premium it stopped letting me play anything.. lol . Fastest cancelation of a service I've done, ever. Bye bye Spotify. Hello old friend, Bittorrent",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "5e42046c-b29b-4035-ba83-a8e222789e98",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "3",
+     "p": 0.71,
+     "haiku": "2"
+    }
+   },
+   "prefill": {
+    "topic": "usability",
+    "intent": "complaint",
+    "sentiment": 0.25,
+    "entities": [
+     "ads"
+    ],
+    "evidence_quote": "But the bad thing is that it gives too many ads, i would have hiven it 5 stars.",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "2313bd8e-43bd-4777-bff9-3ae753288f0e",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "4",
+     "p": 0.51,
+     "haiku": "3"
+    }
+   },
+   "prefill": {
+    "topic": "billing",
+    "intent": "complaint",
+    "sentiment": -0.5,
+    "entities": [
+     "premium"
+    ],
+    "evidence_quote": "There's nothing I can do without the \"try premium\" option popping up every damn time.",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "16929558-ce1e-4b87-8738-a1de3f557f66",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "5",
+     "p": 0.73,
+     "haiku": "4"
+    }
+   },
+   "prefill": {
+    "topic": "billing",
+    "intent": "complaint",
+    "sentiment": -0.5,
+    "entities": [],
+    "evidence_quote": "I paid my subscription and im still getting a pause subscription screen and can't access my music......",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "d27e9b26-a7af-469c-9a4e-8deea2db72ae",
+   "fields": [
+    "topic"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "other",
+     "p": 0.48,
+     "haiku": "catalog"
+    }
+   },
+   "prefill": {
+    "intent": "complaint",
+    "severity": 2,
+    "sentiment": 0.0,
+    "entities": [],
+    "evidence_quote": "Great place for music. Bad for smaller artists and a platform for idiots like Joe Rogan and Steven Crowder to spread their stupidity.",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "5c581e49-727a-4221-be0a-a59344c78d60",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "3",
+     "p": 0.55,
+     "haiku": "2"
+    }
+   },
+   "prefill": {
+    "topic": "billing",
+    "intent": "complaint",
+    "sentiment": 0.0,
+    "entities": [
+     "premium"
+    ],
+    "evidence_quote": "Good but everything is premium",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "d635d6c8-460e-452f-8d53-6cd1ea804e98",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "3",
+     "p": 0.54,
+     "haiku": "2"
+    }
+   },
+   "prefill": {
+    "topic": "billing",
+    "intent": "complaint",
+    "sentiment": -0.25,
+    "entities": [
+     "lyrics",
+     "premium"
+    ],
+    "evidence_quote": "Why are lyrics premium!?",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "aa8fec15-2de4-46af-a911-1b49bcb4eb4c",
+   "fields": [
+    "topic",
+    "severity"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "usability",
+     "p": 0.54,
+     "haiku": "billing"
+    },
+    "severity": {
+     "celeris": "4",
+     "p": 0.45,
+     "haiku": "3"
+    }
+   },
+   "prefill": {
+    "intent": "complaint",
+    "sentiment": -0.25,
+    "entities": [
+     "premium"
+    ],
+    "evidence_quote": "This was the best app to listen music but the new feature ruined this app 😒 I MEAN WHAT THE HELL IS WRONG WITH SPOTIFY AB !!! you put every basic feature in the premium pack and we can't even listen song in ROW NOW !!! worst update in history of spotify in my opinion",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "b03d6dc9-449a-4647-b112-559186656759",
+   "fields": [
+    "topic",
+    "severity"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "usability",
+     "p": 0.9,
+     "haiku": "downloads"
+    },
+    "severity": {
+     "celeris": "3",
+     "p": 0.65,
+     "haiku": "4"
+    }
+   },
+   "prefill": {
+    "intent": "complaint",
+    "sentiment": -0.25,
+    "entities": [
+     "offline mode"
+    ],
+    "evidence_quote": "Generally nice - but integrations buggy, offline mode USELESS, and moving storage failed and deleted everything. Ignores metered setting for WiFi which is a big pain! Fix this stuff and it'd be amazing as the ideas are great. Would be nice to be able to tune the suggestions algorithm as it either sticks to what you know or picks tracks it should know I don't like.",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "56f6a4a1-7aa3-4e61-a361-0f1f7c754fac",
+   "fields": [
+    "topic"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "catalog",
+     "p": 0.51,
+     "haiku": "other"
+    }
+   },
+   "prefill": {
+    "intent": "praise",
+    "severity": 1,
+    "sentiment": 0.75,
+    "entities": [],
+    "evidence_quote": "Love Vern gosdin.",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "4b3ace8e-b199-40b3-8ad4-5c0580e38203",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "2",
+     "p": 0.64,
+     "haiku": "3"
+    }
+   },
+   "prefill": {
+    "topic": "catalog",
+    "intent": "complaint",
+    "sentiment": -0.5,
+    "entities": [
+     "lyrics"
+    ],
+    "evidence_quote": "I want Spotify to get back all the songs which have been removee from the app Spotify is becoming worse from bad I want spotify to remove their new update I want to listen specific lyrics of the song Now it's not a fun for me to listen songs from spotify HATE SPOTIFY All of u support me against spotify",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "253a336b-ef38-49b3-beda-3758b0d6b2c2",
+   "fields": [
+    "intent",
+    "severity"
+   ],
+   "hint": {
+    "intent": {
+     "celeris": "complaint",
+     "p": 0.81,
+     "haiku": "unclear"
+    },
+    "severity": {
+     "celeris": "2",
+     "p": 0.64,
+     "haiku": "1"
+    }
+   },
+   "prefill": {
+    "topic": "other",
+    "sentiment": 0.25,
+    "entities": [],
+    "evidence_quote": "Sumi tos juns,cansons de la tardo.",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "4966b59e-cf09-4881-b3ea-34fd4118a553",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "2",
+     "p": 0.44,
+     "haiku": "3"
+    }
+   },
+   "prefill": {
+    "topic": "billing",
+    "intent": "complaint",
+    "sentiment": 0.0,
+    "entities": [
+     "free trial",
+     "premium"
+    ],
+    "evidence_quote": "Should have been made as just a paid app.",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "b45ac639-166c-4089-a716-d462162a918b",
+   "fields": [
+    "topic"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "catalog",
+     "p": 0.53,
+     "haiku": "other"
+    }
+   },
+   "prefill": {
+    "intent": "praise",
+    "severity": 1,
+    "sentiment": 0.75,
+    "entities": [],
+    "evidence_quote": "I Love it so much",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "0fcf89b2-0b81-4838-bf5f-41c684e43b2d",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "4",
+     "p": 0.53,
+     "haiku": "3"
+    }
+   },
+   "prefill": {
+    "topic": "playback",
+    "intent": "complaint",
+    "sentiment": -0.25,
+    "entities": [],
+    "evidence_quote": "When I playing song the app is shoutdowning",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "651e6e7b-f93e-4369-9631-15c73ddcd4ad",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "5",
+     "p": 0.68,
+     "haiku": "4"
+    }
+   },
+   "prefill": {
+    "topic": "playback",
+    "intent": "complaint",
+    "sentiment": -0.5,
+    "entities": [],
+    "evidence_quote": "There are random long pauses when gapless playback is on, the music randomly stops and won't play/pause on demand, and recently the entire app wont load past the first screen.",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "8f848aef-444d-4f95-8868-8579f690beb0",
+   "fields": [
+    "topic"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "playback",
+     "p": 0.86,
+     "haiku": "other"
+    }
+   },
+   "prefill": {
+    "intent": "complaint",
+    "severity": 2,
+    "sentiment": -0.25,
+    "entities": [],
+    "evidence_quote": "Worst app for listening music ...",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "4001e2ec-2621-4256-b42d-c4988458a293",
+   "fields": [
+    "topic"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "other",
+     "p": 0.48,
+     "haiku": "billing"
+    }
+   },
+   "prefill": {
+    "intent": "complaint",
+    "severity": 2,
+    "sentiment": -0.25,
+    "entities": [],
+    "evidence_quote": "Very cheap App",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "b4f4440f-d952-405d-bf7b-f19fb0adf484",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "2",
+     "p": 0.52,
+     "haiku": "1"
+    }
+   },
+   "prefill": {
+    "topic": "usability",
+    "intent": "request",
+    "sentiment": -0.25,
+    "entities": [
+     "search",
+     "playlist"
+    ],
+    "evidence_quote": "Please bring back the search function in my playlist I don't know why you ever got rid of it epic fail bring it back.",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "0cc5a3be-e40c-4e9f-918d-53d284e2e5b3",
+   "fields": [
+    "intent"
+   ],
+   "hint": {
+    "intent": {
+     "celeris": "complaint",
+     "p": 0.41,
+     "haiku": "praise"
+    }
+   },
+   "prefill": {
+    "topic": "usability",
+    "severity": 1,
+    "sentiment": 0.75,
+    "entities": [],
+    "evidence_quote": "When there is no adds its Awesome",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "9d15352b-b78f-477b-b56f-44a6698ba55a",
+   "fields": [
+    "topic"
+   ],
+   "hint": {
+    "topic": {
+     "celeris": "playback",
+     "p": 0.95,
+     "haiku": "other"
+    }
+   },
+   "prefill": {
+    "intent": "praise",
+    "severity": 1,
+    "sentiment": 0.5,
+    "entities": [],
+    "evidence_quote": "Like it, pretty much can enjoy what I,m hearing 75 percent of every day",
+    "needs_review": false
+   }
+  },
+  {
+   "review_id": "10775595-01b9-4623-9163-51619e2a0fa9",
+   "fields": [
+    "severity"
+   ],
+   "hint": {
+    "severity": {
+     "celeris": "1",
+     "p": 0.7,
+     "haiku": "2"
+    }
+   },
+   "prefill": {
+    "topic": "catalog",
+    "intent": "complaint",
+    "sentiment": 0.25,
+    "entities": [],
+    "evidence_quote": "One star for the songs availability, I like underrated songs which sometimes not available on other app but this app have, otherwise this app is worst it have adds every sec",
+    "needs_review": false
+   }
+  }
+ ],
+ "by_field": {
+  "topic": 10,
+  "severity": 15,
+  "intent": 2
+ }
+}

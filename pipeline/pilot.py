@@ -135,7 +135,8 @@ def run_phase(opts, phase, cli_main):
             return 0
         _stage(log, "ingest", ingest, opts.db)
     enrich = ["enrich", *common, "--provider", opts.provider, "--escalation", opts.escalation, "--workers", "1",
-              "--batch-size", str(opts.batch_size), "--bucket", "pilots", "--label-config", opts.label_config]
+              "--batch-size", str(opts.batch_size), "--bucket", "pilots", "--label-config", opts.label_config,
+              "--gate", "0.60", "--esc-fraction", "0.15", "--esc-fields", "topic,intent,severity"]  # the M5 pilot config
     if opts.provider == "fake":
         enrich += ["--fake-script", opts.fake_script]
     _stage(log, "enrich", lambda: cli_main(enrich + money()), opts.db)

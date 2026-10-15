@@ -1,6 +1,9 @@
 """Local hand-labeling helper for the golden 50 and dev_100 (M2). No API calls; binds to 127.0.0.1 only.
 
 Usage: python scripts/label_tool.py golden   (or: dev)  [--port 8765] [--no-browser]
+       python scripts/label_tool.py dev --disagreements   M6: only the reviews where Celeris and Haiku disagree
+           (evals/dev_100/disagreements.json from `scripts/m6.py dev-prepare`); the agreed fields are pre-filled and
+           both models' answers are shown for the disputed ones.
 
 Shows one review at a time (text only: stars, likes, version and date are hidden so they can't steer the label), the
 contract definitions, and the label form. Every save validates the labels and rewrites the output CSV atomically, so you can
@@ -30,6 +33,7 @@ SOURCE_FIELDS = ["review_id", "review_text", "review_rating", "review_likes", "a
 LABEL_COLUMNS = ["topic", "intent", "sentiment", "severity", "entities", "evidence_quote", "needs_review"]
 EXTRA_COLUMNS = ["accepted_topics", "accepted_intents", "accepted_severities", "notes", "labeled_at"]
 HTML = Path(__file__).with_name("label_tool.html")
+DISAGREEMENTS = ROOT / "evals/dev_100/disagreements.json"
 
 
 def read_csv(path):
@@ -68,8 +72,8 @@ def from_row(row):
 
 
 class Store:
-    def __init__(self, src, out):
-        self.out = out
+    def __init__(self, src, out, only=None):
+        self.out, self.only = out, only or {}
         self.rows = read_csv(src)
         saved = {r["review_id"]: r for r in read_csv(out)} if out.exists() else {}
         for r in self.rows:
@@ -77,7 +81,11 @@ class Store:
                 r[col] = saved.get(r["review_id"], {}).get(col, "")
 
     def items(self):
-        return [{"review_id": r["review_id"], "review_text": r["review_text"], "labels": from_row(r)} for r in self.rows]
+        items = [{"review_id": r["review_id"], "review_text": r["review_text"], "labels": from_row(r)} for r in self.rows]
+        if self.only:  # disagreements mode: just those reviews, with the hint and the pre-filled agreed fields
+            items = [{**i, "hint": self.only[i["review_id"]]["hint"], "prefill": self.only[i["review_id"]]["prefill"]}
+                     for i in items if i["review_id"] in self.only]
+        return items
 
     def save(self, review_id, labels):
         row = next((r for r in self.rows if r["review_id"] == review_id), None)
@@ -137,13 +145,19 @@ def main(argv=None):
     p.add_argument("set", choices=sorted(SETS))
     p.add_argument("--port", type=int, default=8765)
     p.add_argument("--no-browser", action="store_true")
+    p.add_argument("--disagreements", action="store_true", help="dev only: label just the model disagreements (M6)")
     args = p.parse_args(argv)
     src, out = SETS[args.set]
-    store = Store(src, out)
+    only = None
+    if args.disagreements:
+        if args.set != "dev":
+            raise SystemExit("--disagreements is for the dev set")
+        only = {d["review_id"]: d for d in json.loads(DISAGREEMENTS.read_text(encoding="utf-8"))["reviews"]}
+    store = Store(src, out, only)
     done = sum(1 for i in store.items() if i["labels"])
     server = ThreadingHTTPServer(("127.0.0.1", args.port), make_handler(store, args.set))
     url = f"http://127.0.0.1:{args.port}/"
-    print(f"Labeling {args.set}: {done}/{len(store.rows)} done. Saving to {out.relative_to(ROOT)}. Open {url}  (Ctrl+C to stop)")
+    print(f"Labeling {args.set}: {done}/{len(store.items())} done. Saving to {out.relative_to(ROOT)}. Open {url}  (Ctrl+C to stop)")
     if not args.no_browser:
         webbrowser.open(url)
     try:

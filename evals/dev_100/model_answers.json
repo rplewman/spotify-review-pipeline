@@ -1,0 +1,5809 @@
+{
+ "label_config": "pilot-celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1",
+ "escalation_model": "claude-haiku-5-5",
+ "effort": "low",
+ "run_id": "run-20261014-204628-45d602",
+ "note": "every gated field of every dev_100 review, A3's top-2 as candidates (same request as the pipeline's A5)",
+ "reviews": [
+  {
+   "review_id": "8e9a5751-c1e8-4d7a-afbe-5239c98a08d0",
+   "text_sha256": "6f52f0462c06ffb3aba6da3df8896919c9902eab04f32bd38697019db02f5c29",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.98
+      ],
+      [
+       "catalog",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.94
+      ],
+      [
+       "3",
+       0.04
+      ]
+     ],
+     "p_top": 0.94
+    }
+   },
+   "a3_sentiment": -0.94,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.98,
+    "severity": 0.92,
+    "sentiment": 0.88
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "f7cc1aa7-c306-4f5b-a5e9-911cca07fa60",
+   "text_sha256": "6ed664e8ee863e05c4f629d85099b2f8ec99e3edb68043baf9d14e1531133429",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.94
+      ],
+      [
+       "usability",
+       0.03
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.86
+      ],
+      [
+       "3",
+       0.12
+      ]
+     ],
+     "p_top": 0.86
+    }
+   },
+   "a3_sentiment": -0.73,
+   "a3_confidence": {
+    "topic": 0.93,
+    "intent": 0.98,
+    "severity": 0.82,
+    "sentiment": 0.51
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "f1532a7d-a47c-40eb-b41f-da17a379f9fb",
+   "text_sha256": "6e15884a0d3ab277275e67ca6dc79839dbf2b86297eba404aac2895c1a049feb",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.97
+      ],
+      [
+       "catalog",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.89
+      ],
+      [
+       "3",
+       0.08
+      ]
+     ],
+     "p_top": 0.89
+    }
+   },
+   "a3_sentiment": -0.87,
+   "a3_confidence": {
+    "topic": 0.97,
+    "intent": 0.98,
+    "severity": 0.86,
+    "sentiment": 0.79
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "e85a31f6-786e-4673-94b8-010fea8ce464",
+   "text_sha256": "6fc79b90de6fc3162181c61ec2ce36c95d22fce53710575b06112ecbed92e9ec",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "catalog",
+       0.37
+      ],
+      [
+       "usability",
+       0.37
+      ]
+     ],
+     "p_top": 0.37
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.8
+      ],
+      [
+       "complaint",
+       0.09
+      ]
+     ],
+     "p_top": 0.8
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.94
+      ],
+      [
+       "2",
+       0.06
+      ]
+     ],
+     "p_top": 0.94
+    }
+   },
+   "a3_sentiment": 0.64,
+   "a3_confidence": {
+    "topic": 0.28,
+    "intent": 0.75,
+    "severity": 0.92,
+    "sentiment": 0.62
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "a7b7539a-c8d3-4f4e-9edd-d46cd1b1fd12",
+   "text_sha256": "83c8bba7dd1e4a289d003020c814d69eb90ec02c81f19f95d24489840efe4843",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.94
+      ],
+      [
+       "billing",
+       0.03
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "intent": {
+     "top2": [
+      [
+       "cancellation",
+       0.94
+      ],
+      [
+       "request",
+       0.03
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "severity": {
+     "top2": [
+      [
+       "5",
+       0.66
+      ],
+      [
+       "4",
+       0.32
+      ]
+     ],
+     "p_top": 0.66
+    }
+   },
+   "a3_sentiment": -0.76,
+   "a3_confidence": {
+    "topic": 0.93,
+    "intent": 0.92,
+    "severity": 0.58,
+    "sentiment": 0.44
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "cancellation",
+    "severity": "4"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "7a8b5434-66b4-4b13-aa91-5ad62a86ec04",
+   "text_sha256": "132b500f663f6364546215cafdf6774d07e9766155157d25251a5ec567fd6b2c",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.69
+      ],
+      [
+       "catalog",
+       0.12
+      ]
+     ],
+     "p_top": 0.69
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.89
+      ],
+      [
+       "2",
+       0.11
+      ]
+     ],
+     "p_top": 0.89
+    }
+   },
+   "a3_sentiment": 0.77,
+   "a3_confidence": {
+    "topic": 0.65,
+    "intent": 0.99,
+    "severity": 0.86,
+    "sentiment": 0.44
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "5e42046c-b29b-4035-ba83-a8e222789e98",
+   "text_sha256": "20f616858e6bef30df0ce1b4ff96794ea4872ceefbd2113ccb83526507ecdfeb",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.89
+      ],
+      [
+       "billing",
+       0.07
+      ]
+     ],
+     "p_top": 0.89
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.7
+      ],
+      [
+       "praise",
+       0.14
+      ]
+     ],
+     "p_top": 0.7
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.71
+      ],
+      [
+       "2",
+       0.27
+      ]
+     ],
+     "p_top": 0.71
+    }
+   },
+   "a3_sentiment": 0.3,
+   "a3_confidence": {
+    "topic": 0.87,
+    "intent": 0.62,
+    "severity": 0.64,
+    "sentiment": 0.5
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "8f0071a2-190f-4e20-bec3-3f252e47a6e3",
+   "text_sha256": "135c7cf3254f18251ccb02041d5a4ba1aa5296c06840a18b4cff617a235b0a2b",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.98
+      ],
+      [
+       "catalog",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.96
+      ],
+      [
+       "complaint",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.78
+      ],
+      [
+       "2",
+       0.22
+      ]
+     ],
+     "p_top": 0.78
+    }
+   },
+   "a3_sentiment": 0.29,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.95,
+    "severity": 0.72,
+    "sentiment": 0.51
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "0575ce08-ab04-46f0-aa8a-fbf9cd27e8da",
+   "text_sha256": "25df35a9f0da4b7c818ea803400180c8fdb763d5a37c00cf3cb533b1aef9fdb9",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.96
+      ],
+      [
+       "billing",
+       0.01
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.86
+      ],
+      [
+       "3",
+       0.11
+      ]
+     ],
+     "p_top": 0.86
+    }
+   },
+   "a3_sentiment": -0.58,
+   "a3_confidence": {
+    "topic": 0.95,
+    "intent": 0.98,
+    "severity": 0.82,
+    "sentiment": 0.45
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "2313bd8e-43bd-4777-bff9-3ae753288f0e",
+   "text_sha256": "b440c3b55708f9b7c02ecea429568109bd0da8701f420e69d786f1b96fe53834",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.88
+      ],
+      [
+       "usability",
+       0.1
+      ]
+     ],
+     "p_top": 0.88
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "4",
+       0.51
+      ],
+      [
+       "3",
+       0.28
+      ]
+     ],
+     "p_top": 0.51
+    }
+   },
+   "a3_sentiment": -0.44,
+   "a3_confidence": {
+    "topic": 0.86,
+    "intent": 0.96,
+    "severity": 0.39,
+    "sentiment": 0.84
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "16929558-ce1e-4b87-8738-a1de3f557f66",
+   "text_sha256": "5f947519dae8ffc8249d3b0fd798ec83b4e1c4829de689ba7293d41b04f2aaeb",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.92
+      ],
+      [
+       "access",
+       0.03
+      ]
+     ],
+     "p_top": 0.92
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "5",
+       0.73
+      ],
+      [
+       "4",
+       0.25
+      ]
+     ],
+     "p_top": 0.73
+    }
+   },
+   "a3_sentiment": -0.41,
+   "a3_confidence": {
+    "topic": 0.91,
+    "intent": 0.98,
+    "severity": 0.66,
+    "sentiment": 0.62
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "4"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "d26566f7-a898-4298-a06a-50bd3f7319c1",
+   "text_sha256": "de7e64249f439208727b68318c8abf8f2a3587a57608694aca96e4066e29b028",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.53
+      ],
+      [
+       "other",
+       0.18
+      ]
+     ],
+     "p_top": 0.53
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.68
+      ],
+      [
+       "request",
+       0.3
+      ]
+     ],
+     "p_top": 0.68
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.65
+      ],
+      [
+       "3",
+       0.23
+      ]
+     ],
+     "p_top": 0.65
+    }
+   },
+   "a3_sentiment": -0.05,
+   "a3_confidence": {
+    "topic": 0.46,
+    "intent": 0.6,
+    "severity": 0.56,
+    "sentiment": 0.66
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "6db48f4b-20a0-460f-9beb-e07cd20f9fab",
+   "text_sha256": "8b02934487f0399c8ca6cc4d682823efcee75b43672fea05277494476c1ca267",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.96
+      ],
+      [
+       "catalog",
+       0.01
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.92
+      ],
+      [
+       "2",
+       0.08
+      ]
+     ],
+     "p_top": 0.92
+    }
+   },
+   "a3_sentiment": 0.8,
+   "a3_confidence": {
+    "topic": 0.95,
+    "intent": 0.98,
+    "severity": 0.9,
+    "sentiment": 0.52
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "890aeb60-e7cf-4f0d-a321-03a1c8b65757",
+   "text_sha256": "b4973fb4a82810e87335921cd7e8f938e6808d0b069da38811a35e27275df321",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.98
+      ],
+      [
+       "catalog",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.49
+      ],
+      [
+       "4",
+       0.31
+      ]
+     ],
+     "p_top": 0.49
+    }
+   },
+   "a3_sentiment": -0.3,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.98,
+    "severity": 0.36,
+    "sentiment": 0.49
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "61d5fc66-9bd1-4a18-8185-ae9a451e05a3",
+   "text_sha256": "0a61482bb5aa670bc743bb6493fbcf83f9b84c0ff701c41a5ce7ee89e69a5c73",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.91
+      ],
+      [
+       "support",
+       0.07
+      ]
+     ],
+     "p_top": 0.91
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.97
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.94
+      ],
+      [
+       "2",
+       0.06
+      ]
+     ],
+     "p_top": 0.94
+    }
+   },
+   "a3_sentiment": 0.77,
+   "a3_confidence": {
+    "topic": 0.9,
+    "intent": 0.96,
+    "severity": 0.92,
+    "sentiment": 0.45
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "d27e9b26-a7af-469c-9a4e-8deea2db72ae",
+   "text_sha256": "0b9f00c02db9ce0ff7866f05af1c9beb435f94a98d26e608cbeda9f193131576",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.48
+      ],
+      [
+       "catalog",
+       0.41
+      ]
+     ],
+     "p_top": 0.48
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.52
+      ],
+      [
+       "3",
+       0.37
+      ]
+     ],
+     "p_top": 0.52
+    }
+   },
+   "a3_sentiment": -0.08,
+   "a3_confidence": {
+    "topic": 0.41,
+    "intent": 0.96,
+    "severity": 0.4,
+    "sentiment": 0.66
+   },
+   "haiku": {
+    "topic": "catalog",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "e667ab56-1b04-4596-bfd9-69f5919dcc10",
+   "text_sha256": "db756b246298b5375194fbee10339e220b1536db6571ee65c3129a02f92938ed",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "downloads",
+       0.64
+      ],
+      [
+       "catalog",
+       0.18
+      ]
+     ],
+     "p_top": 0.64
+    },
+    "intent": {
+     "top2": [
+      [
+       "request",
+       0.96
+      ],
+      [
+       "complaint",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.53
+      ],
+      [
+       "1",
+       0.42
+      ]
+     ],
+     "p_top": 0.53
+    }
+   },
+   "a3_sentiment": 0.02,
+   "a3_confidence": {
+    "topic": 0.59,
+    "intent": 0.95,
+    "severity": 0.41,
+    "sentiment": 0.6
+   },
+   "haiku": {
+    "topic": "downloads",
+    "intent": "request",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "7e610236-5f6a-404f-a503-ed466c6700eb",
+   "text_sha256": "a74580ae54e09a02c1e31e2a3141d9e098dd88ab16f323551faaae19d9964258",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "catalog",
+       0.9
+      ],
+      [
+       "billing",
+       0.04
+      ]
+     ],
+     "p_top": 0.9
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.95
+      ],
+      [
+       "complaint",
+       0.03
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.93
+      ],
+      [
+       "2",
+       0.07
+      ]
+     ],
+     "p_top": 0.93
+    }
+   },
+   "a3_sentiment": 0.45,
+   "a3_confidence": {
+    "topic": 0.89,
+    "intent": 0.94,
+    "severity": 0.91,
+    "sentiment": 0.84
+   },
+   "haiku": {
+    "topic": "catalog",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "5fb2a0b0-bb06-4d73-b6ff-1a2d332fae37",
+   "text_sha256": "12a5201dc484f5c20c2353d0b9fd9b733c4c7be7a446f29b9d6a846e05585ac6",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.94
+      ],
+      [
+       "support",
+       0.03
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.94
+      ],
+      [
+       "2",
+       0.06
+      ]
+     ],
+     "p_top": 0.94
+    }
+   },
+   "a3_sentiment": 0.5,
+   "a3_confidence": {
+    "topic": 0.93,
+    "intent": 0.96,
+    "severity": 0.92,
+    "sentiment": 0.96
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "35008b46-daf1-497c-ac9b-fe98f120f912",
+   "text_sha256": "ed42d88ee92279fc189d2d00fde9ae344333d36301529b4e2d10966b1831e391",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.96
+      ],
+      [
+       "support",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.96
+      ],
+      [
+       "complaint",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.92
+      ],
+      [
+       "2",
+       0.08
+      ]
+     ],
+     "p_top": 0.92
+    }
+   },
+   "a3_sentiment": 0.46,
+   "a3_confidence": {
+    "topic": 0.95,
+    "intent": 0.95,
+    "severity": 0.9,
+    "sentiment": 0.86
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "5c581e49-727a-4221-be0a-a59344c78d60",
+   "text_sha256": "c8315a4b711338b282ed8eefb7601c76f4fb38c2ba2f0f62ad8d0e5fc6128369",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.98
+      ],
+      [
+       "catalog",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.55
+      ],
+      [
+       "2",
+       0.29
+      ]
+     ],
+     "p_top": 0.55
+    }
+   },
+   "a3_sentiment": -0.04,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.98,
+    "severity": 0.44,
+    "sentiment": 0.59
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "d635d6c8-460e-452f-8d53-6cd1ea804e98",
+   "text_sha256": "9c8974da763ed40d0d1eedb812c235aaaa5ed123dba7c93071d624cff1e302e6",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.64
+      ],
+      [
+       "catalog",
+       0.32
+      ]
+     ],
+     "p_top": 0.64
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.97
+      ],
+      [
+       "request",
+       0.02
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.54
+      ],
+      [
+       "2",
+       0.31
+      ]
+     ],
+     "p_top": 0.54
+    }
+   },
+   "a3_sentiment": -0.3,
+   "a3_confidence": {
+    "topic": 0.59,
+    "intent": 0.96,
+    "severity": 0.42,
+    "sentiment": 0.51
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "06d59085-ebf9-454a-ba15-1e8480562352",
+   "text_sha256": "25694e1a75af9ff377c09157edb41d77e1fcac5a06f8bd99d8c6ad79b90d354c",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.9
+      ],
+      [
+       "catalog",
+       0.04
+      ]
+     ],
+     "p_top": 0.9
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.04
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.58,
+   "a3_confidence": {
+    "topic": 0.89,
+    "intent": 0.98,
+    "severity": 0.95,
+    "sentiment": 0.78
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "bb77bfb2-6eb8-4c6c-88bb-491c7da75196",
+   "text_sha256": "6d42f6e3f3207a81077f0257a76c3e597b5a1cea1477a0853bf8cec676bcd3b2",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.98
+      ],
+      [
+       "catalog",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.89
+      ],
+      [
+       "3",
+       0.07
+      ]
+     ],
+     "p_top": 0.89
+    }
+   },
+   "a3_sentiment": -0.56,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.98,
+    "severity": 0.86,
+    "sentiment": 0.38
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "54fdf931-7807-4af4-9c9b-d87845129bcb",
+   "text_sha256": "f77124c3df5ebac375adbc9686260d132f30796647a3d3dae761d51db6bd832d",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.7
+      ],
+      [
+       "usability",
+       0.15
+      ]
+     ],
+     "p_top": 0.7
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.94
+      ],
+      [
+       "2",
+       0.06
+      ]
+     ],
+     "p_top": 0.94
+    }
+   },
+   "a3_sentiment": 0.65,
+   "a3_confidence": {
+    "topic": 0.66,
+    "intent": 0.99,
+    "severity": 0.92,
+    "sentiment": 0.59
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "15502657-31ee-440e-8df3-2c405b5da275",
+   "text_sha256": "38b73d63d2bd51ccfb5d0d14bf6d4471c4cc90a4c7997a057a2bac34bcb3f018",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "catalog",
+       0.58
+      ],
+      [
+       "billing",
+       0.18
+      ]
+     ],
+     "p_top": 0.58
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.95
+      ],
+      [
+       "request",
+       0.02
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.04
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.66,
+   "a3_confidence": {
+    "topic": 0.52,
+    "intent": 0.94,
+    "severity": 0.95,
+    "sentiment": 0.6
+   },
+   "haiku": {
+    "topic": "catalog",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "ec8d58bf-f9e2-42c6-870b-b87c78fe569f",
+   "text_sha256": "c8f8ca9da82686bc5fe483adaa1d14badba9687b4b26d09285efc028196055dd",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.67
+      ],
+      [
+       "catalog",
+       0.27
+      ]
+     ],
+     "p_top": 0.67
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.91
+      ],
+      [
+       "2",
+       0.09
+      ]
+     ],
+     "p_top": 0.91
+    }
+   },
+   "a3_sentiment": 0.49,
+   "a3_confidence": {
+    "topic": 0.62,
+    "intent": 0.98,
+    "severity": 0.89,
+    "sentiment": 0.9
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "475aa270-a637-4332-ba8d-48def4869f98",
+   "text_sha256": "2806dfe7cd128ae30825ddfcc3a971a34b85efbb53a74219f88ca5ab82adf8a8",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.62
+      ],
+      [
+       "usability",
+       0.18
+      ]
+     ],
+     "p_top": 0.62
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.85
+      ],
+      [
+       "request",
+       0.07
+      ]
+     ],
+     "p_top": 0.85
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.04
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.45,
+   "a3_confidence": {
+    "topic": 0.57,
+    "intent": 0.81,
+    "severity": 0.95,
+    "sentiment": 0.86
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "824cc977-421c-4445-898f-663acfd131f1",
+   "text_sha256": "5c4a456c84cf46336f880065c3964aecb4ac2726cfffc2a12abf854a61a25707",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.91
+      ],
+      [
+       "support",
+       0.03
+      ]
+     ],
+     "p_top": 0.91
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.95
+      ],
+      [
+       "complaint",
+       0.03
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.89
+      ],
+      [
+       "2",
+       0.1
+      ]
+     ],
+     "p_top": 0.89
+    }
+   },
+   "a3_sentiment": 0.75,
+   "a3_confidence": {
+    "topic": 0.9,
+    "intent": 0.94,
+    "severity": 0.86,
+    "sentiment": 0.4
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "8f8c0461-4c41-4829-af15-b2991f18adfe",
+   "text_sha256": "861e55d9d2a146654f48b52c48533dd85713ade29295020a2662d3cdcc2a527e",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.9
+      ],
+      [
+       "catalog",
+       0.03
+      ]
+     ],
+     "p_top": 0.9
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.93
+      ],
+      [
+       "complaint",
+       0.03
+      ]
+     ],
+     "p_top": 0.93
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.9
+      ],
+      [
+       "2",
+       0.1
+      ]
+     ],
+     "p_top": 0.9
+    }
+   },
+   "a3_sentiment": 0.5,
+   "a3_confidence": {
+    "topic": 0.89,
+    "intent": 0.91,
+    "severity": 0.88,
+    "sentiment": 0.89
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "e04b40b8-4ac0-4058-aa91-89986d53586a",
+   "text_sha256": "3d686b2792b7a7a60016d67d5ee6267be34e19382608a7bd0d550d70e07c77c2",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.98
+      ],
+      [
+       "access",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.04
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.85,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.98,
+    "severity": 0.95,
+    "sentiment": 0.65
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "c3fd591f-890c-4721-bd99-57c3600ae82c",
+   "text_sha256": "5af0ca91949d609653604c7b3bc10e612639631e65b2cdc79ac03f53eb066677",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.82
+      ],
+      [
+       "playback",
+       0.09
+      ]
+     ],
+     "p_top": 0.82
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.95
+      ],
+      [
+       "complaint",
+       0.02
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.95
+      ],
+      [
+       "2",
+       0.04
+      ]
+     ],
+     "p_top": 0.95
+    }
+   },
+   "a3_sentiment": 0.47,
+   "a3_confidence": {
+    "topic": 0.79,
+    "intent": 0.94,
+    "severity": 0.94,
+    "sentiment": 0.91
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "ee17dcd6-07c0-4441-8e64-e7ea57877c78",
+   "text_sha256": "63a5146fd50bc87f07526d2f55e13c31d7b038b17461a4161e6d0f6df31d9550",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.89
+      ],
+      [
+       "billing",
+       0.03
+      ]
+     ],
+     "p_top": 0.89
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.94
+      ],
+      [
+       "cancellation",
+       0.02
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.56
+      ],
+      [
+       "3",
+       0.42
+      ]
+     ],
+     "p_top": 0.56
+    }
+   },
+   "a3_sentiment": -0.19,
+   "a3_confidence": {
+    "topic": 0.87,
+    "intent": 0.92,
+    "severity": 0.45,
+    "sentiment": 0.3
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "b551645f-204f-4134-b3ec-dd37dda36d95",
+   "text_sha256": "52bb3799435186f695a78cf366617f3ccaa2c7a06756be2df0c0ce21f3a73285",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.89
+      ],
+      [
+       "catalog",
+       0.05
+      ]
+     ],
+     "p_top": 0.89
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.72
+      ],
+      [
+       "complaint",
+       0.19
+      ]
+     ],
+     "p_top": 0.72
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.03
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.47,
+   "a3_confidence": {
+    "topic": 0.87,
+    "intent": 0.65,
+    "severity": 0.95,
+    "sentiment": 0.7
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "e81ef9d4-212d-47fc-b360-f9a1914f2bcf",
+   "text_sha256": "15fb807333b90160a9def8951d17e370b0c296cbce40be884d7fb97d65e95534",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.75
+      ],
+      [
+       "usability",
+       0.1
+      ]
+     ],
+     "p_top": 0.75
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.89
+      ],
+      [
+       "complaint",
+       0.06
+      ]
+     ],
+     "p_top": 0.89
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.94
+      ],
+      [
+       "2",
+       0.06
+      ]
+     ],
+     "p_top": 0.94
+    }
+   },
+   "a3_sentiment": 0.76,
+   "a3_confidence": {
+    "topic": 0.71,
+    "intent": 0.86,
+    "severity": 0.92,
+    "sentiment": 0.46
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "6f51891d-fa49-45e5-b2b2-27172682ab8f",
+   "text_sha256": "7f229a883ceffe567b7a57aa831b6598e76d82a651667740cca1c445644092f6",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.78
+      ],
+      [
+       "usability",
+       0.07
+      ]
+     ],
+     "p_top": 0.78
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.65
+      ],
+      [
+       "complaint",
+       0.24
+      ]
+     ],
+     "p_top": 0.65
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.03
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.73,
+   "a3_confidence": {
+    "topic": 0.75,
+    "intent": 0.56,
+    "severity": 0.95,
+    "sentiment": 0.4
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "d0ad8f6f-6746-4042-9645-2051184824f6",
+   "text_sha256": "c939327ca16dcf97ca32521d8b834bf1de16573d21deda3bb2a337cf403787a6",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.93
+      ],
+      [
+       "usability",
+       0.04
+      ]
+     ],
+     "p_top": 0.93
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.04
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.48,
+   "a3_confidence": {
+    "topic": 0.92,
+    "intent": 0.98,
+    "severity": 0.95,
+    "sentiment": 0.94
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "9db060c5-2ff5-493a-8a19-01a3da91ff1d",
+   "text_sha256": "49cbc5effc8ff1a1aef442d9b77abf1c969500dc0ba06d94f9168fcdfe8fd287",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.99
+      ],
+      [
+       "usability",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "4",
+       0.46
+      ],
+      [
+       "3",
+       0.41
+      ]
+     ],
+     "p_top": 0.46
+    }
+   },
+   "a3_sentiment": -0.41,
+   "a3_confidence": {
+    "topic": 0.99,
+    "intent": 0.98,
+    "severity": 0.32,
+    "sentiment": 0.64
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "4"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "aa8fec15-2de4-46af-a911-1b49bcb4eb4c",
+   "text_sha256": "a64f66ca3b95474bc63a2aaea2eaa93c1cd1b0738918098f9775c6f4d2fe6a67",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.54
+      ],
+      [
+       "billing",
+       0.4
+      ]
+     ],
+     "p_top": 0.54
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "4",
+       0.45
+      ],
+      [
+       "3",
+       0.41
+      ]
+     ],
+     "p_top": 0.45
+    }
+   },
+   "a3_sentiment": -0.33,
+   "a3_confidence": {
+    "topic": 0.47,
+    "intent": 0.98,
+    "severity": 0.31,
+    "sentiment": 0.52
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "bc1c4825-00c5-458d-ac00-098ce729c76d",
+   "text_sha256": "df3646ec054924fc967fa836d367cfd758c2429ea61372884dd37c032a681713",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.96
+      ],
+      [
+       "catalog",
+       0.03
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.96
+      ],
+      [
+       "request",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.97
+      ],
+      [
+       "2",
+       0.03
+      ]
+     ],
+     "p_top": 0.97
+    }
+   },
+   "a3_sentiment": 0.79,
+   "a3_confidence": {
+    "topic": 0.95,
+    "intent": 0.95,
+    "severity": 0.96,
+    "sentiment": 0.51
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "9f7a013a-082e-4ec1-8a65-a1e0a0395d20",
+   "text_sha256": "3186d8d06125620c6628f771b02d90413152648514f2cb3cef1c987eae35617a",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "catalog",
+       0.76
+      ],
+      [
+       "billing",
+       0.14
+      ]
+     ],
+     "p_top": 0.76
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.02
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.7
+      ],
+      [
+       "3",
+       0.17
+      ]
+     ],
+     "p_top": 0.7
+    }
+   },
+   "a3_sentiment": -0.04,
+   "a3_confidence": {
+    "topic": 0.73,
+    "intent": 0.96,
+    "severity": 0.62,
+    "sentiment": 0.42
+   },
+   "haiku": {
+    "topic": "catalog",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "f9e87b89-b080-48a2-a019-5c5dcf1689a6",
+   "text_sha256": "b645b5dc9b2ded160570e438d56bacd6ee131a31e4efa8eb52fa0e68d870a865",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.66
+      ],
+      [
+       "usability",
+       0.11
+      ]
+     ],
+     "p_top": 0.66
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.85
+      ],
+      [
+       "complaint",
+       0.08
+      ]
+     ],
+     "p_top": 0.85
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.97
+      ],
+      [
+       "2",
+       0.03
+      ]
+     ],
+     "p_top": 0.97
+    }
+   },
+   "a3_sentiment": 0.6,
+   "a3_confidence": {
+    "topic": 0.61,
+    "intent": 0.81,
+    "severity": 0.96,
+    "sentiment": 0.68
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "28711041-0c42-432c-a1ad-63be8278ebec",
+   "text_sha256": "41ab4163f4394a1aa687cb167857a7ece2cee40f718324bdbbc899fb6fbf77db",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.97
+      ],
+      [
+       "usability",
+       0.02
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.84
+      ],
+      [
+       "3",
+       0.1
+      ]
+     ],
+     "p_top": 0.84
+    }
+   },
+   "a3_sentiment": -0.67,
+   "a3_confidence": {
+    "topic": 0.97,
+    "intent": 0.96,
+    "severity": 0.8,
+    "sentiment": 0.34
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "3df77a78-ad9a-4456-8be8-8178ffd43d67",
+   "text_sha256": "7b3ff52549dea0e84b7f247fc5648447e62c14330f55eeb2454755d47fe541f9",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.57
+      ],
+      [
+       "catalog",
+       0.23
+      ]
+     ],
+     "p_top": 0.57
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.77
+      ],
+      [
+       "cancellation",
+       0.18
+      ]
+     ],
+     "p_top": 0.77
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.41
+      ],
+      [
+       "4",
+       0.4
+      ]
+     ],
+     "p_top": 0.41
+    }
+   },
+   "a3_sentiment": -0.34,
+   "a3_confidence": {
+    "topic": 0.51,
+    "intent": 0.71,
+    "severity": 0.26,
+    "sentiment": 0.58
+   },
+   "haiku": {
+    "topic": "playback",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "cc7b79ef-bf37-40fc-a02e-4917b86e422c",
+   "text_sha256": "a7b94f4f0aa737b031970697ccab144e830fdfb9276db55757c3b1476b3335ac",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.89
+      ],
+      [
+       "billing",
+       0.04
+      ]
+     ],
+     "p_top": 0.89
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.94
+      ],
+      [
+       "cancellation",
+       0.04
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.57
+      ],
+      [
+       "3",
+       0.36
+      ]
+     ],
+     "p_top": 0.57
+    }
+   },
+   "a3_sentiment": -0.57,
+   "a3_confidence": {
+    "topic": 0.87,
+    "intent": 0.92,
+    "severity": 0.46,
+    "sentiment": 0.39
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "7f27bbab-ef19-4fb1-80d8-cd014da3e002",
+   "text_sha256": "b7b5887298690e851427c33110b04c43788a9fb199898dc236dbfa2357836b35",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.67
+      ],
+      [
+       "catalog",
+       0.14
+      ]
+     ],
+     "p_top": 0.67
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.02
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.49
+      ],
+      [
+       "4",
+       0.46
+      ]
+     ],
+     "p_top": 0.49
+    }
+   },
+   "a3_sentiment": -0.33,
+   "a3_confidence": {
+    "topic": 0.62,
+    "intent": 0.96,
+    "severity": 0.36,
+    "sentiment": 0.52
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "179d79f7-d052-490f-a9d6-f97525b32642",
+   "text_sha256": "61432dc5a3eff4137bd75ac8594eb505005d8060700b564a521a748f3e93fdfe",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.88
+      ],
+      [
+       "usability",
+       0.08
+      ]
+     ],
+     "p_top": 0.88
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.76
+      ],
+      [
+       "cancellation",
+       0.2
+      ]
+     ],
+     "p_top": 0.76
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.62
+      ],
+      [
+       "4",
+       0.23
+      ]
+     ],
+     "p_top": 0.62
+    }
+   },
+   "a3_sentiment": -0.14,
+   "a3_confidence": {
+    "topic": 0.86,
+    "intent": 0.7,
+    "severity": 0.52,
+    "sentiment": 0.25
+   },
+   "haiku": {
+    "topic": "playback",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "77a53aa5-a453-4bcb-8267-d4f44a492dd3",
+   "text_sha256": "6eabd46d83d30b6aa4710e036517006f49ef9c9f5d4edcba312a6029365ba012",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.48
+      ],
+      [
+       "playback",
+       0.45
+      ]
+     ],
+     "p_top": 0.48
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "4",
+       0.6
+      ],
+      [
+       "5",
+       0.27
+      ]
+     ],
+     "p_top": 0.6
+    }
+   },
+   "a3_sentiment": -0.29,
+   "a3_confidence": {
+    "topic": 0.41,
+    "intent": 0.98,
+    "severity": 0.5,
+    "sentiment": 0.38
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "4"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "72ff3e9b-bc33-49a1-b9a6-deb8fb904cc3",
+   "text_sha256": "79062dfc176537636cbdfe31947093fb90961b456a28d5e189a3507b074e7b8a",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.9
+      ],
+      [
+       "support",
+       0.03
+      ]
+     ],
+     "p_top": 0.9
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.84
+      ],
+      [
+       "request",
+       0.08
+      ]
+     ],
+     "p_top": 0.84
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.98
+      ],
+      [
+       "2",
+       0.02
+      ]
+     ],
+     "p_top": 0.98
+    }
+   },
+   "a3_sentiment": 0.55,
+   "a3_confidence": {
+    "topic": 0.89,
+    "intent": 0.8,
+    "severity": 0.98,
+    "sentiment": 0.76
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "6ecd5837-917a-45de-b811-278da3a26a7a",
+   "text_sha256": "a0eb6878af8d33fad95f06e9acc82ce089af586936c6e5d81c3833206616b701",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.75
+      ],
+      [
+       "usability",
+       0.19
+      ]
+     ],
+     "p_top": 0.75
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.75
+      ],
+      [
+       "3",
+       0.19
+      ]
+     ],
+     "p_top": 0.75
+    }
+   },
+   "a3_sentiment": -0.4,
+   "a3_confidence": {
+    "topic": 0.71,
+    "intent": 0.96,
+    "severity": 0.69,
+    "sentiment": 0.59
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "9a436d71-1493-4700-a5cc-91472f708dcd",
+   "text_sha256": "523d2abc4644e3832c4ed58653eebc524712fd655a65de02819b2166a038ada0",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.76
+      ],
+      [
+       "support",
+       0.07
+      ]
+     ],
+     "p_top": 0.76
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.95
+      ],
+      [
+       "complaint",
+       0.02
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.03
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.72,
+   "a3_confidence": {
+    "topic": 0.73,
+    "intent": 0.94,
+    "severity": 0.95,
+    "sentiment": 0.46
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "b03d6dc9-449a-4647-b112-559186656759",
+   "text_sha256": "2624d4f0a4360f638b08bdbfcefc363198655b0563a5c0014eeb9dd52da8475c",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.9
+      ],
+      [
+       "other",
+       0.06
+      ]
+     ],
+     "p_top": 0.9
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.92
+      ],
+      [
+       "request",
+       0.05
+      ]
+     ],
+     "p_top": 0.92
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.65
+      ],
+      [
+       "4",
+       0.25
+      ]
+     ],
+     "p_top": 0.65
+    }
+   },
+   "a3_sentiment": -0.19,
+   "a3_confidence": {
+    "topic": 0.89,
+    "intent": 0.9,
+    "severity": 0.56,
+    "sentiment": 0.26
+   },
+   "haiku": {
+    "topic": "downloads",
+    "intent": "complaint",
+    "severity": "4"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "d767f1af-e8eb-41af-9cc4-8bfa35253870",
+   "text_sha256": "91da5a96a4bbdb569b76963b431ec7dbced2520f432791a044930838f41a9a81",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.94
+      ],
+      [
+       "other",
+       0.03
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.76
+      ],
+      [
+       "3",
+       0.16
+      ]
+     ],
+     "p_top": 0.76
+    }
+   },
+   "a3_sentiment": -0.71,
+   "a3_confidence": {
+    "topic": 0.93,
+    "intent": 0.98,
+    "severity": 0.7,
+    "sentiment": 0.41
+   },
+   "haiku": {
+    "topic": "playback",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "56f6a4a1-7aa3-4e61-a361-0f1f7c754fac",
+   "text_sha256": "dcded8d45e2fb8f0180483ec479b820b82b0f63cc066bb7d5a250c887f95753a",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "catalog",
+       0.51
+      ],
+      [
+       "other",
+       0.47
+      ]
+     ],
+     "p_top": 0.51
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.91
+      ],
+      [
+       "2",
+       0.09
+      ]
+     ],
+     "p_top": 0.91
+    }
+   },
+   "a3_sentiment": 0.86,
+   "a3_confidence": {
+    "topic": 0.44,
+    "intent": 0.99,
+    "severity": 0.89,
+    "sentiment": 0.65
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "fe5dadcb-e99c-4675-b8c8-6c2bacb338d7",
+   "text_sha256": "bf3c70a5077495139bc711852d086a4d18517b6f8c9cdbb25b472c9cbb011e7a",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.95
+      ],
+      [
+       "access",
+       0.01
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.93
+      ],
+      [
+       "request",
+       0.04
+      ]
+     ],
+     "p_top": 0.93
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.66
+      ],
+      [
+       "3",
+       0.31
+      ]
+     ],
+     "p_top": 0.66
+    }
+   },
+   "a3_sentiment": -0.35,
+   "a3_confidence": {
+    "topic": 0.94,
+    "intent": 0.91,
+    "severity": 0.58,
+    "sentiment": 0.58
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "453b621f-6bdd-428a-a610-2b55918c9adb",
+   "text_sha256": "974bd95070dcc849d213d78a3719af1c59b2800ee8de69e59c5a17ceb4df82ef",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.98
+      ],
+      [
+       "support",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.94
+      ],
+      [
+       "2",
+       0.06
+      ]
+     ],
+     "p_top": 0.94
+    }
+   },
+   "a3_sentiment": 0.82,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.99,
+    "severity": 0.92,
+    "sentiment": 0.55
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "0853c56b-0fa1-4d12-9cb9-6817d52233f5",
+   "text_sha256": "649ce1e4bdd390b2783ec665b9c2fe623dea9153f1b52f3e831b58ac2275c96e",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.98
+      ],
+      [
+       "access",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.96
+      ],
+      [
+       "request",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.49
+      ],
+      [
+       "4",
+       0.43
+      ]
+     ],
+     "p_top": 0.49
+    }
+   },
+   "a3_sentiment": -0.47,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.95,
+    "severity": 0.36,
+    "sentiment": 0.9
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "e8f2fb9b-ad3b-4fec-8194-ab67956ee50a",
+   "text_sha256": "0a62c877a7a00a537f0a6d1e926f73bca44cc716eac6154900a9b2df944fc2e6",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.67
+      ],
+      [
+       "other",
+       0.31
+      ]
+     ],
+     "p_top": 0.67
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.96
+      ],
+      [
+       "request",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.57
+      ],
+      [
+       "3",
+       0.41
+      ]
+     ],
+     "p_top": 0.57
+    }
+   },
+   "a3_sentiment": -0.23,
+   "a3_confidence": {
+    "topic": 0.62,
+    "intent": 0.95,
+    "severity": 0.46,
+    "sentiment": 0.36
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "4b3ace8e-b199-40b3-8ad4-5c0580e38203",
+   "text_sha256": "391d86634cfa6f511914c94701d63a70e740e626182bc0d0016f2a72007ab22b",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "catalog",
+       0.59
+      ],
+      [
+       "playback",
+       0.12
+      ]
+     ],
+     "p_top": 0.59
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.59
+      ],
+      [
+       "request",
+       0.4
+      ]
+     ],
+     "p_top": 0.59
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.64
+      ],
+      [
+       "3",
+       0.26
+      ]
+     ],
+     "p_top": 0.64
+    }
+   },
+   "a3_sentiment": -0.5,
+   "a3_confidence": {
+    "topic": 0.53,
+    "intent": 0.49,
+    "severity": 0.55,
+    "sentiment": 0.81
+   },
+   "haiku": {
+    "topic": "catalog",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "2062c32e-3fab-4957-8ffa-d0e89767abaa",
+   "text_sha256": "c8430ef4499a20d954fec2e3cd2480b7df85a5dec379c0bb11c637b409ba31ba",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.89
+      ],
+      [
+       "usability",
+       0.06
+      ]
+     ],
+     "p_top": 0.89
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.9
+      ],
+      [
+       "2",
+       0.1
+      ]
+     ],
+     "p_top": 0.9
+    }
+   },
+   "a3_sentiment": 0.84,
+   "a3_confidence": {
+    "topic": 0.87,
+    "intent": 0.99,
+    "severity": 0.88,
+    "sentiment": 0.6
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "6a2cd434-9ad2-4e66-8968-ad066659d4df",
+   "text_sha256": "9210f3b6cd173505b0cc141583e2ac7a392ba521a8cfef4e56b292b7bb859812",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.96
+      ],
+      [
+       "access",
+       0.01
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.95
+      ],
+      [
+       "request",
+       0.02
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.68
+      ],
+      [
+       "3",
+       0.29
+      ]
+     ],
+     "p_top": 0.68
+    }
+   },
+   "a3_sentiment": -0.4,
+   "a3_confidence": {
+    "topic": 0.95,
+    "intent": 0.94,
+    "severity": 0.6,
+    "sentiment": 0.68
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "2c3b2ca3-32b0-435f-aef5-84efafce6606",
+   "text_sha256": "6f37aecd9c6845f0fedb55c2d03829b3993e8b41023c864cafa63c474d77c533",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.66
+      ],
+      [
+       "catalog",
+       0.09
+      ]
+     ],
+     "p_top": 0.66
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.74
+      ],
+      [
+       "2",
+       0.26
+      ]
+     ],
+     "p_top": 0.74
+    }
+   },
+   "a3_sentiment": 0.49,
+   "a3_confidence": {
+    "topic": 0.61,
+    "intent": 0.99,
+    "severity": 0.68,
+    "sentiment": 0.95
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "9ef99a2e-7d00-4d76-add9-85b0c0a06572",
+   "text_sha256": "c62025f9b95c5409d67d20ea2c6b111c1d419c1422b2e778513f5a9f8b9b7abf",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.97
+      ],
+      [
+       "catalog",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.96
+      ],
+      [
+       "complaint",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.92
+      ],
+      [
+       "2",
+       0.08
+      ]
+     ],
+     "p_top": 0.92
+    }
+   },
+   "a3_sentiment": 0.47,
+   "a3_confidence": {
+    "topic": 0.97,
+    "intent": 0.95,
+    "severity": 0.9,
+    "sentiment": 0.86
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "0b626430-7bf8-4ae4-9a44-f6ffc4324424",
+   "text_sha256": "3dc349e53262f4a564406715939da2f56740bcb9a0161fc97d12b9d6ef398a54",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.66
+      ],
+      [
+       "usability",
+       0.12
+      ]
+     ],
+     "p_top": 0.66
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.89
+      ],
+      [
+       "2",
+       0.11
+      ]
+     ],
+     "p_top": 0.89
+    }
+   },
+   "a3_sentiment": 0.93,
+   "a3_confidence": {
+    "topic": 0.61,
+    "intent": 0.98,
+    "severity": 0.86,
+    "sentiment": 0.81
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "62b53e0a-0397-4200-826f-122d18fdde32",
+   "text_sha256": "d2fdd2bd1e73c5ae9e1a1862819eb32d60a44196588ce1dae3de0f3a68811d65",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.71
+      ],
+      [
+       "usability",
+       0.12
+      ]
+     ],
+     "p_top": 0.71
+    },
+    "intent": {
+     "top2": [
+      [
+       "cancellation",
+       0.79
+      ],
+      [
+       "request",
+       0.11
+      ]
+     ],
+     "p_top": 0.79
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.54
+      ],
+      [
+       "1",
+       0.38
+      ]
+     ],
+     "p_top": 0.54
+    }
+   },
+   "a3_sentiment": -0.28,
+   "a3_confidence": {
+    "topic": 0.67,
+    "intent": 0.74,
+    "severity": 0.42,
+    "sentiment": 0.49
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "cancellation",
+    "severity": "2"
+   },
+   "haiku_needs_review": true
+  },
+  {
+   "review_id": "253a336b-ef38-49b3-beda-3758b0d6b2c2",
+   "text_sha256": "f3a406fa5f28e1a155ea71167a56eb77d85f15b00ea635315d35998a76a9a44c",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.73
+      ],
+      [
+       "catalog",
+       0.22
+      ]
+     ],
+     "p_top": 0.73
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.81
+      ],
+      [
+       "unclear",
+       0.17
+      ]
+     ],
+     "p_top": 0.81
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.64
+      ],
+      [
+       "1",
+       0.24
+      ]
+     ],
+     "p_top": 0.64
+    }
+   },
+   "a3_sentiment": 0.28,
+   "a3_confidence": {
+    "topic": 0.69,
+    "intent": 0.76,
+    "severity": 0.55,
+    "sentiment": 0.49
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "unclear",
+    "severity": "1"
+   },
+   "haiku_needs_review": true
+  },
+  {
+   "review_id": "9ec495c3-d57d-47dd-b08d-834557b12117",
+   "text_sha256": "c8cc1c7bb662fcb447f52c7e406ded651a1ae0794d62ca630c2ca24f46d01f4a",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.97
+      ],
+      [
+       "catalog",
+       0.02
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.97
+      ],
+      [
+       "2",
+       0.03
+      ]
+     ],
+     "p_top": 0.97
+    }
+   },
+   "a3_sentiment": 0.51,
+   "a3_confidence": {
+    "topic": 0.97,
+    "intent": 0.99,
+    "severity": 0.96,
+    "sentiment": 0.9
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "05fa5b8a-a49b-43be-bab5-38af789a65a7",
+   "text_sha256": "10b979d7c92d50fe73fb5268aea990a8eaae41ecd911aafb74060338511c3100",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.94
+      ],
+      [
+       "usability",
+       0.04
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.02
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "3",
+       0.32
+      ],
+      [
+       "4",
+       0.32
+      ]
+     ],
+     "p_top": 0.32
+    }
+   },
+   "a3_sentiment": -0.37,
+   "a3_confidence": {
+    "topic": 0.93,
+    "intent": 0.96,
+    "severity": 0.15,
+    "sentiment": 0.62
+   },
+   "haiku": {
+    "topic": "playback",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "8b47c5d7-d31c-4aae-b00d-d62217ae55fc",
+   "text_sha256": "598584ffd2d6c3b40172db96839fea17a8a3a9b3adae47a2dfde099bf5987b8e",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.74
+      ],
+      [
+       "playback",
+       0.06
+      ]
+     ],
+     "p_top": 0.74
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.93
+      ],
+      [
+       "2",
+       0.07
+      ]
+     ],
+     "p_top": 0.93
+    }
+   },
+   "a3_sentiment": 0.52,
+   "a3_confidence": {
+    "topic": 0.7,
+    "intent": 0.98,
+    "severity": 0.91,
+    "sentiment": 0.92
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "6eb64519-37d4-4591-a47a-bbb96357de36",
+   "text_sha256": "c5e4efb35051d1daeb103106077113e9cbc0e622ef7485bc86b6faca5a6d738c",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.92
+      ],
+      [
+       "playback",
+       0.05
+      ]
+     ],
+     "p_top": 0.92
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.64
+      ],
+      [
+       "3",
+       0.31
+      ]
+     ],
+     "p_top": 0.64
+    }
+   },
+   "a3_sentiment": -0.36,
+   "a3_confidence": {
+    "topic": 0.91,
+    "intent": 0.96,
+    "severity": 0.55,
+    "sentiment": 0.64
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "e3238297-f942-4c8e-96f7-b951b461e707",
+   "text_sha256": "cfae86c2ded9e11f03ed876af3f5924b19d2a2e7029659205c049c9d2cda70cd",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.63
+      ],
+      [
+       "playback",
+       0.09
+      ]
+     ],
+     "p_top": 0.63
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.93
+      ],
+      [
+       "2",
+       0.07
+      ]
+     ],
+     "p_top": 0.93
+    }
+   },
+   "a3_sentiment": 0.88,
+   "a3_confidence": {
+    "topic": 0.58,
+    "intent": 0.98,
+    "severity": 0.91,
+    "sentiment": 0.7
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "4966b59e-cf09-4881-b3ea-34fd4118a553",
+   "text_sha256": "c37e84536e5a01b68a9d152433b005b8cb5a03c53e88e341bad475ccf39e5ada",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.6
+      ],
+      [
+       "usability",
+       0.34
+      ]
+     ],
+     "p_top": 0.6
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "request",
+       0.02
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.44
+      ],
+      [
+       "3",
+       0.42
+      ]
+     ],
+     "p_top": 0.44
+    }
+   },
+   "a3_sentiment": -0.12,
+   "a3_confidence": {
+    "topic": 0.54,
+    "intent": 0.98,
+    "severity": 0.3,
+    "sentiment": 0.29
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "fac0295e-9b7a-4422-bf77-6faf41eaea55",
+   "text_sha256": "9d2a6255f5b4210429060c6b132c54021242df8672a452dc543ee193b6d08c55",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.98
+      ],
+      [
+       "access",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.92
+      ],
+      [
+       "2",
+       0.07
+      ]
+     ],
+     "p_top": 0.92
+    }
+   },
+   "a3_sentiment": 0.48,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.96,
+    "severity": 0.9,
+    "sentiment": 0.94
+   },
+   "haiku": {
+    "topic": "playback",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "55bc2f5d-0157-467b-8f5c-2f9c7d1b0c04",
+   "text_sha256": "23c88f9a8d6787df7224815383a0a257a7c47434daee5dbf715a9a75d000709d",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.83
+      ],
+      [
+       "usability",
+       0.09
+      ]
+     ],
+     "p_top": 0.83
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.99
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.78
+      ],
+      [
+       "3",
+       0.18
+      ]
+     ],
+     "p_top": 0.78
+    }
+   },
+   "a3_sentiment": -0.24,
+   "a3_confidence": {
+    "topic": 0.81,
+    "intent": 0.99,
+    "severity": 0.72,
+    "sentiment": 0.29
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "710e1aee-ed80-4753-9c4e-c63bee84fd56",
+   "text_sha256": "0dc8ee555c28ec1beeb7adcf7b2ce3ae6bfd980068f9a2413384ab019393b4b8",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.9
+      ],
+      [
+       "support",
+       0.04
+      ]
+     ],
+     "p_top": 0.9
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.79
+      ],
+      [
+       "2",
+       0.21
+      ]
+     ],
+     "p_top": 0.79
+    }
+   },
+   "a3_sentiment": 0.6,
+   "a3_confidence": {
+    "topic": 0.89,
+    "intent": 0.99,
+    "severity": 0.74,
+    "sentiment": 0.75
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "0839f80d-e672-4954-b50e-20f85c2b8d16",
+   "text_sha256": "c1c2174d29233673fea22179c9fcaf938cf2f8b000d2b7c43233610c4e88bdad",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.81
+      ],
+      [
+       "playback",
+       0.14
+      ]
+     ],
+     "p_top": 0.81
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.61
+      ],
+      [
+       "complaint",
+       0.31
+      ]
+     ],
+     "p_top": 0.61
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.5
+      ],
+      [
+       "2",
+       0.44
+      ]
+     ],
+     "p_top": 0.5
+    }
+   },
+   "a3_sentiment": 0.31,
+   "a3_confidence": {
+    "topic": 0.78,
+    "intent": 0.51,
+    "severity": 0.38,
+    "sentiment": 0.56
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": true
+  },
+  {
+   "review_id": "b45ac639-166c-4089-a716-d462162a918b",
+   "text_sha256": "2c37bd9a21de8ad3fd1d5c1d880fb803c0846050e56c3d2a7b36827a188cba27",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "catalog",
+       0.53
+      ],
+      [
+       "other",
+       0.37
+      ]
+     ],
+     "p_top": 0.53
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.95
+      ],
+      [
+       "2",
+       0.05
+      ]
+     ],
+     "p_top": 0.95
+    }
+   },
+   "a3_sentiment": 0.87,
+   "a3_confidence": {
+    "topic": 0.46,
+    "intent": 0.99,
+    "severity": 0.94,
+    "sentiment": 0.68
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "0fcf89b2-0b81-4838-bf5f-41c684e43b2d",
+   "text_sha256": "35c22a01094aebc3fc63441bea9a66885335d8ea80cabdc144e9188f8ac48508",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.94
+      ],
+      [
+       "usability",
+       0.05
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "4",
+       0.53
+      ],
+      [
+       "5",
+       0.39
+      ]
+     ],
+     "p_top": 0.53
+    }
+   },
+   "a3_sentiment": -0.3,
+   "a3_confidence": {
+    "topic": 0.93,
+    "intent": 0.98,
+    "severity": 0.41,
+    "sentiment": 0.5
+   },
+   "haiku": {
+    "topic": "playback",
+    "intent": "complaint",
+    "severity": "3"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "e2fc1a52-c841-4122-8124-02e2ada9a345",
+   "text_sha256": "46659f88224b37c2df54747dd27595abe0d41007311f68a50c2ee3ff2f463016",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.71
+      ],
+      [
+       "catalog",
+       0.17
+      ]
+     ],
+     "p_top": 0.71
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.92
+      ],
+      [
+       "2",
+       0.08
+      ]
+     ],
+     "p_top": 0.92
+    }
+   },
+   "a3_sentiment": 0.53,
+   "a3_confidence": {
+    "topic": 0.67,
+    "intent": 0.98,
+    "severity": 0.9,
+    "sentiment": 0.9
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "651e6e7b-f93e-4369-9631-15c73ddcd4ad",
+   "text_sha256": "d3d626edb6a038034ccd511952ec80a53305c797471a96b32356cc16a55299bf",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.91
+      ],
+      [
+       "usability",
+       0.08
+      ]
+     ],
+     "p_top": 0.91
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.99
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "5",
+       0.68
+      ],
+      [
+       "4",
+       0.29
+      ]
+     ],
+     "p_top": 0.68
+    }
+   },
+   "a3_sentiment": -0.39,
+   "a3_confidence": {
+    "topic": 0.9,
+    "intent": 0.99,
+    "severity": 0.6,
+    "sentiment": 0.71
+   },
+   "haiku": {
+    "topic": "playback",
+    "intent": "complaint",
+    "severity": "4"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "8f848aef-444d-4f95-8868-8579f690beb0",
+   "text_sha256": "47952482ec3f542e45ea2a8d612715e857815b8398545f648621ab1cdc325317",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.86
+      ],
+      [
+       "other",
+       0.07
+      ]
+     ],
+     "p_top": 0.86
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.62
+      ],
+      [
+       "3",
+       0.31
+      ]
+     ],
+     "p_top": 0.62
+    }
+   },
+   "a3_sentiment": -0.33,
+   "a3_confidence": {
+    "topic": 0.84,
+    "intent": 0.98,
+    "severity": 0.52,
+    "sentiment": 0.46
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "4001e2ec-2621-4256-b42d-c4988458a293",
+   "text_sha256": "500d13914c3d68ecbe1e91403def8e8f11c28fc3aae2bd111a519f14f43ce3de",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.48
+      ],
+      [
+       "billing",
+       0.37
+      ]
+     ],
+     "p_top": 0.48
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.73
+      ],
+      [
+       "3",
+       0.23
+      ]
+     ],
+     "p_top": 0.73
+    }
+   },
+   "a3_sentiment": -0.2,
+   "a3_confidence": {
+    "topic": 0.41,
+    "intent": 0.98,
+    "severity": 0.66,
+    "sentiment": 0.34
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "b4f4440f-d952-405d-bf7b-f19fb0adf484",
+   "text_sha256": "2fec8313eb86485cfc98429b788635eeed7a797faf359f8d6fa2b0514913ac9d",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.98
+      ],
+      [
+       "access",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "intent": {
+     "top2": [
+      [
+       "request",
+       0.85
+      ],
+      [
+       "complaint",
+       0.14
+      ]
+     ],
+     "p_top": 0.85
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.52
+      ],
+      [
+       "3",
+       0.23
+      ]
+     ],
+     "p_top": 0.52
+    }
+   },
+   "a3_sentiment": -0.16,
+   "a3_confidence": {
+    "topic": 0.98,
+    "intent": 0.81,
+    "severity": 0.4,
+    "sentiment": 0.26
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "request",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "7b7b7855-cf14-4b59-bdc6-12916e833002",
+   "text_sha256": "843ac01149cced785dfebd0028d3b03ba78e286e1c6f9517ebfcdb609d97af4c",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.87
+      ],
+      [
+       "usability",
+       0.04
+      ]
+     ],
+     "p_top": 0.87
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.7
+      ],
+      [
+       "complaint",
+       0.17
+      ]
+     ],
+     "p_top": 0.7
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.52
+      ],
+      [
+       "2",
+       0.43
+      ]
+     ],
+     "p_top": 0.52
+    }
+   },
+   "a3_sentiment": 0.13,
+   "a3_confidence": {
+    "topic": 0.85,
+    "intent": 0.62,
+    "severity": 0.4,
+    "sentiment": 0.55
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": true
+  },
+  {
+   "review_id": "40f1506e-4bbb-456a-ab3e-8c15911b62a9",
+   "text_sha256": "d4b2a436a54d521dc1f6a9d78ae4b159f2b092cf4ee0705ae6b6be9c495d09db",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.88
+      ],
+      [
+       "usability",
+       0.05
+      ]
+     ],
+     "p_top": 0.88
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.99
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.86
+      ],
+      [
+       "2",
+       0.13
+      ]
+     ],
+     "p_top": 0.86
+    }
+   },
+   "a3_sentiment": 0.5,
+   "a3_confidence": {
+    "topic": 0.86,
+    "intent": 0.99,
+    "severity": 0.82,
+    "sentiment": 0.95
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "82aedd59-debc-4147-9ff4-5a95c3d3a4e4",
+   "text_sha256": "b6a44194462a2d834ad409fff4ff82d24154552d6722d8137d63d1b10e771da9",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.74
+      ],
+      [
+       "usability",
+       0.19
+      ]
+     ],
+     "p_top": 0.74
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.63
+      ],
+      [
+       "praise",
+       0.18
+      ]
+     ],
+     "p_top": 0.63
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.6
+      ],
+      [
+       "3",
+       0.18
+      ]
+     ],
+     "p_top": 0.6
+    }
+   },
+   "a3_sentiment": -0.09,
+   "a3_confidence": {
+    "topic": 0.7,
+    "intent": 0.54,
+    "severity": 0.5,
+    "sentiment": 0.24
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "6884452c-d727-4c24-9511-017020f73a16",
+   "text_sha256": "7834207b6346fb6c4f0331630de9cf469e6b5add58e4d56ed042dbb2123e5cc3",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.78
+      ],
+      [
+       "usability",
+       0.08
+      ]
+     ],
+     "p_top": 0.78
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.96
+      ],
+      [
+       "complaint",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.98
+      ],
+      [
+       "2",
+       0.02
+      ]
+     ],
+     "p_top": 0.98
+    }
+   },
+   "a3_sentiment": 0.5,
+   "a3_confidence": {
+    "topic": 0.75,
+    "intent": 0.95,
+    "severity": 0.98,
+    "sentiment": 0.92
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "0cc5a3be-e40c-4e9f-918d-53d284e2e5b3",
+   "text_sha256": "5038076d2b808758a4951270125cc63c6216a54eeac141e33d52d1adf789c9d6",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.96
+      ],
+      [
+       "playback",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.41
+      ],
+      [
+       "praise",
+       0.25
+      ]
+     ],
+     "p_top": 0.41
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.84
+      ],
+      [
+       "2",
+       0.14
+      ]
+     ],
+     "p_top": 0.84
+    }
+   },
+   "a3_sentiment": 0.68,
+   "a3_confidence": {
+    "topic": 0.95,
+    "intent": 0.26,
+    "severity": 0.8,
+    "sentiment": 0.42
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "7c431748-3a85-4080-8cf9-c41f48f92ea5",
+   "text_sha256": "7805f8d51b481e43d013b935b59881b812312d40aaaeeaa1c2bd57dec1c1eb76",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.7
+      ],
+      [
+       "catalog",
+       0.09
+      ]
+     ],
+     "p_top": 0.7
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.88
+      ],
+      [
+       "complaint",
+       0.05
+      ]
+     ],
+     "p_top": 0.88
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.04
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.5,
+   "a3_confidence": {
+    "topic": 0.66,
+    "intent": 0.85,
+    "severity": 0.95,
+    "sentiment": 0.95
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "6abbfa21-bc7b-400f-96b2-b07fe77b5e37",
+   "text_sha256": "b3a2e166e3560fb217c89c36124ae2fecc6673dbaf84a98ae56cc482dc7c3847",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.86
+      ],
+      [
+       "usability",
+       0.04
+      ]
+     ],
+     "p_top": 0.86
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.96
+      ],
+      [
+       "complaint",
+       0.02
+      ]
+     ],
+     "p_top": 0.96
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.04
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.56,
+   "a3_confidence": {
+    "topic": 0.84,
+    "intent": 0.95,
+    "severity": 0.95,
+    "sentiment": 0.82
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "b0d0660d-b859-4d87-97e8-7420f05d1f94",
+   "text_sha256": "62a296672f268d2e8b0105eaf85fc8bd6ef599693a70dc8daf0650853cc2679a",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.74
+      ],
+      [
+       "usability",
+       0.1
+      ]
+     ],
+     "p_top": 0.74
+    },
+    "intent": {
+     "top2": [
+      [
+       "cancellation",
+       0.72
+      ],
+      [
+       "request",
+       0.19
+      ]
+     ],
+     "p_top": 0.72
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.54
+      ],
+      [
+       "2",
+       0.41
+      ]
+     ],
+     "p_top": 0.54
+    }
+   },
+   "a3_sentiment": 0.0,
+   "a3_confidence": {
+    "topic": 0.7,
+    "intent": 0.65,
+    "severity": 0.42,
+    "sentiment": 0.28
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "cancellation",
+    "severity": "1"
+   },
+   "haiku_needs_review": true
+  },
+  {
+   "review_id": "0be20402-efaf-482f-9635-78f166bcf538",
+   "text_sha256": "e31eba4970f9bf316c8d01429238d181c87cbad2d3429146313fe3254e848def",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.89
+      ],
+      [
+       "usability",
+       0.03
+      ]
+     ],
+     "p_top": 0.89
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.94
+      ],
+      [
+       "complaint",
+       0.03
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.74
+      ],
+      [
+       "2",
+       0.23
+      ]
+     ],
+     "p_top": 0.74
+    }
+   },
+   "a3_sentiment": 0.54,
+   "a3_confidence": {
+    "topic": 0.87,
+    "intent": 0.92,
+    "severity": 0.68,
+    "sentiment": 0.79
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "6455e7cb-ad90-47ad-883f-5b0f0e205af1",
+   "text_sha256": "df14bb0a2ab0bd1cc16ad54788d5376383ac2e6fe4168f4dc5512d40307fbc2c",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.51
+      ],
+      [
+       "catalog",
+       0.31
+      ]
+     ],
+     "p_top": 0.51
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.97
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.97
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.97
+      ],
+      [
+       "2",
+       0.03
+      ]
+     ],
+     "p_top": 0.97
+    }
+   },
+   "a3_sentiment": 0.51,
+   "a3_confidence": {
+    "topic": 0.44,
+    "intent": 0.96,
+    "severity": 0.96,
+    "sentiment": 0.92
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "a06df5ff-01c8-4aff-a89c-a0c2ddc88f76",
+   "text_sha256": "58efe2a554303198c43c5f51568f5b426d046a443b765a5f1346acb3f0e747b8",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "billing",
+       0.75
+      ],
+      [
+       "usability",
+       0.18
+      ]
+     ],
+     "p_top": 0.75
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.81
+      ],
+      [
+       "cancellation",
+       0.15
+      ]
+     ],
+     "p_top": 0.81
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.58
+      ],
+      [
+       "3",
+       0.23
+      ]
+     ],
+     "p_top": 0.58
+    }
+   },
+   "a3_sentiment": -0.33,
+   "a3_confidence": {
+    "topic": 0.71,
+    "intent": 0.76,
+    "severity": 0.48,
+    "sentiment": 0.52
+   },
+   "haiku": {
+    "topic": "billing",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "9d15352b-b78f-477b-b56f-44a6698ba55a",
+   "text_sha256": "e956cba2fd970a8ac1003ad7ee8aab55297bd4f47b73faf5c1d3f2d552cd1099",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "playback",
+       0.95
+      ],
+      [
+       "usability",
+       0.03
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.94
+      ],
+      [
+       "request",
+       0.03
+      ]
+     ],
+     "p_top": 0.94
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.97
+      ],
+      [
+       "2",
+       0.03
+      ]
+     ],
+     "p_top": 0.97
+    }
+   },
+   "a3_sentiment": 0.49,
+   "a3_confidence": {
+    "topic": 0.94,
+    "intent": 0.92,
+    "severity": 0.96,
+    "sentiment": 0.95
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "af53cf35-c680-4ccb-b30c-cfd85bb61c57",
+   "text_sha256": "8ba148189fb12b70b23b86f728ec5fbaf9723429f183a3224471fff865a263c1",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "usability",
+       0.86
+      ],
+      [
+       "billing",
+       0.11
+      ]
+     ],
+     "p_top": 0.86
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.95
+      ],
+      [
+       "request",
+       0.04
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.53
+      ],
+      [
+       "3",
+       0.32
+      ]
+     ],
+     "p_top": 0.53
+    }
+   },
+   "a3_sentiment": 0.01,
+   "a3_confidence": {
+    "topic": 0.84,
+    "intent": 0.94,
+    "severity": 0.41,
+    "sentiment": 0.38
+   },
+   "haiku": {
+    "topic": "usability",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "90c663e4-4362-4929-b4a8-098db44c2cc6",
+   "text_sha256": "c939327ca16dcf97ca32521d8b834bf1de16573d21deda3bb2a337cf403787a6",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.93
+      ],
+      [
+       "usability",
+       0.04
+      ]
+     ],
+     "p_top": 0.93
+    },
+    "intent": {
+     "top2": [
+      [
+       "praise",
+       0.98
+      ],
+      [
+       "complaint",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.96
+      ],
+      [
+       "2",
+       0.04
+      ]
+     ],
+     "p_top": 0.96
+    }
+   },
+   "a3_sentiment": 0.48,
+   "a3_confidence": {
+    "topic": 0.92,
+    "intent": 0.98,
+    "severity": 0.95,
+    "sentiment": 0.94
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "praise",
+    "severity": "1"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "10775595-01b9-4623-9163-51619e2a0fa9",
+   "text_sha256": "99164bca018c5144cb1decd7e4a27059117248bd74684119398324193cd4ffd3",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "catalog",
+       0.99
+      ],
+      [
+       "billing",
+       0.01
+      ]
+     ],
+     "p_top": 0.99
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.95
+      ],
+      [
+       "unclear",
+       0.02
+      ]
+     ],
+     "p_top": 0.95
+    },
+    "severity": {
+     "top2": [
+      [
+       "1",
+       0.7
+      ],
+      [
+       "2",
+       0.24
+      ]
+     ],
+     "p_top": 0.7
+    }
+   },
+   "a3_sentiment": 0.34,
+   "a3_confidence": {
+    "topic": 0.99,
+    "intent": 0.94,
+    "severity": 0.62,
+    "sentiment": 0.69
+   },
+   "haiku": {
+    "topic": "catalog",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "0ed90e01-b1ca-40a5-a0a2-4660c0fdaf60",
+   "text_sha256": "714be252afcf3400047689f282249984331f2bf489bbbb7250387fa10da04711",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.93
+      ],
+      [
+       "usability",
+       0.03
+      ]
+     ],
+     "p_top": 0.93
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.85
+      ],
+      [
+       "3",
+       0.09
+      ]
+     ],
+     "p_top": 0.85
+    }
+   },
+   "a3_sentiment": -0.47,
+   "a3_confidence": {
+    "topic": 0.92,
+    "intent": 0.98,
+    "severity": 0.81,
+    "sentiment": 0.48
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  },
+  {
+   "review_id": "c55970e2-9223-4e83-92de-9b7e4aac0663",
+   "text_sha256": "6fe7d7112caaba1b1bc7bfa656974ac4016cc525a7286117494f5b29dfec1f77",
+   "a3": {
+    "topic": {
+     "top2": [
+      [
+       "other",
+       0.89
+      ],
+      [
+       "usability",
+       0.05
+      ]
+     ],
+     "p_top": 0.89
+    },
+    "intent": {
+     "top2": [
+      [
+       "complaint",
+       0.98
+      ],
+      [
+       "cancellation",
+       0.01
+      ]
+     ],
+     "p_top": 0.98
+    },
+    "severity": {
+     "top2": [
+      [
+       "2",
+       0.88
+      ],
+      [
+       "3",
+       0.07
+      ]
+     ],
+     "p_top": 0.88
+    }
+   },
+   "a3_sentiment": -0.41,
+   "a3_confidence": {
+    "topic": 0.87,
+    "intent": 0.98,
+    "severity": 0.85,
+    "sentiment": 0.74
+   },
+   "haiku": {
+    "topic": "other",
+    "intent": "complaint",
+    "severity": "2"
+   },
+   "haiku_needs_review": false
+  }
+ ]
+}

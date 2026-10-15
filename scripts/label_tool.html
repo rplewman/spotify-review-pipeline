@@ -47,6 +47,7 @@
     <section>
       <div class="muted" id="rid"></div>
       <div class="review" id="text"></div>
+      <div id="hint" style="margin-top:8px"></div>
       <div class="row" style="margin-top:8px">
         <button id="useSel">Use selection as quote</button><button id="useAll">Use whole text</button>
         <span class="muted">Select text in the box above, then click.</span>
@@ -130,7 +131,9 @@ function setChecked(name, vals) { document.querySelectorAll(`input[name=${name}]
 function sent() { $('sentVal').textContent = (+$('sentiment').value).toFixed(2); }
 
 function render() {
-  const it = D.items[i], L = it.labels || {};
+  const it = D.items[i], L = it.labels || it.prefill || {};
+  $('hint').innerHTML = it.hint ? '<strong>Models disagree</strong> (pick what the text supports; a third label is fine): ' +
+    Object.entries(it.hint).map(([f, c]) => `<div>${f}: Celeris <b>${c.celeris}</b> (p ${c.p.toFixed(2)}) · Haiku <b>${c.haiku ?? 'no answer'}</b></div>`).join('') : '';
   $('rid').textContent = `#${i + 1} · ${it.review_id}`;
   $('text').textContent = it.review_text;
   $('topic').value = L.topic || ''; $('intent').value = L.intent || ''; $('severity').value = L.severity || '';
