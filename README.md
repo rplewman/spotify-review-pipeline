@@ -13,8 +13,20 @@ of grouped complaints (20.4%), and still first on those three measures in the un
 | **Decision memo** | [`outputs/memo.md`](outputs/memo.md) (+ [`claims.csv`](outputs/claims.csv), [`recommendations.json`](outputs/recommendations.json)) |
 | **Grading export** | [`grading/`](grading/) — `records.jsonl.gz` (660,622 records), `calls.jsonl.gz` (4,552 calls), `run.json`, `ingestion.json`, `membership.csv`, `ranking.csv`, `claims.csv`, `checkpoint_before/after.json` |
 | **Cost calculator** | [`cost/`](cost/README.md) — 100-review cold/warm pilot [`report_pilot.md`](cost/report_pilot.md), offline replay `python cost/calculator.py`, dated [`rates.csv`](cost/rates.csv) |
-| **Final run** | label_config `celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1` on `state/pipeline.db`, runs `run-20261015-094806-7e9c37` (initial, deliberately interrupted) → `run-20261015-094822-868f46` (resume, random 100k) → `run-20261015-102812-b0aa2c` (frequency add-on) — [`evals/m8/notes.md`](evals/m8/notes.md) |
+| **Final run** | **There is no full-corpus classification run.** The final run is the random 100k + frequency add-on: label_config `celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1` on `state/pipeline.db`, runs `run-20261015-094806-7e9c37` (initial, deliberately interrupted) → `run-20261015-094822-868f46` (resume, random 100k) → `run-20261015-102812-b0aa2c` (frequency add-on) — [`evals/m8/notes.md`](evals/m8/notes.md) |
 | **Total spend** | **$4.33 list price** of the $10 budget — see [Cost](#cost) |
+
+### Grading in 5 minutes
+
+| Look at | Link |
+|---|---|
+| The recommendation and its numbers | [`outputs/memo.md`](outputs/memo.md) · [`outputs/claims.csv`](outputs/claims.csv) · [`outputs/ranking.csv`](outputs/ranking.csv) |
+| The grading export + checker result | [`grading/`](grading/) · [checker summary](#grading-export-and-checker) (`review_required`: only `unfinished_classification`, by design) |
+| The live dashboard (backend → Neon) | https://spotify-review-pipeline.onrender.com (allow ~1 min to wake) |
+| The 100-review cold/warm pilot + calculator | [`cost/report_pilot.md`](cost/report_pilot.md) · [`cost/README.md`](cost/README.md) |
+| Interrupt → resume | [screen recording](RECORDING_URL) · [`evals/recovery/resume_check.json`](evals/recovery/resume_check.json) |
+| Golden 50 + verifier | [`evals/golden/golden_eval.md`](evals/golden/golden_eval.md) · [`evals/verify/verify_report.json`](evals/verify/verify_report.json) |
+| Recompute without any API key | `python -m pipeline.cli rank` and `python cost/calculator.py --out /tmp/replay` ([commands](#setup-and-commands)) |
 
 > **Scope, up front.** All 660,622 rows are ingested, profiled and given exactly one record. Models classified a seeded
 > random **100,000** nonempty reviews plus the **25,000 most duplicated** remaining texts; exact-text reuse filled in every
@@ -53,13 +65,13 @@ of grouped complaints (20.4%), and still first on those three measures in the un
 |---|---|
 | **DQ1** Accessible code, setup, artifacts | [Setup and commands](#setup-and-commands); pinned [`requirements.txt`](requirements.txt); blank [`.env.example`](.env.example); [`.gitignore`](.gitignore) (excludes `.env`, raw data, local state); clean-clone test in [`evals/m12/clean_env.md`](evals/m12/clean_env.md) |
 | **DQ2** Architecture, shared schema, provenance | [Architecture](#architecture); schema [`pipeline/schema.py`](pipeline/schema.py) + [`pipeline/db/schema.sql`](pipeline/db/schema.sql); labels [`labels/taxonomy.md`](labels/taxonomy.md); run manifest [`grading/run.json`](grading/run.json), [`outputs/data_manifest.json`](outputs/data_manifest.json), [`outputs/run_log.jsonl`](outputs/run_log.jsonl); `label_config` on every record and call; `cache_source_id` on every reused record |
-| **DQ3** Memo numbers ↔ calculations ↔ evidence | [`outputs/claims.csv`](outputs/claims.csv) (11 claims, values from `ranking.csv`); the memo's code-generated **number trace** table maps every number to a claim ID or a field of [`outputs/memo_input.json`](outputs/memo_input.json); [`evals/m9/rank_check.json`](evals/m9/rank_check.json) (checker algorithm: 10/10 claims match); dashboard re-checks every claim (`v_claims.matches`) |
+| **DQ3** Memo numbers ↔ calculations ↔ evidence | [`outputs/claims.csv`](outputs/claims.csv) (11 claims, values from `ranking.csv`); the memo's code-generated **number trace** table maps every number to a claim ID or a field of [`outputs/memo_input.json`](outputs/memo_input.json); [`evals/m9/rank_check.json`](evals/m9/rank_check.json) (checker algorithm: 11/11 claims match); dashboard re-checks every claim (`v_claims.matches`) |
 | **DQ4** Coherent recommendation, alternatives, limitations | [`outputs/memo.md`](outputs/memo.md) (priority, 3 recommendations, alternatives, robustness, limitations); dashboard recommendations panel; live smoke [`evals/m11/smoke_live.json`](evals/m11/smoke_live.json); memo slips disclosed [below](#limitations-and-disclosures) |
 | **TE1** 50 human labels, per-field comparison, error analysis | [`evals/golden/golden_eval.md`](evals/golden/golden_eval.md), every disagreement in [`golden_disagreements.csv`](evals/golden/golden_disagreements.csv), labels [`golden_50_labeled.csv`](evals/golden/golden_50_labeled.csv); M6 → M6b comparison [`golden_m6_vs_m6b.md`](evals/golden/golden_m6_vs_m6b.md); tuning set kept apart in [`evals/dev_100/`](evals/dev_100/) and [`evals/heldout_30/`](evals/heldout_30/) |
 | **TE2** Independent verification + planted-error + injection tests | [`evals/verify/verify_report.json`](evals/verify/verify_report.json), [`disagreements.csv`](evals/verify/disagreements.csv), [`planted_errors.json`](evals/verify/planted_errors.json); [`evals/m9/notes.md`](evals/m9/notes.md) (investigation); [`evals/system_tests/results.md`](evals/system_tests/results.md) (12 scenarios PASS + real-model injection) |
 | **TE3** (a) real cold/warm pilot (b) offline calculator (c) retry/spend/recovery controls | (a) [`cost/report_pilot.md`](cost/report_pilot.md) + [`cost/pilot_measured.json`](cost/pilot_measured.json), [`usage.csv`](cost/usage.csv), [`pilot_calls.jsonl`](cost/pilot_calls.jsonl); (b) [`cost/calculator.py`](cost/calculator.py) (stdlib only, rate-doubling test in [`tests/test_m5_cost.py`](tests/test_m5_cost.py)); (c) [`pipeline/db/ledger.py`](pipeline/db/ledger.py), [`pipeline/db/queue.py`](pipeline/db/queue.py), system tests `transient_failures`, `spend_controls`, `hard_kill_recovery` |
-| **WR1** Full ingestion, coverage, classification | [`grading/ingestion.json`](grading/ingestion.json) (the provided `profile`), [`grading/records.jsonl.gz`](grading/records.jsonl.gz): 660,622 records = 279,519 completed + 381,103 quarantined (0 missing); [`evals/m8/finalize.json`](evals/m8/finalize.json); coverage point candidate **0.6539** |
-| **WR2** Runnable staged program, bounded calls, saved handoffs, resume | [`pipeline/cli.py`](pipeline/cli.py) (`run --input <csv>`, `enrich`, `resume`, `verify`, `group`, `rank`, `memo`, `export`, `publish`); ≤ 50 reviews per request; [`grading/calls.jsonl.gz`](grading/calls.jsonl.gz); resume evidence [`evals/recovery/`](evals/recovery/README.md) (checker resume rules PASS; screen recording kept by the author, available on request) |
+| **WR1** Full ingestion, coverage, classification | [`grading/ingestion.json`](grading/ingestion.json) (the provided `profile`), [`grading/records.jsonl.gz`](grading/records.jsonl.gz): 660,622 records = 279,519 completed + 381,103 quarantined (0 missing); [`evals/m8/finalize.json`](evals/m8/finalize.json); coverage point candidate **0.6539** ([formula](#coverage-point)). **Not a full-corpus classification run** (381,090 nonempty rows quarantined out of scope) |
+| **WR2** Runnable staged program, bounded calls, saved handoffs, resume | [`pipeline/cli.py`](pipeline/cli.py) (`run --input <csv>`, `enrich`, `resume`, `verify`, `group`, `rank`, `memo`, `export`, `publish`); ≤ 50 reviews per request; [`grading/calls.jsonl.gz`](grading/calls.jsonl.gz); resume evidence [`evals/recovery/`](evals/recovery/README.md) (checker resume rules PASS); **[screen recording](RECORDING_URL)** of the interrupt → resume |
 | **WR3** Reproducible ranking + deployed dashboard/backend/DB with grounded AI recommendations | `python -m pipeline.cli rank` (zero calls, byte-identical); live URL above; [`docs/DASHBOARD.md`](docs/DASHBOARD.md); [`evals/m11/smoke_live.json`](evals/m11/smoke_live.json) (12/12 API numbers equal the saved files) |
 
 ---
@@ -95,7 +107,7 @@ Everything in this table is **measured** from saved files unless marked *estimat
 | Planted errors | verifier 3/3 + 5/5 flagged; 12/12 contract violations rejected by `validate_record` | [`planted_errors.json`](evals/verify/planted_errors.json), [`system_tests`](evals/system_tests/results.md) |
 | Real-model prompt injection (6 injections + 4 controls) | **no label followed an injected instruction**; no output for unsent reviews | [`injection_real_notes.md`](evals/system_tests/injection_real_notes.md) |
 | Interruption → resume | checker resume rules **PASS** (130,221 → 130,382 IDs; 0 re-sent) | [`evals/recovery/resume_check.json`](evals/recovery/resume_check.json) |
-| Ranking reproducibility | `rank` byte-identical on rerun, zero model calls; checker algorithm 33/33 rows, 10/10 claims | [`rank_check.json`](evals/m9/rank_check.json) |
+| Ranking reproducibility | `rank` byte-identical on rerun, zero model calls; checker algorithm 33/33 rows, 11/11 claims | [`rank_check.json`](evals/m9/rank_check.json) |
 
 ### Cost and time of the final run
 
@@ -255,7 +267,8 @@ every number was checked by code and is mapped in its **Number trace** table.
 - **Limitations** stated in the memo: scope and quarantines, duplication bias, model labels, severity ≠ impact,
   cancellation intent ≠ churn.
 
-Two wording slips in the memo are **disclosed, not fixed** (decision recorded in [`evals/m9/notes.md`](evals/m9/notes.md)):
+Two wording slips in the generated memo are **disclosed, not regenerated** (decision recorded in [`evals/m9/notes.md`](evals/m9/notes.md)).
+The generated text is unchanged; a hand-added **Reviewer note** at the end of [`outputs/memo.md`](outputs/memo.md#reviewer-note-added-by-hand-after-generation-m12--the-generated-text-above-is-unchanged) gives the corrections:
 1. *"Playback leads on mean_severity"* — among the four areas **access** leads (3.637452); playback (3.335726) is second.
    The same paragraph then says access is highest, so the sentence contradicts itself.
 2. *"…so the mean_severity order differs from the main ranking"* — it does not: access > playback > billing/support >
@@ -351,7 +364,7 @@ settled at their estimate) → [`checkpoint_before.json`](evals/recovery/checkpo
 `pipeline.cli resume` → [`checkpoint_after.json`](evals/recovery/checkpoint_after.json) **130,382** → the checker's resume
 rules (local copy, [`pipeline/recovery.py`](pipeline/recovery.py)) **PASS**, and PASS again when the resume run drained
 (0 resume calls re-sent a before ID) — [`resume_check.json`](evals/recovery/resume_check.json), logs `enrich_initial.log`,
-`resume.log`. The author screen-recorded the demo. The checkpoints are also in `grading/`.
+`resume.log`. **Screen recording of the demo: [Google Drive](RECORDING_URL).** The checkpoints are also in `grading/`.
 
 ---
 
@@ -430,6 +443,17 @@ provider Consoles may show less. Ledger: [`pipeline/db/ledger.py`](pipeline/db/l
   nonempty rows quarantined as `out_of_scope_budget_100k`. This is the scope decision above, not a pipeline failure.
 - valid completed 279,519 (176,420 valid cache reuses) · quarantined 381,103 · missing 0 · invalid 0 · accounted 1.0 ·
   **coverage point candidate 0.6539** · 4,552 calls, 39,123,254 input / 4,861,837 output tokens.
+- <a id="coverage-point"></a>**Coverage point** (the brief's formula, with the checker's counts):
+
+  | Term | Weight | Value | Points |
+  |---|---:|---|---:|
+  | exact full-file profile match | 0.2 | 1 (`ingestion.json` = checker `profile`) | 0.2000 |
+  | valid completed-or-quarantined rows / 660,622 | 0.2 | 660,622 / 660,622 = 1.0 | 0.2000 |
+  | valid classified nonempty rows / 660,609 | 0.6 | 279,519 / 660,609 = 0.423123 | 0.2539 |
+  | **Total** | | | **0.6539** |
+
+  The shortfall is the third term: 381,090 nonempty rows were accounted for but never classified (budget decision,
+  [`cost/full_corpus_decision.md`](cost/full_corpus_decision.md)).
 - **344 succeeded enrich calls left out of `calls.jsonl.gz`:** 172 A3 + 172 A5 calls from the superseded M6 config
   (`…gate0.70+esc-claude-haiku-5-5-0.40…`) on the first 10k, whose reviews were re-done under the frozen config (those calls
   are exported). Including them would trigger `call_config_mismatch`. The full list is in
@@ -521,7 +545,8 @@ and `resume`.
   disagreements, not full hand labels.
 - **Verification.** 200 of 20,683 sampled texts unverified (max_tokens at 50 reviews per batch request); the second-place
   area depends on which labeler you trust.
-- **Memo slips.** Two mean_severity comparisons are wrong (see [Decision memo](#decision-memo)); kept as generated.
+- **Memo slips.** Two mean_severity comparisons are wrong (see [Decision memo](#decision-memo)); kept as generated, with
+  a hand-added reviewer note at the end of `outputs/memo.md`.
 - **Evidence quotes under injection.** For 2 synthetic injection reviews the code-cut quote was the injected sentence
   (a valid substring but weak evidence); `extract-code-v1` was frozen and not changed.
 - **Export.** 344 superseded M6-config calls are left out of `calls.jsonl.gz` (listed in `evals/m10/export.json`).

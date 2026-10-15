@@ -91,3 +91,19 @@ Every number in the memo and recommendations, mapped by code to a claim ID or to
 | 1 | label_config; label_config; top_issues[other-general].rank |
 | 5 | label_config; label_config; areas[usability].issue_count … |
 | 60.4 | areas[outside].share_of_members |
+
+## Reviewer note (added by hand after generation, M12 — the generated text above is unchanged)
+
+Two sentences above compare `mean_severity` wrongly. Code checks every number and ID in the memo, but not comparisons,
+so these slipped through. Corrections, from `outputs/area_aggregates.csv` and `outputs/comparison_random_100k_areas.csv`:
+
+1. *Recommendation:* "Playback leads on mean_severity (3.335726 …)". **Access leads** among the four areas (3.637452);
+   playback is second (3.335726), then billing/support (2.679428) and usability (2.469498). The same sentence then says
+   access is highest, so the sentence contradicts itself.
+2. *Robustness:* "…so the mean_severity order differs from the main ranking". **It does not.** The order is
+   access > playback > billing/support > usability in both the main ranking and the random 100k (3.959812 > 3.347190 >
+   2.714308 > 2.583068).
+
+Neither correction changes the recommendation. It rests on complaint_count, severity_sum and share_of_members, where
+usability leads in both samples. Usability has the lowest mean_severity of the four areas: it is the largest problem by
+volume, not the most severe per complaint. Rerunning `pipeline.cli memo` rewrites this file from cache without this note.

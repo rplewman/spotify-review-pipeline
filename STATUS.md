@@ -21,9 +21,14 @@
   (incl. URL passwords) absent from all tracked files (gz decompressed) and from full `git log -p`; the only pattern hit is the
   fake `npg_secret` test fixture. Personal details: commit author email, and Windows paths with the local username in
   `cost/full_corpus_decision.json`, `evals/golden/golden_eval*.json`, `evals/m9/verify_run1_crash.log` (left as is).
+- Self-grade follow-ups: hand-added **Reviewer note** at the end of `outputs/memo.md` (corrects the two mean_severity slips;
+  generated text unchanged); README: "Grading in 5 minutes" block, coverage-point formula, explicit "no full-corpus run",
+  claims check corrected to 11/11.
 - Fast suite **136 passed** (with `.env`); clean clone 127 passed / 8 skipped (no Neon URL) after the firewall fix.
 
 ### 👤 Open for Rory (outward-facing, not done by Claude)
+0. Upload the resume screen recording to Google Drive (anyone with the link can view) and replace the 3 `RECORDING_URL`
+   placeholders in `README.md` with the link.
 1. `git push` (commits since `9e1aed2`), then make the GitHub repo **public** (Settings → General → Change visibility).
 2. Open README + evidence links signed out (private window): README, `grading/`, `outputs/memo.md`, `cost/report_pilot.md`,
    live dashboard.
