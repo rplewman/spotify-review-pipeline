@@ -1,0 +1,22 @@
+resuming from run-20261015-094806-7e9c37 (celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1)
+{
+ "run_id": "run-20261015-094822-868f46",
+ "phase": "resume",
+ "stop_reason": "drained",
+ "started_at": "2026-10-15T16:48:22.876064Z",
+ "ended_at": "2026-10-15T17:27:02.386164Z",
+ "elapsed_s": 2317.234,
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "calls": {
+  "succeeded": 2779
+ },
+ "input_tokens": 25682195,
+ "output_tokens": 2278602,
+ "spend_usd_list": {
+  "spent": 2.38699328,
+  "reserved": 0
+ },
+ "queue": {
+  "done": 78099
+ }
+}

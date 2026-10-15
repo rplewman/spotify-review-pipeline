@@ -1,0 +1,24 @@
+interrupted: leases released, state saved; continue with `python -m pipeline.cli resume`
+{
+ "run_id": "run-20261015-094806-7e9c37",
+ "phase": "initial",
+ "stop_reason": "interrupted",
+ "started_at": "2026-10-15T16:48:06.809045Z",
+ "ended_at": "2026-10-15T16:48:15.409472Z",
+ "elapsed_s": 7.093,
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "calls": {
+  "failed": 2,
+  "succeeded": 7
+ },
+ "input_tokens": 68147,
+ "output_tokens": 4080,
+ "spend_usd_list": {
+  "spent": 0.011876,
+  "reserved": 0
+ },
+ "queue": {
+  "done": 8642,
+  "pending": 69457
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "db": "state\\pipeline.db",
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "initial_run": {
+  "run_id": "run-20261015-094806-7e9c37",
+  "phase": "initial",
+  "stop_reason": "interrupted",
+  "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+  "calls": {
+   "failed": 2,
+   "succeeded": 7
+  }
+ },
+ "resume_run": {
+  "run_id": "run-20261015-094822-868f46",
+  "phase": "resume",
+  "stop_reason": "drained",
+  "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+  "calls": {
+   "succeeded": 2779
+  },
+  "exit_code": 0
+ },
+ "check_at_after": {
+  "ok": true,
+  "flags": [],
+  "before": 130221,
+  "after": 130382,
+  "new_after_resume": 161,
+  "before_cached": 121579,
+  "before_unlogged_in_initial": 0,
+  "new_ids_in_resume_calls": 50,
+  "resume_calls_with_before_ids": []
+ },
+ "check_at_end": {
+  "ok": true,
+  "flags": [],
+  "before": 130221,
+  "after": 130382,
+  "new_after_resume": 161,
+  "before_cached": 121579,
+  "before_unlogged_in_initial": 0,
+  "new_ids_in_resume_calls": 50,
+  "resume_calls_with_before_ids": []
+ }
+}

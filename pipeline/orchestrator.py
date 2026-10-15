@@ -7,7 +7,7 @@ One worker iteration:
 
 Stop conditions (checked before every claim; the stop reason is saved on the run):
     drained · limit (item cap) · time (--max-minutes) · budget (the ledger refuses the next reservation)
-    · quota_402 · fatal_<status> · interrupted (Ctrl-C / cancel) — every path releases this run's leases, marks
+    · quota_402 · fatal_<status> · paused (a PAUSE file next to the DB) · interrupted (Ctrl-C / cancel) — every path releases this run's leases, marks
     unfinished attempts failed and settles their reservations at the estimate, and writes a checkpoint before exiting.
 
 A run killed hard (no cleanup) is recovered by `recover()`: once its heartbeat is older than the lease, its in-flight
@@ -60,6 +60,7 @@ class Orchestrator:
         self.stop_reason = None
         self.claimed = 0
         self.in_flight = {}  # request_id -> (owner, item ids)
+        self.pause_file = Path(self.db_path).parent / "PAUSE"  # touch it to stop cleanly; `resume` later
 
     # ---------- lifecycle ----------
     def _start(self):
@@ -132,6 +133,9 @@ class Orchestrator:
             while self.stop_reason is None:
                 if self.deadline and time.monotonic() >= self.deadline:
                     self.stop("time")
+                    break
+                if self.pause_file.exists():
+                    self.stop("paused")  # graceful pause: in-flight calls finish, nothing new is claimed
                     break
                 want = self.cfg.batch_size
                 if self.cfg.limit is not None:

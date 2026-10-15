@@ -1,0 +1,23 @@
+frequency add-on: 25000 texts, 41577 rows (scope='frequency_addon')
+enqueued 25000 items for enrich / celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1
+{
+ "run_id": "run-20261015-102812-b0aa2c",
+ "phase": "initial",
+ "stop_reason": "drained",
+ "started_at": "2026-10-15T17:28:12.366553Z",
+ "ended_at": "2026-10-15T17:41:26.941819Z",
+ "elapsed_s": 794.203,
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "calls": {
+  "succeeded": 1000
+ },
+ "input_tokens": 8930373,
+ "output_tokens": 774575,
+ "spend_usd_list": {
+  "spent": 0.81276574,
+  "reserved": 0
+ },
+ "queue": {
+  "done": 103099
+ }
+}

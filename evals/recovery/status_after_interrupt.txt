@@ -1,0 +1,18 @@
+queue (stage, label_config, status, items):
+   enrich celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1 done 8492
+   enrich celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1 pending 69607
+   enrich celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1 done 8642
+   enrich celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1 pending 69457
+   enrich provisional-v0 pending 78099
+records: {'completed': 130221, 'quarantined': 13}
+ledger by bucket (list price USD):
+   decisions: {'spent': 0.19035779, 'reserved': 0}
+   escalation: {'spent': 0.2941113, 'reserved': 0}
+   total: {'spent': 0.48446909, 'reserved': 0}
+calls: {'failed': 2, 'succeeded': 691}
+last runs:
+   run-20261015-094806-7e9c37 initial interrupted 2026-10-15T16:48:06.809045Z 2026-10-15T16:48:15.409472Z
+   run-20261014-222056-bfbe36 initial drained 2026-10-15T05:20:56.805906Z 2026-10-15T05:25:51.083968Z
+   run-20261014-211208-3191ff initial drained 2026-10-15T04:12:08.259010Z 2026-10-15T04:12:08.442381Z
+   run-20261014-211050-ebc60b initial drained 2026-10-15T04:10:50.564045Z 2026-10-15T04:12:05.162425Z
+   run-20261014-210807-0e40de initial drained 2026-10-15T04:08:07.812381Z 2026-10-15T04:10:39.344109Z

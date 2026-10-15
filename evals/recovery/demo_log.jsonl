@@ -1,0 +1,10 @@
+{"at": "2026-10-15T16:48:00.954833Z", "msg": "1/7 start enrich (phase initial) on state\\pipeline.db", "args": ["--provider", "celeris", "--escalation", "anthropic", "--bucket", "decisions", "--workers", "4", "--paid", "--max-spend", "4.00"]}
+{"at": "2026-10-15T16:48:13.888557Z", "msg": "2/7 4 A3 batches done in run-20261015-094806-7e9c37: sending the interrupt", "run_id": "run-20261015-094806-7e9c37"}
+{"at": "2026-10-15T16:48:15.600955Z", "msg": "   enrich exited with code 130; stop_reason=interrupted", "exit_code": 130, "run": {"run_id": "run-20261015-094806-7e9c37", "phase": "initial", "stop_reason": "interrupted", "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1", "calls": {"failed": 2, "succeeded": 7}}}
+{"at": "2026-10-15T16:48:15.874698Z", "msg": "3/7 checkpoint_before.json: 130221 completed IDs", "count": 130221}
+{"at": "2026-10-15T16:48:15.874698Z", "msg": "4/7 status"}
+{"at": "2026-10-15T16:48:19.494274Z", "msg": "5/7 resume (phase resume)", "args": ["--provider", "celeris", "--escalation", "anthropic", "--bucket", "decisions", "--workers", "4", "--paid", "--max-spend", "4.00"]}
+{"at": "2026-10-15T16:48:29.062628Z", "msg": "6/7 checkpoint_after.json: 130382 completed IDs (+161)", "count": 130382}
+{"at": "2026-10-15T16:48:29.463358Z", "msg": "7/7 checker resume rules: PASS", "check": {"ok": true, "flags": [], "before": 130221, "after": 130382, "new_after_resume": 161, "before_cached": 121579, "before_unlogged_in_initial": 0, "new_ids_in_resume_calls": 50, "resume_calls_with_before_ids": []}}
+{"at": "2026-10-15T16:48:29.463358Z", "msg": "waiting for the resume run to finish (Ctrl-C here is forwarded: the run stops cleanly; `resume` again)"}
+{"at": "2026-10-15T17:27:03.358893Z", "msg": "resume finished (0); rules at the end: PASS", "check": {"ok": true, "flags": [], "before": 130221, "after": 130382, "new_after_resume": 161, "before_cached": 121579, "before_unlogged_in_initial": 0, "new_ids_in_resume_calls": 50, "resume_calls_with_before_ids": []}}

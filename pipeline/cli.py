@@ -27,7 +27,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from pipeline import pilot
+from pipeline import finalize, pilot
 from pipeline.agents import grouper, intake, memo, ranker, verifier
 from pipeline.batch_runner import BatchConfig, run_verify_batch
 from pipeline.db import ledger, queue
@@ -182,7 +182,7 @@ def run_enrich(args, base=None, phase="initial"):
     print(json.dumps(summary, indent=1))
     if summary["stop_reason"] == "budget":
         print(f"stopped by the ledger: {getattr(orch, 'budget_message', '')}")
-    return 0 if summary["stop_reason"] in ("drained", "limit", "time", "budget") else 1
+    return 0 if summary["stop_reason"] in ("drained", "limit", "time", "budget", "paused") else 1
 
 
 def cmd_resume(args):
@@ -422,6 +422,27 @@ def cmd_ingest(args):
     return 0
 
 
+def cmd_finalize(args):
+    """M8 close-out: cache fill + one final record per source row + reconciliation (no API calls)."""
+    conn = connect(args.db)
+    migrate(conn)
+    if args.label_config is None:
+        args.provider, args.escalation, args.shape, args.gate, args.esc_fraction = "celeris", "anthropic", "A", 1.00, 1.00
+        args.esc_fields, args.sentiment = "severity", "mode"
+        args.label_config = default_label_config(args)
+    try:
+        r = finalize.finalize(conn, args.label_config, args.allow_unreached, args.ingestion)
+    except finalize.FinalizeError as e:
+        print(f"FINALIZE REFUSED: {e}", file=sys.stderr)
+        return 1
+    print(json.dumps(r, indent=1))
+    if args.out:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps({"label_config": args.label_config, **r}, indent=1) + "\n", encoding="utf-8",
+                            newline="\n")
+    return 0 if r["reconcile"]["ok"] else 1
+
+
 def ctrl_break_as_ctrl_c():
     """Windows: a run started in its own process group (scripts/resume_demo.py) can only be sent Ctrl-Break. Treat it as
     Ctrl-C, so asyncio cancels the run and the orchestrator's cleanup (leases, attempts, checkpoint) runs as usual."""
@@ -472,6 +493,12 @@ def main(argv=None):
     p.add_argument("--paid", action="store_true")
     p.add_argument("--max-spend", type=float, default=None, help="cap for the whole pilot (cold + warm), USD list")
     p.add_argument("--fake-script", default="")
+    p = commands.add_parser("finalize", help="M8: cache fill + quarantine out-of-scope rows + reconcile (no API calls)")
+    p.add_argument("--db", type=Path, default=Path("state/pipeline.db"))
+    p.add_argument("--label-config", default=None, help="default: the frozen M6b config")
+    p.add_argument("--allow-unreached", action="store_true", help="quarantine unreached in-scope rows as out_of_scope_budget")
+    p.add_argument("--ingestion", type=Path, default=Path("grading/ingestion.json"))
+    p.add_argument("--out", type=Path, default=Path("evals/m8/finalize.json"))
     for name in ("export", "publish"):
         commands.add_parser(name, help=f"arrives in {'M10' if name == 'export' else 'M11'}")
     args = parser.parse_args(argv)
@@ -490,6 +517,8 @@ def main(argv=None):
         return simple[args.command](args)
     if args.command == "run":
         return cmd_run(args)
+    if args.command == "finalize":
+        return cmd_finalize(args)
     if args.command == "pilot":
         return cmd_pilot(args)
     print(f"`{args.command}` arrives in {'M10' if args.command == 'export' else 'M11'}", file=sys.stderr)

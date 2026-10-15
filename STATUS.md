@@ -1,6 +1,41 @@
 # STATUS — handoff log
 
-## Last completed: M7 (System tests & recovery evidence) — ✅ gate passed 2026-10-15 (💰 $0.0020 list, injection run approved by Rory)
+## Last completed: M8 (Main 100k run + 25k add-on) — ✅ gate passed 2026-10-15 (💰 $3.2117 list, approved by Rory)
+
+### Done (M8)
+- **Resume demo, screen-recorded by Rory** (`evals/recovery/`): initial run interrupted after 4 A3 batches (exit 130,
+  2 in-flight calls closed failed at estimate) → checkpoint_before **130,221** → resume → checkpoint_after **130,382** (+161)
+  → checker resume rules **PASS**, and PASS again when the resume run drained. 👤 Rory keeps the recording (needed in M10/M12).
+- **100k:** resume run drained 69,607 texts in 38.7 min, 2,779 calls, 0 failed. **Add-on** (`--scope addon`, top 25,000
+  out-of-scope texts = 41,577 rows): 13.2 min, 1,000 calls, 0 failed. Details: `evals/m8/notes.md`.
+- **New code:** graceful pause (`state/PAUSE` next to the DB → workers finish in-flight calls, stop `paused`, exit 0;
+  remove the file and `resume`); `pipeline/finalize.py` + `pipeline.cli finalize` (exact-text cache fill over all texts,
+  out-of-scope rows → `out_of_scope_budget_100k`, unreached in-scope rows refused unless `--allow-unreached`, then
+  reconciliation → `evals/m8/finalize.json`). Tests +2 (`tests/test_m7_system.py`); fast suite **138 passed**.
+- **Gate:** 660,622 source rows = 660,622 records (0 missing, 0 orphans; ingestion.json ✔). Completed **279,519**
+  (random_100k 100,000 · add-on 41,577 · out-of-scope via cache fill 137,942; 176,420 by cache reuse), all under the
+  frozen label_config. Quarantined 381,103 = `out_of_scope_budget_100k` 381,090 + `empty_review_text` 13.
+
+### Spend (list price)
+- M8: **$3.2117** = 100k $2.3989 (interrupted initial $0.0119 + resume $2.3870) + add-on $0.8128;
+  Celeris $1.0442 (prepaid credit) + Anthropic Haiku $2.1675 (cash). Estimate was $3.29 base.
+- **Project total ≈ $3.8968** (Celeris ≈ $1.2492 credit, Anthropic ≈ $2.6477 cash). pipeline.db ledger: decisions ≈ $1.23 / 2.00,
+  escalation ≈ $2.45 / 5.00, total $3.6842. Remaining under the $9.00 working limit ≈ $5.10.
+
+### Notes for M9/M10
+- M9 verification at 20%: ≈ 15.6k texts (100k) + ≈ 5k (add-on); bucket `verification` cap $1.00. Ranking excludes add-on rows
+  (`outputs/ranking_excluded.txt`).
+- M10: export calls only under the final label_config (the M6-config calls are still in the DB, see M7 notes); the two
+  interrupted calls of run-20261015-094806-7e9c37 are real failed outcomes and stay in `calls.jsonl`.
+- `outputs/run_log.jsonl` was appended by the runs (tracked file, committed).
+
+### Next step
+**M9 — Analysis: verify, group, rank, memo.**
+"Read CLAUDE.md, STATUS.md and PLAN.md §5 M9, then do M9."
+
+---
+
+## Previously completed: M7 (System tests & recovery evidence) — ✅ gate passed 2026-10-15 (💰 $0.0020 list, injection run approved by Rory)
 
 ### Done (M7)
 - **Code:** `pipeline/recovery.py` (checkpoint files `{"completed_ids": [...]}` + `resume_rules` = local copy of the checker's

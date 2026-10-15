@@ -89,3 +89,45 @@ def test_resume_demo_interrupts_and_resumes_cleanly(tmp_path):
     assert result["check_at_end"]["resume_calls_with_before_ids"] == []
     before, after = (recovery.read_ids(out / f"checkpoint_{k}.json") for k in ("before", "after"))
     assert before and set(before) < set(after)
+
+
+def test_pause_file_stops_cleanly_and_resume_continues(tmp_path):
+    """M8: a PAUSE file next to the DB stops the run before the next claim (no leases held); `resume` finishes it."""
+    db = synthetic.build_db(tmp_path / "s.db", synthetic.default_texts(30), CFG)
+    (tmp_path / "PAUSE").touch()
+    assert run(db, "initial")["stop_reason"] == "paused"
+    conn = connect(db)
+    assert conn.execute("SELECT COUNT(*) FROM work_items WHERE status='leased'").fetchone()[0] == 0
+    (tmp_path / "PAUSE").unlink()
+    assert run(db, "resume")["stop_reason"] == "drained"
+    assert len(recovery.completed(conn, CFG)) == 30
+
+
+def test_finalize_fills_cache_quarantines_out_of_scope_and_reconciles(tmp_path):
+    """M8 close-out: shared texts fan out, the rest of out_of_scope → out_of_scope_budget_100k, one record per ID."""
+    from pipeline import finalize
+    texts = synthetic.default_texts(30)
+    texts = texts + texts[:5] + ["never sent text A", "never sent text B"]  # 5 duplicates + 2 unique out-of-scope
+    db = synthetic.build_db(tmp_path / "s.db", texts, CFG)
+    conn = connect(db)
+    oos = [f"{synthetic.PREFIX}{i:05d}" for i in range(30, len(texts))]
+    with immediate(conn):
+        conn.executemany("UPDATE source_reviews SET scope='out_of_scope' WHERE review_id=?", [(r,) for r in oos])
+        conn.executemany("DELETE FROM records WHERE review_id=?", [(r,) for r in oos])
+        conn.execute("DELETE FROM work_items WHERE text_sha256 IN (SELECT text_sha256 FROM source_reviews "
+                     "WHERE review_id IN (?, ?))", oos[-2:])
+    run(db, "initial")
+    with immediate(conn):  # as if the out-of-scope duplicates were never fanned out
+        conn.executemany("DELETE FROM records WHERE review_id=?", [(r,) for r in oos])
+    with pytest.raises(finalize.FinalizeError):
+        with immediate(conn):
+            conn.execute("UPDATE runs SET ended_at=NULL")
+        finalize.finalize(conn, CFG, ingestion_path=tmp_path / "none.json")
+    with immediate(conn):
+        conn.execute("UPDATE runs SET ended_at='x'")
+    r = finalize.finalize(conn, CFG, ingestion_path=tmp_path / "none.json")
+    assert r["cache_fill_rows_written"] >= 5 and r["quarantined_out_of_scope"] == 2
+    rec = r["reconcile"]
+    assert rec["ok"] and rec["records"] == rec["source_rows"] == len(texts)
+    assert rec["quarantined_by_reason"].get(finalize.OUT_OF_SCOPE_REASON) == 2
+    assert finalize.finalize(conn, CFG, ingestion_path=tmp_path / "none.json")["quarantined_out_of_scope"] == 0

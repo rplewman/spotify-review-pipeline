@@ -1,0 +1,39 @@
+{
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "cache_fill_rows_written": 0,
+ "quarantined_unreached": 0,
+ "quarantined_out_of_scope": 381090,
+ "unreached_before": {},
+ "reconcile": {
+  "ok": true,
+  "source_rows": 660622,
+  "records": 660622,
+  "missing_by_scope": {},
+  "orphan_records": 0,
+  "by_status": {
+   "completed": 279519,
+   "quarantined": 381103
+  },
+  "quarantined_by_reason": {
+   "empty_review_text": 13,
+   "out_of_scope_budget_100k": 381090
+  },
+  "by_scope_status": {
+   "empty_text:quarantined": 13,
+   "frequency_addon:completed": 41577,
+   "out_of_scope:completed": 137942,
+   "out_of_scope:quarantined": 381090,
+   "random_100k:completed": 100000
+  },
+  "completed_by_label_config": {
+   "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1": 279519
+  },
+  "completed_by_cache_reuse": 176420,
+  "ingestion_counts": {
+   "duplicate_review_ids": 0,
+   "empty_review_text": 13,
+   "missing_app_version": 159701,
+   "records": 660622
+  }
+ }
+}
