@@ -1,6 +1,33 @@
 # STATUS — handoff log
 
-## Last completed: M9 (Analysis: verify, group, rank, memo) — ✅ gate passed 2026-10-15 (💰 $0.4330 list, approved by Rory)
+## Last completed: M10 (Grading export + checker) — ✅ gate passed 2026-10-15 (no spend)
+
+### Done (M10) — details `evals/m10/notes.md`
+- **Code:** `pipeline/export.py` + `pipeline.cli export` (records + calls gz with mtime 0, run.json, copies of
+  membership/ranking/claims and the M8 checkpoints; side report `evals/m10/export.json`). Test `tests/test_m10_export.py`.
+  Fast suite **139 passed**.
+- **grading/** built: 660,622 records; 4,552 calls (all real outcomes incl. 2+9+2 failed); **344 succeeded M6-config enrich
+  calls left out** (superseded label_config → would be `call_config_mismatch`; listed in `evals/m10/export.json`).
+- **Checker:** `review_required` with only **`unfinished_classification` 381,090** (out-of-scope quarantines, by design);
+  valid completed 279,519, quarantined 381,103, accounted 1.0, **coverage point candidate 0.6539**. `ingestion.json`
+  re-profiled byte-identical. `local-reference.json` / `self-check.json` at repo root (gitignored).
+
+### Notes for M11/M12
+- **README (M12) must explain:** `unfinished_classification` (accounted, not classified); the 344 left-out M6-config calls;
+  the two memo v3 mean_severity slips (M9); injection-sentence evidence quotes (M7).
+- `grading/records.jsonl.gz` is 53 MB (GitHub warns > 50 MB, limit 100 MB). Re-run `pipeline.cli export` + the three checker
+  commands (PLAN §9.7) after any DB change; the export is byte-deterministic.
+
+### Spend
+- M10: **$0** (no API calls). Project total unchanged ≈ **$4.3298** list (Celeris ≈ $1.2492 credit, Anthropic ≈ $3.0807 cash).
+
+### Next step
+**M11 — Publish, backend, dashboard.**
+"Read CLAUDE.md, STATUS.md and PLAN.md §5 M11, then do M11."
+
+---
+
+## Previously completed: M9 (Analysis: verify, group, rank, memo) — ✅ gate passed 2026-10-15 (💰 $0.4330 list, approved by Rory)
 
 ### Done (M9) — details `evals/m9/notes.md`
 - **Scope change (Rory OK):** the contract ranking groups all **101,649** completed complaint/cancellation records (checker

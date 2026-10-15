@@ -443,6 +443,24 @@ def cmd_finalize(args):
     return 0 if r["reconcile"]["ok"] else 1
 
 
+def cmd_export(args):
+    """M10: grading/ from the DB + outputs/ (no API calls); the side report lists every call left out and why."""
+    from pipeline import export
+    conn = connect(args.db)
+    migrate(conn)
+    if args.label_config is None:
+        args.provider, args.escalation, args.shape, args.gate, args.esc_fraction = "celeris", "anthropic", "A", 1.00, 1.00
+        args.esc_fields, args.sentiment = "severity", "mode"
+        args.label_config = default_label_config(args)
+    r = export.export(conn, args.label_config, args.root, args.out)
+    args.report.parent.mkdir(parents=True, exist_ok=True)
+    args.report.write_text(json.dumps({"label_config": args.label_config, **r}, indent=1) + "\n", encoding="utf-8",
+                           newline="\n")
+    print(json.dumps({k: v for k, v in r.items() if k != "excluded_calls"}, indent=1))
+    print(f"side report: {args.report}")
+    return 0
+
+
 def ctrl_break_as_ctrl_c():
     """Windows: a run started in its own process group (scripts/resume_demo.py) can only be sent Ctrl-Break. Treat it as
     Ctrl-C, so asyncio cancels the run and the orchestrator's cleanup (leases, attempts, checkpoint) runs as usual."""
@@ -499,8 +517,13 @@ def main(argv=None):
     p.add_argument("--allow-unreached", action="store_true", help="quarantine unreached in-scope rows as out_of_scope_budget")
     p.add_argument("--ingestion", type=Path, default=Path("grading/ingestion.json"))
     p.add_argument("--out", type=Path, default=Path("evals/m8/finalize.json"))
-    for name in ("export", "publish"):
-        commands.add_parser(name, help=f"arrives in {'M10' if name == 'export' else 'M11'}")
+    p = commands.add_parser("export", help="M10: build grading/ (records, calls, run.json, ranking files, checkpoints)")
+    p.add_argument("--db", type=Path, default=Path("state/pipeline.db"))
+    p.add_argument("--label-config", default=None, help="default: the frozen M6b config")
+    p.add_argument("--root", type=Path, default=Path("."), help="where outputs/ and evals/recovery/ are read")
+    p.add_argument("--out", type=Path, default=Path("grading"))
+    p.add_argument("--report", type=Path, default=Path("evals/m10/export.json"))
+    commands.add_parser("publish", help="arrives in M11")
     args = parser.parse_args(argv)
 
     if args.command == "ingest":
@@ -521,7 +544,9 @@ def main(argv=None):
         return cmd_finalize(args)
     if args.command == "pilot":
         return cmd_pilot(args)
-    print(f"`{args.command}` arrives in {'M10' if args.command == 'export' else 'M11'}", file=sys.stderr)
+    if args.command == "export":
+        return cmd_export(args)
+    print(f"`{args.command}` arrives in M11", file=sys.stderr)
     return 2
 
 
