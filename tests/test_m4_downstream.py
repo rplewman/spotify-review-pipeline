@@ -216,6 +216,19 @@ def test_rank_matches_checker_recomputation_and_is_byte_identical(enriched, tmp_
     conn.close()
 
 
+def test_rank_in_fresh_clone_reads_grading_export(enriched, tmp_path):
+    """outputs/enriched.jsonl.gz is gitignored; without it rank uses grading/records.jsonl.gz (same records)."""
+    conn = connect(enriched)
+    grouper.group(conn, CFG, FakeProvider(model="fake-analysis"), tmp_path, start_run(conn, "group", {}))
+    conn.close()
+    ranker.rank(tmp_path)
+    first = (tmp_path / "outputs/ranking.csv").read_bytes()
+    (tmp_path / "grading").mkdir()
+    (tmp_path / "outputs/enriched.jsonl.gz").rename(tmp_path / "grading/records.jsonl.gz")
+    assert cli.main(["rank", "--root", str(tmp_path)]) == 0
+    assert (tmp_path / "outputs/ranking.csv").read_bytes() == first
+
+
 def test_rank_rejects_bad_membership(enriched, tmp_path):
     conn = connect(enriched)
     grouper.group(conn, CFG, FakeProvider(model="fake-analysis"), tmp_path, start_run(conn, "group", {}))

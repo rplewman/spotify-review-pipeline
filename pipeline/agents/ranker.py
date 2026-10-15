@@ -1,7 +1,8 @@
 """A10 Ranker (PLAN §3.3, §9.5, brief step 5), code only — zero model calls.
 
-Inputs are saved files only: outputs/enriched.jsonl.gz (records), outputs/membership.csv, outputs/issues.json and
-labels/areas.yaml. Outputs (byte-identical on every rerun of the same inputs):
+Inputs are saved files only: outputs/enriched.jsonl.gz (records; grading/records.jsonl.gz in a fresh clone),
+outputs/membership.csv, outputs/issues.json and labels/areas.yaml.
+Outputs (byte-identical on every rerun of the same inputs):
 - outputs/ranking.csv           rank,issue_id,complaint_count,severity_sum,mean_severity,priority_score  (the contract)
 - outputs/aggregates.csv        the same per issue + name, topic, subtopic, area, cancellations, needs_review, share
 - outputs/area_aggregates.csv   the declared roll-up of the 8 topics into the brief's 4 effort areas (+ outside)
@@ -38,10 +39,17 @@ def share(a, b):
     return str((Decimal(a) / Decimal(b)).quantize(Decimal("0.000001"), rounding=ROUND_HALF_UP)) if b else "0.000000"
 
 
+def records_path(root):
+    """outputs/enriched.jsonl.gz (gitignored, rebuilt by `group`); in a fresh clone, the committed grading export."""
+    snap = Path(root) / "outputs" / "enriched.jsonl.gz"
+    export = Path(root) / "grading" / "records.jsonl.gz"
+    return snap if snap.exists() or not export.exists() else export
+
+
 def load(root):
     out = Path(root) / "outputs"
     records = {}
-    with gzip.open(out / "enriched.jsonl.gz", "rt", encoding="utf-8") as f:
+    with gzip.open(records_path(root), "rt", encoding="utf-8") as f:
         for line in f:
             r = json.loads(line)
             records[r["review_id"]] = r
