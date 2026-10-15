@@ -97,8 +97,9 @@ def test_keywords_cover_topics():
 # --- firewalls --------------------------------------------------------------------------------------------------------
 
 # Only these files may reference the hand-label files. M6 adds its sweep (dev_100 only) and evaluation (golden only) scripts here.
-LABEL_READERS = {"scripts/label_tool.py", "scripts/m6.py"}
-LABEL_PATTERN = re.compile(r"golden_50_labeled|dev_100_labeled|evals[/\\]+golden|evals[/\\]+dev_100[/\\]+[^\"']*labeled")
+LABEL_READERS = {"scripts/label_tool.py", "scripts/m6.py", "scripts/m6b.py"}  # M6b: held-out 30 scoring
+LABEL_PATTERN = re.compile(r"golden_50_labeled|dev_100_labeled|heldout_30_labeled|evals[/\\]+golden|"
+                           r"evals[/\\]+dev_100[/\\]+[^\"']*labeled")
 CODE_DIRS = ("pipeline", "backend", "scripts", "prompts", "labels", "cost", "dashboard", "evals")
 
 

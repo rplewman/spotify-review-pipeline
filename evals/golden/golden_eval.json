@@ -4,20 +4,20 @@
   "missing": 0,
   "topic": {
    "exact": 0.78,
-   "accepted": 0.9
+   "accepted": 0.88
   },
   "intent": {
    "exact": 0.86,
    "accepted": 0.9
   },
   "severity": {
-   "exact": 0.82,
-   "accepted": 0.9,
-   "mae": 0.18
+   "exact": 0.7,
+   "accepted": 0.8,
+   "mae": 0.3
   },
   "sentiment": {
-   "mae": 0.3084,
-   "within_tolerance": 0.52,
+   "mae": 0.305,
+   "within_tolerance": 0.62,
    "tolerance": 0.25
   },
   "quote": {
@@ -26,22 +26,18 @@
   },
   "entities_mean_jaccard": 0.8133333333333332,
   "needs_review_as_error_predictor": {
-   "flagged": 2,
-   "reviews_with_an_error": 13,
+   "flagged": 3,
+   "reviews_with_an_error": 18,
    "flagged_and_wrong": 2,
-   "precision": 1.0,
-   "recall": 0.15384615384615385,
-   "agrees_with_gold_needs_review": 0.94
+   "precision": 0.6666666666666666,
+   "recall": 0.1111111111111111,
+   "agrees_with_gold_needs_review": 0.96
   },
   "ambiguous_cases": 22,
   "by_route": {
-   "accept": {
-    "n": 33,
-    "all_fields_ok": 27
-   },
    "escalate": {
-    "n": 17,
-    "all_fields_ok": 10
+    "n": 50,
+    "all_fields_ok": 32
    }
   },
   "confusion": {
@@ -84,7 +80,7 @@
     [
      "other",
      "other",
-     23
+     22
     ],
     [
      "other",
@@ -94,21 +90,16 @@
     [
      "other",
      "usability",
-     1
+     2
     ],
     [
      "playback",
      "playback",
-     3
+     4
     ],
     [
      "playback",
      "support",
-     1
-    ],
-    [
-     "playback",
-     "usability",
      1
     ],
     [
@@ -180,22 +171,16 @@
     ]
    ]
   },
-  "variant_accepted": {
-   "topic": 0.96,
-   "intent": 0.96,
-   "severity": 0.82
-  },
-  "variant_n": 50,
-  "label_config": "celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1",
+  "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
   "db": "C:\\Users\\thoma\\Spotify Review FInal\\state\\pipeline.db",
   "golden_file": "evals\\golden\\golden_50_labeled.csv",
-  "variant_db": "state\\m6_golden_B.db",
+  "variant_db": null,
   "tuning_note": "golden labels were not used for tuning (gate and cap chosen on dev_100 only)"
  },
  "per_review": [
   {
    "review_id": "292ce26a-815d-4bce-a3b6-93cb6c9e7e2c",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "catalog",
     "gold": "catalog",
@@ -215,23 +200,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.10999999999999999,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": false
-   }
+   "ambiguous": true
   },
   {
    "review_id": "a70e8d3e-3f84-46bc-b008-67f476c67963",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -251,23 +231,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.08999999999999997,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "0d4f8b48-74c1-4e2a-89b5-11eaa737027e",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -287,19 +262,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.18000000000000005,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "991b6b3a-f511-458a-a5b7-234f78048fb5",
@@ -323,23 +293,18 @@
     "accepted": false
    },
    "severity_abs_err": 1,
-   "sentiment_abs_err": 0.14,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": false
-   }
+   "ambiguous": false
   },
   {
    "review_id": "599a0d41-989a-40ef-8ed2-e92db76eea46",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -359,23 +324,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.42000000000000004,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "0c6ca545-3f89-4da6-b3db-1a352371fb6e",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -395,23 +355,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.020000000000000018,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "111f9048-f7bd-4be0-813e-76b8fc49f73f",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -431,23 +386,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.040000000000000036,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "b567f70c-edba-4922-ac2a-e945e5eb3472",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "playback",
     "gold": "other",
@@ -474,16 +424,11 @@
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "b5ee7834-a0eb-4c15-9c7b-935831021922",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "catalog",
     "gold": "other",
@@ -503,23 +448,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.15000000000000002,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "1fc8b08f-7d6a-472f-b317-8ceb28d00f22",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "billing",
     "gold": "usability",
@@ -539,19 +479,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.24,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": false,
    "entities_jaccard": 0.3333333333333333,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "947821dc-b356-45dc-a0bc-1903728fad40",
@@ -575,19 +510,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.47,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "723f07de-9881-4049-8680-1a9e25652914",
@@ -611,23 +541,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.8300000000000001,
+   "sentiment_abs_err": 1.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "47428620-ec21-424d-a515-0b0b0012a5cf",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -647,23 +572,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.18,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "fc344263-308d-48a1-9715-c380d063b6de",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -690,16 +610,11 @@
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "6112667b-3d71-475c-b1a4-159b87f73d2b",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -719,19 +634,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.010000000000000009,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "01d453b0-dca3-42e9-8aa4-5fc167b08070",
@@ -749,25 +659,20 @@
     "accepted": true
    },
    "severity": {
-    "pred": "2",
+    "pred": "3",
     "gold": "2",
-    "exact": true,
-    "accepted": true
+    "exact": false,
+    "accepted": false
    },
-   "severity_abs_err": 0,
+   "severity_abs_err": 1,
    "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
-   "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": false
-   }
+   "any_wrong": true,
+   "ambiguous": true
   },
   {
    "review_id": "ac6cd66d-a9d2-42a4-afb8-2f84beff7fd1",
@@ -785,29 +690,24 @@
     "accepted": false
    },
    "severity": {
-    "pred": "1",
+    "pred": "2",
     "gold": "1",
-    "exact": true,
-    "accepted": true
+    "exact": false,
+    "accepted": false
    },
-   "severity_abs_err": 0,
-   "sentiment_abs_err": 0.47,
+   "severity_abs_err": 1,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": true,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": false,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "44129679-31a0-4108-9314-086a3456f6ae",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -827,19 +727,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.44,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
-   "pred_needs_review": false,
+   "pred_needs_review": true,
    "gold_needs_review": true,
    "any_wrong": true,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "46842184-32f8-4088-ac15-2a700a7e94ed",
@@ -857,29 +752,24 @@
     "accepted": true
    },
    "severity": {
-    "pred": "2",
+    "pred": "3",
     "gold": "2",
-    "exact": true,
-    "accepted": true
+    "exact": false,
+    "accepted": false
    },
-   "severity_abs_err": 0,
-   "sentiment_abs_err": 0.52,
+   "severity_abs_err": 1,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
-   "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": false
-   }
+   "any_wrong": true,
+   "ambiguous": false
   },
   {
    "review_id": "657f1b77-0183-4b06-bf48-5e6d9ab08f9a",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -899,19 +789,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.03999999999999998,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "5de7f95b-ccad-41b2-9f63-a13f7c1d9f09",
@@ -929,29 +814,24 @@
     "accepted": false
    },
    "severity": {
-    "pred": "1",
+    "pred": "2",
     "gold": "1",
-    "exact": true,
+    "exact": false,
     "accepted": true
    },
-   "severity_abs_err": 0,
-   "sentiment_abs_err": 0.73,
+   "severity_abs_err": 1,
+   "sentiment_abs_err": 0.75,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "de48c99b-46fe-4837-8634-e63dbc72a5ea",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "catalog",
     "gold": "catalog",
@@ -971,23 +851,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.19999999999999996,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.5,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "aa573851-0b86-4b1b-adf6-210268c08d2a",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1007,23 +882,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.020000000000000018,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "372d4e67-59cc-4c54-879f-3e8a202ee554",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "usability",
     "gold": "usability",
@@ -1043,19 +913,14 @@
     "accepted": false
    },
    "severity_abs_err": 1,
-   "sentiment_abs_err": 0.5700000000000001,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": false
-   }
+   "ambiguous": true
   },
   {
    "review_id": "47f1406d-4918-4d60-9647-5ca8e610caca",
@@ -1079,23 +944,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.6799999999999999,
+   "sentiment_abs_err": 0.75,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "82780cbe-6435-4efb-84f6-8e5fa47ffc3a",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1115,23 +975,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.15000000000000002,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "36609c5c-fe48-4459-86b8-cc78fd3c77cd",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1151,23 +1006,18 @@
     "accepted": true
    },
    "severity_abs_err": 1,
-   "sentiment_abs_err": 0.39,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
-   "pred_needs_review": false,
+   "pred_needs_review": true,
    "gold_needs_review": true,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "f4c8146a-d5c8-4168-b00e-21af666afc6a",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1187,19 +1037,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.04999999999999999,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "3ddb3f4e-f7b9-430b-b335-eadc6d321f46",
@@ -1223,19 +1068,14 @@
     "accepted": true
    },
    "severity_abs_err": 1,
-   "sentiment_abs_err": 0.74,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.3333333333333333,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": true,
-   "variant": {
-    "topic": false,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "16d640e9-b281-4746-9562-c7dbcf7126b6",
@@ -1253,29 +1093,24 @@
     "accepted": true
    },
    "severity": {
-    "pred": "2",
+    "pred": "3",
     "gold": "2",
-    "exact": true,
-    "accepted": true
+    "exact": false,
+    "accepted": false
    },
-   "severity_abs_err": 0,
-   "sentiment_abs_err": 0.31,
+   "severity_abs_err": 1,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
-   "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": false
-   }
+   "any_wrong": true,
+   "ambiguous": true
   },
   {
    "review_id": "8cc4fad4-26ec-47b7-96e8-49c7da714eca",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1295,23 +1130,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.27,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": false
-   }
+   "ambiguous": false
   },
   {
    "review_id": "215463ae-95b7-4481-8747-1754b68f31fa",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "playback",
     "gold": "playback",
@@ -1331,19 +1161,14 @@
     "accepted": false
    },
    "severity_abs_err": 1,
-   "sentiment_abs_err": 0.43,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "46c0b49f-83a1-427e-8f0b-cef62e3c94b5",
@@ -1367,19 +1192,14 @@
     "accepted": true
    },
    "severity_abs_err": 1,
-   "sentiment_abs_err": 0.81,
+   "sentiment_abs_err": 1.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "283b5843-a992-464f-b1dc-9dc7281ff390",
@@ -1403,23 +1223,18 @@
     "accepted": false
    },
    "severity_abs_err": 1,
-   "sentiment_abs_err": 0.01,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
-   "pred_needs_review": true,
+   "pred_needs_review": false,
    "gold_needs_review": true,
    "any_wrong": true,
-   "ambiguous": true,
-   "variant": {
-    "topic": false,
-    "intent": false,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "1d15724a-98ff-400a-8083-0d9afc801098",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1439,23 +1254,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.010000000000000009,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "89ea724c-358f-48ab-9516-cd130d21c471",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "usability",
     "gold": "other",
@@ -1475,23 +1285,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.32999999999999996,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "2aa566c6-b98d-4513-b900-83702a8db8eb",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "usability",
     "gold": "usability",
@@ -1511,19 +1316,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.020000000000000018,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "8c0546b0-ce43-4a36-9d33-9f979e98d522",
@@ -1541,29 +1341,24 @@
     "accepted": true
    },
    "severity": {
-    "pred": "3",
+    "pred": "4",
     "gold": "3",
-    "exact": true,
-    "accepted": true
+    "exact": false,
+    "accepted": false
    },
-   "severity_abs_err": 0,
-   "sentiment_abs_err": 0.78,
+   "severity_abs_err": 1,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
-   "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "any_wrong": true,
+   "ambiguous": true
   },
   {
    "review_id": "a972945c-6601-4108-882a-afe986866a7b",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1583,23 +1378,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.28,
+   "sentiment_abs_err": 0.5,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "8fd3dd72-5535-40f6-8779-1bd60892131e",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1619,23 +1409,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.010000000000000009,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "b58dd6f0-ad88-4319-b6db-58afb60c37c1",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "catalog",
     "gold": "usability",
@@ -1655,23 +1440,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.7,
+   "sentiment_abs_err": 0.75,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": false
-   }
+   "ambiguous": false
   },
   {
    "review_id": "1a41c7e1-a655-4c63-b4db-c22bdff18003",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1691,27 +1471,22 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.010000000000000009,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "dceb14e7-2df0-422f-bb2b-73d7c373159a",
    "route": "escalate",
    "topic": {
-    "pred": "usability",
+    "pred": "playback",
     "gold": "playback",
-    "exact": false,
+    "exact": true,
     "accepted": true
    },
    "intent": {
@@ -1727,23 +1502,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.81,
+   "sentiment_abs_err": 1.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "5fba12ea-4980-4f25-a129-f830a3974fd2",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "catalog",
     "gold": "catalog",
@@ -1763,19 +1533,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.20999999999999996,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "ac4e860a-c042-49cc-90f3-189591c336ac",
@@ -1799,23 +1564,18 @@
     "accepted": true
    },
    "severity_abs_err": 1,
-   "sentiment_abs_err": 0.79,
+   "sentiment_abs_err": 0.75,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "9034d675-9582-49b6-a1c1-c4ddabf8baf1",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "usability",
     "gold": "usability",
@@ -1835,19 +1595,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.31,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": false
-   }
+   "ambiguous": false
   },
   {
    "review_id": "d2f3874f-d15d-4a2f-bb97-4f1213defa46",
@@ -1871,28 +1626,23 @@
     "accepted": false
    },
    "severity_abs_err": 1,
-   "sentiment_abs_err": 0.51,
+   "sentiment_abs_err": 0.25,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 0.5,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": true,
-   "ambiguous": true,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": true
   },
   {
    "review_id": "99b93e31-9f15-4daa-88ac-349ab0419c48",
    "route": "escalate",
    "topic": {
-    "pred": "other",
+    "pred": "usability",
     "gold": "other",
-    "exact": true,
-    "accepted": true
+    "exact": false,
+    "accepted": false
    },
    "intent": {
     "pred": "complaint",
@@ -1907,23 +1657,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.21999999999999997,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
-   "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "any_wrong": true,
+   "ambiguous": false
   },
   {
    "review_id": "ca63dfbe-7120-4e18-af6e-8ea786cd157d",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1943,23 +1688,18 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.020000000000000018,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   },
   {
    "review_id": "083811c7-d469-499b-9bef-5b9fb096653d",
-   "route": "accept",
+   "route": "escalate",
    "topic": {
     "pred": "other",
     "gold": "other",
@@ -1979,19 +1719,14 @@
     "accepted": true
    },
    "severity_abs_err": 0,
-   "sentiment_abs_err": 0.19999999999999996,
+   "sentiment_abs_err": 0.0,
    "quote_member": true,
    "quote_support": true,
    "entities_jaccard": 1.0,
    "pred_needs_review": false,
    "gold_needs_review": false,
    "any_wrong": false,
-   "ambiguous": false,
-   "variant": {
-    "topic": true,
-    "intent": true,
-    "severity": true
-   }
+   "ambiguous": false
   }
  ]
 }

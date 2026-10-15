@@ -7,9 +7,9 @@ gives no usage or the billing of an error is unknown), or released when the prov
 """
 from pipeline.db.store import immediate, now_iso
 
-# PLAN §4 bucket caps (list price, USD). The project total binds across all buckets.
-BUCKET_CAPS = {"pilots": 1.00, "decisions": 4.50, "escalation": 2.00, "verification": 0.50, "analysis": 0.25,
-               "reserve": 1.75}
+# PLAN §4 bucket caps (list price, USD; v4.2, set in M6b). The project total binds across all buckets.
+BUCKET_CAPS = {"pilots": 0.50, "decisions": 2.00, "escalation": 5.00, "verification": 1.00, "analysis": 0.25,
+               "reserve": 1.25}
 PROJECT_CAP = 10.00
 
 

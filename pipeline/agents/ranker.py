@@ -46,10 +46,12 @@ def load(root):
     with (out / "membership.csv").open(encoding="utf-8", newline="") as f:
         membership = [(row["issue_id"], row["review_id"]) for row in csv.DictReader(f)]
     issues = json.loads((out / "issues.json").read_text(encoding="utf-8"))
-    return records, membership, issues
+    excl = out / "ranking_excluded.txt"  # frequency add-on records: completed, but not part of the ranking (grouper)
+    left_out = frozenset(excl.read_text(encoding="utf-8").split()) if excl.exists() else frozenset()
+    return records, membership, issues, left_out
 
 
-def validate(records, membership, issue_ids):
+def validate(records, membership, issue_ids, left_out=frozenset()):
     """The contract's membership rules (allow_multi_issue: false). Raises RankError listing the first problems."""
     errors, seen, per_review = [], set(), Counter()
     for iid, rid in membership:
@@ -64,16 +66,16 @@ def validate(records, membership, issue_ids):
         per_review[rid] += 1
     errors += [f"{rid} in {n} issues" for rid, n in per_review.items() if n > 1]
     ungrouped = [rid for rid, r in records.items() if r["status"] == "completed" and r["intent"] in MEMBER_INTENTS
-                 and rid not in per_review]
+                 and rid not in per_review and rid not in left_out]
     if ungrouped:
         errors.append(f"{len(ungrouped)} complaint/cancellation records not grouped (e.g. {ungrouped[0]})")
     if errors:
         raise RankError(f"{len(errors)} membership problem(s): " + "; ".join(errors[:5]))
 
 
-def compute(records, membership, issues_doc):
+def compute(records, membership, issues_doc, left_out=frozenset()):
     issues = {i["issue_id"]: i for i in issues_doc["issues"]}
-    validate(records, membership, set(issues))
+    validate(records, membership, set(issues), left_out)
     sev, canc, nr = defaultdict(list), Counter(), Counter()
     for iid, rid in membership:
         r = records[rid]
@@ -105,7 +107,7 @@ def compute(records, membership, issues_doc):
                "completed": len(completed), "quarantined": len(records) - len(completed),
                "cache_reused": sum(1 for r in completed if r.get("cache_source_id")),
                "needs_review": sum(1 for r in completed if r["needs_review"] is True),
-               "members": total, "issues": len(rows),
+               "members": total, "issues": len(rows), "excluded_from_ranking": len(left_out),
                "by_intent": dict(sorted(Counter(r["intent"] for r in completed).items())),
                "by_topic": dict(sorted(Counter(r["topic"] for r in completed).items())),
                "by_severity": {str(k): v for k, v in sorted(Counter(r["severity"] for r in completed).items())},
@@ -123,8 +125,8 @@ def _write_csv(path, fields, rows):
 
 def rank(root, conn=None):
     """Recompute the ranking and aggregates from saved files; optionally refresh the DB tables. Zero model calls."""
-    records, membership, issues_doc = load(root)
-    rows, area_rows, overall = compute(records, membership, issues_doc)
+    records, membership, issues_doc, left_out = load(root)
+    rows, area_rows, overall = compute(records, membership, issues_doc, left_out)
     out = Path(root) / "outputs"
     _write_csv(out / "ranking.csv", RANK_FIELDS, rows)
     _write_csv(out / "aggregates.csv", AGG_FIELDS, rows)

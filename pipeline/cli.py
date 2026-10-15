@@ -5,7 +5,7 @@
                                    [--esc-fraction 0.15] [--paid --max-spend USD] [--workers N] [--limit N] ...
     python -m pipeline.cli resume  [same provider flags]   continue the last stopped/crashed run (phase "resume")
     python -m pipeline.cli status
-    python -m pipeline.cli verify  [--provider fake|anthropic] [--sample-rate 0.05] [--seed verify-v1] [--standard]
+    python -m pipeline.cli verify  [--provider fake|anthropic] [--sample-rate 0.20] [--seed verify-v1] [--standard]
                                    A8 on a declared seeded sample: Batch API (default; resumes an open job by ID) or
                                    real time with --standard; then the disagreement report + the planted-error test
     python -m pipeline.cli group   [--provider fake|anthropic]   A9: membership (code) + issue names (one call)
@@ -39,9 +39,12 @@ from pipeline.providers.fake import FakeBatchProvider, FakeProvider, parse_scrip
 from pipeline.stages import EnrichStage, PassthroughStage, make_label_config
 
 PAID_PROVIDERS = ("celeris", "anthropic")
-# Frozen in M6 (2026-10-15, dev_100 sweep, option B): escalate severity only, gate 0.70, cap 0.40.
-STAGE_DEFAULTS = {"stage": "chain", "shape": "A", "gate": 0.70, "esc_fraction": 0.40, "esc_max_spend": None,
-                  "esc_fields": "severity"}
+# Re-frozen in M6b (PLAN v4.2): Haiku on severity for every review (gate 1.00 = always, cap 1.00); sentiment = the most
+# probable level. (M6: severity only below gate 0.70, cap 0.40, probability-weighted sentiment.)
+STAGE_DEFAULTS = {"stage": "chain", "shape": "A", "gate": 1.00, "esc_fraction": 1.00, "esc_max_spend": None,
+                  "esc_fields": "severity", "sentiment": "mode"}
+# A resumed run whose saved spec predates a setting keeps the behaviour it was started with.
+LEGACY_SETTINGS = {"sentiment": "mean"}
 
 
 def add_enrich_flags(p, resume=False):
@@ -59,6 +62,14 @@ def add_enrich_flags(p, resume=False):
     p.add_argument("--esc-fraction", type=float, default=None, help="A4 cap: max escalated share of the queue (default 0.15)")
     p.add_argument("--esc-max-spend", type=float, default=None, help="A5 $ sub-cap (default: PLAN §4 escalation bucket)")
     p.add_argument("--esc-fields", default=None, help="gated fields, comma-separated (default severity; M6 freeze)")
+    p.add_argument("--sentiment", choices=("mean", "mode"), default=None,
+                   help="sentiment = probability-weighted (mean, ≤ M6) or the most probable level (mode, M6b default)")
+    if not resume:
+        p.add_argument("--scope", choices=("random_100k", "addon"), default="random_100k",
+                       help="random_100k = seed ranks ≤ 100,000 only (default); addon = also the frequency add-on texts "
+                            "(built on first use, claimed after any 100k work left)")
+        p.add_argument("--addon-size", type=int, default=intake.ADDON_SIZE,
+                       help=f"top-N out-of-scope distinct texts for --scope addon (default {intake.ADDON_SIZE:,})")
     p.add_argument("--label-config", default=d)
     p.add_argument("--workers", type=int, default=d)
     p.add_argument("--batch-size", type=int, default=d)
@@ -78,7 +89,7 @@ def resolve_settings(args, spec=None):
     spec = spec or {}
     for key, default in STAGE_DEFAULTS.items():
         if getattr(args, key, None) is None:
-            setattr(args, key, spec.get(key, default))
+            setattr(args, key, spec.get(key, LEGACY_SETTINGS.get(key, default) if spec else default))
     if getattr(args, "escalation", None) is None:
         args.escalation = spec.get("escalation") or ("fake" if args.provider == "fake" else "anthropic")
 
@@ -97,7 +108,8 @@ def default_label_config(args):
     if args.provider == "fake":
         return "fake-v0"
     esc = None if args.escalation == "none" else "claude-haiku-5-5"
-    return make_label_config("celeris-1-decision", args.shape, args.gate, esc, args.esc_fraction, esc_fields(args))
+    return make_label_config("celeris-1-decision", args.shape, args.gate, esc, args.esc_fraction, esc_fields(args),
+                             args.sentiment)
 
 
 def esc_fields(args):
@@ -121,7 +133,7 @@ def make_stage(args, label_config):
     esc = {"fake": lambda: FakeProvider(latency=args.fake_latency, model="fake-escalation"),
            "anthropic": lambda: ClaudeProvider(), "none": lambda: None}[args.escalation]()
     return EnrichStage(provider, label_config, esc, shape=args.shape, gate=args.gate, esc_fraction=args.esc_fraction,
-                       esc_fields=esc_fields(args),
+                       esc_fields=esc_fields(args), sentiment=args.sentiment,
                        esc_bucket_cap=args.esc_max_spend), spec
 
 
@@ -135,6 +147,9 @@ def run_enrich(args, base=None, phase="initial"):
     if getattr(args, "max_minutes", None) is not None:
         base["max_seconds"] = args.max_minutes * 60
     base["max_spend"] = args.max_spend
+    scope = getattr(args, "scope", None)  # None on resume: the stopped run's max_rank is kept
+    if scope == "random_100k":
+        base["max_rank"] = min(base.get("max_rank") or intake.SCOPE_SIZE, intake.SCOPE_SIZE)
     resolve_settings(args, base.get("provider"))
     check_paid(args)
     base.setdefault("label_config", default_label_config(args))
@@ -149,6 +164,9 @@ def run_enrich(args, base=None, phase="initial"):
         raise SystemExit("refused: fake runs must use their own --db, not the operational state/pipeline.db")
     conn = connect(args.db)
     migrate(conn)
+    if scope == "addon":
+        built = intake.build_addon(conn, args.addon_size)
+        print(f"frequency add-on: {built['texts']} texts, {built['rows']} rows (scope='frequency_addon')")
     added = intake.enqueue(conn, cfg.stage, cfg.label_config) if conn.execute("SELECT 1 FROM texts LIMIT 1").fetchone() else 0
     conn.close()
     if added:
@@ -216,7 +234,7 @@ def add_downstream_flags(p, verify=False):
     p.add_argument("--max-spend", type=float, default=None, help="this command's spend cap in USD (list price)")
     p.add_argument("--fake-script", default="", help="fake behaviours in call order, e.g. invented,valid")
     if verify:
-        p.add_argument("--sample-rate", type=float, default=None, help="declared sample rate (default 0.05)")
+        p.add_argument("--sample-rate", type=float, default=None, help="declared sample rate (default 0.20)")
         p.add_argument("--seed", default=None, help="sample seed (default verify-v1)")
         p.add_argument("--standard", action="store_true", help="real-time Messages API instead of the Batch API")
         p.add_argument("--batch-size", type=int, default=50, help="reviews per request (≤ 50)")
@@ -421,7 +439,7 @@ def main(argv=None):
     p = commands.add_parser("run", help="all stages: ingest, then enrich")
     p.add_argument("--input", type=Path, required=True)
     p.add_argument("--raw-dir", type=Path, default=Path("data/raw"))
-    p.add_argument("--sample-rate", type=float, default=None, help="A8 declared sample rate (default 0.05)")
+    p.add_argument("--sample-rate", type=float, default=None, help="A8 declared sample rate (default 0.20)")
     p.add_argument("--verify-standard", action="store_true", help="A8 in real time instead of the Batch API")
     add_enrich_flags(p)
     add_downstream_flags(commands.add_parser("verify", help="A8: verify a declared random sample (Batch API)"), True)

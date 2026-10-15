@@ -1,44 +1,45 @@
 review_id,field,gold,accepted,pred,route,review_text
 991b6b3a-f511-458a-a5b7-234f78048fb5,severity,2,2,3,escalate,"Ads were okay, but limited functionality..it's just too much"
-599a0d41-989a-40ef-8ed2-e92db76eea46,sentiment,0.5,±0.25,0.92,accept,I just loved it
-b567f70c-edba-4922-ac2a-e945e5eb3472,topic,other,other,playback,accept,good ❤❤🔊🔊
-947821dc-b356-45dc-a0bc-1903728fad40,sentiment,-0.5,±0.25,-0.03,escalate,Very good but wen I play my song it o ly plays a little bit then it stops I updated my phone and it worked but it happend again they need to fix this issue
+599a0d41-989a-40ef-8ed2-e92db76eea46,sentiment,0.5,±0.25,1.0,escalate,I just loved it
+b567f70c-edba-4922-ac2a-e945e5eb3472,topic,other,other,playback,escalate,good ❤❤🔊🔊
+947821dc-b356-45dc-a0bc-1903728fad40,sentiment,-0.5,±0.25,0.0,escalate,Very good but wen I play my song it o ly plays a little bit then it stops I updated my phone and it worked but it happend again they need to fix this issue
 723f07de-9881-4049-8680-1a9e25652914,intent,complaint,complaint|unclear,praise,escalate,"Update: I reached out to Spotify Support and with some help from Sarah I was able to get the app working again. Old Post:Normally, the app works great, and I use it constantly. I tried to open it today, and it keeps crashing every time. I've tried uninstalling and reinstalling, and updating. Nothing seems to work unfortunately."
-723f07de-9881-4049-8680-1a9e25652914,sentiment,-0.5,±0.25,0.33,escalate,"Update: I reached out to Spotify Support and with some help from Sarah I was able to get the app working again. Old Post:Normally, the app works great, and I use it constantly. I tried to open it today, and it keeps crashing every time. I've tried uninstalling and reinstalling, and updating. Nothing seems to work unfortunately."
+723f07de-9881-4049-8680-1a9e25652914,sentiment,-0.5,±0.25,0.5,escalate,"Update: I reached out to Spotify Support and with some help from Sarah I was able to get the app working again. Old Post:Normally, the app works great, and I use it constantly. I tried to open it today, and it keeps crashing every time. I've tried uninstalling and reinstalling, and updating. Nothing seems to work unfortunately."
+01d453b0-dca3-42e9-8aa4-5fc167b08070,severity,2,2,3,escalate,I like it but god I hate it when the music Interrupts my ads
 01d453b0-dca3-42e9-8aa4-5fc167b08070,sentiment,-0.5,±0.25,0.0,escalate,I like it but god I hate it when the music Interrupts my ads
 ac6cd66d-a9d2-42a4-afb8-2f84beff7fd1,intent,praise,praise,complaint,escalate,Lhat ng song nasa spotify
-ac6cd66d-a9d2-42a4-afb8-2f84beff7fd1,sentiment,0.5,±0.25,0.03,escalate,Lhat ng song nasa spotify
-44129679-31a0-4108-9314-086a3456f6ae,intent,unclear,unclear,praise,accept,Avtar sungh
-44129679-31a0-4108-9314-086a3456f6ae,sentiment,0,±0.25,0.44,accept,Avtar sungh
-46842184-32f8-4088-ac15-2a700a7e94ed,sentiment,-0.5,±0.25,0.02,escalate,"asem, lirik nya kdang gaada kek mana??"
+ac6cd66d-a9d2-42a4-afb8-2f84beff7fd1,severity,1,1,2,escalate,Lhat ng song nasa spotify
+ac6cd66d-a9d2-42a4-afb8-2f84beff7fd1,sentiment,0.5,±0.25,0.0,escalate,Lhat ng song nasa spotify
+44129679-31a0-4108-9314-086a3456f6ae,intent,unclear,unclear,praise,escalate,Avtar sungh
+44129679-31a0-4108-9314-086a3456f6ae,sentiment,0,±0.25,0.5,escalate,Avtar sungh
+46842184-32f8-4088-ac15-2a700a7e94ed,severity,2,2,3,escalate,"asem, lirik nya kdang gaada kek mana??"
+46842184-32f8-4088-ac15-2a700a7e94ed,sentiment,-0.5,±0.25,0.0,escalate,"asem, lirik nya kdang gaada kek mana??"
 5de7f95b-ccad-41b2-9f63-a13f7c1d9f09,intent,cancellation,cancellation|unclear,complaint,escalate,We are boycotting Swedish app in our protest against Sweden for their desrecpect & desceration of our holy book Qur'an
-5de7f95b-ccad-41b2-9f63-a13f7c1d9f09,sentiment,-0.75,±0.25,-0.02,escalate,We are boycotting Swedish app in our protest against Sweden for their desrecpect & desceration of our holy book Qur'an
-372d4e67-59cc-4c54-879f-3e8a202ee554,severity,2,2,3,accept,Please ye ads ko thoda kumm Karo harr ek song ke baad ad 🙏🙄
-372d4e67-59cc-4c54-879f-3e8a202ee554,sentiment,-0.5,±0.25,0.07,accept,Please ye ads ko thoda kumm Karo harr ek song ke baad ad 🙏🙄
-47f1406d-4918-4d60-9647-5ca8e610caca,sentiment,-0.75,±0.25,-0.07,escalate,Very poor updates as we cannot playback the songs and most bad updates are happening it is affecting the spotify quality
-36609c5c-fe48-4459-86b8-cc78fd3c77cd,sentiment,-0.5,±0.25,-0.11,accept,Bheekhmangon
+5de7f95b-ccad-41b2-9f63-a13f7c1d9f09,sentiment,-0.75,±0.25,0.0,escalate,We are boycotting Swedish app in our protest against Sweden for their desrecpect & desceration of our holy book Qur'an
+de48c99b-46fe-4837-8634-e63dbc72a5ea,sentiment,1,±0.25,0.5,escalate,I LOVE that I was able to put in only a few songs I like and Spotify gave me recommendations for an AWESOME Playlist...!!!
+372d4e67-59cc-4c54-879f-3e8a202ee554,severity,2,2,3,escalate,Please ye ads ko thoda kumm Karo harr ek song ke baad ad 🙏🙄
+372d4e67-59cc-4c54-879f-3e8a202ee554,sentiment,-0.5,±0.25,0.0,escalate,Please ye ads ko thoda kumm Karo harr ek song ke baad ad 🙏🙄
+47f1406d-4918-4d60-9647-5ca8e610caca,sentiment,-0.75,±0.25,0.0,escalate,Very poor updates as we cannot playback the songs and most bad updates are happening it is affecting the spotify quality
+36609c5c-fe48-4459-86b8-cc78fd3c77cd,sentiment,-0.5,±0.25,0.0,escalate,Bheekhmangon
 3ddb3f4e-f7b9-430b-b335-eadc6d321f46,topic,billing,billing|playback,usability,escalate,"Deleting this App. The new update suck, we can't choose our fvrt songs after some clicks, we can't CHOOSE song after a song played, and we can't turn off shuffle option. They are pushing us to upgrade to Premium subscription. No wonder if you guys loose ratings and users. Anyway i am deleting this app after years of using."
-3ddb3f4e-f7b9-430b-b335-eadc6d321f46,sentiment,-1,±0.25,-0.26,escalate,"Deleting this App. The new update suck, we can't choose our fvrt songs after some clicks, we can't CHOOSE song after a song played, and we can't turn off shuffle option. They are pushing us to upgrade to Premium subscription. No wonder if you guys loose ratings and users. Anyway i am deleting this app after years of using."
-16d640e9-b281-4746-9562-c7dbcf7126b6,sentiment,-0.5,±0.25,-0.19,escalate,It's my best music app but now it's not...everything basic features is premium....
-8cc4fad4-26ec-47b7-96e8-49c7da714eca,sentiment,-0.75,±0.25,-0.48,accept,I hate this app and sweden .I love islam
-215463ae-95b7-4481-8747-1754b68f31fa,severity,4,4,5,accept,What is happening with Spotify?? Recently I'm trying to play a song but it doesn't working. So I unstalled and thn again install it now I can't even open the app.. Just showing try again?? I really loved Spotify but this making me to rate it 1 star plz fix the problm as fast as u can
-215463ae-95b7-4481-8747-1754b68f31fa,sentiment,-0.75,±0.25,-0.32,accept,What is happening with Spotify?? Recently I'm trying to play a song but it doesn't working. So I unstalled and thn again install it now I can't even open the app.. Just showing try again?? I really loved Spotify but this making me to rate it 1 star plz fix the problm as fast as u can
-46c0b49f-83a1-427e-8f0b-cef62e3c94b5,sentiment,-1,±0.25,-0.19,escalate,"Are you out of your mind? This is dangerous! Listening to music in a normal volume and suddenly an add starts and my ears feel like they explode!! Stop this BS, or you're gonna destroy someones ears."
+3ddb3f4e-f7b9-430b-b335-eadc6d321f46,sentiment,-1,±0.25,-0.5,escalate,"Deleting this App. The new update suck, we can't choose our fvrt songs after some clicks, we can't CHOOSE song after a song played, and we can't turn off shuffle option. They are pushing us to upgrade to Premium subscription. No wonder if you guys loose ratings and users. Anyway i am deleting this app after years of using."
+16d640e9-b281-4746-9562-c7dbcf7126b6,severity,2,2,3,escalate,It's my best music app but now it's not...everything basic features is premium....
+215463ae-95b7-4481-8747-1754b68f31fa,severity,4,4,5,escalate,What is happening with Spotify?? Recently I'm trying to play a song but it doesn't working. So I unstalled and thn again install it now I can't even open the app.. Just showing try again?? I really loved Spotify but this making me to rate it 1 star plz fix the problm as fast as u can
+46c0b49f-83a1-427e-8f0b-cef62e3c94b5,sentiment,-1,±0.25,0.0,escalate,"Are you out of your mind? This is dangerous! Listening to music in a normal volume and suddenly an add starts and my ears feel like they explode!! Stop this BS, or you're gonna destroy someones ears."
 283b5843-a992-464f-b1dc-9dc7281ff390,topic,other,other,billing,escalate,"Beth, we all got to give me a free dollar to go with 3 months, bro I can't be like"
 283b5843-a992-464f-b1dc-9dc7281ff390,intent,unclear,unclear,complaint,escalate,"Beth, we all got to give me a free dollar to go with 3 months, bro I can't be like"
 283b5843-a992-464f-b1dc-9dc7281ff390,severity,1,1,2,escalate,"Beth, we all got to give me a free dollar to go with 3 months, bro I can't be like"
-89ea724c-358f-48ab-9516-cd130d21c471,topic,other,other,usability,accept,Good app!
-89ea724c-358f-48ab-9516-cd130d21c471,sentiment,0.25,±0.25,0.58,accept,Good app!
-8c0546b0-ce43-4a36-9d33-9f979e98d522,sentiment,-1,±0.25,-0.22,escalate,"1-Lyrics not getting loaded, 2-can't go back to or start song where to wanted. Pathetic update"
-a972945c-6601-4108-882a-afe986866a7b,sentiment,1,±0.25,0.72,accept,Phenomenal
-b58dd6f0-ad88-4319-b6db-58afb60c37c1,topic,usability,usability,catalog,accept,"The only thing Spotify lacks is the ability to organize saved 
+89ea724c-358f-48ab-9516-cd130d21c471,topic,other,other,usability,escalate,Good app!
+8c0546b0-ce43-4a36-9d33-9f979e98d522,severity,3,3,4,escalate,"1-Lyrics not getting loaded, 2-can't go back to or start song where to wanted. Pathetic update"
+8c0546b0-ce43-4a36-9d33-9f979e98d522,sentiment,-1,±0.25,-0.5,escalate,"1-Lyrics not getting loaded, 2-can't go back to or start song where to wanted. Pathetic update"
+a972945c-6601-4108-882a-afe986866a7b,sentiment,1,±0.25,0.5,escalate,Phenomenal
+b58dd6f0-ad88-4319-b6db-58afb60c37c1,topic,usability,usability,catalog,escalate,"The only thing Spotify lacks is the ability to organize saved 
 albums/artists into collections. Would definitely deserve 5 stars if it 
 included this feature."
-b58dd6f0-ad88-4319-b6db-58afb60c37c1,sentiment,-0.25,±0.25,0.45,accept,"The only thing Spotify lacks is the ability to organize saved 
+b58dd6f0-ad88-4319-b6db-58afb60c37c1,sentiment,-0.25,±0.25,0.5,escalate,"The only thing Spotify lacks is the ability to organize saved 
 albums/artists into collections. Would definitely deserve 5 stars if it 
 included this feature."
-dceb14e7-2df0-422f-bb2b-73d7c373159a,sentiment,-1,±0.25,-0.19,escalate,I gave one star because I can't give any less than that. the new update is sooooooo annoying like I can't even play the songs that I like and I can't rewind songs what the heck
-ac4e860a-c042-49cc-90f3-189591c336ac,sentiment,-0.75,±0.25,0.04,escalate,paying for subscribing but unable to play in offline mode really?
-9034d675-9582-49b6-a1c1-c4ddabf8baf1,sentiment,-0.75,±0.25,-0.44,accept,Worst app ever too much ad
+dceb14e7-2df0-422f-bb2b-73d7c373159a,sentiment,-1,±0.25,0.0,escalate,I gave one star because I can't give any less than that. the new update is sooooooo annoying like I can't even play the songs that I like and I can't rewind songs what the heck
+ac4e860a-c042-49cc-90f3-189591c336ac,sentiment,-0.75,±0.25,0.0,escalate,paying for subscribing but unable to play in offline mode really?
 d2f3874f-d15d-4a2f-bb97-4f1213defa46,severity,3,3,2,escalate,Too expensive and the free version is pretty much unusable with constant ads... Every two or three songs.. Forget it
-d2f3874f-d15d-4a2f-bb97-4f1213defa46,sentiment,-0.75,±0.25,-0.24,escalate,Too expensive and the free version is pretty much unusable with constant ads... Every two or three songs.. Forget it
+99b93e31-9f15-4daa-88ac-349ab0419c48,topic,other,other,usability,escalate,This update very bad for everyone.old Spotify. we all want.

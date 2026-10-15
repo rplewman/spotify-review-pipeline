@@ -1,0 +1,167 @@
+{
+ "label": "seed ranks 1–10,050 (golden 50 + analysis_10000) under the frozen config",
+ "generated_at": "2026-10-15T05:26:10+00:00",
+ "input": {
+  "file": "analysis_10000.csv (+ golden ranks 1–50) = seed ranks 1–10050",
+  "sha256": "eaa62ca6d44d717302904a9c922e99b0b4584d174309cb45295ecbc2ba2a91b5",
+  "match": true,
+  "rows": 10050,
+  "ids_sha256": "72522ad15de1c3e14db2d82a495f65b99def857ef0f153a4fd947cf972d6585b"
+ },
+ "records": {
+  "completed": 10050,
+  "quarantined": 0,
+  "rows": 10050,
+  "completed_via_exact_text_reuse": 1558
+ },
+ "unique_texts": 8492,
+ "routes": {
+  "escalate": 8492
+ },
+ "verification": {
+  "declared_sample_rate": 0.2,
+  "seed": "verify-v1",
+  "sampled_texts": 25,
+  "verified_texts": 25,
+  "tier": "standard (real time)"
+ },
+ "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
+ "stages": {
+  "enrich_decision": {
+   "agent": "A3",
+   "provider": "celeris",
+   "model": "celeris-1-decision",
+   "effort": "n/a (decision model)",
+   "prompt_version": "prompt-v1",
+   "schema_version": "schema-v1",
+   "shape": "A",
+   "batch_size": 50,
+   "workers": [
+    4
+   ]
+  },
+  "enrich_escalation": {
+   "agent": "A5",
+   "model": "claude-haiku-5-5",
+   "effort": "low",
+   "prompt_version": "escalation-prompt-v1",
+   "gate": 0.6,
+   "esc_fraction_cap": 0.15,
+   "batch_size": "≤ 50 (the batch's escalated texts)",
+   "workers": 1
+  },
+  "extract_validate": {
+   "agent": "A6+A7",
+   "model": "code",
+   "version": "extract-code-v1+schema-v1"
+  },
+  "verify": {
+   "agent": "A8",
+   "model": "claude-haiku-5-5",
+   "effort": "low",
+   "prompt_version": "verifier-prompt-v1",
+   "batch_size": 50,
+   "workers": 1,
+   "tier": "standard"
+  },
+  "group": {
+   "agent": "A9",
+   "model": "claude-haiku-5-5",
+   "effort": "low",
+   "prompt_version": "grouper-prompt-v1"
+  },
+  "rank": {
+   "agent": "A10",
+   "model": "code"
+  },
+  "memo": {
+   "agent": "A11",
+   "model": "claude-haiku-5-5",
+   "effort": "low",
+   "prompt_version": "memo-prompt-v1"
+  }
+ },
+ "phases": {
+  "cold": {
+   "stages": [
+    {
+     "stage": "ingest",
+     "seconds": 2.0100000000000002,
+     "new_calls": 0,
+     "note": "pilot ingest seconds per row × rows"
+    },
+    {
+     "stage": "enrich",
+     "seconds": 294.278062,
+     "new_calls": 340,
+     "note": "1-worker seconds per decided text × texts (worker-count runs below)"
+    },
+    {
+     "stage": "verify",
+     "seconds": 10.111,
+     "rc": 0,
+     "new_calls": 1,
+     "run_ids": [
+      "run-20261014-202632-c7f99c"
+     ]
+    },
+    {
+     "stage": "group",
+     "seconds": 6.891,
+     "rc": 0,
+     "new_calls": 1,
+     "run_ids": [
+      "run-20261014-202642-752478"
+     ]
+    },
+    {
+     "stage": "rank",
+     "seconds": 0.067,
+     "rc": 0,
+     "new_calls": 0,
+     "run_ids": []
+    },
+    {
+     "stage": "memo",
+     "seconds": 18.382,
+     "rc": 0,
+     "new_calls": 1,
+     "run_ids": [
+      "run-20261014-202649-494e5d"
+     ]
+    }
+   ],
+   "total_seconds": 331.739062,
+   "new_calls": 340,
+   "new_enrich_calls": 340
+  },
+  "warm": {
+   "stages": [],
+   "total_seconds": 0.0,
+   "new_calls": null,
+   "new_enrich_calls": null
+  }
+ },
+ "local_compute": {
+  "usd": "unknown (local laptop CPU and SQLite; not billed, not metered)",
+  "note": "reported apart from API spend; times above include local work"
+ },
+ "downstream_from": "pilot (cost_100, cold): A8 per verified text, A9 and A11 per run",
+ "scale_runs": [
+  {
+   "run_id": "run-20261014-222056-bfbe36",
+   "workers": 4,
+   "max_rank": 10050,
+   "stop_reason": "drained",
+   "seconds": 294.278062,
+   "calls": 340,
+   "a3_calls": 170,
+   "a5_calls": 170,
+   "texts_decided": 8492,
+   "http_429": 0,
+   "failed": 0,
+   "texts_per_s": 28.857061047248575,
+   "requests_per_min": 69.32219092838801
+  }
+ ]
+}

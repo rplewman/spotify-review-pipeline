@@ -1,0 +1,44 @@
+{
+ "ranks": [
+  10051,
+  10080
+ ],
+ "labeled": 30,
+ "sentiment": {
+  "mean": {
+   "n": 30,
+   "mae": 0.171,
+   "within": 0.767
+  },
+  "mode": {
+   "n": 30,
+   "mae": 0.175,
+   "within": 0.9
+  }
+ },
+ "severity": {
+  "celeris": {
+   "n": 30,
+   "accepted": 0.8,
+   "correct": 24
+  },
+  "haiku": {
+   "n": 30,
+   "accepted": 0.833,
+   "correct": 25
+  }
+ },
+ "celeris_only": {
+  "topic": {
+   "n": 30,
+   "accepted": 0.967,
+   "correct": 29
+  },
+  "intent": {
+   "n": 30,
+   "accepted": 0.967,
+   "correct": 29
+  }
+ },
+ "note": "fresh held-out reviews (seed ranks 10,051–10,080), labeled by Rory without model answers; never used for tuning"
+}

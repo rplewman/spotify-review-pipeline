@@ -1,6 +1,58 @@
 # STATUS — handoff log
 
-## Last completed: M6 (Scale checkpoints + golden evaluation) — ✅ gate passed 2026-10-15 (💰 $0.2090 list, approved by Rory)
+## Last completed: M6b (Fidelity upgrade + re-freeze) — ✅ gate passed 2026-10-15 (💰 $0.4572 list, approved by Rory)
+
+### Frozen label_config (CLI default; supersedes M6)
+`celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1`
+= shape A; **Haiku severity for every review** (gate 1.00 = always, cap 1.00); **sentiment = most probable level** (ties → nearer 0);
+topic/intent = Celeris. Rationale, results and disclosures: `evals/m6_notes.md` § M6b.
+M8: `python -m pipeline.cli enrich --provider celeris --escalation anthropic --bucket decisions --workers 4 --paid --max-spend …`
+(default `--scope random_100k` caps at rank 100,000), then the add-on with `--scope addon` (builds the top 25,000 on first use).
+
+### Done (M6b)
+- **Code:** `decision.sentiment_value` + `--sentiment mean|mode` (`+sentiment-mode-v1` in label_config only for mode; a resumed
+  pre-M6b run keeps `mean`); router gate ≥ 1.00 = escalate every gated field; `enrich --scope random_100k|addon --addon-size`
+  (`intake.build_addon`: top-N out-of-scope distinct texts by row count, rows tagged `scope='frequency_addon'`,
+  `texts.scope_rank = 100,000 + frequency rank`); grouper leaves add-on rows out of membership and writes
+  `outputs/ranking_excluded.txt` (ranker accepts them; `excluded_from_ranking` in overall metrics); verify default rate
+  **0.20** (seed verify-v1, superset of 5%); ledger + calculator BUCKET_CAPS = PLAN §4 v4.2 (pilots 0.50, decisions 2.00,
+  escalation 5.00, verification 1.00, analysis 0.25, reserve 1.25); `ClaudeProvider` prices per model (Sonnet 5.5 added to
+  `cost/rates.csv`); `scripts/m6b.py` (sentiment-check, heldout-prepare/-enrich/-score, topic-test/-score, golden-compare);
+  `label_tool.py heldout`. Tests `tests/test_m6b.py` (12); queue tests count paid IDs per agent (A5 now sees every review).
+  Fast suite: **131 passed**.
+- **Held-out 30** (ranks 10,051–10,080, labeled blind by Rory): sentiment mean MAE 0.171 / ±0.25 77% → mode 0.175 / **90%**
+  (fewer big misses, no MAE gain); severity Celeris 24/30 → Haiku 25/30. `evals/heldout_30/`.
+- **Sonnet 5.5 topic test** on dev_100 (all topics): gain 0 on the adjudicated rows, cost far over the limit → **not adopted**,
+  topic stays with Celeris. `evals/topic_test/`.
+- **10k re-run** (`state/pipeline.db`, ranks 1–10,050): 8,492 texts, 0 quarantined, 340 calls, 0 failed, 294 s @ 4 workers.
+  Records for those rows now carry the M6b config (M6's A3/A4/A5 outputs remain in agent_outputs).
+- **Golden 50 M6 → M6b:** topic 90→88, intent 90→90, **severity 90→80 (MAE 0.18→0.30)**, sentiment ±0.25 52→62%.
+  Disclosed as **Haiku run-to-run noise** (27% of its severity answers changed between runs on the same texts; Celeris
+  severity on golden is 40/50 in both). On the 80 independent reviews: Celeris 64, Haiku<0.70 65, Haiku-all 65.
+  👤 Rory chose to keep the M6b freeze anyway (2026-10-15).
+- **Projection** (`cost/report.*` = 100k under M6b; `cost/m6b/report_100k_plus_addon.*`; M6 report kept as `cost/report_m6.*`):
+  100k $3.11 / $4.73; 100k + add-on $4.10 / **$6.24** (base / conservative). **Gate: $0.68 spent + $6.24 = $6.92 ≤ $9.00 ✔.**
+
+### Spend (list price)
+- M6b: **$0.4572** = held-out $0.0016 + Sonnet topic test $0.1645 (incl. one attempt with a client connection error settled
+  at its estimate **$0.1135**, billing unknown, likely $0 — check the Console) + 10k re-run $0.2912 (Celeris $0.0937 credit,
+  Haiku $0.1975 cash).
+- **Project total $0.6831** (Celeris $0.2049 prepaid credit, Anthropic $0.4783 cash), de-duplicated over all state DBs
+  (`m6.spend_to_date`, now also `state/m6b_heldout.db`).
+
+### Notes for M7/M8/M12
+- README (M12) must disclose: sentiment change is golden-driven (held-out result above); golden severity drop = Haiku noise;
+  Sonnet topic test not adopted; Celeris also varies run to run (top-1 changed topic 14%, intent 7%, severity 17% between runs).
+- M8 escalation: ~78k A5 calls' worth of reviews at the 100k (every review); `--max-spend` must leave room for the $0.68 spent.
+  Verification at 20% ≈ 15.6k texts (100k) + ≈ 5k (add-on).
+- The old `label_tool.py dev` processes (PIDs 31656/31032) were stopped this session.
+
+### Next step
+**M7 — System tests & recovery evidence.** "Read CLAUDE.md, STATUS.md and PLAN.md §5 M7, then do M7."
+
+---
+
+## Previously completed: M6 (Scale checkpoints + golden evaluation) — ✅ gate passed 2026-10-15 (💰 $0.2090 list, approved by Rory)
 
 ### Frozen label_config (CLI default from now on; `pipeline/cli.py` STAGE_DEFAULTS)
 `celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1`
@@ -56,11 +108,8 @@
 - Old `label_tool.py dev` process (PID 31656, port 8765) was still running on 2026-10-15 with a pre-M6 copy of the dev
   CSV — don't save from it.
 
-### Next step
-**PLAN v4.2 (Rory, 2026-10-15): M6b before M7** — fidelity upgrade (sentiment = most probable level, Haiku on severity
-for every review, stronger-model topic test, 20% verification, add-on 25k path), re-freeze, 10k re-run. The M6 frozen config
-above is superseded once M6b re-freezes. 👤 Rory hand-labels 30 fresh held-out reviews in M6b.
-"Read CLAUDE.md, STATUS.md and PLAN.md §5 M6b, then do M6b."
+### Next step (then)
+M6b — done 2026-10-15 (see above).
 
 ---
 

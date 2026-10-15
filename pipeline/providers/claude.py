@@ -18,11 +18,17 @@ from pipeline.providers.base import Provider, ProviderError, Response, classify_
 
 class ClaudeProvider(Provider):
     name = "anthropic"
-    # Haiku 5.5, prompts ≤ 100K tokens, USD / 1M tokens (cost/rates.csv)
-    rates = {"input_tokens": 0.10, "cached_tokens": 0.01, "cache_write_tokens": 0.125, "output_tokens": 0.50}
+    # USD / 1M tokens, prompts ≤ 100K tokens (cost/rates.csv). Sonnet 5.5 only for the M6b topic-model test.
+    RATES = {"claude-haiku-5-5": {"input_tokens": 0.10, "cached_tokens": 0.01, "cache_write_tokens": 0.125,
+                                  "output_tokens": 0.50},
+             "claude-sonnet-5-5": {"input_tokens": 2.00, "cached_tokens": 0.20, "cache_write_tokens": 2.50,
+                                   "output_tokens": 10.00}}
+    rates = RATES["claude-haiku-5-5"]
 
     def __init__(self, model="claude-haiku-5-5", api_key=None, client=None):
-        self.model = model
+        if model not in self.RATES:
+            raise ValueError(f"no list price for {model!r} (add it to ClaudeProvider.RATES and cost/rates.csv)")
+        self.model, self.rates = model, self.RATES[model]
         if client is None:
             key = api_key or os.environ.get("ANTHROPIC_API_KEY")
             if not key:
@@ -84,7 +90,8 @@ class ClaudeBatchProvider(ClaudeProvider):
     · results(job_id) → [(custom_id, kind, Response | None, error)] with kind ∈ succeeded | errored | canceled | expired.
     Errored, canceled and expired requests are not billed."""
     tier = "batch"
-    rates = {"input_tokens": 0.05, "cached_tokens": 0.005, "cache_write_tokens": 0.0625, "output_tokens": 0.25}
+    RATES = {m: {k: v / 2 for k, v in r.items()} for m, r in ClaudeProvider.RATES.items()}  # 50% off
+    rates = RATES["claude-haiku-5-5"]
 
     async def call(self, request):
         raise RuntimeError("ClaudeBatchProvider has no real-time call; use ClaudeProvider (--standard)")

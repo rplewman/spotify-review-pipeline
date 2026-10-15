@@ -3,8 +3,8 @@
   "budget_usd": 10.0,
   "output_token_cap": 4000,
   "max_concurrency": 4,
-  "max_fallback_fraction": 0.4,
-  "verify_rate": 0.05,
+  "max_fallback_fraction": 1.0,
+  "verify_rate": 0.2,
   "verify_tier": "batch"
  },
  "volumes": {
@@ -44,8 +44,7 @@
   },
   "unique_texts": 8492,
   "routes": {
-   "accept": 5363,
-   "escalate": 3129
+   "escalate": 8492
   },
   "verification": {
    "declared_sample_rate": 0.2,
@@ -54,7 +53,7 @@
    "verified_texts": 25,
    "tier": "standard (real time)"
   },
-  "label_config": "celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity+extract-code-v1+prompt-v1+schema-v1",
+  "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
   "stage_config": {
    "enrich_decision": {
     "agent": "A3",
@@ -66,8 +65,6 @@
     "shape": "A",
     "batch_size": 50,
     "workers": [
-     1,
-     2,
      4
     ]
    },
@@ -116,30 +113,30 @@
    "A3": {
     "unit": "distinct text decided",
     "units": 8492,
-    "attempts": 172,
-    "succeeded": 172,
+    "attempts": 170,
+    "succeeded": 170,
     "failed": 0,
     "items": {
-     "celeris/celeris-1-decision/standard/input_tokens": 2343114.0
+     "celeris/celeris-1-decision/standard/input_tokens": 2341892.0
     },
-    "cost": 0.09372456000000003,
-    "cold_cost": 0.09372456000000003,
+    "cost": 0.09367568000000007,
+    "cold_cost": 0.09367568000000007,
     "warm_cost": 0.0
    },
    "A5": {
     "unit": "escalated text",
-    "units": 3129,
-    "attempts": 172,
-    "succeeded": 172,
+    "units": 8492,
+    "attempts": 170,
+    "succeeded": 170,
     "failed": 0,
     "items": {
-     "anthropic/claude-haiku-5-5/standard_le100k/input_tokens": 246837.0,
-     "anthropic/claude-haiku-5-5/standard_le100k/cache_write_5m_tokens": 1330.0,
-     "anthropic/claude-haiku-5-5/standard_le100k/output_tokens": 121175.0,
-     "anthropic/claude-haiku-5-5/standard_le100k/cache_read_tokens": 227430.0
+     "anthropic/claude-haiku-5-5/standard_le100k/input_tokens": 544843.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/cache_write_5m_tokens": 5320.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/output_tokens": 280248.0,
+     "anthropic/claude-haiku-5-5/standard_le100k/cache_read_tokens": 220780.0
     },
-    "cost": 0.08771174999999969,
-    "cold_cost": 0.08771174999999969,
+    "cost": 0.19748109999999852,
+    "cold_cost": 0.19748109999999852,
     "warm_cost": 0.0
    },
    "A8": {
@@ -187,16 +184,16 @@
     "warm_cost": 0.0
    }
   },
-  "api_subtotal_usd": 0.18608341,
+  "api_subtotal_usd": 0.29580388,
   "api_by_provider_usd": {
-   "celeris": 0.09372456000000003,
-   "anthropic": 0.09235884999999967
+   "celeris": 0.09367568000000007,
+   "anthropic": 0.20212819999999854
   },
   "unknown_billing_usd": 0,
   "unknown_billing_attempts": 0,
   "cold": {
-   "seconds": 899.7074600990644,
-   "calls": 344,
+   "seconds": 331.739062,
+   "calls": 340,
    "stages": [
     {
      "stage": "ingest",
@@ -206,8 +203,8 @@
     },
     {
      "stage": "enrich",
-     "seconds": 862.2464600990644,
-     "new_calls": 344,
+     "seconds": 294.278062,
+     "new_calls": 340,
      "note": "1-worker seconds per decided text \u00d7 texts (worker-count runs below)"
     },
     {
@@ -245,24 +242,18 @@
      ]
     }
    ],
-   "api_usd": 0.1860834099999997
+   "api_usd": 0.2958038799999986
   },
   "warm": {
-   "seconds": 0.183371,
-   "calls": 0,
-   "enrich_calls": 0,
-   "stages": [
-    {
-     "stage": "enrich",
-     "seconds": 0.183371,
-     "new_calls": 0
-    }
-   ],
+   "seconds": 0.0,
+   "calls": null,
+   "enrich_calls": null,
+   "stages": [],
    "incremental_api_usd": 0.0
   },
-  "throughput_rows_per_s": 11.170297508585092,
-  "cost_per_1000_rows_usd": 0.01851576218905473,
-  "cost_per_completed_record_usd": 1.8515762189054727e-05,
+  "throughput_rows_per_s": 30.294894847203736,
+  "cost_per_1000_rows_usd": 0.029433221890547263,
+  "cost_per_completed_record_usd": 2.9433221890547265e-05,
   "rates_used": [
    {
     "key": "anthropic/claude-haiku-5-5/standard_le100k/cache_read_tokens",
@@ -313,30 +304,30 @@
       "units": 484189,
       "retry_overhead": 0.0,
       "tokens": {
-       "input_tokens": 133597506.42322186
+       "input_tokens": 133527831.55770136
       },
-      "usd": 5.343900256928874
+      "usd": 5.341113262308054
      },
      "A5": {
-      "units": 178406.427343382,
+      "units": 484189.0,
       "retry_overhead": 0.0,
       "tokens": {
-       "input_tokens": 14073923.715614697,
-       "cache_write_5m_tokens": 75832.7096090438,
-       "output_tokens": 6909044.050282619,
-       "cache_read_tokens": 12967393.34314649
+       "input_tokens": 31065354.136481393,
+       "cache_write_5m_tokens": 303330.83843617525,
+       "output_tokens": 15978921.20489873,
+       "cache_read_tokens": 12588229.795101272
       },
-      "usd": 5.001067418835374
+      "usd": 11.259794668853038
      },
      "A8": {
-      "units": 24209.45,
+      "units": 96837.8,
       "retry_overhead": 0.0,
       "tokens": {
-       "input_tokens": 1047784.996,
-       "cache_write_5m_tokens": 1273417.07,
-       "output_tokens": 2190471.0360000003
+       "input_tokens": 4191139.984,
+       "cache_write_5m_tokens": 5093668.28,
+       "output_tokens": 8761884.144000001
       },
-      "usd": 0.6636778623000001
+      "usd": 2.6547114492000006
      },
      "A9": {
       "units": 1,
@@ -358,22 +349,22 @@
       "usd": 0.002250425
      }
     },
-    "fallback_fraction": 0.3684644371172869,
-    "api_usd": 11.011889063064249,
+    "fallback_fraction": 1.0,
+    "api_usd": 19.25886290536109,
     "time": {
      "stages_s": {
       "ingest": 132.1244,
-      "enrich": 12290.692748142543,
+      "enrich": 4194.718575180111,
       "verify": 3600.0,
       "group": 6.891,
       "rank": 0.067,
       "memo": 18.382
      },
-     "total_s": 16048.157148142544,
-     "throughput_rows_per_s": 41.164975760251835
+     "total_s": 7952.182975180111,
+     "throughput_rows_per_s": 83.07429570746736
     },
-    "cost_per_1000_rows_usd": 0.016668971156068448,
-    "cost_per_output_usd": 1.6669299181610075e-05
+    "cost_per_1000_rows_usd": 0.029152621174228364,
+    "cost_per_output_usd": 2.9153194863165792e-05
    },
    "conservative": {
     "stages": {
@@ -381,30 +372,30 @@
       "units": 484189,
       "retry_overhead": 0.1,
       "tokens": {
-       "input_tokens": 183696571.3319301
+       "input_tokens": 183600768.3918394
       },
-      "usd": 7.347862853277205
+      "usd": 7.344030735673576
      },
      "A5": {
-      "units": 193675.6,
+      "units": 484189.0,
       "retry_overhead": 0.1,
       "tokens": {
-       "input_tokens": 21007883.70282838,
-       "cache_write_5m_tokens": 113194.07270693514,
-       "output_tokens": 12375601.588207098,
-       "cache_read_tokens": 19356186.432885908
+       "input_tokens": 42714861.937661916,
+       "cache_write_5m_tokens": 417079.902849741,
+       "output_tokens": 26365219.988082908,
+       "cache_read_tokens": 17308815.96826425
       },
-      "usd": 8.496300287803614
+      "usd": 17.679319335346506
      },
      "A8": {
-      "units": 24209.45,
+      "units": 96837.8,
       "retry_overhead": 0.1,
       "tokens": {
-       "input_tokens": 1440704.3695000003,
-       "cache_write_5m_tokens": 1750948.4712500004,
-       "output_tokens": 3614277.2094000005
+       "input_tokens": 5762817.478000001,
+       "cache_write_5m_tokens": 7003793.885000002,
+       "output_tokens": 14457108.837600002
       },
-      "usd": 1.0631519443875002
+      "usd": 4.252607777550001
      },
      "A9": {
       "units": 1,
@@ -426,22 +417,22 @@
       "usd": 0.004950935
      }
     },
-    "fallback_fraction": 0.4,
-    "api_usd": 16.91445084046832,
+    "fallback_fraction": 1.0,
+    "api_usd": 29.283093603570084,
     "time": {
      "stages_s": {
       "ingest": 132.1244,
-      "enrich": 24581.385496285086,
+      "enrich": 8389.437150360221,
       "verify": 86400.0,
       "group": 13.782,
       "rank": 0.134,
       "memo": 36.764
      },
-     "total_s": 111164.18989628508,
-     "throughput_rows_per_s": 5.942759090102242
+     "total_s": 94972.24155036022,
+     "throughput_rows_per_s": 6.955948277262645
     },
-    "cost_per_1000_rows_usd": 0.025603826152426533,
-    "cost_per_output_usd": 2.5604330005295596e-05
+    "cost_per_1000_rows_usd": 0.044326549227198135,
+    "cost_per_output_usd": 4.432742152100575e-05
    }
   },
   "full_no_reuse": {
@@ -451,30 +442,30 @@
       "units": 660609,
       "retry_overhead": 0.0,
       "tokens": {
-       "input_tokens": 182275341.07701367
+       "input_tokens": 182180279.34856337
       },
-      "usd": 7.2910136430805474
+      "usd": 7.287211173942535
      },
      "A5": {
-      "units": 243410.92333961377,
+      "units": 660609.0,
       "retry_overhead": 0.0,
       "tokens": {
-       "input_tokens": 19201924.603509188,
-       "cache_write_5m_tokens": 103463.25600565238,
-       "output_tokens": 9426436.125176638,
-       "cache_read_tokens": 17692216.776966557
+       "input_tokens": 42384384.05405087,
+       "cache_write_5m_tokens": 413853.0240226095,
+       "output_tokens": 21801030.503061708,
+       "cache_read_tokens": 17174900.496938296
       },
-      "usd": 6.82326559770961
+      "usd": 15.36243428990815
      },
      "A8": {
-      "units": 33030.450000000004,
+      "units": 132121.80000000002,
       "retry_overhead": 0.0,
       "tokens": {
-       "input_tokens": 1429557.8760000002,
-       "cache_write_5m_tokens": 1737401.6700000004,
-       "output_tokens": 2988595.1160000004
+       "input_tokens": 5718231.504000001,
+       "cache_write_5m_tokens": 6949606.680000002,
+       "output_tokens": 11954380.464000002
       },
-      "usd": 0.9054967563000001
+      "usd": 3.6219870252000006
      },
      "A9": {
       "units": 1,
@@ -496,22 +487,22 @@
       "usd": 0.002250425
      }
     },
-    "fallback_fraction": 0.3684644371172869,
-    "api_usd": 15.023019522090157,
+    "fallback_fraction": 1.0,
+    "api_usd": 26.274876014050683,
     "time": {
      "stages_s": {
       "ingest": 132.1244,
-      "enrich": 16768.952300976885,
+      "enrich": 5723.113997284444,
       "verify": 3600.0,
       "group": 6.891,
       "rank": 0.067,
       "memo": 18.382
      },
-     "total_s": 20526.416700976886,
-     "throughput_rows_per_s": 32.18399049496836
+     "total_s": 9480.578397284444,
+     "throughput_rows_per_s": 69.68161353839174
     },
-    "cost_per_1000_rows_usd": 0.02274071938580634,
-    "cost_per_output_usd": 2.2741166896136984e-05
+    "cost_per_1000_rows_usd": 0.039772935224758915,
+    "cost_per_output_usd": 3.9773717908854834e-05
    },
    "conservative": {
     "stages": {
@@ -519,30 +510,30 @@
       "units": 660609,
       "retry_overhead": 0.1,
       "tokens": {
-       "input_tokens": 250628593.98089382
+       "input_tokens": 250497884.10427463
       },
-      "usd": 10.025143759235753
+      "usd": 10.019915364170986
      },
      "A5": {
-      "units": 264243.60000000003,
+      "units": 660609.0,
       "retry_overhead": 0.1,
       "tokens": {
-       "input_tokens": 28662355.082502402,
-       "cache_write_5m_tokens": 154437.67449664432,
-       "output_tokens": 16884798.683125604,
-       "cache_read_tokens": 26408842.338926177
+       "input_tokens": 58278528.07431995,
+       "cache_write_5m_tokens": 569047.9080310881,
+       "output_tokens": 35971700.33005182,
+       "cache_read_tokens": 23615488.183290157
       },
-      "usd": 11.592027982514384
+      "usd": 24.120988842794695
      },
      "A8": {
-      "units": 33030.450000000004,
+      "units": 132121.80000000002,
       "retry_overhead": 0.1,
       "tokens": {
-       "input_tokens": 1965642.0795000005,
-       "cache_write_5m_tokens": 2388927.2962500006,
-       "output_tokens": 4931181.941400001
+       "input_tokens": 7862568.318000002,
+       "cache_write_5m_tokens": 9555709.185000002,
+       "output_tokens": 19724727.765600003
       },
-      "usd": 1.4505239541375001
+      "usd": 5.8020958165500005
      },
      "A9": {
       "units": 1,
@@ -564,22 +555,22 @@
       "usd": 0.004950935
      }
     },
-    "fallback_fraction": 0.4,
-    "api_usd": 23.074831450887636,
+    "fallback_fraction": 1.0,
+    "api_usd": 39.95013577851567,
     "time": {
      "stages_s": {
       "ingest": 132.1244,
-      "enrich": 33537.90460195377,
+      "enrich": 11446.227994568888,
       "verify": 86400.0,
       "group": 13.782,
       "rank": 0.134,
       "memo": 36.764
      },
-     "total_s": 120120.70900195377,
-     "throughput_rows_per_s": 5.499651188283071
+     "total_s": 98029.03239456889,
+     "throughput_rows_per_s": 6.739044381678509
     },
-    "cost_per_1000_rows_usd": 0.03492894794737026,
-    "cost_per_output_usd": 3.492963530755354e-05
+    "cost_per_1000_rows_usd": 0.060473517046837184,
+    "cost_per_output_usd": 6.0474707093781155e-05
    }
   },
   "scope_100k": {
@@ -589,30 +580,30 @@
       "units": 78099,
       "retry_overhead": 0.0,
       "tokens": {
-       "input_tokens": 21549088.587611873
+       "input_tokens": 21537850.13047574
       },
-      "usd": 0.8619635435044749
+      "usd": 0.8615140052190297
      },
      "A5": {
-      "units": 28776.70407442299,
+      "units": 78099.0,
       "retry_overhead": 0.0,
       "tokens": {
-       "input_tokens": 2270103.964083844,
-       "cache_write_5m_tokens": 12231.708666980689,
-       "output_tokens": 1114419.0208431466,
-       "cache_read_tokens": 2091622.1820536978
+       "input_tokens": 5010797.628002826,
+       "cache_write_5m_tokens": 48926.834667922754,
+       "output_tokens": 2577377.361281206,
+       "cache_read_tokens": 2030463.638718794
       },
-      "usd": 0.8066650922338673
+      "usd": 1.8161889341615638
      },
      "A8": {
-      "units": 3904.9500000000003,
+      "units": 15619.800000000001,
       "retry_overhead": 0.0,
       "tokens": {
-       "input_tokens": 169006.236,
-       "cache_write_5m_tokens": 205400.37000000002,
-       "output_tokens": 353319.87600000005
+       "input_tokens": 676024.944,
+       "cache_write_5m_tokens": 821601.4800000001,
+       "output_tokens": 1413279.5040000002
       },
-      "usd": 0.10705029930000001
+      "usd": 0.42820119720000005
      },
      "A9": {
       "units": 1,
@@ -634,22 +625,22 @@
       "usd": 0.002250425
      }
     },
-    "fallback_fraction": 0.3684644371172869,
-    "api_usd": 1.7789224600383422,
+    "fallback_fraction": 1.0,
+    "api_usd": 3.1091476615805935,
     "time": {
      "stages_s": {
       "ingest": 20.0,
-      "enrich": 1982.4713344111174,
+      "enrich": 676.6021656894135,
       "verify": 3600.0,
       "group": 6.891,
       "rank": 0.067,
       "memo": 18.382
      },
-     "total_s": 5627.811334411117,
-     "throughput_rows_per_s": 17.76889701126838
+     "total_s": 4321.942165689414,
+     "throughput_rows_per_s": 23.137745986947635
     },
-    "cost_per_1000_rows_usd": 0.017789224600383423,
-    "cost_per_output_usd": 1.7789224600383422e-05
+    "cost_per_1000_rows_usd": 0.031091476615805937,
+    "cost_per_output_usd": 3.1091476615805936e-05
    },
    "conservative": {
     "stages": {
@@ -657,30 +648,30 @@
       "units": 78099,
       "retry_overhead": 0.1,
       "tokens": {
-       "input_tokens": 29629996.807966325
+       "input_tokens": 29614543.929404147
       },
-      "usd": 1.185199872318653
+      "usd": 1.1845817571761659
      },
      "A5": {
-      "units": 31239.600000000002,
+      "units": 78099.0,
       "retry_overhead": 0.1,
       "tokens": {
-       "input_tokens": 3388541.8902684567,
-       "cache_write_5m_tokens": 18258.043624161077,
-       "output_tokens": 1996167.0100671146,
-       "cache_read_tokens": 3122125.459731544
+       "input_tokens": 6889846.738503886,
+       "cache_write_5m_tokens": 67274.3976683938,
+       "output_tokens": 4252672.646113991,
+       "cache_read_tokens": 2791887.5032383422
       },
-      "usd": 1.3704412041107386
+      "usd": 2.8516491716483165
      },
      "A8": {
-      "units": 3904.9500000000003,
+      "units": 15619.800000000001,
       "retry_overhead": 0.1,
       "tokens": {
-       "input_tokens": 232383.57450000005,
-       "cache_write_5m_tokens": 282425.50875000004,
-       "output_tokens": 582977.7954000001
+       "input_tokens": 929534.2980000002,
+       "cache_write_5m_tokens": 1129702.0350000001,
+       "output_tokens": 2331911.1816000002
       },
-      "usd": 0.17148490301250002
+      "usd": 0.6859396120500001
      },
      "A9": {
       "units": 1,
@@ -702,29 +693,29 @@
       "usd": 0.004950935
      }
     },
-    "fallback_fraction": 0.4,
-    "api_usd": 2.7342617344418914,
+    "fallback_fraction": 1.0,
+    "api_usd": 4.7293062958744825,
     "time": {
      "stages_s": {
       "ingest": 20.0,
-      "enrich": 3964.9426688222347,
+      "enrich": 1353.204331378827,
       "verify": 86400.0,
       "group": 13.782,
       "rank": 0.134,
       "memo": 36.764
      },
-     "total_s": 90435.62266882224,
-     "throughput_rows_per_s": 1.1057589592344907
+     "total_s": 87823.88433137882,
+     "throughput_rows_per_s": 1.1386424178493177
     },
-    "cost_per_1000_rows_usd": 0.027342617344418913,
-    "cost_per_output_usd": 2.7342617344418912e-05
+    "cost_per_1000_rows_usd": 0.04729306295874482,
+    "cost_per_output_usd": 4.729306295874482e-05
    }
   }
  },
  "warnings": [
-  "OVER BUDGET: full_with_reuse (base) $11.01 > budget $10.00",
-  "OVER BUDGET: full_with_reuse (conservative) $16.91 > budget $10.00",
-  "OVER BUDGET: full_no_reuse (base) $15.02 > budget $10.00",
-  "OVER BUDGET: full_no_reuse (conservative) $23.07 > budget $10.00"
+  "OVER BUDGET: full_with_reuse (base) $19.26 > budget $10.00",
+  "OVER BUDGET: full_with_reuse (conservative) $29.28 > budget $10.00",
+  "OVER BUDGET: full_no_reuse (base) $26.27 > budget $10.00",
+  "OVER BUDGET: full_no_reuse (conservative) $39.95 > budget $10.00"
  ]
 }

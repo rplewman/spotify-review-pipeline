@@ -47,7 +47,8 @@ def db(tmp_path):
 
 def test_max_rank_limits_claims_and_the_escalation_cap(db, tmp_path):
     rc = cli.main(["enrich", "--db", str(db), "--root", str(tmp_path), "--provider", "fake", "--max-rank", "40",
-                   "--batch-size", "10", "--label-config", "cfg-x", "--fake-script", "low_conf"])
+                   "--batch-size", "10", "--label-config", "cfg-x", "--fake-script", "low_conf",
+                   "--gate", "0.70", "--esc-fraction", "0.15"])
     assert rc == 0
     conn = connect(db)
     ranks = [r[0] for r in conn.execute("SELECT scope_rank FROM work_items WHERE label_config='cfg-x' AND status='done'")]
@@ -176,21 +177,24 @@ def test_dev_escalate_refuses_without_money_flags():
         m6.main(["dev-enrich"])
 
 
-def test_frozen_config_escalates_severity_only(db, tmp_path):
+def test_m6_frozen_config_escalates_severity_only(db, tmp_path):
+    """The M6 freeze (superseded by M6b): its string and behaviour are still reproducible with explicit flags."""
     from pipeline.stages import make_label_config
     old = make_label_config("celeris-1-decision", "A", 0.6, "claude-haiku-5-5", 0.15)
     assert "escfields" not in old  # earlier strings unchanged
     assert make_label_config("celeris-1-decision", "A", 0.6, "claude-haiku-5-5", 0.15, ("topic", "intent", "severity")) == old
     frozen = cli.default_label_config(type("A", (), {"provider": "celeris", "escalation": "anthropic", "shape": "A",
-                                                     "gate": 0.70, "esc_fraction": 0.40, "esc_fields": "severity"})())
+                                                     "gate": 0.70, "esc_fraction": 0.40, "esc_fields": "severity",
+                                                     "sentiment": "mean"})())
     assert frozen == ("celeris-1-decision+shapeA+gate0.70+esc-claude-haiku-5-5-0.40+escfields-severity"
                       "+extract-code-v1+prompt-v1+schema-v1")
     d = {"probs": {"topic": {"playback": 0.4, "other": 0.6}, "intent": {"complaint": 0.5, "praise": 0.5},
                    "severity": {"3": 0.55, "2": 0.45}}}
     assert router.uncertain_fields(d, 0.70, ("severity",)) == ["severity"]
-    # end to end on the fake provider with the CLI defaults (= the frozen config): A5 only ever answers severity
+    # end to end on the fake provider with the M6 settings: A5 only ever answers severity
     rc = cli.main(["enrich", "--db", str(db), "--root", str(tmp_path), "--provider", "fake", "--batch-size", "20",
-                   "--label-config", "cfg-frozen", "--fake-script", "low_conf"])
+                   "--label-config", "cfg-frozen", "--fake-script", "low_conf", "--gate", "0.70",
+                   "--esc-fraction", "0.40", "--sentiment", "mean"])
     assert rc == 0
     conn = connect(db)
     routes = [json.loads(r[0]) for r in conn.execute("SELECT output_json FROM agent_outputs WHERE agent='A4' "

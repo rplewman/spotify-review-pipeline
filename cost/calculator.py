@@ -29,8 +29,8 @@ HERE = Path(__file__).resolve().parent
 # Contract volumes (GRADING_CONTRACT / dataset README, PLAN §9.1) and our scope (PLAN §1.1, M1 measurement).
 FULL = {"rows": 660_622, "outputs": 660_609, "quarantined": 13, "distinct": 484_189}
 SCOPE = {"rows": 100_000, "outputs": 100_000, "quarantined": 0, "distinct": 78_099}
-# PLAN §4 bucket caps (list USD) checked against the 100k scope scenario.
-BUCKET_CAPS = {"A3": ("decisions", 4.50), "A5": ("escalation", 2.00), "A8": ("verification", 0.50),
+# PLAN §4 bucket caps (list USD, v4.2 — M6b) checked against the 100k scope scenario (= pipeline/db/ledger.py).
+BUCKET_CAPS = {"A3": ("decisions", 2.00), "A5": ("escalation", 5.00), "A8": ("verification", 1.00),
                "fixed": ("analysis", 0.25)}
 STAGES = [  # (key, calls.role, calls.agent, unit, scaling)
     ("A3", "enrich", "A3", "distinct text decided", "distinct"),

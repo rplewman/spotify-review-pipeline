@@ -1,7 +1,8 @@
 """A4 Router (PLAN §3.3, §3.5), code only: accept A3's labels or send the uncertain fields to A5.
 
 - Gate: a gated field (topic / intent / severity by default; the frozen M6 config gates severity only, because the
-  dev_100 sweep showed Haiku hurts topic) whose top probability is < `gate` (part of label_config) is uncertain. Sentiment is not gated (it is a probability-weighted value, not a choice).
+  dev_100 sweep showed Haiku hurts topic) whose top probability is < `gate` (part of label_config) is uncertain. A gate ≥ 1.00 means "always": every gated field of every review goes to A5 (M6b: Haiku on severity
+  for every review, cap 1.00). Sentiment is not gated (it is a probability-weighted value, not a choice).
 - Caps: escalations under one label_config are limited to floor(esc_fraction × the stage's work items in reach). The count and
   the new routes are written in one write transaction, so concurrent workers can never overshoot it. Over the cap →
   `capped`: A3's labels with needs_review=true. The $ sub-cap is the ledger's `escalation` bucket: when it refuses
@@ -22,7 +23,7 @@ def top_prob(decision, field):
 
 def uncertain_fields(decision, gate, fields=GATED):
     """The gated fields (all three by default; M6 froze severity only) whose top probability is below the gate."""
-    return [f for f in fields if top_prob(decision, f) < gate]
+    return [f for f in fields if gate >= 1.0 or top_prob(decision, f) < gate]
 
 
 def top2(decision, field):

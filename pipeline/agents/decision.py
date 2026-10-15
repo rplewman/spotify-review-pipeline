@@ -4,7 +4,9 @@ Shape A (default): `state` = the label definitions (prompts/decision_state_v1.md
 reviews tagged [R1]…[Rn]; 4 short questions per review ("Topic of [R7]") whose options are bare label names.
 Shape B (flag, M5 comparison): one review per request; the definitions travel in each question's option descriptions.
 
-Topic, intent, severity and sentiment only; every probability is kept. The answer for review n must arrive under
+Topic, intent, severity and sentiment only; every probability is kept. Sentiment: `mean` (M3b–M6) = Celeris's
+probability-weighted score, which pulls toward 0; `mode` (M6b, `+sentiment-mode-v1` in label_config) = the most
+probable level (−1, −0.5, 0, +0.5, +1), ties → the level nearer 0. The answer for review n must arrive under
 the keys `R<n>_<field>`. A key for a review we did not send (a foreign [R<n>]) makes the whole response suspect
 (attribution can no longer be trusted) → the call is invalid → every review is retried once → quarantine.
 A missing or malformed answer only invalidates that review.
@@ -19,6 +21,8 @@ STATE_PREFIX = (Path(__file__).resolve().parents[2] / "prompts" / "decision_stat
 FIELDS = ("topic", "intent", "severity", "sentiment")
 SEVERITY_LEVELS = ["1 no problem", "2 minor or generic", "3 degraded", "4 blocked core task", "5 serious harm"]
 SENTIMENT_LEVELS = ["very negative", "negative", "neutral", "positive", "very positive"]
+SENTIMENT_MODES = ("mean", "mode")
+SENTIMENT_MODE_VERSION = "sentiment-mode-v1"
 REF = re.compile(r"\[R(\d+)\]")
 KEY = re.compile(r"\AR(\d+)_(topic|intent|severity|sentiment)\Z")
 
@@ -104,7 +108,18 @@ def _score(ans, n_levels):
     return float(ans["score"]), _probs(ans, [str(i) for i in range(n_levels)])
 
 
-def read_review(answers, n):
+def sentiment_value(score, probs, mode="mean"):
+    """−1..1 from Celeris's sentiment answer. mean: the probability-weighted level (score 0..4); mode: the most
+    probable level, ties → the level nearer neutral (index 2), then the lower one."""
+    if mode == "mean":
+        return round(score / 2 - 1, 2)
+    if mode != "mode":
+        raise ValueError(f"unknown sentiment mode {mode!r}")
+    level = max(range(5), key=lambda i: (probs[str(i)], -abs(i - 2), -i))
+    return level / 2 - 1
+
+
+def read_review(answers, n, sentiment="mean"):
     """One review's decision from the answers dict; raises ValueError if anything is missing or malformed."""
     missing = [f for f in FIELDS if f"R{n}_{f}" not in answers]
     if missing:
@@ -116,7 +131,7 @@ def read_review(answers, n):
     level = max(range(5), key=lambda i: (sev_p[str(i)], -i))  # most probable level; ties → the lower severity
     return {
         "topic": topic, "intent": intent, "severity": level + 1,
-        "sentiment": round(sent_score / 2 - 1, 2),  # probability-weighted level 0..4 → −1..1
+        "sentiment": sentiment_value(sent_score, sent_p, sentiment),
         "probs": {"topic": topic_p, "intent": intent_p,
                   "severity": {str(i + 1): sev_p[str(i)] for i in range(5)},
                   "sentiment": {lvl: sent_p[str(i)] for i, lvl in enumerate(SENTIMENT_LEVELS)}},
@@ -124,7 +139,7 @@ def read_review(answers, n):
     }
 
 
-def parse(body, n_reviews):
+def parse(body, n_reviews, sentiment="mean"):
     """({n: decision}, {n: invalid_reason}, notes). Raises ValueError when the response as a whole is unusable."""
     if not isinstance(body, dict) or not isinstance(body.get("answers"), dict):
         raise ValueError("unparseable output")
@@ -135,7 +150,7 @@ def parse(body, n_reviews):
     ok, bad = {}, {}
     for n in range(1, n_reviews + 1):
         try:
-            ok[n] = read_review(answers, n)
+            ok[n] = read_review(answers, n, sentiment)
         except ValueError as e:
             bad[n] = str(e)
     return ok, bad, []

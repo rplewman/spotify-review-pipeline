@@ -1,0 +1,717 @@
+{
+ "model": "claude-sonnet-5-5",
+ "effort": "low",
+ "label_config_of_a3": "pilot-celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1",
+ "run_id": "run-20261014-220252-dda60c",
+ "requests": [
+  "34451255b71243e7ac38ab8a5c70fb79",
+  "b6885174827647c19d9df92b76df20d6"
+ ],
+ "usd_list": 0.16449550000000002,
+ "calls": 3,
+ "input_tokens": 12496,
+ "output_tokens": 2772,
+ "request": "the pipeline's A5 request (prompts/escalation_system_v1.md) with all 8 topics as candidates, sorted by Celeris's probability (shown)",
+ "reviews": [
+  {
+   "review_id": "8e9a5751-c1e8-4d7a-afbe-5239c98a08d0",
+   "celeris": "other",
+   "p_top": 0.98,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "f7cc1aa7-c306-4f5b-a5e9-911cca07fa60",
+   "celeris": "other",
+   "p_top": 0.94,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "f1532a7d-a47c-40eb-b41f-da17a379f9fb",
+   "celeris": "other",
+   "p_top": 0.97,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "e85a31f6-786e-4673-94b8-010fea8ce464",
+   "celeris": "catalog",
+   "p_top": 0.37,
+   "model": "catalog",
+   "needs_review": false
+  },
+  {
+   "review_id": "a7b7539a-c8d3-4f4e-9edd-d46cd1b1fd12",
+   "celeris": "playback",
+   "p_top": 0.94,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "7a8b5434-66b4-4b13-aa91-5ad62a86ec04",
+   "celeris": "other",
+   "p_top": 0.69,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "5e42046c-b29b-4035-ba83-a8e222789e98",
+   "celeris": "usability",
+   "p_top": 0.89,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "8f0071a2-190f-4e20-bec3-3f252e47a6e3",
+   "celeris": "other",
+   "p_top": 0.98,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "0575ce08-ab04-46f0-aa8a-fbf9cd27e8da",
+   "celeris": "other",
+   "p_top": 0.96,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "2313bd8e-43bd-4777-bff9-3ae753288f0e",
+   "celeris": "billing",
+   "p_top": 0.88,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "16929558-ce1e-4b87-8738-a1de3f557f66",
+   "celeris": "billing",
+   "p_top": 0.92,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "d26566f7-a898-4298-a06a-50bd3f7319c1",
+   "celeris": "usability",
+   "p_top": 0.53,
+   "model": "catalog",
+   "needs_review": false
+  },
+  {
+   "review_id": "6db48f4b-20a0-460f-9beb-e07cd20f9fab",
+   "celeris": "other",
+   "p_top": 0.96,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "890aeb60-e7cf-4f0d-a321-03a1c8b65757",
+   "celeris": "billing",
+   "p_top": 0.98,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "61d5fc66-9bd1-4a18-8185-ae9a451e05a3",
+   "celeris": "other",
+   "p_top": 0.91,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "d27e9b26-a7af-469c-9a4e-8deea2db72ae",
+   "celeris": "other",
+   "p_top": 0.48,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "e667ab56-1b04-4596-bfd9-69f5919dcc10",
+   "celeris": "downloads",
+   "p_top": 0.64,
+   "model": "downloads",
+   "needs_review": false
+  },
+  {
+   "review_id": "7e610236-5f6a-404f-a503-ed466c6700eb",
+   "celeris": "catalog",
+   "p_top": 0.9,
+   "model": "catalog",
+   "needs_review": false
+  },
+  {
+   "review_id": "5fb2a0b0-bb06-4d73-b6ff-1a2d332fae37",
+   "celeris": "other",
+   "p_top": 0.94,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "35008b46-daf1-497c-ac9b-fe98f120f912",
+   "celeris": "other",
+   "p_top": 0.96,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "5c581e49-727a-4221-be0a-a59344c78d60",
+   "celeris": "billing",
+   "p_top": 0.98,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "d635d6c8-460e-452f-8d53-6cd1ea804e98",
+   "celeris": "billing",
+   "p_top": 0.64,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "06d59085-ebf9-454a-ba15-1e8480562352",
+   "celeris": "other",
+   "p_top": 0.9,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "bb77bfb2-6eb8-4c6c-88bb-491c7da75196",
+   "celeris": "other",
+   "p_top": 0.98,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "54fdf931-7807-4af4-9c9b-d87845129bcb",
+   "celeris": "other",
+   "p_top": 0.7,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "15502657-31ee-440e-8df3-2c405b5da275",
+   "celeris": "catalog",
+   "p_top": 0.58,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "ec8d58bf-f9e2-42c6-870b-b87c78fe569f",
+   "celeris": "other",
+   "p_top": 0.67,
+   "model": "other",
+   "needs_review": true
+  },
+  {
+   "review_id": "475aa270-a637-4332-ba8d-48def4869f98",
+   "celeris": "other",
+   "p_top": 0.62,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "824cc977-421c-4445-898f-663acfd131f1",
+   "celeris": "other",
+   "p_top": 0.91,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "8f8c0461-4c41-4829-af15-b2991f18adfe",
+   "celeris": "other",
+   "p_top": 0.9,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "e04b40b8-4ac0-4058-aa91-89986d53586a",
+   "celeris": "usability",
+   "p_top": 0.98,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "c3fd591f-890c-4721-bd99-57c3600ae82c",
+   "celeris": "usability",
+   "p_top": 0.82,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "ee17dcd6-07c0-4441-8e64-e7ea57877c78",
+   "celeris": "usability",
+   "p_top": 0.89,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "b551645f-204f-4134-b3ec-dd37dda36d95",
+   "celeris": "other",
+   "p_top": 0.89,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "e81ef9d4-212d-47fc-b360-f9a1914f2bcf",
+   "celeris": "other",
+   "p_top": 0.75,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "6f51891d-fa49-45e5-b2b2-27172682ab8f",
+   "celeris": "other",
+   "p_top": 0.78,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "d0ad8f6f-6746-4042-9645-2051184824f6",
+   "celeris": "other",
+   "p_top": 0.93,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "9db060c5-2ff5-493a-8a19-01a3da91ff1d",
+   "celeris": "billing",
+   "p_top": 0.99,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "aa8fec15-2de4-46af-a911-1b49bcb4eb4c",
+   "celeris": "usability",
+   "p_top": 0.54,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "bc1c4825-00c5-458d-ac00-098ce729c76d",
+   "celeris": "billing",
+   "p_top": 0.96,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "9f7a013a-082e-4ec1-8a65-a1e0a0395d20",
+   "celeris": "catalog",
+   "p_top": 0.76,
+   "model": "catalog",
+   "needs_review": false
+  },
+  {
+   "review_id": "f9e87b89-b080-48a2-a019-5c5dcf1689a6",
+   "celeris": "other",
+   "p_top": 0.66,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "28711041-0c42-432c-a1ad-63be8278ebec",
+   "celeris": "other",
+   "p_top": 0.97,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "3df77a78-ad9a-4456-8be8-8178ffd43d67",
+   "celeris": "playback",
+   "p_top": 0.57,
+   "model": "playback",
+   "needs_review": false
+  },
+  {
+   "review_id": "cc7b79ef-bf37-40fc-a02e-4917b86e422c",
+   "celeris": "usability",
+   "p_top": 0.89,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "7f27bbab-ef19-4fb1-80d8-cd014da3e002",
+   "celeris": "usability",
+   "p_top": 0.67,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "179d79f7-d052-490f-a9d6-f97525b32642",
+   "celeris": "playback",
+   "p_top": 0.88,
+   "model": "playback",
+   "needs_review": false
+  },
+  {
+   "review_id": "77a53aa5-a453-4bcb-8267-d4f44a492dd3",
+   "celeris": "usability",
+   "p_top": 0.48,
+   "model": "playback",
+   "needs_review": false
+  },
+  {
+   "review_id": "72ff3e9b-bc33-49a1-b9a6-deb8fb904cc3",
+   "celeris": "other",
+   "p_top": 0.9,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "6ecd5837-917a-45de-b811-278da3a26a7a",
+   "celeris": "other",
+   "p_top": 0.75,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "9a436d71-1493-4700-a5cc-91472f708dcd",
+   "celeris": "other",
+   "p_top": 0.76,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "b03d6dc9-449a-4647-b112-559186656759",
+   "celeris": "usability",
+   "p_top": 0.9,
+   "model": "downloads",
+   "needs_review": false
+  },
+  {
+   "review_id": "d767f1af-e8eb-41af-9cc4-8bfa35253870",
+   "celeris": "playback",
+   "p_top": 0.94,
+   "model": "playback",
+   "needs_review": false
+  },
+  {
+   "review_id": "56f6a4a1-7aa3-4e61-a361-0f1f7c754fac",
+   "celeris": "catalog",
+   "p_top": 0.51,
+   "model": "catalog",
+   "needs_review": false
+  },
+  {
+   "review_id": "fe5dadcb-e99c-4675-b8c8-6c2bacb338d7",
+   "celeris": "usability",
+   "p_top": 0.95,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "453b621f-6bdd-428a-a610-2b55918c9adb",
+   "celeris": "other",
+   "p_top": 0.98,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "0853c56b-0fa1-4d12-9cb9-6817d52233f5",
+   "celeris": "usability",
+   "p_top": 0.98,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "e8f2fb9b-ad3b-4fec-8194-ab67956ee50a",
+   "celeris": "usability",
+   "p_top": 0.67,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "4b3ace8e-b199-40b3-8ad4-5c0580e38203",
+   "celeris": "catalog",
+   "p_top": 0.59,
+   "model": "catalog",
+   "needs_review": false
+  },
+  {
+   "review_id": "2062c32e-3fab-4957-8ffa-d0e89767abaa",
+   "celeris": "other",
+   "p_top": 0.89,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "6a2cd434-9ad2-4e66-8968-ad066659d4df",
+   "celeris": "usability",
+   "p_top": 0.96,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "2c3b2ca3-32b0-435f-aef5-84efafce6606",
+   "celeris": "other",
+   "p_top": 0.66,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "9ef99a2e-7d00-4d76-add9-85b0c0a06572",
+   "celeris": "other",
+   "p_top": 0.97,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "0b626430-7bf8-4ae4-9a44-f6ffc4324424",
+   "celeris": "other",
+   "p_top": 0.66,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "62b53e0a-0397-4200-826f-122d18fdde32",
+   "celeris": "other",
+   "p_top": 0.71,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "253a336b-ef38-49b3-beda-3758b0d6b2c2",
+   "celeris": "other",
+   "p_top": 0.73,
+   "model": "other",
+   "needs_review": true
+  },
+  {
+   "review_id": "9ec495c3-d57d-47dd-b08d-834557b12117",
+   "celeris": "other",
+   "p_top": 0.97,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "05fa5b8a-a49b-43be-bab5-38af789a65a7",
+   "celeris": "playback",
+   "p_top": 0.94,
+   "model": "playback",
+   "needs_review": false
+  },
+  {
+   "review_id": "8b47c5d7-d31c-4aae-b00d-d62217ae55fc",
+   "celeris": "other",
+   "p_top": 0.74,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "6eb64519-37d4-4591-a47a-bbb96357de36",
+   "celeris": "usability",
+   "p_top": 0.92,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "e3238297-f942-4c8e-96f7-b951b461e707",
+   "celeris": "other",
+   "p_top": 0.63,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "4966b59e-cf09-4881-b3ea-34fd4118a553",
+   "celeris": "billing",
+   "p_top": 0.6,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "fac0295e-9b7a-4422-bf77-6faf41eaea55",
+   "celeris": "playback",
+   "p_top": 0.98,
+   "model": "playback",
+   "needs_review": false
+  },
+  {
+   "review_id": "55bc2f5d-0157-467b-8f5c-2f9c7d1b0c04",
+   "celeris": "other",
+   "p_top": 0.83,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "710e1aee-ed80-4753-9c4e-c63bee84fd56",
+   "celeris": "other",
+   "p_top": 0.9,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "0839f80d-e672-4954-b50e-20f85c2b8d16",
+   "celeris": "other",
+   "p_top": 0.81,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "b45ac639-166c-4089-a716-d462162a918b",
+   "celeris": "catalog",
+   "p_top": 0.53,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "0fcf89b2-0b81-4838-bf5f-41c684e43b2d",
+   "celeris": "playback",
+   "p_top": 0.94,
+   "model": "playback",
+   "needs_review": false
+  },
+  {
+   "review_id": "e2fc1a52-c841-4122-8124-02e2ada9a345",
+   "celeris": "other",
+   "p_top": 0.71,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "651e6e7b-f93e-4369-9631-15c73ddcd4ad",
+   "celeris": "playback",
+   "p_top": 0.91,
+   "model": "playback",
+   "needs_review": false
+  },
+  {
+   "review_id": "8f848aef-444d-4f95-8868-8579f690beb0",
+   "celeris": "playback",
+   "p_top": 0.86,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "4001e2ec-2621-4256-b42d-c4988458a293",
+   "celeris": "other",
+   "p_top": 0.48,
+   "model": "other",
+   "needs_review": true
+  },
+  {
+   "review_id": "b4f4440f-d952-405d-bf7b-f19fb0adf484",
+   "celeris": "usability",
+   "p_top": 0.98,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "7b7b7855-cf14-4b59-bdc6-12916e833002",
+   "celeris": "other",
+   "p_top": 0.87,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "40f1506e-4bbb-456a-ab3e-8c15911b62a9",
+   "celeris": "other",
+   "p_top": 0.88,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "82aedd59-debc-4147-9ff4-5a95c3d3a4e4",
+   "celeris": "billing",
+   "p_top": 0.74,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "6884452c-d727-4c24-9511-017020f73a16",
+   "celeris": "other",
+   "p_top": 0.78,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "0cc5a3be-e40c-4e9f-918d-53d284e2e5b3",
+   "celeris": "usability",
+   "p_top": 0.96,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "7c431748-3a85-4080-8cf9-c41f48f92ea5",
+   "celeris": "other",
+   "p_top": 0.7,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "6abbfa21-bc7b-400f-96b2-b07fe77b5e37",
+   "celeris": "other",
+   "p_top": 0.86,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "b0d0660d-b859-4d87-97e8-7420f05d1f94",
+   "celeris": "other",
+   "p_top": 0.74,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "0be20402-efaf-482f-9635-78f166bcf538",
+   "celeris": "other",
+   "p_top": 0.89,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "6455e7cb-ad90-47ad-883f-5b0f0e205af1",
+   "celeris": "other",
+   "p_top": 0.51,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "a06df5ff-01c8-4aff-a89c-a0c2ddc88f76",
+   "celeris": "billing",
+   "p_top": 0.75,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "9d15352b-b78f-477b-b56f-44a6698ba55a",
+   "celeris": "playback",
+   "p_top": 0.95,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "af53cf35-c680-4ccb-b30c-cfd85bb61c57",
+   "celeris": "usability",
+   "p_top": 0.86,
+   "model": "billing",
+   "needs_review": false
+  },
+  {
+   "review_id": "90c663e4-4362-4929-b4a8-098db44c2cc6",
+   "celeris": "other",
+   "p_top": 0.93,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "10775595-01b9-4623-9163-51619e2a0fa9",
+   "celeris": "catalog",
+   "p_top": 0.99,
+   "model": "usability",
+   "needs_review": false
+  },
+  {
+   "review_id": "0ed90e01-b1ca-40a5-a0a2-4660c0fdaf60",
+   "celeris": "other",
+   "p_top": 0.93,
+   "model": "other",
+   "needs_review": false
+  },
+  {
+   "review_id": "c55970e2-9223-4e83-92de-9b7e4aac0663",
+   "celeris": "other",
+   "p_top": 0.89,
+   "model": "other",
+   "needs_review": false
+  }
+ ]
+}

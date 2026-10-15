@@ -1,0 +1,113 @@
+{
+ "model": "claude-sonnet-5-5",
+ "usd_list_test": 0.16449550000000002,
+ "usd_per_review": 0.0016449550000000002,
+ "celeris_top1": {
+  "all": [
+   96,
+   100
+  ],
+  "adjudicated": [
+   19,
+   23
+  ],
+  "escalated": 0
+ },
+ "gates": [
+  {
+   "gate": 0.5,
+   "escalated_share": 0.04,
+   "adjudicated": [
+    19,
+    23
+   ],
+   "all": [
+    95,
+    100
+   ],
+   "gain_adjudicated": 0,
+   "projected_usd_conservative": 10.18,
+   "passes": false
+  },
+  {
+   "gate": 0.6,
+   "escalated_share": 0.12,
+   "adjudicated": [
+    19,
+    23
+   ],
+   "all": [
+    93,
+    100
+   ],
+   "gain_adjudicated": 0,
+   "projected_usd_conservative": 30.53,
+   "passes": false
+  },
+  {
+   "gate": 0.7,
+   "escalated_share": 0.24,
+   "adjudicated": [
+    19,
+    23
+   ],
+   "all": [
+    93,
+    100
+   ],
+   "gain_adjudicated": 0,
+   "projected_usd_conservative": 61.05,
+   "passes": false
+  },
+  {
+   "gate": 0.8,
+   "escalated_share": 0.39,
+   "adjudicated": [
+    19,
+    23
+   ],
+   "all": [
+    93,
+    100
+   ],
+   "gain_adjudicated": 0,
+   "projected_usd_conservative": 99.21,
+   "passes": false
+  },
+  {
+   "gate": 0.9,
+   "escalated_share": 0.56,
+   "adjudicated": [
+    19,
+    23
+   ],
+   "all": [
+    92,
+    100
+   ],
+   "gain_adjudicated": 0,
+   "projected_usd_conservative": 142.46,
+   "passes": false
+  },
+  {
+   "gate": 1.01,
+   "escalated_share": 1.0,
+   "adjudicated": [
+    19,
+    23
+   ],
+   "all": [
+    92,
+    100
+   ],
+   "gain_adjudicated": 0,
+   "projected_usd_conservative": 254.39,
+   "passes": false
+  }
+ ],
+ "decision": {
+  "adopt": false,
+  "gate": null,
+  "rule": "adopt only if it beats Celeris top-1 on the adjudicated dev rows by ≥ 2 reviews AND the projected conservative cost ≤ $0.72 (= escalation $5.00 + reserve $1.25 − Haiku severity on all $4.53 − $1.00 floor)"
+ }
+}

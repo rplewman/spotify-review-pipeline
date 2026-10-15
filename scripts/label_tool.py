@@ -1,6 +1,6 @@
 """Local hand-labeling helper for the golden 50 and dev_100 (M2). No API calls; binds to 127.0.0.1 only.
 
-Usage: python scripts/label_tool.py golden   (or: dev)  [--port 8765] [--no-browser]
+Usage: python scripts/label_tool.py golden   (or: dev, heldout)  [--port 8765] [--no-browser]
        python scripts/label_tool.py dev --disagreements   M6: only the reviews where Celeris and Haiku disagree
            (evals/dev_100/disagreements.json from `scripts/m6.py dev-prepare`); the agreed fields are pre-filled and
            both models' answers are shown for the disputed ones.
@@ -9,6 +9,7 @@ Shows one review at a time (text only: stars, likes, version and date are hidden
 contract definitions, and the label form. Every save validates the labels and rewrites the output CSV atomically, so you can
 stop at any point and resume later. Output = the template's 13 columns filled in, plus accepted alternatives and notes:
   golden -> evals/golden/golden_50_labeled.csv     dev -> evals/dev_100/dev_100_labeled.csv
+  heldout -> evals/heldout_30/heldout_30_labeled.csv (M6b; `scripts/m6b.py heldout-prepare` writes the input)
 This script and the M6 sweep/evaluation scripts are the only code allowed to touch these files (tests/test_m2_labels.py).
 """
 import argparse
@@ -28,6 +29,8 @@ from pipeline.schema import INTENTS, SEVERITIES, TOPICS, validate_labels  # noqa
 SETS = {
     "golden": (ROOT / "data/raw/golden_50_to_label.csv", ROOT / "evals/golden/golden_50_labeled.csv"),
     "dev": (ROOT / "evals/dev_100/dev_100_to_label.csv", ROOT / "evals/dev_100/dev_100_labeled.csv"),
+    # M6b: 30 fresh held-out reviews (seed ranks 10,051–10,080), labeled blind (no model answers shown)
+    "heldout": (ROOT / "evals/heldout_30/heldout_30_to_label.csv", ROOT / "evals/heldout_30/heldout_30_labeled.csv"),
 }
 SOURCE_FIELDS = ["review_id", "review_text", "review_rating", "review_likes", "app_version", "review_timestamp"]
 LABEL_COLUMNS = ["topic", "intent", "sentiment", "severity", "entities", "evidence_quote", "needs_review"]

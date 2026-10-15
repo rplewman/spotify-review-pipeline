@@ -77,7 +77,17 @@ def members(conn, label_config):
                                   s.text_sha256, s.review_text
                            FROM records r JOIN source_reviews s ON s.review_id = r.review_id
                            WHERE r.status='completed' AND r.label_config=? AND r.intent IN ('complaint','cancellation')
+                             AND s.scope IS NOT 'frequency_addon'
                            ORDER BY r.review_id""", (label_config,)).fetchall()
+
+
+def excluded(conn, label_config):
+    """Completed complaint/cancellation records left out of the business ranking: the frequency add-on (PLAN §1.1)
+    labels rows for coverage only, it is not a random sample."""
+    return [r[0] for r in conn.execute("""SELECT r.review_id FROM records r JOIN source_reviews s ON s.review_id = r.review_id
+                                          WHERE r.status='completed' AND r.label_config=? AND s.scope='frequency_addon'
+                                            AND r.intent IN ('complaint','cancellation') ORDER BY r.review_id""",
+                                       (label_config,))]
 
 
 def build(rows):
@@ -204,9 +214,13 @@ def group(conn, label_config, provider, root, run_id, max_spend=None):
         w = csv.writer(f, lineterminator="\n")
         w.writerow(["issue_id", "review_id"])
         w.writerows(membership)
+    left_out = excluded(conn, label_config)
+    (out / "ranking_excluded.txt").write_text("".join(rid + "\n" for rid in left_out), encoding="utf-8")
     doc = {"label_config": label_config, "subtopics_version": subtopics()[0], "areas_version": areas()[0],
            "grouper_prompt": PROMPT_VERSION, "model": provider.model, "naming": prov,
-           "allow_multi_issue": False, "issues": list(issues.values())}
+           "allow_multi_issue": False, "excluded_from_ranking": {"scope": "frequency_addon", "records": len(left_out),
+                                                                 "file": "ranking_excluded.txt"},
+           "issues": list(issues.values())}
     (out / "issues.json").write_text(json.dumps(doc, ensure_ascii=False, indent=1, sort_keys=True) + "\n",
                                      encoding="utf-8")
     export_enriched(conn, label_config, out / "enriched.jsonl.gz")

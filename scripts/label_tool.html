@@ -184,7 +184,7 @@ document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.ke
 
 fetch('/api/items').then(r => r.json()).then(d => {
   D = d;
-  $('title').textContent = d.set === 'golden' ? 'Golden 50' : 'dev_100';
+  $('title').textContent = ({golden: 'Golden 50', dev: 'dev_100', heldout: 'Held-out 30'})[d.set] || d.set;
   opts($('topic'), d.topics); opts($('intent'), d.intents); opts($('severity'), d.severities);
   alts($('altTopics'), d.topics, 'at'); alts($('altIntents'), d.intents, 'ai'); alts($('altSeverities'), d.severities, 'as');
   const k = d.items.findIndex(x => !x.labels); go(k >= 0 ? k : 0);

@@ -66,9 +66,10 @@ def run(db, provider, tmp_path=None, **kw):
     return asyncio.run(orch.run())
 
 
-def succeeded_ids(conn):
+def succeeded_ids(conn, agent="A3"):
+    """Review IDs per succeeded call of one agent (M6b: A5 now sees every review too, in its own call)."""
     ids = Counter()
-    for (j,) in conn.execute("SELECT review_ids_json FROM calls WHERE outcome='succeeded'"):
+    for (j,) in conn.execute("SELECT review_ids_json FROM calls WHERE outcome='succeeded' AND agent=?", (agent,)):
         ids.update(json.loads(j))
     return ids
 
@@ -78,6 +79,8 @@ def assert_complete_and_unique(conn):
     assert statuses == {"done": conn.execute("SELECT COUNT(*) FROM texts").fetchone()[0]}, statuses
     ids = succeeded_ids(conn)
     assert ids and max(ids.values()) == 1, [k for k, v in ids.items() if v > 1]
+    a5 = succeeded_ids(conn, "A5")
+    assert not a5 or max(a5.values()) == 1, [k for k, v in a5.items() if v > 1]
     originals = {r[0] for r in conn.execute("SELECT original_review_id FROM texts")}
     assert set(ids) == originals  # every distinct text was paid for exactly once, via its original ID
 

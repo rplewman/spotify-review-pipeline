@@ -147,13 +147,15 @@ class PassthroughStage(Stage):
         return ok, bad, notes
 
 
-def make_label_config(decision_model, shape, gate, esc_model, esc_fraction, esc_fields=None):
+def make_label_config(decision_model, shape, gate, esc_model, esc_fraction, esc_fields=None, sentiment="mean"):
     """PLAN §3.7: every setting that changes a label is in the string; any change → new work, no cache reuse.
-    `esc_fields` (the gated fields) is written only when it is not all three, so earlier strings are unchanged."""
+    `esc_fields` (the gated fields) is written only when it is not all three, and the sentiment tag only for `mode`
+    (M6b), so earlier strings are unchanged."""
     fields = tuple(esc_fields or router.GATED)
     gated = "" if set(fields) == set(router.GATED) else "+escfields-" + "-".join(f for f in router.GATED if f in fields)
     return (f"{decision_model}+shape{shape}+gate{gate:.2f}+esc-{esc_model or 'none'}-{esc_fraction:.2f}{gated}"
-            f"+{extractor.EXTRACT_VERSION}+{decision.PROMPT_VERSION}+{SCHEMA_VERSION}")
+            f"+{extractor.EXTRACT_VERSION}+{decision.PROMPT_VERSION}+{SCHEMA_VERSION}"
+            + (f"+{decision.SENTIMENT_MODE_VERSION}" if sentiment == "mode" else ""))
 
 
 class EnrichStage(Stage):
@@ -168,8 +170,11 @@ class EnrichStage(Stage):
     """
 
     def __init__(self, provider, label_config, escalation_provider=None, shape="A", gate=0.60, esc_fraction=0.15,
-                 esc_bucket="escalation", esc_bucket_cap=None, esc_fields=router.GATED):
+                 esc_bucket="escalation", esc_bucket_cap=None, esc_fields=router.GATED, sentiment="mean"):
         super().__init__(provider, label_config)
+        if sentiment not in decision.SENTIMENT_MODES:
+            raise ValueError(f"unknown sentiment mode {sentiment!r}")
+        self.sentiment = sentiment
         self.esc_fields = tuple(esc_fields)
         self.escalation_provider, self.shape, self.gate = escalation_provider, shape, gate
         self.esc_fraction = esc_fraction if escalation_provider is not None else 0.0
@@ -180,7 +185,7 @@ class EnrichStage(Stage):
     def describe(self):
         return {"stage": "EnrichStage", "shape": self.shape, "gate": self.gate, "esc_fraction": self.esc_fraction,
                 "escalation_model": getattr(self.escalation_provider, "model", None), "esc_bucket": self.esc_bucket,
-                "esc_fields": list(self.esc_fields)}
+                "esc_fields": list(self.esc_fields), "sentiment": self.sentiment}
 
     # ----- saved intermediate outputs -----
     def _load(self, conn, agent, shas):
@@ -238,7 +243,7 @@ class EnrichStage(Stage):
         index = {n: i["id"] for n, i in enumerate(items, 1)}
 
         def parse(body):
-            ok, bad, notes = decision.parse(body, len(items))
+            ok, bad, notes = decision.parse(body, len(items), self.sentiment)
             return ({index[n]: d for n, d in ok.items()}, {index[n]: r for n, r in bad.items()}, notes)
 
         return Call("A3", "A3", self.provider, items, payload, parse, tokens,

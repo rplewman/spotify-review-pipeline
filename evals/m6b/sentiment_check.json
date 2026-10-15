@@ -1,0 +1,31 @@
+{
+ "note": "golden-driven: the golden 50 showed the pull toward 0 (M6), so this is disclosed and re-checked on the fresh held-out 30 (heldout-score)",
+ "sets": {
+  "golden_50": {
+   "mean": {
+    "n": 50,
+    "mae": 0.308,
+    "within": 0.52
+   },
+   "mode": {
+    "n": 50,
+    "mae": 0.285,
+    "within": 0.64
+   },
+   "reference": "hand labels"
+  },
+  "dev_100": {
+   "mean": {
+    "n": 100,
+    "mae": 0.076,
+    "within": 0.95
+   },
+   "mode": {
+    "n": 100,
+    "mae": 0.138,
+    "within": 0.96
+   },
+   "reference": "dev_100 sentiment is a model-agreement pre-fill for 77 rows (not independent)"
+  }
+ }
+}

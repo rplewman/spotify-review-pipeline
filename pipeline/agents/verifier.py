@@ -23,7 +23,7 @@ from pipeline.stages import Call, Stage, payload_tokens
 PROMPT_VERSION = "verifier-prompt-v1"
 SYSTEM = (Path(__file__).resolve().parents[2] / "prompts" / "verifier_system_v1.md").read_text(encoding="utf-8").strip()
 EFFORT = "low"
-DEFAULT_RATE = 0.05
+DEFAULT_RATE = 0.20  # M6b (PLAN v4.2); was 0.05 — same seed, so a superset
 DEFAULT_SEED = "verify-v1"
 FIELDS = ("topic", "intent", "severity")
 SCHEMA = {

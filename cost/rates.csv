@@ -12,3 +12,7 @@ anthropic,claude-haiku-5-5,standard_le100k,cache_read_tokens,0.01,1M tokens,USD,
 anthropic,claude-haiku-5-5,standard_le100k,output_tokens,0.50,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12
 anthropic,claude-haiku-5-5,batch_le100k,input_tokens,0.05,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12
 anthropic,claude-haiku-5-5,batch_le100k,output_tokens,0.25,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-12
+anthropic,claude-sonnet-5-5,standard_le100k,input_tokens,2.00,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-14
+anthropic,claude-sonnet-5-5,standard_le100k,cache_write_5m_tokens,2.50,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-14
+anthropic,claude-sonnet-5-5,standard_le100k,cache_read_tokens,0.20,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-14
+anthropic,claude-sonnet-5-5,standard_le100k,output_tokens,10.00,1M tokens,USD,https://platform.claude.com/docs/en/about-claude/pricing,2026-10-14

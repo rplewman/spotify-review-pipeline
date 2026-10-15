@@ -28,6 +28,7 @@ EMPTY_REASON = "empty_review_text"
 # Placeholder until the label_config is defined (M3) and frozen (M6); workers only claim items of their own config.
 PROVISIONAL_LABEL_CONFIG = "provisional-v0"
 ADDON_STEPS = (1_000, 5_000, 10_000, 25_000)
+ADDON_SIZE = 25_000  # PLAN v4.2: frequency add-on = the top 25,000 out-of-scope distinct texts (confirmed by Rory, M6)
 
 # Seed-order rank ranges (1-based, inclusive) of the official samples (prepare_dataset.py) and our dev_100 (§3.5).
 SUBSETS = {
@@ -197,6 +198,40 @@ def enqueue(conn, stage, label_config):
                               SELECT text_sha256, ?, ?, scope_rank FROM texts WHERE true
                               ON CONFLICT (text_sha256, stage, label_config) DO NOTHING""", (stage, label_config))
     return cur.rowcount
+
+
+def build_addon(conn, size=ADDON_SIZE):
+    """PLAN §1.1 frequency add-on (M6b): the `size` out-of-scope distinct texts shared by the most rows (ties: the
+    lowest seed rank first; the same order as the ingestion report's curve) become `texts` rows, and all their rows
+    get scope='frequency_addon'. Their `texts.scope_rank` = 100,000 + frequency rank, so the queue claims them after the
+    100k, most frequent first, and `--max-rank 100000` never reaches them. Idempotent: once built, returns the counts."""
+    with conn:
+        have = conn.execute("SELECT COUNT(DISTINCT text_sha256), COUNT(*) FROM source_reviews "
+                            "WHERE scope='frequency_addon'").fetchone()
+        if have[0]:
+            if have[0] != size:
+                raise IntakeError(f"frequency add-on already built with {have[0]} texts, not {size}")
+            return {"texts": have[0], "rows": have[1], "built": False}
+        top = conn.execute("""SELECT text_sha256 FROM source_reviews WHERE scope = 'out_of_scope'
+                                AND text_sha256 NOT IN (SELECT text_sha256 FROM texts)
+                              GROUP BY text_sha256 ORDER BY COUNT(*) DESC, MIN(scope_rank) ASC LIMIT ?""",
+                           (size,)).fetchall()
+        conn.execute("CREATE TEMP TABLE addon_pick (text_sha256 TEXT PRIMARY KEY, freq_rank INTEGER NOT NULL)")
+        conn.executemany("INSERT INTO addon_pick VALUES (?, ?)", [(sha, n) for n, (sha,) in enumerate(top, 1)])
+        conn.execute("""UPDATE source_reviews SET scope = 'frequency_addon'
+                        WHERE scope = 'out_of_scope' AND text_sha256 IN (SELECT text_sha256 FROM addon_pick)""")
+        conn.execute(f"""
+            WITH ins AS (
+                SELECT s.text_sha256, s.review_text, s.review_id,
+                       ROW_NUMBER() OVER (PARTITION BY s.text_sha256 ORDER BY s.scope_rank) AS rn,
+                       COUNT(*) OVER (PARTITION BY s.text_sha256) AS n_in
+                FROM source_reviews s WHERE s.scope = 'frequency_addon')
+            INSERT INTO texts (text_sha256, review_text, original_review_id, scope_rank, rows_in_scope, rows_total)
+            SELECT ins.text_sha256, ins.review_text, ins.review_id, {SCOPE_SIZE} + p.freq_rank, ins.n_in, ins.n_in
+            FROM ins JOIN addon_pick p ON p.text_sha256 = ins.text_sha256 WHERE ins.rn = 1""")
+        conn.execute("DROP TABLE addon_pick")
+        rows = conn.execute("SELECT COUNT(*) FROM source_reviews WHERE scope='frequency_addon'").fetchone()[0]
+    return {"texts": len(top), "rows": rows, "built": True}
 
 
 def ranked_rows(conn, lo, hi):
