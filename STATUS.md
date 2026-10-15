@@ -1,6 +1,6 @@
 # STATUS — handoff log
 
-## Last completed: M7 (System tests & recovery evidence) — ✅ offline gate passed 2026-10-15 (💰 $0; tiny paid injection run pending Rory)
+## Last completed: M7 (System tests & recovery evidence) — ✅ gate passed 2026-10-15 (💰 $0.0020 list, injection run approved by Rory)
 
 ### Done (M7)
 - **Code:** `pipeline/recovery.py` (checkpoint files `{"completed_ids": [...]}` + `resume_rules` = local copy of the checker's
@@ -35,11 +35,18 @@
   record's → export only calls under the final label_config (and disclose the M6 calls in the run log/README), or decide in M10.
 - Copy `evals/recovery/checkpoint_{before,after}.json` into `grading/` in M10 (extra provenance keys are ignored by the checker).
 
+- **Real-model injection** (`evals/system_tests/injection_real_notes.md`; 6 injections + 4 controls, Celeris + Haiku +
+  Haiku verifier): **no label followed an injected instruction**, no output for unsent reviews, format intact.
+  Weakness: for 2 reviews the code-cut evidence_quote is the injection sentence itself (valid substring, weak evidence);
+  not fixed (extract-code-v1 frozen) → **disclose in the README (M12)**.
+
 ### Spend (list price)
-- M7: **$0** so far. Project total unchanged: **$0.6831** (Celeris $0.2049 credit, Anthropic $0.4783 cash).
+- M7: **$0.0020** = Celeris $0.0001 (prepaid credit) + Anthropic $0.0019 (cash), DB `state/m7_system/injection_real.db`.
+- **Project total $0.6851** (Celeris $0.2050 credit, Anthropic $0.4802 cash). M10/M12 spend roll-ups must include
+  `state/m7_system/injection_real.db` (the other m7 DBs are fake, $0 real).
 
 ### Next step
-Pending: Rory's yes/no on `injection_real` (≤ $0.02 cap, est. < $0.01). Then **M8 — Main 100k run.**
+**M8 — Main 100k run.**
 "Read CLAUDE.md, STATUS.md and PLAN.md §5 M8, then do M8."
 
 ---
