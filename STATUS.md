@@ -1,6 +1,37 @@
 # STATUS — handoff log
 
-## Last completed: M10 (Grading export + checker) — ✅ gate passed 2026-10-15 (no spend)
+## In progress: M11 (Publish, backend, dashboard) — code done + verified on Neon `test`; live deploy waiting on Rory (no spend)
+
+### Done (M11) — details `docs/DASHBOARD.md`
+- **Publish:** `pipeline/db/publish.py` + `pipeline.cli publish [--target main|test]`. One transaction: drop/recreate schemas
+  `serving` (tables) + `dashboard` (views: v_overall, v_status_reasons, v_scope, v_topic/intent/severity, v_area_rollup,
+  v_ranking, v_claims (+ recomputed `matches`), v_recommendations, v_run_summary, v_cost_summary, v_reviews). 660,622 records
+  (text for completed rows only) in ~40 s. Read-only login role **`dashboard_ro`** (SELECT on `dashboard.*` only,
+  `default_transaction_read_only`, 15 s statement timeout); password `DASHBOARD_RO_PASSWORD` in `.env`, plus
+  `DASHBOARD_DATABASE_URL` / `TEST_DASHBOARD_DATABASE_URL`.
+- **Backend:** `backend/app.py` read-only endpoints (`/api/overview|areas|ranking|claims|recommendations|cost`,
+  `/api/reviews/{id}`, `/api/issues/{id}/reviews`, `/api/health`, `/api/docs`); one shared connection, 5-min cache.
+  `DASHBOARD_TARGET=test` reads the test branch. **Dashboard:** `dashboard/index.html` (static, served at `/`), checked at
+  desktop + 375 px (no horizontal scroll).
+- **Tests:** `tests/test_m11_publish.py` (4; the Neon one publishes a fixture to `test` twice, checks RO role can't read
+  `serving.*` / can't create, endpoint numbers, planted claim mismatch → ✗). `test_m2_labels` allowlist + `publish.py`
+  (reads golden_eval.json scores only). Fast suite **135 passed**.
+- **Smoke:** `scripts/smoke_dashboard.py --base-url …` compares the API with `outputs/` → all 12 checks equal on the local
+  backend over the full data on Neon `test` (`evals/m11/smoke_local_test_branch.json`).
+
+### Still to do (needs Rory)
+1. `python -m pipeline.cli publish --target main` (rebuilds the serving schemas on Neon main; was blocked pending approval).
+2. Render → service env: add `DASHBOARD_DATABASE_URL` (value from `.env`); then delete the owner `DATABASE_URL` there.
+3. `git push origin main` (24+ local commits; triggers the Render redeploy). Repo is still private.
+4. Live smoke: `python scripts/smoke_dashboard.py --base-url https://spotify-review-pipeline.onrender.com --out evals/m11/smoke_live.json`;
+   open the URL signed out. Then mark M11 complete.
+
+### Spend
+- M11: **$0** (no API calls). Project total unchanged ≈ **$4.3298** list (Celeris ≈ $1.2492 credit, Anthropic ≈ $3.0807 cash).
+
+---
+
+## Previously completed: M10 (Grading export + checker) — ✅ gate passed 2026-10-15 (no spend)
 
 ### Done (M10) — details `evals/m10/notes.md`
 - **Code:** `pipeline/export.py` + `pipeline.cli export` (records + calls gz with mtime 0, run.json, copies of
