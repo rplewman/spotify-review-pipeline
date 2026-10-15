@@ -27,8 +27,7 @@
 - Fast suite **136 passed** (with `.env`); clean clone 127 passed / 8 skipped (no Neon URL) after the firewall fix.
 
 ### 👤 Open for Rory (outward-facing, not done by Claude)
-0. Upload the resume screen recording to Google Drive (anyone with the link can view) and replace the 3 `RECORDING_URL`
-   placeholders in `README.md` with the link.
+0. ~~Recording link~~ — done: https://drive.google.com/file/d/1vY28SDUlj692z5ezCeA9y4JtV9eySvOI/view (opens signed out); in README (3 places).
 1. `git push` (commits since `9e1aed2`), then make the GitHub repo **public** (Settings → General → Change visibility).
 2. Open README + evidence links signed out (private window): README, `grading/`, `outputs/memo.md`, `cost/report_pilot.md`,
    live dashboard.
