@@ -231,11 +231,12 @@ class Orchestrator:
             ok, bad, call_error = {}, {i["id"]: str(e) for i in call.items}, str(e)
             outcome, error = "failed", str(e)
         with immediate(conn):
-            conn.execute("""UPDATE calls SET outcome=?, input_tokens=?, output_tokens=?, cached_tokens=?, cost_usd=?,
+            conn.execute("""UPDATE calls SET outcome=?, input_tokens=?, output_tokens=?, cached_tokens=?, cache_write_tokens=?, cost_usd=?,
                                              latency_ms=?, error=?, usage_available=?, provider_request_id=?, ended_at=?
                             WHERE request_id=?""",
                          (outcome, int(u.get("input_tokens", 0)), int(u.get("output_tokens", 0)),
-                          int(u.get("cached_tokens", 0) or 0), cost, latency, error, int(usage_ok),
+                          int(u.get("cached_tokens", 0) or 0),
+                          int(u.get("cache_write_tokens", 0) or 0), cost, latency, error, int(usage_ok),
                           resp.provider_request_id, now_iso(), request_id))
             ledger.settle(conn, request_id, cost)
             self.stage.absorb(conn, ctx, call, ok, bad, request_id, call_error)

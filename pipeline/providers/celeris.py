@@ -61,3 +61,39 @@ class CelerisProvider(Provider):
             usage = {"input_tokens": u["input_tokens"], "output_tokens": int(u.get("output_tokens") or 0),
                      "cached_tokens": 0}
         return Response(parsed, usage, None, latency_ms)
+
+
+class MagnusProvider(CelerisProvider):
+    """`celeris-1-magnus` (M5 escalation comparison only): OpenAI-compatible chat completions, JSON mode via
+    `response_format` (no Markdown fence), reasoning on by default (`reasoning_effort` low). Reasoning tokens are
+    billed as completion tokens. Usage: prompt_tokens (cached subset in prompt_tokens_details.cached_tokens),
+    completion_tokens. Rates: cost/rates.csv."""
+    rates = {"input_tokens": 0.20, "cached_tokens": 0.02, "output_tokens": 0.70}
+
+    def __init__(self, model="celeris-1-magnus", base="https://inference.celeris.ai/celeris-1-magnus/v1", **kw):
+        super().__init__(model=model, base=base, **kw)
+
+    async def call(self, request):
+        t0 = time.perf_counter()
+        body = {"model": self.model, **request.payload}
+        headers = {"Authorization": f"Bearer {self.api_key}", "X-Client-Trace-Id": request.request_id}
+        try:
+            r = await self._http().post(f"{self.base}/chat/completions", json=body, headers=headers,
+                                        timeout=request.timeout)
+        except httpx.TimeoutException as e:
+            raise ProviderError("transient", 408, f"client timeout: {e}", billed=None)
+        except httpx.TransportError as e:
+            raise ProviderError("transient", None, f"connection error: {e}", billed=None)
+        latency_ms = int((time.perf_counter() - t0) * 1000)
+        if r.status_code != 200:
+            raise classify_http(r.status_code, _retry_after(r.headers), r.text[:300])
+        data = r.json()
+        u = data.get("usage") or {}
+        usage = None
+        if isinstance(u.get("prompt_tokens"), int):
+            usage = {"input_tokens": u["prompt_tokens"], "output_tokens": int(u.get("completion_tokens") or 0),
+                     "cached_tokens": int((u.get("prompt_tokens_details") or {}).get("cached_tokens") or 0)}
+        choice = (data.get("choices") or [{}])[0]
+        text = (choice.get("message") or {}).get("content") or ""
+        body = parse_json_text(text) if choice.get("finish_reason") != "length" else f"truncated (length): {text[:200]}"
+        return Response(body, usage, data.get("id"), latency_ms)

@@ -84,11 +84,12 @@ def call_validated(conn, provider, *, role, agent, label_config, payload, valida
         except ValueError as e:
             output, errors = None, [str(e)]
         with immediate(conn):
-            conn.execute("""UPDATE calls SET outcome=?, input_tokens=?, output_tokens=?, cached_tokens=?, cost_usd=?,
+            conn.execute("""UPDATE calls SET outcome=?, input_tokens=?, output_tokens=?, cached_tokens=?, cache_write_tokens=?, cost_usd=?,
                                              latency_ms=?, error=?, usage_available=?, provider_request_id=?, ended_at=?
                             WHERE request_id=?""",
                          ("failed" if errors else "succeeded", int(u.get("input_tokens", 0)),
-                          int(u.get("output_tokens", 0)), int(u.get("cached_tokens", 0) or 0), cost,
+                          int(u.get("output_tokens", 0)), int(u.get("cached_tokens", 0) or 0),
+                          int(u.get("cache_write_tokens", 0) or 0), cost,
                           resp.latency_ms or int((time.perf_counter() - t0) * 1000),
                           ("rejected: " + "; ".join(errors))[:2000] if errors else None, int(usage_ok),
                           resp.provider_request_id, now_iso(), request_id))

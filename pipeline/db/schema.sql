@@ -109,7 +109,8 @@ CREATE TABLE IF NOT EXISTS calls (
     usage_available INTEGER,                  -- 0 = provider gave no usage (tokens exported as 0 + flag)
     est_usd         REAL,                     -- the ledger reservation for this attempt
     provider_request_id TEXT,             -- the provider's own ID when it returns one (Anthropic); Celeris has none
-    ended_at        TEXT
+    ended_at        TEXT,
+    cache_write_tokens INTEGER                -- Anthropic cache writes (priced apart from plain input; M5 calculator)
 );
 CREATE INDEX IF NOT EXISTS ix_calls_run ON calls(run_id, outcome);
 

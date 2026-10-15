@@ -13,6 +13,7 @@
     python -m pipeline.cli memo    [--provider fake|anthropic]   A11: memo, claims, recommendations (one call)
     python -m pipeline.cli analyze [--provider fake|anthropic]   group → rank → memo
     python -m pipeline.cli run --input <csv>              ingest → enrich → verify → group → rank → memo
+    python -m pipeline.cli pilot [--provider fake|celeris] M5: cost_100 cold + warm, every stage, evidence in cost/
     python -m pipeline.cli export | publish               arrive in M10 / M11
 
 Money rule: a paid provider runs only with --paid AND --max-spend. The fake provider is offline and free.
@@ -25,6 +26,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from pipeline import pilot
 from pipeline.agents import grouper, intake, memo, ranker, verifier
 from pipeline.batch_runner import BatchConfig, run_verify_batch
 from pipeline.db import ledger, queue
@@ -345,6 +347,34 @@ def cmd_run(args):
     return cmd_analyze(down)
 
 
+def cmd_pilot(args):
+    """M5: cost_100.csv cold (new DB, 1 worker, every stage) then warm; evidence files for the cost calculator."""
+    args.escalation = args.escalation or ("fake" if args.provider == "fake" else "anthropic")
+    args.downstream = "fake" if args.provider == "fake" else "anthropic"
+    paid = [p for p in (args.provider, args.escalation, args.downstream) if p in PAID_PROVIDERS]
+    if paid and (not args.paid or args.max_spend is None):
+        raise SystemExit(f"refused: {', '.join(sorted(set(paid)))} is paid; pass --paid and --max-spend (PLAN §4)")
+    args.decision_model = "celeris-1-decision" if args.provider == "celeris" else "fake"
+    if args.label_config is None:
+        args.shape, args.gate, args.esc_fraction = "A", 0.60, 0.15
+        args.label_config = "pilot-" + default_label_config(args)
+    if Path(args.db).resolve() == Path("state/pipeline.db").resolve():
+        raise SystemExit("refused: the pilot needs its own --db, not the operational state/pipeline.db")
+    try:
+        measured = pilot.run_pilot(args, main)
+    except pilot.PilotError as e:
+        print(f"PILOT FAILED: {e}", file=sys.stderr)
+        return 1
+    ph = measured["phases"]
+    print(json.dumps({"records": measured["records"], "routes": measured["routes"],
+                      "cold": {"seconds": ph["cold"]["total_seconds"], "calls": ph["cold"]["new_calls"]},
+                      "warm": {"seconds": ph["warm"]["total_seconds"], "calls": ph["warm"]["new_calls"],
+                               "enrich_calls": ph["warm"]["new_enrich_calls"]},
+                      "evidence": str(args.out)}, indent=1))
+    print(f"next (offline): python cost/calculator.py --usage {args.out}/usage.csv")
+    return 0
+
+
 def cmd_ingest(args):
     try:
         r = intake.ingest(args.csv, args.raw_dir, args.db, args.root, label_config=args.label_config)
@@ -391,6 +421,20 @@ def main(argv=None):
     p.add_argument("--db", type=Path, default=None, help="also refresh the DB's ranking tables")
     add_downstream_flags(commands.add_parser("memo", help="A11: memo + claims + recommendations (one call)"))
     add_downstream_flags(commands.add_parser("analyze", help="group → rank → memo"))
+    p = commands.add_parser("pilot", help="M5: cost_100 cold + warm through every stage (evidence in cost/)")
+    p.add_argument("--input", type=Path, default=Path("data/raw/cost_100.csv"))
+    p.add_argument("--raw-dir", type=Path, default=Path("data/raw"))
+    p.add_argument("--db", type=Path, default=Path("state/pilot.db"), help="must not exist (cold = empty cache)")
+    p.add_argument("--root", type=Path, default=Path("cost/pilot_run"), help="the pilot's outputs/ and evals/")
+    p.add_argument("--out", type=Path, default=Path("cost"), help="where the evidence files go")
+    p.add_argument("--provider", choices=("fake", "celeris"), default="fake")
+    p.add_argument("--escalation", choices=("fake", "anthropic", "none"), default=None)
+    p.add_argument("--label-config", default=None)
+    p.add_argument("--batch-size", type=int, default=50)
+    p.add_argument("--sample-rate", type=float, default=pilot.PILOT_SAMPLE_RATE, help="declared A8 pilot rate")
+    p.add_argument("--paid", action="store_true")
+    p.add_argument("--max-spend", type=float, default=None, help="cap for the whole pilot (cold + warm), USD list")
+    p.add_argument("--fake-script", default="")
     for name in ("export", "publish"):
         commands.add_parser(name, help=f"arrives in {'M10' if name == 'export' else 'M11'}")
     args = parser.parse_args(argv)
@@ -409,6 +453,8 @@ def main(argv=None):
         return simple[args.command](args)
     if args.command == "run":
         return cmd_run(args)
+    if args.command == "pilot":
+        return cmd_pilot(args)
     print(f"`{args.command}` arrives in {'M10' if args.command == 'export' else 'M11'}", file=sys.stderr)
     return 2
 

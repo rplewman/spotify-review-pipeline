@@ -29,7 +29,7 @@
     "evals/dev_100/dev_100_to_label.csv"
   ],
   "parser": "csv.DictReader(strict=True), encoding utf-8-sig, newline=''; row hash = check_submission.row_sha",
-  "schema_sha256": "b854d5afaf097a71733bd7dde921df01fd3b135c38f2e1bfa8686a7f4fbe674d",
+  "schema_sha256": "cc83ccba8c88de488bf150d581f903062ef36823082b423b08dd62c0ac2ec639",
   "scope": {
     "method": "First N by SHA-256(seed + ':' + review_id) among unique nonempty valid-rating rows (the official sampling order; ties by review_id)",
     "seed": "berkeley-fall-2026-assignment-5-v1",

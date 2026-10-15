@@ -161,11 +161,12 @@ def commit(conn, stage, job_id, cfg):
             except ValueError as e:
                 ok, bad = {}, {i["id"]: str(e) for i in items}
                 outcome, error = "failed", str(e)
-            conn.execute("""UPDATE calls SET outcome=?, input_tokens=?, output_tokens=?, cached_tokens=?, cost_usd=?,
+            conn.execute("""UPDATE calls SET outcome=?, input_tokens=?, output_tokens=?, cached_tokens=?, cache_write_tokens=?, cost_usd=?,
                                              error=?, usage_available=?, provider_request_id=?, ended_at=?
                             WHERE request_id=?""",
                          (outcome, int(u.get("input_tokens", 0)), int(u.get("output_tokens", 0)),
-                          int(u.get("cached_tokens", 0) or 0), cost, error, int(usage_ok), resp.provider_request_id,
+                          int(u.get("cached_tokens", 0) or 0),
+                          int(u.get("cache_write_tokens", 0) or 0), cost, error, int(usage_ok), resp.provider_request_id,
                           now_iso(), rid))
             ledger.settle(conn, rid, cost)
             by_id = {i["id"]: i for i in items}
