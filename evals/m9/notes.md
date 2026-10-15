@@ -44,6 +44,11 @@ The duplicated short texts mostly inflate `other-general` (outside the four area
 - Calls: 3 = rejected by the code check ("number 100 is not in the input") + a connection error + accepted.
 - 👤 **For Rory's review:** "largest area roll-up on every measure" is wrong for mean severity (usability 2.469498 is
   the lowest of the four; access 3.637452 is highest). Decide: accept with a note, or regenerate (≈ $0.005).
+- **Regenerated once (Rory, cap $0.02) with memo-prompt-v3** (adds: no "every measure" claims; name the metric per
+  comparison). 1 call, accepted first time, $0.0029; 11 claims; rank check PASS. The "every measure" slip is gone, but two
+  new mean_severity slips (not code-checkable): "Playback leads on mean_severity" (access leads; playback is 2nd) and
+  "the mean_severity order differs from the main ranking" (it does not: access > playback > billing/support > usability
+  in both). 👤 Rory: accept with a README note, or hand-correct in M12 — no further regeneration without approval.
 
 ## Bug found and fixed: stale event loop
 `asyncio.run()` per call closes the loop while the async Anthropic client keeps pooled connections bound to it → the
@@ -53,5 +58,6 @@ errors" (M7 notes). Fix: `providers.base.run_sync` (one loop per provider) in `b
 tolerate transient errors. `FakeBatchProvider` now rejects a changed loop like the real client (the old runner fails 2 tests).
 
 ## Spend (list price; all Anthropic Haiku 5.5 = cash)
-verify $0.4173 (419 calls: 410 succeeded, 9 failed at max_tokens) + group $0.0027 + memo $0.0101 (3 calls) = **$0.4301**.
-Estimate was $0.57 base. Project total ≈ **$4.3269** (Celeris ≈ $1.2492 credit, Anthropic ≈ $3.0778 cash).
+verify $0.4173 (419 calls: 410 succeeded, 9 failed at max_tokens) + group $0.0027 + memo $0.0101 (3 calls)
++ memo v3 regeneration $0.0029 = **$0.4330**.
+Estimate was $0.57 base. Project total ≈ **$4.3298** (Celeris ≈ $1.2492 credit, Anthropic ≈ $3.0807 cash).

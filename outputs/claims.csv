@@ -6,6 +6,7 @@ C03b,usability-general,severity_sum,14578
 C04a,playback-general,complaint_count,4288
 C05a,billing-subscription,complaint_count,3636
 C06a,usability-playback_controls,complaint_count,2377
+C06c,usability-playback_controls,mean_severity,3.043332
 C07a,usability-interface,complaint_count,2678
 C08a,access-login,complaint_count,1283
 C08c,access-login,mean_severity,4.246298

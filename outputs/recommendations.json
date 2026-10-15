@@ -1,8 +1,8 @@
 {
- "cache": "hit",
- "input_sha256": "62ba8adbd945f70ace5c0afbb571d398044ad6583aee83fa19047fa653993e86",
+ "cache": "miss",
+ "input_sha256": "d757947d1247f4066b11c393332fead687d57c6781d34e63f3dde6630994d744",
  "label_config": "celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1",
- "memo_prompt": "memo-prompt-v2",
+ "memo_prompt": "memo-prompt-v3",
  "model": "claude-haiku-5-5",
  "priority_area": "usability",
  "question": "Where should Spotify put the next quarter of product effort: access, usability, playback, or billing/support?",
@@ -10,36 +10,49 @@
   {
    "area": "usability",
    "claim_ids": [
-    "C03a",
-    "C03b"
+    "C06a",
+    "C06c",
+    "C07a"
    ],
    "evidence": [
     {
-     "issue_id": "usability-general",
-     "quote": "Logged out of my account and the app is completely frozen on the loading screen. Uninstalled and re-installed as well as updated the app and nothing is working.",
-     "review_id": "2bfdb397-8572-4648-b75b-7be421da488a"
+     "issue_id": "usability-playback_controls",
+     "quote": "App is awful and broken. Podcasts randomly stop, also can no longer use skip/play/stop because the neccessary buttons no longer show up. Have to force close the",
+     "review_id": "41082441-be8d-4508-9630-4ff7b05cb5c2"
+    },
+    {
+     "issue_id": "usability-playback_controls",
+     "quote": "Since last update, podcasts stop literally every 10 minutes and the display screen is gone so you can't skip forward or back, view queue, add to queue.",
+     "review_id": "4dd98e33-718c-417e-964d-bfa1419e09ca"
     }
    ],
    "issue_ids": [
-    "usability-general"
+    "usability-playback_controls",
+    "usability-interface"
    ],
    "position": 1,
-   "rationale": "The second-largest usability issue by complaints, and the one customers describe as the app not opening or getting stuck on loading.",
+   "rationale": "Customers report missing skip, play and shuffle controls and a broken interface after updates; playback_controls has the higher mean_severity among the usability issues.",
    "supporting": [
     {
-     "claim_id": "C03a",
-     "issue_id": "usability-general",
+     "claim_id": "C06a",
+     "issue_id": "usability-playback_controls",
      "metric": "complaint_count",
-     "value": "6087"
+     "value": "2377"
     },
     {
-     "claim_id": "C03b",
-     "issue_id": "usability-general",
-     "metric": "severity_sum",
-     "value": "14578"
+     "claim_id": "C06c",
+     "issue_id": "usability-playback_controls",
+     "metric": "mean_severity",
+     "value": "3.043332"
+    },
+    {
+     "claim_id": "C07a",
+     "issue_id": "usability-interface",
+     "metric": "complaint_count",
+     "value": "2678"
     }
    ],
-   "title": "Fix app freezes and launch failures"
+   "title": "Fix playback controls and interface regressions after updates"
   },
   {
    "area": "usability",
@@ -58,7 +71,7 @@
     "usability-ads"
    ],
    "position": 2,
-   "rationale": "The largest usability issue by complaints and severity, so it carries the most weight in the usability roll-up.",
+   "rationale": "Ads and repeated songs are the largest usability issue by complaint count and severity_sum, though its mean_severity is lower.",
    "supporting": [
     {
      "claim_id": "C02a",
@@ -73,35 +86,42 @@
      "value": "18508"
     }
    ],
-   "title": "Reduce ad load and repeated-song complaints"
+   "title": "Review the ad experience, including timer behaviour"
   },
   {
    "area": "usability",
    "claim_ids": [
-    "C06a"
+    "C03a",
+    "C03b"
    ],
    "evidence": [
     {
-     "issue_id": "usability-playback_controls",
-     "quote": "App is awful and broken. Podcasts randomly stop, also can no longer use skip/play/stop because the neccessary buttons no longer show up. Have to force close the",
-     "review_id": "41082441-be8d-4508-9630-4ff7b05cb5c2"
+     "issue_id": "usability-general",
+     "quote": "Logged out of my account and the app is completely frozen on the loading screen. Uninstalled and re-installed as well as updated the app and nothing is working.",
+     "review_id": "2bfdb397-8572-4648-b75b-7be421da488a"
     }
    ],
    "issue_ids": [
-    "usability-playback_controls"
+    "usability-general"
    ],
    "position": 3,
-   "rationale": "Customers report skip, play, and queue controls missing or broken, which affects core listening.",
+   "rationale": "Customers report the app stuck on the loading screen or not opening, and this is the second-largest usability issue by severity_sum.",
    "supporting": [
     {
-     "claim_id": "C06a",
-     "issue_id": "usability-playback_controls",
+     "claim_id": "C03a",
+     "issue_id": "usability-general",
      "metric": "complaint_count",
-     "value": "2377"
+     "value": "6087"
+    },
+    {
+     "claim_id": "C03b",
+     "issue_id": "usability-general",
+     "metric": "severity_sum",
+     "value": "14578"
     }
    ],
-   "title": "Restore playback controls in podcasts and music"
+   "title": "Investigate app freezing and failure to open"
   }
  ],
- "request_id": "3177221b6bcb4a07a6a34dce5829fbd1"
+ "request_id": "d242c731f47f42b2adfc27cced81aa51"
 }

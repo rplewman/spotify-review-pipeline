@@ -23,8 +23,9 @@ from pipeline.db.store import immediate, now_iso
 from pipeline.oneshot import call_validated
 
 ROOT = Path(__file__).resolve().parents[2]
-SYSTEM = (ROOT / "prompts" / "memo_system_v2.md").read_text(encoding="utf-8").strip()
-PROMPT_VERSION = "memo-prompt-v2"  # M9: scope disclosure, wording rules, random-100k comparison
+SYSTEM = (ROOT / "prompts" / "memo_system_v3.md").read_text(encoding="utf-8").strip()
+# M9: v2 = scope disclosure, wording rules, random-100k comparison; v3 = no "every measure" claims (Rory)
+PROMPT_VERSION = "memo-prompt-v3"
 TOP_ISSUES = 10
 EVIDENCE_PER_ISSUE = 3
 METRICS = {"a": "complaint_count", "b": "severity_sum", "c": "mean_severity", "d": "priority_score"}
