@@ -59,7 +59,7 @@ evidence_quote is an exact substring of the text: **True**
   ranking. It is one of the 17,708 `needs_review` records (`outputs/overall_metrics.json`) and one of the A8 intent
   disagreements in `evals/verify/disagreements.csv`.
 - **Known limitation:** a low *topic/intent* probability alone does not set `needs_review` (only A5 does, and A5 only
-  answers severity) → golden needs_review recall is 11% (`evals/golden/golden_eval.md`).
+  answers severity) → golden needs_review recall is 11% (see the golden evaluation in the README).
 
 ## Failed case (verification): request `814c11ff4b554cbe9b18f1243b64493e`
 An A8 Batch request of 50 reviews hit `max_tokens` (5,000 output tokens) → `unparseable verifier output` → `failed`

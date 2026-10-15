@@ -1,6 +1,44 @@
 # STATUS — handoff log
 
-## Last completed: M11 (Publish, backend, dashboard) — ✅ gate passed 2026-10-15 (no spend)
+## Last completed: M12 (README, evidence & publish) — ✅ local work done 2026-10-15 (no spend); 👤 publish + submit pending Rory
+
+### Done (M12)
+- **`README.md`**: rubric → evidence map; results summary (accounted vs completed, cache reuse, golden, verifier, cost/time
+  measured vs estimated); mermaid architecture (6 stages, code/model boundaries, stop/retry, SQLite → Neon → FastAPI →
+  dashboard) + role table (why each model call); labels/models/settings; ranking rules + area table + random-100k
+  comparison; memo summary with the **two v3 mean_severity slips disclosed**; trace; golden; verification/planted/injection;
+  resume; cost (pilot, calculator replay commands, spend list/credit/cash); dashboard + DB setup; grading export
+  (`unfinished_classification`, **344 left-out M6-config calls**, 50.8 MB records file); setup/run/replay commands;
+  limitations; dataset link + SHA-256.
+- **Traces** (`scripts/trace_review.py`, read-only): `evals/m12/trace_ok.md` (review `8c256cff…` → A3/A5 → record →
+  calls → verifier (topic disagrees: access) → `usability-ads` → rank 2 → claims C02a/C02b → memo + recommendation 2);
+  `evals/m12/trace_ambiguous.md` (`7ad378f0…` mixed praise/complaint, needs_review, + the failed A8 max_tokens request).
+- **Clean-environment test** (`evals/m12/clean_env.md`): fresh clone, no keys → calculator replays byte-identical
+  (pilot + 100k), `rank` byte-identical (6 files), checker identical to M10, live smoke 12/12. Fixed two bugs it found:
+  `rank` now falls back to `grading/records.jsonl.gz` when `outputs/enriched.jsonl.gz` is absent (new test); 
+  `overall_metrics.json` written with LF. Added `requirements-lock.txt` (full pip freeze). Windows: clone into a short path.
+- **Secret hygiene:** `.env` ignored (`.gitignore:2`), only `.env.example` tracked/ever committed; every `.env` value
+  (incl. URL passwords) absent from all tracked files (gz decompressed) and from full `git log -p`; the only pattern hit is the
+  fake `npg_secret` test fixture. Personal details: commit author email, and Windows paths with the local username in
+  `cost/full_corpus_decision.json`, `evals/golden/golden_eval*.json`, `evals/m9/verify_run1_crash.log` (left as is).
+- Fast suite **136 passed** (with `.env`); clean clone 127 passed / 8 skipped (no Neon URL) after the firewall fix.
+
+### 👤 Open for Rory (outward-facing, not done by Claude)
+1. `git push` (commits since `9e1aed2`), then make the GitHub repo **public** (Settings → General → Change visibility).
+2. Open README + evidence links signed out (private window): README, `grading/`, `outputs/memo.md`, `cost/report_pilot.md`,
+   live dashboard.
+3. Optional: delete the owner `DATABASE_URL` from Render (read-only URL is the only one needed).
+4. Submit the repo URL via the course portal (https://submissions-portal-eight.vercel.app).
+
+### Spend
+- M12: **$0**. Project total unchanged ≈ **$4.3298** list (Celeris ≈ $1.2492 credit, Anthropic ≈ $3.0807 cash).
+
+### Next step
+None — project complete once Rory publishes and submits.
+
+---
+
+## Previously completed: M11 (Publish, backend, dashboard) — ✅ gate passed 2026-10-15 (no spend)
 
 ### Done (M11) — details `docs/DASHBOARD.md`
 - **Publish:** `pipeline/db/publish.py` + `pipeline.cli publish [--target main|test]`. One transaction: drop/recreate schemas

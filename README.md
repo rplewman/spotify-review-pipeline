@@ -442,7 +442,9 @@ provider Consoles may show less. Ledger: [`pipeline/db/ledger.py`](pipeline/db/l
 ## Setup and commands
 
 Requirements: Python 3.12. Tested on Windows 11 (paths below use POSIX style; on Windows use
-`.venv\Scripts\python`).
+`.venv\Scripts\python`, and clone into a short path such as `C:\src` — one Anthropic SDK file exceeds Windows' 260-character
+path limit otherwise). `requirements.txt` pins the direct dependencies; `requirements-lock.txt` is the exact environment
+that produced the results.
 
 ```bash
 git clone https://github.com/rplewman/spotify-review-pipeline.git

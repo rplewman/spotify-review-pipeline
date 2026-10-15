@@ -155,7 +155,8 @@ def rank(root, conn=None):
         _write_csv(out / "comparison_random_100k_ranking.csv", AGG_FIELDS, c_rows)
         _write_csv(out / "comparison_random_100k_areas.csv", AREA_FIELDS, c_areas)
         overall["comparison_random_100k"] = {"members": len(sub), "issues": len(c_rows)}
-    (out / "overall_metrics.json").write_text(json.dumps(overall, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+    (out / "overall_metrics.json").write_text(json.dumps(overall, indent=1, sort_keys=True) + "\n", encoding="utf-8",
+                                              newline="\n")  # LF on every OS → byte-identical to the committed file
     if conn is not None:
         cfg = issues_doc["label_config"]
         with immediate(conn):
