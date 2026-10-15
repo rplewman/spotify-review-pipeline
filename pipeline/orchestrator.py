@@ -22,7 +22,6 @@ from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
 
-from pipeline.agents import cache
 from pipeline.db import ledger, limiter, queue
 from pipeline.db.store import connect, immediate, iso, migrate, now_iso, utcnow
 from pipeline.providers.base import ProviderError, Request
@@ -157,12 +156,12 @@ class Orchestrator:
 
     def _precall_check(self, conn, owner, items):
         """Items whose text already has a result under this label_config are done with no call."""
-        hits = cache.cached(conn, [i["text_sha256"] for i in items], self.cfg.label_config)
+        hits = self.stage.cached(conn, [i["text_sha256"] for i in items])
         if not hits:
             return items
         with immediate(conn):
             mine = queue.held(conn, owner, [i["id"] for i in items if i["text_sha256"] in hits])
-            cache.fan_out(conn, self.cfg.label_config, [i["text_sha256"] for i in items if i["id"] in mine])
+            self.stage.reuse(conn, [i["text_sha256"] for i in items if i["id"] in mine])
             queue.mark_done(conn, mine)
         return [i for i in items if i["text_sha256"] not in hits]
 
@@ -249,9 +248,7 @@ class Orchestrator:
         with immediate(conn):
             mine = queue.held(conn, owner, list(by_id))
             done = [i for i in ok if i in mine]
-            for i in done:
-                cache.write_result(conn, by_id[i]["text_sha256"], self.cfg.label_config, ok[i], ok[i].get("request_id"))
-            cache.fan_out(conn, self.cfg.label_config, [by_id[i]["text_sha256"] for i in done])
+            self.stage.save(conn, [(by_id[i], ok[i]) for i in done])
             queue.mark_done(conn, done)
             invalid = [i for i in bad if i in mine]
             self.stage.forget(conn, [by_id[i]["text_sha256"] for i in invalid])
@@ -259,7 +256,7 @@ class Orchestrator:
             for i in invalid:
                 if queue.mark_invalid(conn, i, bad[i]):
                     quarantined[by_id[i]["text_sha256"]] = f"invalid_output: {bad[i]}"
-            cache.quarantine_texts(conn, self.cfg.label_config, quarantined)
+            self.stage.quarantine(conn, quarantined)
 
     def _on_error(self, conn, owner, items, request_id, call, e, t0):
         ids = [i["id"] for i in items]
@@ -315,7 +312,9 @@ def recover(conn, stale_seconds):
     dead = [r[0] for r in conn.execute("SELECT run_id FROM runs WHERE ended_at IS NULL AND heartbeat_at < ?", (cutoff,))]
     for run_id in dead:
         with immediate(conn):
-            for (rid,) in conn.execute("SELECT request_id FROM ledger WHERE run_id=? AND kind='reserve'",
+            for (rid,) in conn.execute("""SELECT request_id FROM ledger WHERE run_id=? AND kind='reserve'
+                                          AND request_id NOT IN (SELECT request_id FROM calls WHERE tier='batch'
+                                                                 AND outcome='in_flight')""",  # closed by the batch runner
                                        (run_id,)).fetchall():
                 abandon(conn, rid)  # no-op for attempts that were already closed
             conn.execute("UPDATE runs SET ended_at=?, stop_reason='crashed' WHERE run_id=?", (now_iso(), run_id))
@@ -355,6 +354,8 @@ def write_run_outputs(conn, root, summary, stage, label_config):
     out.mkdir(parents=True, exist_ok=True)
     with (out / "run_log.jsonl").open("a", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(summary, sort_keys=True) + "\n")
+    if stage != "enrich":
+        return  # the verifier's unverifiable texts go to its own report, not to the record quarantine log
     rows = conn.execute("""SELECT t.original_review_id, w.text_sha256, w.last_error, w.attempts, w.invalid_attempts
                            FROM work_items w JOIN texts t ON t.text_sha256 = w.text_sha256
                            WHERE w.stage=? AND w.label_config=? AND w.status='quarantined' ORDER BY w.scope_rank""",

@@ -1,0 +1,40 @@
+# Code-side subtopics for A9 grouping (subtopics-v1). issue_id = "<topic>-<subtopic>"; a complaint/cancellation record
+# goes to the FIRST subtopic (in this order) with a term in its review text (case-insensitive whole word or phrase,
+# the same matcher as keywords-v1), else "<topic>-general". One issue per review (allow_multi_issue: false).
+# Changing this file changes issue membership: bump the version and rerun group → rank → memo.
+version: subtopics-v1
+subtopics:
+  access:
+    password: [password, reset, verification, code]
+    login: [login, log in, logged out, log out, sign in, signin, sign up, signup, facebook, google]
+    account: [account, hacked, email, profile, deleted]
+  usability:
+    ads: [ads, ad, advert, adverts, commercial, commercials]
+    playback_controls: [shuffle, repeat, queue, skip, skips, play button, choose]
+    library_playlists: [playlist, playlists, library, liked songs, sort, folder]
+    interface: [ui, interface, layout, design, update, home screen, navigation, button, widget, dark mode, cluttered]
+  playback:
+    crashes: [crash, crashes, crashing, crashed, closes, freeze, freezes, frozen, black screen, blank screen, not opening]
+    connection: [bluetooth, connect, connection, internet, wifi, android auto, carplay, chromecast, speaker, device]
+    stops_skips: [stops, stopping, pause, pauses, pausing, skips, buffering, won't play, wont play, can't play, cant play, not playing]
+    audio_quality: [audio, sound, volume, quality, static, distorted]
+    performance: [lag, laggy, slow, battery, data usage, heats, memory, storage]
+  downloads:
+    lost_downloads: [disappear, disappeared, disappearing, deleted, gone, removed, redownload, re-download]
+    offline_mode: [offline]
+    download_fails: [download, downloads, downloading, downloaded, stuck]
+  catalog:
+    lyrics: [lyrics]
+    missing_content: [missing, unavailable, not available, removed, greyed, grayed, region]
+    recommendations: [recommend, recommendation, recommendations, algorithm, discover, suggestions, suggested, same songs]
+    search: [search, find]
+    podcasts_audiobooks: [podcast, podcasts, audiobook, audiobooks, episode]
+  billing:
+    charges_refunds: [charged, charge, refund, billed, payment, money, scam, stolen, fraud]
+    price: [price, expensive, cost, afford, increase, raised, cheap]
+    premium_limits: [skip, skips, shuffle, free version, free users, pay, paywall, limit, limited]
+    subscription: [subscription, subscribe, trial, plan, family, student, cancel, renew, premium]
+  support:
+    support: [support, customer service, customer care, help, contact, reply, response, agent, chat]
+  other:
+    general: []

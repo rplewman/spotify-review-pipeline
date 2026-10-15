@@ -14,7 +14,7 @@ so a retry, a lost lease or a resume never pays for a finished step twice.
 import json
 from dataclasses import dataclass, field
 
-from pipeline.agents import decision, escalation, extractor, router, validator
+from pipeline.agents import cache, decision, escalation, extractor, router, validator
 from pipeline.db.store import immediate, now_iso
 from pipeline.schema import SCHEMA_VERSION, validate_labels
 
@@ -98,6 +98,25 @@ class Stage:
 
     def forget(self, conn, text_shas):
         """An item was invalid: drop its saved intermediate outputs so the retry starts clean (inside a transaction)."""
+
+    # ----- where results live (enrichment: the A2 cache + record fan-out; the verifier overrides these) -----
+    def cached(self, conn, text_shas):
+        """Pre-call check: the subset of `text_shas` already finished under this stage's label_config."""
+        return cache.cached(conn, text_shas, self.label_config)
+
+    def reuse(self, conn, text_shas):
+        """Finish items whose text was already done (inside the commit transaction)."""
+        cache.fan_out(conn, self.label_config, text_shas)
+
+    def save(self, conn, done):
+        """Commit validated outputs: done = [(item, result)] (inside the fenced commit transaction)."""
+        for item, res in done:
+            cache.write_result(conn, item["text_sha256"], self.label_config, res, res.get("request_id"))
+        cache.fan_out(conn, self.label_config, [item["text_sha256"] for item, _ in done])
+
+    def quarantine(self, conn, reasons):
+        """Texts that failed validation twice ({text_sha: reason})."""
+        cache.quarantine_texts(conn, self.label_config, reasons)
 
 
 class PassthroughStage(Stage):

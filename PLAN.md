@@ -318,7 +318,7 @@ CLAUDE.md STATUS.md  session bootstrap + handoff log (see §6)
 | Pilots + comparisons (100 / 500 / 10k, A vs B, escalation candidates, `dev_100` escalations) | all | mixed | $1.00 | Under the frozen config the dev files are part of the 100k |
 | Decisions for the 100k (+ optional frequency add-on) | A3 | Celeris, real time | ≤ $4.50 | Credit first, then the card; the ledger stops at this cap; the add-on only uses what the 100k leaves. **Full-corpus GO (§1.2): this cap becomes the M6 projection + 20%, still within the $10 total** |
 | Escalation (below the gate) | A5 | Haiku 5.5 by default (cheaper than `celeris-1-magnus` per token), real time; Batch API if the full corpus is GO | $2.00 | Fraction cap set in M6 |
-| Verification sample | A8 | Haiku, Batch API | $0.50 | Declared sample size set in M4 |
+| Verification sample | A8 | Haiku, Batch API | $0.50 | Declared in M4: **5% of distinct completed texts**, seed `verify-v1` (sha256(seed:text_sha256)/2^256 < 0.05) ≈ 3,900 texts at the 100k; ≤ 50 per request; upper-end ≈ $0.12 at batch rates |
 | Grouping names, memo + recommendations | A9, A11 | Haiku | $0.25 | Generated once and stored, never at page view |
 | Reserve (retries, reruns) | — | — | $1.75 | Includes the $0.75 freed by code-only extraction |
 | **Total** | | | **≤ $10.00** | Cash spend ≈ everything except the Celeris bucket |

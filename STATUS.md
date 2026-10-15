@@ -1,6 +1,63 @@
 # STATUS — handoff log
 
-## Last completed: M3b (Enrichment agents A3–A7) — ✅ gate passed 2026-10-14 (no spend)
+## Last completed: M4 (Downstream stages, thin versions) — ✅ gate passed 2026-10-14 (no spend)
+
+### Done (M4)
+- **A8 Verifier** (`agents/verifier.py`, `prompts/verifier_system_v1.md`): declared seeded sample = distinct texts with a
+  result where sha256(`seed:text_sha256`)/2^256 < rate (default **0.05**, seed `verify-v1`; a higher rate = superset;
+  PLAN §4 updated). Request built from texts only (test proves the stored labels can't change it). Labels topic/intent/
+  severity/needs_review via structured output, effort low. Queue stage `verify`, key `<label_config>#<verify_config>`
+  (`verify_config` = `<model>+verifier-prompt-v1+effort-low`); results in table `verifier_outputs`, never in records.
+  Invalid → retry once → item quarantined = "unverified" in the report (no record quarantine).
+  Report: `evals/verify/{verify_report.json, verifier_predictions.jsonl, disagreements.csv}`; **planted errors**:
+  `evals/verify/planted_errors.json` (synthetic copy, topic flipped on 3 agreeing reviews → all flagged).
+- **Batch API runner** (`pipeline/batch_runner.py` + `ClaudeBatchProvider` in `providers/claude.py`, batch rates
+  $0.05/$0.25): claim → ≤ 50 reviews/request → reserve (bucket `verification`) → `calls` rows (tier batch, custom_id =
+  request_id) → `batch_jobs` 'building' → submit → 'submitted' → poll → commit per result (ONE transaction each) →
+  errored/canceled/expired/missing = not billed, requeued → next round (≤ 3). Open job → resumed by ID, never resubmitted
+  (`--max-wait-minutes` exit = 'waiting'; rerun `verify` to resume). Crash before the provider ID is saved → 'abandoned',
+  settled at the estimate, items requeued. `recover()` no longer touches in-flight batch calls. `--standard` = real-time
+  through the orchestrator (stage hooks `cached/reuse/save/quarantine` added to `Stage`; enrich behaviour unchanged).
+  SDK path tested on a mocked httpx2 transport (create → retrieve → results JSONL).
+- **A9 Grouper** (`agents/grouper.py`, `labels/subtopics.yaml` subtopics-v1, `prompts/grouper_system_v1.md`): members =
+  every completed complaint/cancellation record (incl. cache reuses / out-of-scope fills); issue_id = `<topic>-<subtopic>`
+  (first subtopic term in the text, else `-general`), exactly one per review. One `group` call names issues from ≤ 5
+  quotes each (unknown IDs / names with digits rejected → code default name); cached by input hash in `analysis_cache`.
+  Saves DB `issues`/`membership` + `outputs/{issues.json, membership.csv, enriched.jsonl.gz}` (gzip mtime 0 → deterministic).
+- **A10 Ranker** (`agents/ranker.py`): from saved files only → `outputs/{ranking.csv, aggregates.csv, area_aggregates.csv,
+  overall_metrics.json}`; validates membership (unknown/duplicate/multi/ungrouped → RankError); uses the checker's
+  `mean_string`; area roll-up via `labels/areas.yaml` (4 areas + outside, shares 6 dp). Test = the checker's own algorithm.
+- **A11 Memo** (`agents/memo.py`, `prompts/memo_system_v1.md`): one `memo` call over `outputs/memo_input.json` (area
+  roll-up, totals, top 10 issues with claim IDs `C<rank><a-d>`, ≤ 3 quotes each). Code rejects unknown issue (backticked)
+  / review (UUID) / claim IDs and any number not in the input → failed call → one retry with the errors → else CallRejected.
+  Writes `outputs/{memo.md, claims.csv (cited claims, values from ranking), recommendations.json}` + DB tables; cached.
+- **One-shot calls** (`pipeline/oneshot.py`): ledger reserve (bucket `analysis`) → calls row → validate → settle.
+- **CLI**: `verify [--standard] [--sample-rate] [--seed] [--plant]`, `group`, `rank` (zero calls, `--db` optional),
+  `memo`, `analyze` (group → rank → memo); `run --input <csv>` now runs ingest → enrich → verify → group → rank → memo.
+  Downstream `--provider fake|anthropic`; anthropic needs `--paid --max-spend`; fake refused on `state/pipeline.db`.
+- Tests `tests/test_m4_downstream.py` (16, ~4 s), incl. the gate: `run` on FakeProvider → all 17 output files, the four
+  succeeded roles, `rank` twice byte-identical with zero calls, warm `analyze` = zero calls. Full fast suite: **94 passed**.
+  Real `state/pipeline.db` migrated (new tables only; 78,099 pending kept); manifest `schema_sha256` updated.
+
+### Expected paid cost of the downstream stages (estimates, nothing run)
+- Verify at 100k (≈ 3,900 texts, 78 batch requests): ≈ $0.02–0.12 list (upper end = full max_tokens). Pilot (100 reviews,
+  use `--sample-rate 0.2 --standard` if batch is slow): < $0.01. Group naming ≈ $0.003; memo ≤ $0.004 per attempt.
+
+### Notes for M5
+- The pilot must run every stage on cost_100: `enrich … --limit 100`, then `verify --provider anthropic --paid
+  --max-spend 0.02 --sample-rate 0.2` (declare the pilot rate in the report), then `analyze --provider anthropic --paid
+  --max-spend 0.02`. Run downstream on a DB/root holding only the pilot records (or a separate `--root`), so the memo is
+  about the pilot only.
+- Haiku structured output + effort `low` on group/memo/verify is untested against the live API; M5's first paid call
+  will show it. If the memo's number check rejects twice, read the call `error` column (it lists every rejected token).
+- `outputs/enriched.jsonl.gz` replaces the planned `enriched.jsonl` (size); M10 exports `grading/records.jsonl.gz` itself.
+
+### Next step
+M5 (Cost calculator + 100-review pilot, 💰 ≈ cents): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M5, then do M5."
+
+---
+
+## Previously completed: M3b (Enrichment agents A3–A7) — ✅ gate passed 2026-10-14 (no spend)
 
 ### Done (M3b)
 - **Chain protocol** (`pipeline/stages.py`): a stage now yields `Call`s (provider, payload, estimate, parser, bucket) for a leased
@@ -47,8 +104,8 @@
   --label-config <pilot cfg> --limit 100` on a DB/queue restricted to cost_100 (M5 must enqueue only the 100 pilot texts).
 - `results.probs_json` holds `{a3, a3_confidence, a4, a5}` for the M6 gate sweep.
 
-### Next step
-M4 (Downstream stages, thin versions): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M4, then do M4."
+### Next step (then)
+M4 — done 2026-10-14 (see above).
 
 ---
 

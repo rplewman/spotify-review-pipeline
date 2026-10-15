@@ -1,5 +1,5 @@
 -- Operational store (SQLite, WAL). PLAN §3.2. Applied idempotently by A1 Intake.
--- Analysis tables (issues, membership, aggregates, ranking, claims, recommendations) are added in M4.
+-- Downstream tables (verifier_outputs, batch job columns, analysis_cache, issues … recommendations) were added in M4.
 
 -- All 660,622 source rows. scope_rank = 1-based rank in the official seed order
 -- (lowest SHA-256("berkeley-fall-2026-assignment-5-v1:" + review_id)) among unique, nonempty, valid-rating rows;
@@ -125,12 +125,103 @@ CREATE TABLE IF NOT EXISTS agent_outputs (
     PRIMARY KEY (text_sha256, label_config, agent)
 );
 
+-- Anthropic Message Batches jobs (A8 verifier). Inserted as 'building' (provider_job_id = 'pending:<job_key>') BEFORE
+-- submission, so a crash is visible; the real provider ID replaces it right after submit. Resumed by ID, never resubmitted.
 CREATE TABLE IF NOT EXISTS batch_jobs (
     provider_job_id TEXT PRIMARY KEY,
-    item_ids_json   TEXT NOT NULL,
-    status          TEXT NOT NULL,
+    item_ids_json   TEXT NOT NULL,              -- {request_id (= custom_id): [work_item ids]}
+    status          TEXT NOT NULL,              -- building | submitted | ended | committed | abandoned
     submitted_at    TEXT,
-    ended_at        TEXT
+    ended_at        TEXT,
+    job_key         TEXT,                       -- local ID (lease owner of the job's items)
+    role            TEXT,
+    label_config    TEXT,
+    run_id          TEXT,
+    request_counts_json TEXT,                   -- provider's request_counts at the last poll
+    committed_at    TEXT
+);
+
+-- A8 verifier labels per distinct text, keyed by the enrichment label_config they check and the verifier config.
+-- The verifier never saw the first prediction; agreement is computed in code (pipeline/agents/verifier.py).
+CREATE TABLE IF NOT EXISTS verifier_outputs (
+    text_sha256   TEXT NOT NULL,
+    label_config  TEXT NOT NULL,
+    verify_config TEXT NOT NULL,
+    topic         TEXT NOT NULL,
+    intent        TEXT NOT NULL,
+    severity      INTEGER NOT NULL,
+    needs_review  INTEGER NOT NULL,
+    request_id    TEXT,
+    created_at    TEXT NOT NULL,
+    PRIMARY KEY (text_sha256, label_config, verify_config)
+);
+
+-- Downstream model outputs cached by an input hash (A9 names, A11 memo): a warm rerun makes zero calls.
+CREATE TABLE IF NOT EXISTS analysis_cache (
+    agent        TEXT NOT NULL,
+    input_sha256 TEXT NOT NULL,
+    model        TEXT NOT NULL,
+    output_json  TEXT NOT NULL,
+    request_id   TEXT,
+    created_at   TEXT NOT NULL,
+    PRIMARY KEY (agent, input_sha256, model)
+);
+
+-- Analysis outputs (A9-A11), replaced per label_config by each command; the files in outputs/ are the evidence.
+CREATE TABLE IF NOT EXISTS issues (
+    issue_id     TEXT NOT NULL,
+    label_config TEXT NOT NULL,
+    topic        TEXT NOT NULL,
+    subtopic     TEXT NOT NULL,
+    area         TEXT NOT NULL,
+    name         TEXT NOT NULL,
+    description  TEXT,
+    name_source  TEXT NOT NULL,                 -- model | default
+    member_count INTEGER NOT NULL,
+    PRIMARY KEY (issue_id, label_config)
+);
+CREATE TABLE IF NOT EXISTS membership (
+    issue_id     TEXT NOT NULL,
+    review_id    TEXT NOT NULL,
+    label_config TEXT NOT NULL,
+    PRIMARY KEY (label_config, issue_id, review_id)
+);
+CREATE TABLE IF NOT EXISTS ranking (
+    label_config    TEXT NOT NULL,
+    rank            INTEGER NOT NULL,
+    issue_id        TEXT NOT NULL,
+    complaint_count INTEGER NOT NULL,
+    severity_sum    INTEGER NOT NULL,
+    mean_severity   TEXT NOT NULL,
+    priority_score  INTEGER NOT NULL,
+    PRIMARY KEY (label_config, issue_id)
+);
+CREATE TABLE IF NOT EXISTS aggregates (
+    label_config TEXT NOT NULL,
+    issue_id     TEXT NOT NULL,
+    row_json     TEXT NOT NULL,
+    PRIMARY KEY (label_config, issue_id)
+);
+CREATE TABLE IF NOT EXISTS area_aggregates (
+    label_config TEXT NOT NULL,
+    area         TEXT NOT NULL,
+    row_json     TEXT NOT NULL,
+    PRIMARY KEY (label_config, area)
+);
+CREATE TABLE IF NOT EXISTS claims (
+    label_config TEXT NOT NULL,
+    claim_id     TEXT NOT NULL,
+    issue_id     TEXT NOT NULL,
+    metric       TEXT NOT NULL,
+    value        TEXT NOT NULL,
+    PRIMARY KEY (label_config, claim_id)
+);
+CREATE TABLE IF NOT EXISTS recommendations (
+    label_config TEXT NOT NULL,
+    position     INTEGER NOT NULL,
+    row_json     TEXT NOT NULL,
+    request_id   TEXT,
+    PRIMARY KEY (label_config, position)
 );
 
 CREATE TABLE IF NOT EXISTS ledger (

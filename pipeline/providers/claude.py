@@ -56,15 +56,63 @@ class ClaudeProvider(Provider):
             if e.status_code == 429:
                 err.billed = False
             raise err
-        latency_ms = int((time.perf_counter() - t0) * 1000)
-        u = msg.usage
-        cached = getattr(u, "cache_read_input_tokens", None) or 0
-        write = getattr(u, "cache_creation_input_tokens", None) or 0
-        usage = {"input_tokens": u.input_tokens + cached + write, "output_tokens": u.output_tokens,
-                 "cached_tokens": cached, "cache_write_tokens": write}
-        if msg.stop_reason == "refusal":
-            body = f"refusal: {getattr(msg, 'stop_details', None)}"
-        else:
-            text = "".join(b.text for b in msg.content if b.type == "text")
-            body = parse_json_text(text) if msg.stop_reason != "max_tokens" else f"truncated (max_tokens): {text[:200]}"
-        return Response(body, usage, getattr(msg, "_request_id", None), latency_ms)
+        return to_response(msg, int((time.perf_counter() - t0) * 1000))
+
+
+def to_response(msg, latency_ms=0):
+    """A Messages API message (standard or a batch result) → Response: parsed JSON body (or raw text) + usage."""
+    u = msg.usage
+    cached = getattr(u, "cache_read_input_tokens", None) or 0
+    write = getattr(u, "cache_creation_input_tokens", None) or 0
+    usage = {"input_tokens": u.input_tokens + cached + write, "output_tokens": u.output_tokens,
+             "cached_tokens": cached, "cache_write_tokens": write}
+    if msg.stop_reason == "refusal":
+        body = f"refusal: {getattr(msg, 'stop_details', None)}"
+    else:
+        text = "".join(b.text for b in msg.content if b.type == "text")
+        body = parse_json_text(text) if msg.stop_reason != "max_tokens" else f"truncated (max_tokens): {text[:200]}"
+    return Response(body, usage, getattr(msg, "_request_id", None) or getattr(msg, "id", None), latency_ms)
+
+
+class ClaudeBatchProvider(ClaudeProvider):
+    """Message Batches API (PLAN §3.6, §9.10): 50% off input and output; results arrive in any order, keyed by custom_id.
+
+    submit(requests) → provider job ID · status(job_id) → ("in_progress" | "canceling" | "ended", request_counts)
+    · results(job_id) → [(custom_id, kind, Response | None, error)] with kind ∈ succeeded | errored | canceled | expired.
+    Errored, canceled and expired requests are not billed."""
+    tier = "batch"
+    rates = {"input_tokens": 0.05, "cached_tokens": 0.005, "cache_write_tokens": 0.0625, "output_tokens": 0.25}
+
+    async def call(self, request):
+        raise RuntimeError("ClaudeBatchProvider has no real-time call; use ClaudeProvider (--standard)")
+
+    async def _guard(self, coro):
+        try:
+            return await coro
+        except anthropic.APIConnectionError as e:
+            raise ProviderError("transient", None, f"connection error: {e}", billed=False)
+        except anthropic.APIStatusError as e:
+            raise classify_http(e.status_code, None, str(e.message)[:300])
+
+    async def submit(self, requests):
+        """requests = [(custom_id, params incl. model)] → provider job ID."""
+        job = await self._guard(self.client.messages.batches.create(
+            requests=[{"custom_id": cid, "params": params} for cid, params in requests]))
+        return job.id
+
+    async def status(self, job_id):
+        job = await self._guard(self.client.messages.batches.retrieve(job_id))
+        counts = job.request_counts
+        return job.processing_status, {k: getattr(counts, k, 0) for k in
+                                       ("processing", "succeeded", "errored", "canceled", "expired")}
+
+    async def results(self, job_id):
+        out = []
+        async for entry in await self._guard(self.client.messages.batches.results(job_id)):
+            r = entry.result
+            if r.type == "succeeded":
+                out.append((entry.custom_id, "succeeded", to_response(r.message), None))
+            else:
+                err = getattr(r, "error", None)
+                out.append((entry.custom_id, r.type, None, str(getattr(err, "error", err) or r.type)[:300]))
+        return out
