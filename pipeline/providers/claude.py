@@ -27,7 +27,10 @@ class ClaudeProvider(Provider):
             key = api_key or os.environ.get("ANTHROPIC_API_KEY")
             if not key:
                 raise RuntimeError("ANTHROPIC_API_KEY is not set (.env)")
-            client = anthropic.AsyncAnthropic(api_key=key, max_retries=0)
+            # a key not scoped to a workspace needs the workspace ID on every request (ANTHROPIC_WORKSPACE_ID, .env)
+            ws = os.environ.get("ANTHROPIC_WORKSPACE_ID")
+            client = anthropic.AsyncAnthropic(api_key=key, max_retries=0,
+                                              default_headers={"anthropic-workspace-id": ws} if ws else None)
         self.client = client
 
     def cost(self, usage):
