@@ -1,0 +1,22 @@
+resuming from run-20261015-091839-b1588a (fake-v0)
+{
+ "run_id": "run-20261015-091847-fd7725",
+ "phase": "resume",
+ "stop_reason": "drained",
+ "started_at": "2026-10-15T16:18:47.197926Z",
+ "ended_at": "2026-10-15T16:19:00.726024Z",
+ "elapsed_s": 13.5,
+ "label_config": "fake-v0",
+ "calls": {
+  "succeeded": 62
+ },
+ "input_tokens": 75556,
+ "output_tokens": 18828,
+ "spend_usd_list": {
+  "spent": 0.08497,
+  "reserved": 0
+ },
+ "queue": {
+  "done": 1669
+ }
+}

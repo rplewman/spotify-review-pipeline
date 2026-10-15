@@ -1,0 +1,11 @@
+queue (stage, label_config, status, items):
+   enrich fake-v0 done 100
+   enrich fake-v0 pending 1569
+records: {'completed': 431}
+ledger by bucket (list price USD):
+   escalation: {'spent': 0.020769000000000003, 'reserved': 0}
+   pilots: {'spent': 0.004959, 'reserved': 0}
+   total: {'spent': 0.025728, 'reserved': 0}
+calls: {'failed': 2, 'succeeded': 6}
+last runs:
+   run-20261015-091839-b1588a initial interrupted 2026-10-15T16:18:39.483022Z 2026-10-15T16:18:40.858332Z

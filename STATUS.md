@@ -1,6 +1,50 @@
 # STATUS — handoff log
 
-## Last completed: M6b (Fidelity upgrade + re-freeze) — ✅ gate passed 2026-10-15 (💰 $0.4572 list, approved by Rory)
+## Last completed: M7 (System tests & recovery evidence) — ✅ offline gate passed 2026-10-15 (💰 $0; tiny paid injection run pending Rory)
+
+### Done (M7)
+- **Code:** `pipeline/recovery.py` (checkpoint files `{"completed_ids": [...]}` + `resume_rules` = local copy of the checker's
+  resume block over the DB); `pipeline/synthetic.py` (SYNTH- corpora in their own fresh DB); `pipeline.cli` maps
+  **Ctrl-Break → Ctrl-C** on Windows (`ctrl_break_as_ctrl_c`), so a run in its own process group stops cleanly.
+  `scripts/resume_demo.py` (enrich → N A3 calls + ≥ 1 committed batch → interrupt → checkpoint_before → status → resume →
+  checkpoint_after → rules → wait for the resume run → rules again). `scripts/system_tests.py` (12 offline scenarios +
+  `injection_real`, paid). Tests `tests/test_m7_system.py` (5). Fast suite **128 passed**; full suite **136 passed** (7 min).
+- **Rehearsal** (`evals/recovery/rehearsal/`, FakeProvider, 2,000 synthetic rows): interrupt → exit 130 `interrupted`,
+  2 in-flight calls closed failed, 0 reserved → before 431 → resume → after 631 → rules **PASS**; at the end **PASS**,
+  0 resume calls with a before ID. Bug found and fixed while rehearsing: "N succeeded A3 calls" alone could leave
+  `checkpoint_before` empty (A5 still in flight with 2+ workers) → the demo now also waits for committed records.
+- **System tests** (`evals/system_tests/results.{md,json}`, all PASS): planted errors (5/5 caught by the verifier
+  comparison on a test copy; 12/12 contract violations caught by `validate_record`; a planted resume re-send flagged);
+  injection with a model that obeys (invalid label → retry → quarantined with reason; an answer for an unsent review →
+  call bisected → culprit quarantined; quotes always cut by code); A9/A11 invented IDs/numbers rejected and retried;
+  malformed output (bisect + retry; missing twice → quarantined, logged in quarantine.jsonl); empty texts quarantined
+  `empty_review_text` and never sent; ambiguous text (low top prob saved; **needs_review stays false** under the frozen
+  config — known limitation); 429/408 retried, 402 global stop → resume, 400 stop, max_attempts → failed; ledger stops
+  before the cap, paid without `--paid` refused, fake on pipeline.db refused; hard kill → crashed → resume, rules pass;
+  real failures so far = 4 (2 Anthropic connection errors settled at estimate $0.0132 + $0.1135; 2 pilot 400s at $0);
+  no SYNTH- rows in state/pipeline.db / outputs/ / grading/.
+- `state/pipeline.db` checked read-only: all 8,492 non-cached completed records are in succeeded `initial` calls with the
+  frozen label_config (0 unlogged) → the M8 `checkpoint_before` will satisfy the checker.
+
+### Notes for M8/M10
+- **M8 first ~10 minutes, recording on:** `.venv/Scripts/python scripts/resume_demo.py --out evals/recovery --enrich-args
+  "--provider celeris --escalation anthropic --bucket decisions --workers 4 --paid --max-spend X"` (the resume run is the
+  rest of the main run; Ctrl-C in the demo window is forwarded and stops it cleanly). Then the add-on with `--scope addon`.
+- **M10 export risk:** `state/pipeline.db` also holds 344 succeeded enrich calls under the **M6** label_config for the same
+  10k reviews. The checker flags `call_config_mismatch` for any succeeded enrich call whose label_config differs from the
+  record's → export only calls under the final label_config (and disclose the M6 calls in the run log/README), or decide in M10.
+- Copy `evals/recovery/checkpoint_{before,after}.json` into `grading/` in M10 (extra provenance keys are ignored by the checker).
+
+### Spend (list price)
+- M7: **$0** so far. Project total unchanged: **$0.6831** (Celeris $0.2049 credit, Anthropic $0.4783 cash).
+
+### Next step
+Pending: Rory's yes/no on `injection_real` (≤ $0.02 cap, est. < $0.01). Then **M8 — Main 100k run.**
+"Read CLAUDE.md, STATUS.md and PLAN.md §5 M8, then do M8."
+
+---
+
+## Previously completed: M6b (Fidelity upgrade + re-freeze) — ✅ gate passed 2026-10-15 (💰 $0.4572 list, approved by Rory)
 
 ### Frozen label_config (CLI default; supersedes M6)
 `celeris-1-decision+shapeA+gate1.00+esc-claude-haiku-5-5-1.00+escfields-severity+extract-code-v1+prompt-v1+schema-v1+sentiment-mode-v1`

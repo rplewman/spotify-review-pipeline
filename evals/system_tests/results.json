@@ -1,0 +1,484 @@
+[
+ {
+  "name": "planted_error_verifier",
+  "expected": "5 wrong topics planted in a separate copy of the first labels are all flagged by the independent verifier's comparison; the real records are untouched",
+  "observed": {
+   "verify_exit": 0,
+   "planted": 5,
+   "detected": 5,
+   "missed": 0,
+   "real_records_changed": false
+  },
+  "passed": true,
+  "seconds": 0.16
+ },
+ {
+  "name": "planted_error_checks",
+  "expected": "each planted contract violation in a test copy is rejected by pipeline.schema.validate_record; a resume call re-sending a checkpointed ID is flagged by the resume rules",
+  "observed": {
+   "good_record_errors": [],
+   "caught": {
+    "topic not in the label set": "topic 'hacked' not in ('access', 'usability', 'playback', 'downloads', 'catalog', 'billing', 'support', 'other')",
+    "severity out of range": "severity 6 must be an int 1-5",
+    "severity as a string": "severity '3' must be an int 1-5",
+    "sentiment out of range": "sentiment 1.5 must be a number in [-1, 1]",
+    "quote not in the text": "evidence_quote is not an exact substring of the review text",
+    "needs_review not a bool": "needs_review 'yes' must be a bool",
+    "empty entity": "entities [''] must be a list of nonempty strings",
+    "missing label_config": "label_config must be a nonempty string",
+    "cache_source_id = itself": "cache_source_id must name a different review",
+    "extra key": "unexpected keys ['verifier_said']",
+    "empty text with another reason": "empty text must be quarantined with reason 'empty_review_text'",
+    "quarantine without reason": "quarantined record needs a nonempty reason"
+   },
+   "missed": [],
+   "resume_rules_flags": [
+    "reprocessed_checkpoint (1 resume calls)",
+    "resume_call_evidence"
+   ]
+  },
+  "passed": true,
+  "seconds": 0.09
+ },
+ {
+  "name": "injection_fake",
+  "expected": "an invalid label never reaches a record (enum check); a review whose output is invalid twice is quarantined with its reason; an answer for an unsent review is rejected (whole call unusable → bisected until the culprit is alone); quotes are cut by code, never taken from the model; the other reviews complete",
+  "observed": {
+   "stop_reason": "drained",
+   "calls": {
+    "succeeded": 4
+   },
+   "records": {
+    "SYNTH-00000": {
+     "status": "quarantined",
+     "reason": "invalid_output: choice 'hacked' not allowed",
+     "topic": null
+    },
+    "SYNTH-00001": {
+     "status": "completed",
+     "reason": null,
+     "topic": "other"
+    },
+    "SYNTH-00002": {
+     "status": "completed",
+     "reason": null,
+     "topic": "downloads"
+    },
+    "SYNTH-00003": {
+     "status": "completed",
+     "reason": null,
+     "topic": "downloads"
+    },
+    "SYNTH-00004": {
+     "status": "completed",
+     "reason": null,
+     "topic": "support"
+    },
+    "SYNTH-00005": {
+     "status": "completed",
+     "reason": null,
+     "topic": "playback"
+    },
+    "SYNTH-00006": {
+     "status": "completed",
+     "reason": null,
+     "topic": "catalog"
+    },
+    "SYNTH-00007": {
+     "status": "completed",
+     "reason": null,
+     "topic": "downloads"
+    },
+    "SYNTH-00008": {
+     "status": "completed",
+     "reason": null,
+     "topic": "other"
+    },
+    "SYNTH-00009": {
+     "status": "completed",
+     "reason": null,
+     "topic": "other"
+    }
+   },
+   "provider_calls": 2,
+   "foreign": {
+    "stop_reason": "drained",
+    "calls": {
+     "failed": 6,
+     "succeeded": 5
+    },
+    "target": {
+     "status": "quarantined",
+     "reason": "invalid_output: foreign answer keys ['R51_topic']"
+    },
+    "provider_calls": [
+     [
+      "valid",
+      10
+     ],
+     [
+      "valid",
+      5
+     ],
+     [
+      "valid",
+      2
+     ],
+     [
+      "valid",
+      3
+     ],
+     [
+      "valid",
+      1
+     ],
+     [
+      "valid",
+      2
+     ],
+     [
+      "valid",
+      1
+     ],
+     [
+      "valid",
+      1
+     ],
+     [
+      "valid",
+      5
+     ],
+     [
+      "valid",
+      1
+     ]
+    ],
+    "others_completed": 9
+   }
+  },
+  "passed": true,
+  "seconds": 0.14
+ },
+ {
+  "name": "group_memo_injection",
+  "expected": "the invented issue name is dropped; the memo with an unknown issue/review ID and an unsupported number fails the code check, is retried once with the errors, and only the clean answer is written",
+  "observed": {
+   "exit_codes": {
+    "group": 0,
+    "rank": 0,
+    "memo": 0
+   },
+   "calls": {
+    "group": {
+     "succeeded": 1
+    },
+    "memo": {
+     "failed": 1,
+     "succeeded": 1
+    }
+   },
+   "invented_ids_in_outputs": false
+  },
+  "passed": true,
+  "seconds": 0.3
+ },
+ {
+  "name": "malformed_output",
+  "expected": "a non-JSON response fails the call, which is bisected and re-sent (no review charged an invalid attempt for it); a review missing from the answer twice is quarantined with reason and attempt count in outputs/quarantine.jsonl; every other review completes",
+  "observed": {
+   "stop_reason": "drained",
+   "calls": {
+    "failed": 1,
+    "succeeded": 7
+   },
+   "target": "quarantined",
+   "target_reason": "invalid_output: missing answers for [R1]: ['topic', 'intent', 'severity', 'sentiment']",
+   "quarantine_log": [
+    {
+     "review_id": "SYNTH-00002",
+     "text_sha256": "913fd84573973e27de28f83b6d2ff366f9b846344a1a8bde75b2226fdcb6f1f2",
+     "label_config": "fake-v0",
+     "reason": "invalid_output: missing answers for [R1]: ['topic', 'intent', 'severity', 'sentiment']",
+     "attempts": 2,
+     "invalid_attempts": 2
+    }
+   ],
+   "others_completed": 29,
+   "others": 29
+  },
+  "passed": true,
+  "seconds": 0.11
+ },
+ {
+  "name": "missing_text",
+  "expected": "empty / whitespace-only texts are quarantined at intake with reason 'empty_review_text' and never sent to a model; the rest complete",
+  "observed": {
+   "SYNTH-00000": [
+    "quarantined",
+    "empty_review_text"
+   ],
+   "SYNTH-00001": [
+    "quarantined",
+    "empty_review_text"
+   ],
+   "SYNTH-00002": [
+    "quarantined",
+    "empty_review_text"
+   ],
+   "SYNTH-00003": [
+    "completed",
+    null
+   ],
+   "SYNTH-00004": [
+    "completed",
+    null
+   ]
+  },
+  "never_sent": true,
+  "passed": true,
+  "seconds": 0.08
+ },
+ {
+  "name": "ambiguous_label",
+  "expected": "low-confidence (ambiguous) reviews still get one valid label; every probability is saved with the decision (agent_outputs A3); under the frozen config only severity is escalated, so a low topic probability does not by itself set needs_review (known limitation, golden recall 15%)",
+  "observed": {
+   "SYNTH-00000": {
+    "topic": "access",
+    "top_topic_prob": 0.4,
+    "route": "escalate",
+    "escalated_fields": [
+     "severity"
+    ],
+    "needs_review": false
+   },
+   "SYNTH-00001": {
+    "topic": "other",
+    "top_topic_prob": 0.4,
+    "route": "escalate",
+    "escalated_fields": [
+     "severity"
+    ],
+    "needs_review": false
+   },
+   "SYNTH-00002": {
+    "topic": "other",
+    "top_topic_prob": 0.4,
+    "route": "escalate",
+    "escalated_fields": [
+     "severity"
+    ],
+    "needs_review": false
+   },
+   "SYNTH-00003": {
+    "topic": "billing",
+    "top_topic_prob": 0.9,
+    "route": "escalate",
+    "escalated_fields": [
+     "severity"
+    ],
+    "needs_review": false
+   }
+  },
+  "passed": true,
+  "seconds": 0.09
+ },
+ {
+  "name": "transient_failures",
+  "expected": "429 / 408 are retried with backoff (429 not charged, 408 settled at the estimate) and the queue drains; 402 stops everything with no lease left and resume finishes; 400 stops the run; an item failing 3 times (max_attempts) is marked failed, not retried forever",
+  "observed": {
+   "transient": {
+    "stop_reason": "drained",
+    "failed_call_errors": [
+     "429 transient: fake 429",
+     "408 transient: fake timeout",
+     "429 transient: fake 429"
+    ],
+    "queue": {
+     "done": 36
+    },
+    "ledger": {
+     "spent": 0.007857,
+     "reserved": 0
+    }
+   },
+   "quota_402": {
+    "stop_reason": "quota_402",
+    "queue_after_stop": {
+     "done": 20,
+     "pending": 16
+    },
+    "resume_stop": "drained",
+    "queue_after_resume": {
+     "done": 36
+    }
+   },
+   "fatal_400": {
+    "stop_reason": "fatal_400"
+   },
+   "max_attempts": {
+    "stop_reason": "drained",
+    "items": [
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ],
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ],
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ],
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ],
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ],
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ],
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ],
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ],
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ],
+     [
+      "failed",
+      3,
+      "408 transient: fake timeout"
+     ]
+    ]
+   }
+  },
+  "passed": true,
+  "seconds": 0.94
+ },
+ {
+  "name": "spend_controls",
+  "expected": "the ledger reserves before every call and stops admitting work before the cap (spent ≤ cap, nothing left reserved); a paid provider without --paid/--max-spend is refused; a fake run on state/pipeline.db is refused",
+  "observed": {
+   "cap_usd": 0.005316,
+   "stop_reason": "budget",
+   "ledger": {
+    "spent": 0.000876,
+    "reserved": 0
+   },
+   "queue": {
+    "done": 10,
+    "pending": 159
+   },
+   "paid_refusal": "refused: celeris, anthropic is paid; pass --paid and --max-spend (PLAN §4)",
+   "operational_db_refusal": "refused: fake runs must use their own --db, not the operational state/pipeline.db"
+  },
+  "passed": true,
+  "seconds": 0.16
+ },
+ {
+  "name": "hard_kill_recovery",
+  "expected": "a run killed with no cleanup is detected as crashed once its heartbeat is stale; its in-flight call is closed as failed and settled at the estimate; resume finishes the queue without re-sending any completed ID (checker resume rules pass)",
+  "observed": {
+   "runs": [
+    [
+     "initial",
+     "crashed"
+    ],
+    [
+     "resume",
+     "drained"
+    ]
+   ],
+   "resume_exit": 0,
+   "before": 63,
+   "after": 150,
+   "rules": {
+    "ok": true,
+    "flags": [],
+    "before": 63,
+    "after": 150,
+    "new_after_resume": 87,
+    "before_cached": 23,
+    "before_unlogged_in_initial": 0,
+    "new_ids_in_resume_calls": 87,
+    "resume_calls_with_before_ids": []
+   },
+   "ledger": {
+    "spent": 0.01573425,
+    "reserved": 0
+   }
+  },
+  "passed": true,
+  "seconds": 5.31
+ },
+ {
+  "name": "real_transient_failures",
+  "expected": "record every real failed call so far (no fake data); each was settled at its estimate when billing was unknown",
+  "observed": {
+   "failed_calls": 4,
+   "by_db": {
+    "m6_dev.db": [
+     {
+      "agent": "A5-dev100",
+      "model": "claude-haiku-5-5",
+      "error": "None transient: connection error: Connection error.",
+      "settled_usd": 0.013177249999999998
+     },
+     {
+      "agent": "A5-topic-test",
+      "model": "claude-sonnet-5-5",
+      "error": "None transient: connection error: Connection error.",
+      "settled_usd": 0.1135125
+     }
+    ],
+    "pilot_attempt1.db": [
+     {
+      "agent": "A5",
+      "model": "claude-haiku-5-5",
+      "error": "400 fatal: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'This API key is not scoped to a workspace, so this request must include the anthropic-workspace-id header with the ID of the workspace to use. Add the header, or use an API key that is scoped to a workspace.'}",
+      "settled_usd": 0.0
+     }
+    ],
+    "pilot_attempt2.db": [
+     {
+      "agent": "A5",
+      "model": "claude-haiku-5-5",
+      "error": "400 fatal: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'This API key is not scoped to a workspace, so this request must include the anthropic-workspace-id header with the ID of the workspace to use. Add the header, or use an API key that is scoped to a workspace.'}",
+      "settled_usd": 0.0
+     }
+    ]
+   }
+  },
+  "passed": true,
+  "seconds": 0.14
+ },
+ {
+  "name": "synthetic_exclusion",
+  "expected": "synthetic rows (SYNTH- IDs) exist only in their own DBs under state/m7_*; none in state/pipeline.db, outputs/ or grading/ (so none in business aggregates or the export)",
+  "observed": {
+   "synth_rows_in_pipeline_db": 0,
+   "files_with_synth_ids": []
+  },
+  "passed": true,
+  "seconds": 0.09
+ }
+]

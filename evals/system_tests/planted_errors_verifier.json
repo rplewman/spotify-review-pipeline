@@ -1,0 +1,40 @@
+{
+ "detected": 5,
+ "label_config": "fake-v0",
+ "missed": 0,
+ "note": "test copy only; excluded from business aggregates",
+ "planted": [
+  {
+   "field": "topic",
+   "planted": "other",
+   "review_id": "SYNTH-00024",
+   "true_first_label": "support"
+  },
+  {
+   "field": "topic",
+   "planted": "other",
+   "review_id": "SYNTH-00051",
+   "true_first_label": "support"
+  },
+  {
+   "field": "topic",
+   "planted": "playback",
+   "review_id": "SYNTH-00013",
+   "true_first_label": "usability"
+  },
+  {
+   "field": "topic",
+   "planted": "other",
+   "review_id": "SYNTH-00007",
+   "true_first_label": "support"
+  },
+  {
+   "field": "topic",
+   "planted": "access",
+   "review_id": "SYNTH-00031",
+   "true_first_label": "other"
+  }
+ ],
+ "synthetic": true,
+ "verify_config": "fake-verifier+verifier-prompt-v1+effort-low"
+}

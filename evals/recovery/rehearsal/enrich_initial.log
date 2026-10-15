@@ -1,0 +1,25 @@
+enqueued 1669 items for enrich / fake-v0
+interrupted: leases released, state saved; continue with `python -m pipeline.cli resume`
+{
+ "run_id": "run-20261015-091839-b1588a",
+ "phase": "initial",
+ "stop_reason": "interrupted",
+ "started_at": "2026-10-15T16:18:39.483022Z",
+ "ended_at": "2026-10-15T16:18:40.858332Z",
+ "elapsed_s": 1.344,
+ "label_config": "fake-v0",
+ "calls": {
+  "failed": 2,
+  "succeeded": 6
+ },
+ "input_tokens": 7438,
+ "output_tokens": 1200,
+ "spend_usd_list": {
+  "spent": 0.025728,
+  "reserved": 0
+ },
+ "queue": {
+  "done": 100,
+  "pending": 1569
+ }
+}

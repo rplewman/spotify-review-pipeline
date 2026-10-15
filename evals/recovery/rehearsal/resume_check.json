@@ -1,0 +1,46 @@
+{
+ "db": "state\\m7_rehearsal.db",
+ "label_config": "fake-v0",
+ "initial_run": {
+  "run_id": "run-20261015-091839-b1588a",
+  "phase": "initial",
+  "stop_reason": "interrupted",
+  "label_config": "fake-v0",
+  "calls": {
+   "failed": 2,
+   "succeeded": 6
+  }
+ },
+ "resume_run": {
+  "run_id": "run-20261015-091847-fd7725",
+  "phase": "resume",
+  "stop_reason": "drained",
+  "label_config": "fake-v0",
+  "calls": {
+   "succeeded": 62
+  },
+  "exit_code": 0
+ },
+ "check_at_after": {
+  "ok": true,
+  "flags": [],
+  "before": 431,
+  "after": 631,
+  "new_after_resume": 200,
+  "before_cached": 331,
+  "before_unlogged_in_initial": 0,
+  "new_ids_in_resume_calls": 200,
+  "resume_calls_with_before_ids": []
+ },
+ "check_at_end": {
+  "ok": true,
+  "flags": [],
+  "before": 431,
+  "after": 631,
+  "new_after_resume": 200,
+  "before_cached": 331,
+  "before_unlogged_in_initial": 0,
+  "new_ids_in_resume_calls": 200,
+  "resume_calls_with_before_ids": []
+ }
+}

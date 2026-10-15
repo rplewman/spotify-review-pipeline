@@ -21,6 +21,7 @@ Money rule: a paid provider runs only with --paid AND --max-spend. The fake prov
 import argparse
 import asyncio
 import json
+import signal
 import sys
 from pathlib import Path
 
@@ -421,7 +422,15 @@ def cmd_ingest(args):
     return 0
 
 
+def ctrl_break_as_ctrl_c():
+    """Windows: a run started in its own process group (scripts/resume_demo.py) can only be sent Ctrl-Break. Treat it as
+    Ctrl-C, so asyncio cancels the run and the orchestrator's cleanup (leases, attempts, checkpoint) runs as usual."""
+    if hasattr(signal, "SIGBREAK"):
+        signal.signal(signal.SIGBREAK, lambda *_: signal.raise_signal(signal.SIGINT))
+
+
 def main(argv=None):
+    ctrl_break_as_ctrl_c()
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     commands = parser.add_subparsers(dest="command", required=True)
 
