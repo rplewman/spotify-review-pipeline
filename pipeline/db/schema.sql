@@ -108,9 +108,22 @@ CREATE TABLE IF NOT EXISTS calls (
     started_at      TEXT,
     usage_available INTEGER,                  -- 0 = provider gave no usage (tokens exported as 0 + flag)
     est_usd         REAL,                     -- the ledger reservation for this attempt
+    provider_request_id TEXT,             -- the provider's own ID when it returns one (Anthropic); Celeris has none
     ended_at        TEXT
 );
 CREATE INDEX IF NOT EXISTS ix_calls_run ON calls(run_id, outcome);
+
+-- Intermediate agent outputs per distinct text (M3b): A3 decision + every probability, A4 route, A5 escalation answer.
+-- Saved in the same transaction as the call that produced them, so a retry or resume never re-pays a finished step.
+CREATE TABLE IF NOT EXISTS agent_outputs (
+    text_sha256  TEXT NOT NULL,
+    label_config TEXT NOT NULL,
+    agent        TEXT NOT NULL CHECK (agent IN ('A3', 'A4', 'A5')),
+    request_id   TEXT,                       -- the call that produced it (NULL for A4, which is code)
+    output_json  TEXT NOT NULL,
+    created_at   TEXT NOT NULL,
+    PRIMARY KEY (text_sha256, label_config, agent)
+);
 
 CREATE TABLE IF NOT EXISTS batch_jobs (
     provider_job_id TEXT PRIMARY KEY,

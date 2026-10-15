@@ -5,6 +5,8 @@ Errors are classified once, here, so the orchestrator's policy is provider-indep
 `billed` says whether the failed attempt is charged: False → the ledger reservation is released; None (unknown) →
 settled at the estimate, conservatively.
 """
+import json
+import re
 from dataclasses import dataclass, field
 
 
@@ -16,6 +18,7 @@ class Request:
     texts: list
     payload: dict = field(default_factory=dict)  # stage-specific request body parts (built by the stage)
     timeout: float = 120.0
+    meta: dict = field(default_factory=dict)     # stage bookkeeping for the fake provider and logs; never sent
 
 
 @dataclass
@@ -37,10 +40,26 @@ def classify_http(status, retry_after=None, message=""):
     """Map an HTTP status to a ProviderError (Celeris semantics, PLAN §9.9: 429 and 502 are not charged)."""
     if status == 402:
         return ProviderError("quota", status, message or "insufficient_quota", billed=False)
-    if status in (408, 429, 500, 502, 503, 504):
+    if status in (408, 429, 500, 502, 503, 504, 529):  # 529 = Anthropic overloaded
         return ProviderError("transient", status, message, retry_after=retry_after,
                              billed=False if status in (429, 502) else None)
     return ProviderError("fatal", status, message, billed=False)
+
+
+FENCE = re.compile(r"\A```(?:json)?\n(.*)\n```\Z", re.S)
+
+
+def parse_json_text(text):
+    """Strict JSON. The one known wrapper (a whole-body Markdown code fence, PLAN §9.9) is stripped only on an exact
+    match; anything else that does not parse is returned unchanged as text, so the stage reports it as malformed."""
+    for candidate in (text, (m.group(1) if (m := FENCE.match(text.strip())) else None)):
+        if candidate is None:
+            continue
+        try:
+            return json.loads(candidate)
+        except ValueError:
+            pass
+    return text
 
 
 class Provider:

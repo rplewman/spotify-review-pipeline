@@ -1,7 +1,58 @@
 # STATUS — handoff log
 
-## Last completed: M3a (Queue, cache & control engine) — ✅ gate passed 2026-10-14 (no spend)
+## Last completed: M3b (Enrichment agents A3–A7) — ✅ gate passed 2026-10-14 (no spend)
 
+### Done (M3b)
+- **Chain protocol** (`pipeline/stages.py`): a stage now yields `Call`s (provider, payload, estimate, parser, bucket) for a leased
+  batch; the orchestrator runs each call (reserve → limiter → `calls` row → provider → ONE transaction: outcome + usage, ledger,
+  `stage.absorb`), then `stage.finish` → ONE fenced transaction for results/fan-out/queue. `PassthroughStage` (M3a) is a one-call
+  stage; M3a tests unchanged and green. New table `agent_outputs` (A3 decision with every probability, A4 route, A5 answer per
+  text + label_config, saved with the call) → an A5 failure, lost lease or resume never re-pays A3. `calls.provider_request_id` added.
+- **A3 Decision** (`agents/decision.py`, `prompts/decision_state_v1.md`): shape A = definitions + ≤ 50 `[R<n>]` reviews in `state`,
+  4 bare questions per review (topic/intent choice, severity/sentiment score); shape B (`--shape B --batch-size 1`) = one review,
+  definitions in option descriptions. Severity = most probable level (+1); sentiment = probability-weighted level → −1..1.
+  `[R<n>]` inside review text is neutralised. Missing/malformed answer → that review invalid; a **foreign key** or unparseable
+  body → the call is invalid and the batch is **bisected** (halves re-sent at once) so only the culprit gets retry-once → quarantine.
+- **A4 Router** (`agents/router.py`): gate on top probability (topic/intent/severity, default 0.60); cap = floor(esc_fraction ×
+  queue size), counted atomically in the DB; over the cap → `capped` (A3 label, needs_review). $ sub-cap = ledger bucket
+  `escalation` (`--esc-max-spend`): a refused A5 reservation → `capped_budget`, run continues.
+- **A5 Escalation** (`agents/escalation.py`, `prompts/escalation_system_v1.md`, `providers/claude.py`): Haiku 5.5 via the SDK
+  (`max_retries=0`), effort `low` (adaptive thinking), structured output (JSON schema), one request per batch's escalated texts,
+  single-field questions with A3's top-2. Missing/invalid answer or unusable body → A3's value kept with needs_review (no quarantine).
+  Usage: cache reads/writes priced separately. `celeris-1-magnus` client **not built** (PLAN §4 defaults to Haiku; build in M5 only if
+  the comparison is still wanted).
+- **A6 Extractor** (`agents/extractor.py`, keywords-v1): shortest sentence with a topic term, else full text (always a slice);
+  entities as written, longest match first. **A7 Validator** (`agents/validator.py`) = schema-v1 + label_config.
+- **Providers**: `providers/celeris.py` (httpx, `X-Client-Trace-Id` = our request_id, Retry-After, §9.9 error classes, usage or None,
+  exact code-fence strip in `base.parse_json_text`); 529 → transient. Fake provider answers in Celeris / escalation shapes (+ `foreign`).
+- **CLI**: `enrich [--provider fake|celeris] [--escalation fake|anthropic|none] [--stage chain|passthrough] [--shape A|B] [--gate]
+  [--esc-fraction] [--esc-max-spend]`; any paid part (celeris or anthropic) needs `--paid --max-spend`. Default paid label_config =
+  `make_label_config(...)` e.g. `celeris-1-decision+shapeA+gate0.60+esc-claude-haiku-5-5-0.15+extract-code-v1+prompt-v1+schema-v1`.
+  Resume inherits the stage settings from the run's provider spec.
+- Tests `tests/test_m3b_agents.py` (31, ~4 s): confident → accepted; low-conf → escalated (A3's 2nd candidate wins); fraction cap
+  (4 workers) and $ sub-cap → needs_review; no escalation model → needs_review; A5 malformed → fallback; A5 408/429 → A3 not re-paid;
+  crash between A3 and A5 → resume reuses decisions; missing `[R<n>]` → retry → quarantine; foreign `[R<n>]` → only the culprit
+  quarantined (bisection); malformed singleton → retry → quarantine; injected label → rejected → retried; all records pass §9.8 and
+  quotes are exact substrings; decision parser on the measured smoke response; Celeris/Claude clients on mocked transports.
+  Full fast suite: **78 passed** (`-m "not data"`). Real `state/pipeline.db` migrated (78,099 pending kept); manifest `schema_sha256` updated.
+
+### Measured offline (no calls)
+- Shape A, first 50 queue texts: ≈ 14.7k input tokens upper-end estimate (definitions ≈ 1.1k) → ≈ 293 tokens/review, ≈ $0.0006/request;
+  shape B ≈ 720 tokens/review. 100k scope at shape A ≈ 78k × 293 × $0.04/M ≈ **$0.92 upper end** (M5 measures the real number).
+
+### Notes for M4/M5
+- Haiku's minimum cacheable prefix is likely above our ~1k-token escalation system prompt, so expect `cache_read_input_tokens = 0`
+  (harmless; report as "not cached"). Verify in M5.
+- M5 paid commands (after Rory's yes), e.g. `enrich --provider celeris --escalation anthropic --paid --max-spend 0.05 --bucket pilots
+  --label-config <pilot cfg> --limit 100` on a DB/queue restricted to cost_100 (M5 must enqueue only the 100 pilot texts).
+- `results.probs_json` holds `{a3, a3_confidence, a4, a5}` for the M6 gate sweep.
+
+### Next step
+M4 (Downstream stages, thin versions): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M4, then do M4."
+
+---
+
+## Previously completed: M3a (Queue, cache & control engine) — ✅ gate passed 2026-10-14 (no spend)
 ### Done (M3a)
 - `pipeline/db/store.py`: `connect` (WAL, busy_timeout, explicit transactions), `immediate()` = `BEGIN IMMEDIATE`, `migrate()`
   (applies `schema.sql` + adds columns an older DB lacks; the real `state/pipeline.db` is migrated, nothing lost).
@@ -36,9 +87,6 @@
 - Write `CelerisProvider` / `AnthropicProvider` against `providers/base.py` (send `request_id` as `X-Client-Trace-Id`; return usage or None).
 - Replace `PassthroughStage` with the A3→A7 chain; `estimate_tokens/usd` should use the real request size (state + questions).
 - The real DB still has only `provisional-v0` items (78,099 pending); fake runs never touch it.
-
-### Next step
-M3b (Enrichment agents A3–A7): "Read CLAUDE.md, STATUS.md and PLAN.md §5 M3b, then do M3b."
 
 ---
 

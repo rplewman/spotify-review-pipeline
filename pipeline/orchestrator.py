@@ -65,7 +65,8 @@ class Orchestrator:
     def _start(self):
         conn = connect(self.db_path)
         migrate(conn)
-        config = {**asdict(self.cfg), "provider": self.provider_spec, "model": self.stage.model, "bucket": self.bucket}
+        config = {**asdict(self.cfg), "provider": self.provider_spec, "model": self.stage.model, "bucket": self.bucket,
+                  "stage_config": self.stage.describe()}
         with immediate(conn):
             conn.execute("INSERT INTO runs (run_id, config_json, phase, started_at, heartbeat_at) VALUES (?,?,?,?,?)",
                          (self.run_id, json.dumps(config), self.cfg.phase, now_iso(), now_iso()))
@@ -166,75 +167,104 @@ class Orchestrator:
         return [i for i in items if i["text_sha256"] not in hits]
 
     async def _process(self, conn, owner, items):
+        """Run the stage's calls for one leased batch, then commit its results in one fenced transaction."""
+        ctx = self.stage.begin(conn, items)
+        while (call := self.stage.next_call(conn, ctx)) is not None:
+            if not await self._call(conn, owner, items, call, ctx):
+                return  # items were requeued / released, or the run is stopping
+        ok, bad = self.stage.finish(ctx)
+        self._commit(conn, owner, items, ok, bad)
+
+    async def _call(self, conn, owner, items, call, ctx):
+        """One provider attempt. True = carry on with the batch; False = the batch is over (error or stop)."""
         ids = [i["id"] for i in items]
         request_id = uuid.uuid4().hex  # sent as X-Client-Trace-Id by real providers
-        est = self.stage.estimate_usd(items)
+        bucket = call.bucket or self.bucket
+        cap = call.bucket_cap if call.bucket_cap is not None else (self.cfg.bucket_cap if bucket == self.bucket else None)
+        provider, est = call.provider, call.est_usd
         try:
-            ledger.reserve(conn, request_id, self.stage.provider.name, self.bucket, est, self.caps, self.run_id)
+            ledger.reserve(conn, request_id, provider.name, bucket, est,
+                           ledger.caps_for(bucket, self.run_id, self.cfg.max_spend, cap), self.run_id)
         except ledger.BudgetExceeded as e:
+            if self.stage.on_budget(conn, ctx, call, str(e)):
+                return True
             with immediate(conn):
                 queue.release(conn, ids, owner)
             self.stop("budget")
             self.budget_message = str(e)
-            return
+            return False
         self.in_flight[request_id] = (owner, ids)  # from here on, an interruption must close the reservation
-        tokens = self.stage.estimate_tokens(items)
-        while (wait := limiter.acquire(conn, self.stage.model, tokens, self.cfg.rpm, self.cfg.tpm)) > 0:
+        while (wait := limiter.acquire(conn, provider.model, call.est_tokens, self.cfg.rpm, self.cfg.tpm)) > 0:
             await asyncio.sleep(min(wait, 5.0))
-        review_ids = [i["review_id"] for i in items]
+        review_ids = [i["review_id"] for i in call.items]
         with immediate(conn):
             conn.execute("""INSERT INTO calls (request_id, role, agent, model, tier, phase, outcome, label_config,
                                                review_ids_json, run_id, started_at, est_usd)
                             VALUES (?,?,?,?,?,?,'in_flight',?,?,?,?,?)""",
-                         (request_id, self.stage.role, self.stage.agent, self.stage.model, self.stage.provider.tier,
+                         (request_id, self.stage.role, call.agent, provider.model, provider.tier,
                           self.cfg.phase, self.cfg.label_config, json.dumps(review_ids), self.run_id, now_iso(), est))
-        req = Request(request_id, self.stage.model, review_ids, [i["review_text"] for i in items],
-                      self.stage.payload(items), self.cfg.call_timeout)
+        req = Request(request_id, provider.model, review_ids, [i["review_text"] for i in call.items],
+                      call.payload, self.cfg.call_timeout, call.meta)
         t0 = time.perf_counter()
         try:
-            resp = await asyncio.wait_for(self.stage.provider.call(req), self.cfg.call_timeout)
+            resp = await asyncio.wait_for(provider.call(req), self.cfg.call_timeout)
         except ProviderError as e:
-            self._on_error(conn, owner, items, request_id, est, e, t0)
+            self._on_error(conn, owner, items, request_id, call, e, t0)
+            return False
         except asyncio.TimeoutError:
-            self._on_error(conn, owner, items, request_id, est,
+            self._on_error(conn, owner, items, request_id, call,
                            ProviderError("transient", None, "client timeout", billed=None), t0)
-        else:
-            self._on_response(conn, owner, items, request_id, est, resp, t0)
-        self.in_flight.pop(request_id, None)
+            return False
+        self._on_response(conn, request_id, call, ctx, resp, t0)
+        return True
 
-    def _on_response(self, conn, owner, items, request_id, est, resp, t0):
+    def _on_response(self, conn, request_id, call, ctx, resp, t0):
+        """ONE transaction: the call's outcome + usage, the ledger settlement, and the stage's saved step outputs."""
         latency = resp.latency_ms or int((time.perf_counter() - t0) * 1000)
         usage_ok = resp.usage is not None
         u = resp.usage or {}
-        cost = self.stage.provider.cost(u) if usage_ok else est
+        cost = call.provider.cost(u) if usage_ok else call.est_usd
+        call_error = None
         try:
-            ok, bad, notes = self.stage.parse(resp.body, items)
+            ok, bad, notes = call.parse(resp.body)
             outcome, error = "succeeded", "; ".join(notes) or None
         except ValueError as e:
-            ok, bad, notes = {}, {i["id"]: str(e) for i in items}, []
+            ok, bad, call_error = {}, {i["id"]: str(e) for i in call.items}, str(e)
             outcome, error = "failed", str(e)
-        by_id = {i["id"]: i for i in items}
         with immediate(conn):
             conn.execute("""UPDATE calls SET outcome=?, input_tokens=?, output_tokens=?, cached_tokens=?, cost_usd=?,
-                                             latency_ms=?, error=?, usage_available=?, ended_at=? WHERE request_id=?""",
+                                             latency_ms=?, error=?, usage_available=?, provider_request_id=?, ended_at=?
+                            WHERE request_id=?""",
                          (outcome, int(u.get("input_tokens", 0)), int(u.get("output_tokens", 0)),
-                          int(u.get("cached_tokens", 0) or 0), cost, latency, error, int(usage_ok), now_iso(), request_id))
+                          int(u.get("cached_tokens", 0) or 0), cost, latency, error, int(usage_ok),
+                          resp.provider_request_id, now_iso(), request_id))
             ledger.settle(conn, request_id, cost)
+            self.stage.absorb(conn, ctx, call, ok, bad, request_id, call_error)
+        self.in_flight.pop(request_id, None)
+
+    def _commit(self, conn, owner, items, ok, bad):
+        """ONE fenced transaction: results + record fan-out for the items this worker still holds; invalid → retry
+        once → quarantine."""
+        by_id = {i["id"]: i for i in items}
+        with immediate(conn):
             mine = queue.held(conn, owner, list(by_id))
             done = [i for i in ok if i in mine]
             for i in done:
-                cache.write_result(conn, by_id[i]["text_sha256"], self.cfg.label_config, ok[i], request_id)
+                cache.write_result(conn, by_id[i]["text_sha256"], self.cfg.label_config, ok[i], ok[i].get("request_id"))
             cache.fan_out(conn, self.cfg.label_config, [by_id[i]["text_sha256"] for i in done])
             queue.mark_done(conn, done)
+            invalid = [i for i in bad if i in mine]
+            self.stage.forget(conn, [by_id[i]["text_sha256"] for i in invalid])
             quarantined = {}
-            for i, reason in bad.items():
-                if i in mine and queue.mark_invalid(conn, i, reason):
-                    quarantined[by_id[i]["text_sha256"]] = f"invalid_output: {reason}"
+            for i in invalid:
+                if queue.mark_invalid(conn, i, bad[i]):
+                    quarantined[by_id[i]["text_sha256"]] = f"invalid_output: {bad[i]}"
             cache.quarantine_texts(conn, self.cfg.label_config, quarantined)
 
-    def _on_error(self, conn, owner, items, request_id, est, e, t0):
+    def _on_error(self, conn, owner, items, request_id, call, e, t0):
         ids = [i["id"] for i in items]
         attempts = max(i["attempts"] for i in items)
+        est = call.est_usd
         with immediate(conn):
             conn.execute("""UPDATE calls SET outcome='failed', input_tokens=0, output_tokens=0, usage_available=0,
                                              cost_usd=?, latency_ms=?, error=?, ended_at=? WHERE request_id=?""",
@@ -247,7 +277,7 @@ class Orchestrator:
             mine = list(queue.held(conn, owner, ids))
             if e.kind == "transient":
                 if e.status == 429 and e.retry_after:
-                    limiter.block(conn, self.stage.model, e.retry_after)
+                    limiter.block(conn, call.provider.model, e.retry_after)
                 if attempts >= self.cfg.max_attempts:
                     queue.fail(conn, mine, str(e))
                 else:
@@ -256,6 +286,7 @@ class Orchestrator:
             else:
                 queue.release(conn, mine, owner)
                 self.stop("quota_402" if e.kind == "quota" else f"fatal_{e.status}")
+        self.in_flight.pop(request_id, None)
 
 
 # ---------- recovery, checkpoints, reporting ----------

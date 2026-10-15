@@ -1,7 +1,8 @@
 """Pipeline command line. Runs without Claude (PLAN §3.1).
 
     python -m pipeline.cli ingest  [--csv data/raw/spotify_reviews_18months.csv] [--db state/pipeline.db]
-    python -m pipeline.cli enrich  [--provider fake|celeris|anthropic] [--paid --max-spend USD] [--workers N] [--limit N] ...
+    python -m pipeline.cli enrich  [--provider fake|celeris] [--escalation fake|anthropic|none] [--shape A|B] [--gate 0.60]
+                                   [--esc-fraction 0.15] [--paid --max-spend USD] [--workers N] [--limit N] ...
     python -m pipeline.cli resume  [same provider flags]   continue the last stopped/crashed run (phase "resume")
     python -m pipeline.cli status
     python -m pipeline.cli run --input <csv>              ingest, then enrich (later stages are added by M4)
@@ -15,21 +16,35 @@ import json
 import sys
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from pipeline.agents import intake
 from pipeline.db import ledger, queue
 from pipeline.db.store import connect, migrate
 from pipeline.orchestrator import Orchestrator, RunConfig, recover
+from pipeline.providers.celeris import CelerisProvider
+from pipeline.providers.claude import ClaudeProvider
 from pipeline.providers.fake import FakeProvider, parse_script
-from pipeline.stages import PassthroughStage
+from pipeline.stages import EnrichStage, PassthroughStage, make_label_config
 
 PAID_PROVIDERS = ("celeris", "anthropic")
+STAGE_DEFAULTS = {"stage": "chain", "shape": "A", "gate": 0.60, "esc_fraction": 0.15, "esc_max_spend": None}
 
 
 def add_enrich_flags(p, resume=False):
     d = None if resume else argparse.SUPPRESS  # resume: unset flags inherit the stopped run's config
     p.add_argument("--db", type=Path, default=Path("state/pipeline.db"))
     p.add_argument("--root", type=Path, default=Path("."), help="where outputs/run_log.jsonl and quarantine.jsonl go")
-    p.add_argument("--provider", choices=("fake", *PAID_PROVIDERS), default=None if resume else "fake")
+    p.add_argument("--provider", choices=("fake", "celeris"), default=None if resume else "fake",
+                   help="A3 decision provider")
+    p.add_argument("--escalation", choices=("fake", "anthropic", "none"), default=None,
+                   help="A5 provider (default: fake with --provider fake, else anthropic = Claude Haiku 5.5)")
+    p.add_argument("--stage", choices=("chain", "passthrough"), default=None,
+                   help="chain = A3-A7 (default); passthrough = the M3a single-call stage (fake only)")
+    p.add_argument("--shape", choices=("A", "B"), default=None, help="Celeris request shape (PLAN §3.8); B needs --batch-size 1")
+    p.add_argument("--gate", type=float, default=None, help="A4 escalation gate on the top probability (default 0.60)")
+    p.add_argument("--esc-fraction", type=float, default=None, help="A4 cap: max escalated share of the queue (default 0.15)")
+    p.add_argument("--esc-max-spend", type=float, default=None, help="A5 $ sub-cap (default: PLAN §4 escalation bucket)")
     p.add_argument("--label-config", default=d)
     p.add_argument("--workers", type=int, default=d)
     p.add_argument("--batch-size", type=int, default=d)
@@ -43,14 +58,51 @@ def add_enrich_flags(p, resume=False):
     p.add_argument("--fake-latency", type=float, default=0.0)
 
 
+def resolve_settings(args, spec=None):
+    """Stage settings from the flags, else the resumed run's provider spec, else the defaults."""
+    spec = spec or {}
+    for key, default in STAGE_DEFAULTS.items():
+        if getattr(args, key, None) is None:
+            setattr(args, key, spec.get(key, default))
+    if getattr(args, "escalation", None) is None:
+        args.escalation = spec.get("escalation") or ("fake" if args.provider == "fake" else "anthropic")
+
+
+def paid_parts(args):
+    return [p for p in (args.provider, getattr(args, "escalation", None)) if p in PAID_PROVIDERS]
+
+
+def check_paid(args):
+    paid = paid_parts(args)
+    if paid and (not args.paid or args.max_spend is None):
+        raise SystemExit(f"refused: {', '.join(paid)} is paid; pass --paid and --max-spend (PLAN §4)")
+
+
+def default_label_config(args):
+    if args.provider == "fake":
+        return "fake-v0"
+    esc = None if args.escalation == "none" else "claude-haiku-5-5"
+    return make_label_config("celeris-1-decision", args.shape, args.gate, esc, args.esc_fraction)
+
+
 def make_stage(args, label_config):
-    if args.provider in PAID_PROVIDERS:
-        if not args.paid or args.max_spend is None:
-            raise SystemExit(f"refused: provider {args.provider!r} is paid; pass --paid and --max-spend (PLAN §4)")
-        raise SystemExit(f"provider {args.provider!r} arrives in M3b/M5 (only 'fake' exists in M3a)")
-    provider = FakeProvider(script=parse_script(args.fake_script), latency=args.fake_latency)
-    return PassthroughStage(provider, label_config), {"name": "fake", "script": args.fake_script,
-                                                      "latency": args.fake_latency}
+    check_paid(args)
+    if paid_parts(args):
+        load_dotenv(".env")
+    spec = {"name": args.provider, "escalation": args.escalation, **{k: getattr(args, k) for k in STAGE_DEFAULTS},
+            "script": args.fake_script, "latency": args.fake_latency}
+    if args.provider == "celeris":
+        provider = CelerisProvider()
+    else:
+        provider = FakeProvider(script=parse_script(args.fake_script), latency=args.fake_latency)
+    if args.stage == "passthrough":
+        if args.provider != "fake":
+            raise SystemExit("refused: the passthrough stage only works with the fake provider")
+        return PassthroughStage(provider, label_config), spec
+    esc = {"fake": lambda: FakeProvider(latency=args.fake_latency, model="fake-escalation"),
+           "anthropic": lambda: ClaudeProvider(), "none": lambda: None}[args.escalation]()
+    return EnrichStage(provider, label_config, esc, shape=args.shape, gate=args.gate, esc_fraction=args.esc_fraction,
+                       esc_bucket_cap=args.esc_max_spend), spec
 
 
 def run_enrich(args, base=None, phase="initial"):
@@ -63,7 +115,11 @@ def run_enrich(args, base=None, phase="initial"):
     if getattr(args, "max_minutes", None) is not None:
         base["max_seconds"] = args.max_minutes * 60
     base["max_spend"] = args.max_spend
-    base.setdefault("label_config", "fake-v0" if args.provider == "fake" else intake.PROVISIONAL_LABEL_CONFIG)
+    resolve_settings(args, base.get("provider"))
+    check_paid(args)
+    base.setdefault("label_config", default_label_config(args))
+    if args.shape == "B" and base.get("batch_size", 50) != 1:
+        raise SystemExit("shape B sends one review per request: pass --batch-size 1")
     base["phase"] = phase
     fields = RunConfig.__dataclass_fields__
     cfg = RunConfig(**{k: v for k, v in base.items() if k in fields})
@@ -179,8 +235,8 @@ def main(argv=None):
     if args.command == "status":
         return cmd_status(args)
     if args.command == "run":
-        if args.provider in PAID_PROVIDERS and (not args.paid or args.max_spend is None):
-            raise SystemExit(f"refused: provider {args.provider!r} is paid; pass --paid and --max-spend (PLAN §4)")
+        resolve_settings(args)
+        check_paid(args)
         args.csv, args.label_config = args.input, getattr(args, "label_config", intake.PROVISIONAL_LABEL_CONFIG)
         if cmd_ingest(args):
             return 1
