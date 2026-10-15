@@ -38,7 +38,8 @@
   19/20/13) → shape A kept; disclosed in `evals/m6_notes.md`.
 - **Full-corpus decision (§1.2): NO-GO** (`cost/full_corpus_decision.md`, also appended to `cost/report.md`): conservative
   projection $16.86 > $9.00 (conditions 2 and 3 fail; time would fit). **Frequency add-on recommendation: top 25,000
-  distinct texts** (≤ $0.82 upper end, +41,577 rows, coverage point 0.6161 → 0.6539). 👤 Rory confirms both before M8.
+  distinct texts** (≤ $0.82 upper end, +41,577 rows, coverage point 0.6161 → 0.6539). 👤 **NO-GO confirmed by Rory
+  2026-10-15**; add-on size still to confirm before M8.
 
 ### Spend (list price)
 - M6: **$0.2090** = Celeris $0.1012 (prepaid credit) + Anthropic $0.1079 (cash). Includes one Haiku attempt with a client

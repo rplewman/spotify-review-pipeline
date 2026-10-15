@@ -1,6 +1,6 @@
 ## Full-corpus decision point (PLAN §1.2)
 
-**NO-GO** (computed 2026-10-15; Rory confirms before M8).
+**NO-GO** (computed 2026-10-15; **confirmed by Rory 2026-10-15**).
 
 | Condition | Value | OK |
 |---|---|---|
